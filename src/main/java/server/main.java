@@ -10,8 +10,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 class Server {
     public static void main(String[] args) throws Exception {
-        final String PORT = System.getenv("PORT");
-        HttpServer server = HttpServer.create(new InetSocketAddress(PORT != null ? Integer.parseInt(PORT) : 8080), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(Env.PORT), 0);
         server.createContext("/", new HelloWorld());
         server.setExecutor(null);
         server.start();
