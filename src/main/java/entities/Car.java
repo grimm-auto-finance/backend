@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,9 +27,38 @@ public class Car {
      * @param year
      */
     public Car(int price, String name, int year) {
+        this(price, name, year, new HashMap<>());
+    }
+
+    /**
+     * Constructs a new Car with the given price, name, year
+     * and AddOns map.
+     * @param price
+     * @param name
+     * @param year
+     * @param addOns
+     */
+    public Car(int price, String name, int year, Map<String, AddOn> addOns) {
         this.price = price;
         this.name = name;
         this.year = year;
+        this.addOns = addOns;
+    }
+
+    /**
+     * Adds the given AddOn to this Car's set of AddOns
+     * @param addOn
+     */
+    public void addAddOn(AddOn addOn) {
+        addOns.put(addOn.name, addOn);
+    }
+
+    /**
+     * Removes the given AddOn from this Car's set of AddOns
+     * @param addOn
+     */
+    public void removeAddOn(AddOn addOn) {
+        addOns.remove(addOn.name);
     }
 
     /**
