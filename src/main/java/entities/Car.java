@@ -50,7 +50,7 @@ public class Car {
      * @param addOn
      */
     public void addAddOn(AddOn addOn) {
-        addOns.put(addOn.name, addOn);
+        addOns.put(addOn.getName(), addOn);
     }
 
     /**
@@ -58,7 +58,7 @@ public class Car {
      * @param addOn
      */
     public void removeAddOn(AddOn addOn) {
-        addOns.remove(addOn.name);
+        addOns.remove(addOn.getName());
     }
 
     /**
