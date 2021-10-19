@@ -7,4 +7,52 @@ package entities;
  * returned loan.
  */
 public class CarBuyer {
+
+    private int budget;
+    private int creditScore;
+
+    /**
+     * Constructs a new CarBuyer with the specified
+     * budget and credit score.
+     * @param budget
+     * @param creditScore
+     */
+    public CarBuyer(int budget, int creditScore) {
+        this.budget = budget;
+        this.creditScore = creditScore;
+    }
+
+    /**
+     * Returns this CarBuyer's budget.
+     * @return
+     */
+    public int getBudget() {
+        return budget;
+    }
+
+    //TODO: Is this needed?
+    /**
+     * Updates the CarBuyer's budget to the specified value.
+     * @param budget
+     */
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    /**
+     * Returns this CarBuyer's credit score.
+     * @return
+     */
+    public int getCreditScore() {
+        return creditScore;
+    }
+
+    //TODO: is this needed?
+    /**
+     * Updates this CarBuyer's credit score to the specified value.
+     * @param creditScore
+     */
+    public void setCreditScore(int creditScore) {
+        this.creditScore = creditScore;
+    }
 }
