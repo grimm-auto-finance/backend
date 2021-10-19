@@ -11,11 +11,11 @@ public class AddOn {
 
     /**
      * Constructs a new AddOn object with the given name.
-     * The price and description fields are given placeholder values.
+     * The price and description fields are not initialized.
      * @param name
      */
     public AddOn(String name) {
-        this(name, -1, "");
+        this.name = name;
     }
 
     /**
