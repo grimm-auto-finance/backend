@@ -8,7 +8,7 @@ package entities;
  */
 public class CarBuyer {
 
-    private int budget;
+    private Double budget;
     private int creditScore;
 
     /**
@@ -17,7 +17,7 @@ public class CarBuyer {
      * @param budget
      * @param creditScore
      */
-    public CarBuyer(int budget, int creditScore) {
+    public CarBuyer(Double budget, int creditScore) {
         this.budget = budget;
         this.creditScore = creditScore;
     }
@@ -26,7 +26,7 @@ public class CarBuyer {
      * Returns this CarBuyer's budget.
      * @return
      */
-    public int getBudget() {
+    public Double getBudget() {
         return budget;
     }
 
@@ -35,7 +35,7 @@ public class CarBuyer {
      * Updates the CarBuyer's budget to the specified value.
      * @param budget
      */
-    public void setBudget(int budget) {
+    public void setBudget(Double budget) {
         this.budget = budget;
     }
 
