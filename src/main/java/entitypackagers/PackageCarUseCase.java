@@ -1,9 +1,11 @@
 package entitypackagers;
 
+import entities.AddOn;
 import entities.Car;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
+import java.util.Map;
 
 public class PackageCarUseCase {
     private final JsonObjectBuilder completeJsonBuilder;
@@ -27,7 +29,17 @@ public class PackageCarUseCase {
         thisJsonBuilder.add("price", car.getPrice());
         thisJsonBuilder.add("name", car.getName());
         thisJsonBuilder.add("year", car.getYear());
-        // TODO: create AddOn Packager to call here
-        completeJsonBuilder.add("car buyer", thisJsonBuilder);
+
+        // create a new JsonObjectBuilder to handle serializing this car's add-ons
+        // this ensures that the add-ons are listed together in a sub-entry of the Json object
+        JsonObjectBuilder addOnJsonBuilder = Json.createObjectBuilder();
+        PackageAddOnUseCase addOnPackager = new PackageAddOnUseCase(addOnJsonBuilder);
+        Map<String, AddOn> addOns = car.getAddOns();
+        for (String addOnName : addOns.keySet()) {
+            addOnPackager.writeEntity(addOns.get(addOnName));
+        }
+
+        thisJsonBuilder.add("add-ons", addOnJsonBuilder);
+        completeJsonBuilder.add("car", thisJsonBuilder);
     }
 }
