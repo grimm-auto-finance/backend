@@ -13,6 +13,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     compileOnly 'com.sun.net.httpserver:http:20070405'
+    compileOnly 'javax.json:javax.json-api:1.1.4'
 }
 
 jar {
