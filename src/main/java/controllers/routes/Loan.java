@@ -3,6 +3,7 @@ package routes;
 import entities.Car;
 import entities.CarBuyer;
 import entities.LoanData;
+import entitypackagers.PackageAllUseCase;
 import entitypackagers.PackageLoanDataUseCase;
 import fetchers.LoanDataFetcher;
 import constants.Exceptions;
@@ -33,11 +34,12 @@ public class Loan extends controllers.Route {
         try {
             Car car = new Car("Honda", "Civic", 2002);
             car.setPrice(7000);
-            LoanData loanData = LoanDataFetcher.fetch(new CarBuyer(30000.0, 780), car);
+            CarBuyer carBuyer = new CarBuyer(30000.0, 780);
+            LoanData loanData = LoanDataFetcher.fetch(carBuyer, car);
 
             JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-            PackageLoanDataUseCase loanDataPackager = new PackageLoanDataUseCase(jsonBuilder);
-            loanDataPackager.writeEntity(loanData);
+            PackageAllUseCase allPackager = new PackageAllUseCase(jsonBuilder);
+            allPackager.writeEntities(car, carBuyer, loanData);
             String responseString = jsonBuilder.build().toString();
             t.sendResponseHeaders(200, responseString.length());
             os.write(responseString.getBytes());
