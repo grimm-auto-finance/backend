@@ -24,14 +24,7 @@ public class GenerateAddOnsUseCase {
          */
         HashMap<String, AddOn> MapOfAddOns = new HashMap<String, AddOn>();
         for (String addOnName: ListOfAddOnNames) {
-            /**
-             * TODO: Find out if we want to set the price and description of an addon as parameters to the constructor
-             * because they will always begin as 0 and empty string as this information is obtained from the
-             * database
-             * I have set it to zero and the empty string respectively now
-             * so that I dont change the entities class in this branch
-             */
-            MapOfAddOns.put(addOnName, new AddOn(addOnName, 0.0, ""));
+            MapOfAddOns.put(addOnName, new AddOn(addOnName));
         }
         return MapOfAddOns;
     }
