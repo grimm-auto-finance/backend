@@ -14,7 +14,7 @@ public class GenerateBuyerUseCase {
      * @param creditScore The car buyers credit score
      * @return
      */
-    public CarBuyer GenerateBuyerDataUseCase(Double budget, int creditScore) {
+    public CarBuyer GenerateBuyerDataUseCase(double budget, int creditScore) {
         return new CarBuyer(budget, creditScore);
     }
 }
