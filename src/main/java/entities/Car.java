@@ -15,17 +15,18 @@ public class Car {
     private int price;
 
     // The make, model and year of the Car
-    final private String make;
-    final private String model;
-    final private int year;
+    private final String make;
+    private final String model;
+    private final int year;
 
     // TODO: decide if we want to use Factory method instead
     /**
      * Constructs a new Car with the given price, name, year
      * and empty AddOns map.
-     * @param make
-     * @param model
-     * @param year
+     * Price of the car initially set to -1 as price of the car is not know during initialization
+     * @param make The make of the car
+     * @param model The model of the car
+     * @param year The model year of the car
      */
     public Car(String make, String model, int year) {
         this(-1, make, model, year, new HashMap<>());
@@ -34,11 +35,11 @@ public class Car {
     /**
      * Constructs a new Car with the given price, name, year
      * and AddOns map.
-     * @param price
-     * @param make
-     * @param model
-     * @param year
-     * @param addOns
+     * @param price The price of the car
+     * @param make The make of the car
+     * @param model The model of the car
+     * @param year The model year of the calr
+     * @param addOns A mapping of addon names to AddOn objects
      */
     public Car(int price, String make, String model, int year, Map<String, AddOn> addOns) {
         this.price = price;
