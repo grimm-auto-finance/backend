@@ -11,8 +11,9 @@ public class PackageAllUseCase {
     private final JsonObjectBuilder builder;
 
     /**
-     * Constructs a new PackageAllUseCase that writes information about
-     * Cars, CarBuyers, and LoanDatas to the given JsonObjectBuilder
+     * Constructs a new PackageAllUseCase that writes information about Cars, CarBuyers, and
+     * LoanDatas to the given JsonObjectBuilder
+     *
      * @param builder the JsonObjectBuilder to serialize entities to
      */
     public PackageAllUseCase(JsonObjectBuilder builder) {
@@ -21,6 +22,7 @@ public class PackageAllUseCase {
 
     /**
      * Writes the given Car, CarBuyer, and LoanData to builder
+     *
      * @param car the Car to serialize
      * @param buyer the CarBuyer to serialize
      * @param loanData the LoanData to serialize

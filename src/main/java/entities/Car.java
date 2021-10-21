@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A class to represent an individual car that is being
- * viewed and configured in the user interface.
+ * A class to represent an individual car that is being viewed and configured in the user interface.
  */
 public class Car {
     // A Map between add-on names and AddOn objects representing those addons
@@ -21,9 +20,9 @@ public class Car {
 
     // TODO: decide if we want to use Factory method instead
     /**
-     * Constructs a new Car with the given price, name, year
-     * and empty AddOns map.
-     * Price of the car initially set to -1 as price of the car is not know during initialization
+     * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
+     * initially set to -1 as price of the car is not know during initialization
+     *
      * @param make The make of the car
      * @param model The model of the car
      * @param year The model year of the car
@@ -33,8 +32,8 @@ public class Car {
     }
 
     /**
-     * Constructs a new Car with the given price, name, year
-     * and AddOns map.
+     * Constructs a new Car with the given price, name, year and AddOns map.
+     *
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car
@@ -51,6 +50,7 @@ public class Car {
 
     /**
      * Adds the given AddOn to this Car's set of AddOns
+     *
      * @param addOn
      */
     public void addAddOn(AddOn addOn) {
@@ -59,6 +59,7 @@ public class Car {
 
     /**
      * Removes the given AddOn from this Car's set of AddOns
+     *
      * @param addOn
      */
     public void removeAddOn(AddOn addOn) {
@@ -71,6 +72,7 @@ public class Car {
 
     /**
      * Returns this Car's price, in dollars.
+     *
      * @return
      */
     public int getPrice() {
@@ -79,6 +81,7 @@ public class Car {
 
     /**
      * Updates this Car's price to the specified value.
+     *
      * @param price
      */
     public void setPrice(int price) {
@@ -87,6 +90,7 @@ public class Car {
 
     /**
      * returns the make of this car
+     *
      * @return
      */
     public String getMake() {
@@ -95,6 +99,7 @@ public class Car {
 
     /**
      * returns the model of this car
+     *
      * @return
      */
     public String getModel() {
@@ -103,12 +108,10 @@ public class Car {
 
     /**
      * Returns this Car's model year
+     *
      * @return
      */
-
     public int getYear() {
         return year;
     }
-
-
 }

@@ -1,9 +1,8 @@
 package entities;
 
 /**
- * A class to represent a loan, as determined
- * by the Senso API /rate and /score functions
- * based on a given CarBuyer and Car.
+ * A class to represent a loan, as determined by the Senso API /rate and /score functions based on a
+ * given CarBuyer and Car.
  */
 public class LoanData {
     private double interestRate;
@@ -13,15 +12,12 @@ public class LoanData {
     private int termLength;
     private double interestSum;
 
-    /**
-     * Constructs an empty LoanData object.
-     */
-    public LoanData() {
-
-    }
+    /** Constructs an empty LoanData object. */
+    public LoanData() {}
 
     /**
      * Constructs a new LoanData object with the given values.
+     *
      * @param interestRate
      * @param installment
      * @param sensoScore
@@ -29,9 +25,13 @@ public class LoanData {
      * @param termLength
      * @param interestSum
      */
-    public LoanData(double interestRate, double installment,
-                    String sensoScore, double loanAmount,
-                    int termLength, double interestSum) {
+    public LoanData(
+            double interestRate,
+            double installment,
+            String sensoScore,
+            double loanAmount,
+            int termLength,
+            double interestSum) {
         this.interestRate = interestRate;
         this.installment = installment;
         this.sensoScore = sensoScore;
@@ -42,6 +42,7 @@ public class LoanData {
 
     /**
      * Returns this LoanData's interest rate.
+     *
      * @return
      */
     public double getInterestRate() {
@@ -50,6 +51,7 @@ public class LoanData {
 
     /**
      * Updates this LoanData's interest rate with the given value.
+     *
      * @param interestRate
      */
     public void setInterestRate(double interestRate) {
@@ -58,6 +60,7 @@ public class LoanData {
 
     /**
      * Returns this loan's monthly installment amount
+     *
      * @return
      */
     public double getInstallment() {
@@ -66,6 +69,7 @@ public class LoanData {
 
     /**
      * Updates this loan's monthly installment amount with the given value
+     *
      * @param installment
      */
     public void setInstallment(double installment) {
@@ -74,6 +78,7 @@ public class LoanData {
 
     /**
      * Returns this loan's senso score
+     *
      * @return
      */
     public String getSensoScore() {
@@ -82,6 +87,7 @@ public class LoanData {
 
     /**
      * Updates this loan's senso score with the given value
+     *
      * @param sensoScore
      */
     public void setSensoScore(String sensoScore) {
@@ -90,6 +96,7 @@ public class LoanData {
 
     /**
      * Returns this loan's principal dollar value
+     *
      * @return
      */
     public double getLoanAmount() {
@@ -98,6 +105,7 @@ public class LoanData {
 
     /**
      * Updates this loan's principal dollar value
+     *
      * @param loanAmount
      */
     public void setLoanAmount(double loanAmount) {
@@ -106,6 +114,7 @@ public class LoanData {
 
     /**
      * Returns this loan's term length
+     *
      * @return
      */
     public int getTermLength() {
@@ -114,6 +123,7 @@ public class LoanData {
 
     /**
      * Updates this loan's term length
+     *
      * @param termLength
      */
     public void setTermLength(int termLength) {
@@ -122,6 +132,7 @@ public class LoanData {
 
     /**
      * Returns the total amount of interest to be paid on this loan
+     *
      * @return
      */
     public double getInterestSum() {
@@ -130,6 +141,7 @@ public class LoanData {
 
     /**
      * Updates the total amount of interest to be paid on this loan
+     *
      * @param interestSum
      */
     public void setInterestSum(double interestSum) {

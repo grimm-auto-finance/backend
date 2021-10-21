@@ -1,10 +1,8 @@
 package entities;
 
 /**
- * A class to represent an individual person buying a car
- * Stores all necessary information about the person that is
- * used by the Senso API and our functions to determine the
- * returned loan.
+ * A class to represent an individual person buying a car Stores all necessary information about the
+ * person that is used by the Senso API and our functions to determine the returned loan.
  */
 public class CarBuyer {
 
@@ -12,8 +10,8 @@ public class CarBuyer {
     private final int creditScore;
 
     /**
-     * Constructs a new CarBuyer with the specified
-     * budget and credit score.
+     * Constructs a new CarBuyer with the specified budget and credit score.
+     *
      * @param budget
      * @param creditScore
      */
@@ -24,19 +22,19 @@ public class CarBuyer {
 
     /**
      * Returns this CarBuyer's budget.
+     *
      * @return
      */
     public double getBudget() {
         return budget;
     }
 
-
     /**
      * Returns this CarBuyer's credit score.
+     *
      * @return
      */
     public int getCreditScore() {
         return creditScore;
     }
-
 }

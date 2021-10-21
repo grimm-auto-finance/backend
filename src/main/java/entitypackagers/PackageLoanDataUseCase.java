@@ -10,8 +10,9 @@ public class PackageLoanDataUseCase {
     private final JsonObjectBuilder thisJsonBuilder;
 
     /**
-     * Constructs a new PackageLoanDataUseCase that writes
-     * LoanData information to the given JsonObjectBuilder
+     * Constructs a new PackageLoanDataUseCase that writes LoanData information to the given
+     * JsonObjectBuilder
+     *
      * @param jsonBuilder the JsonObjectBuilder to write LoanData information to
      */
     public PackageLoanDataUseCase(JsonObjectBuilder jsonBuilder) {
@@ -21,6 +22,7 @@ public class PackageLoanDataUseCase {
 
     /**
      * Write the given LoanData's data to completeJsonBuilder
+     *
      * @param loanData the LoanData to serialize
      */
     public void writeEntity(LoanData loanData) {

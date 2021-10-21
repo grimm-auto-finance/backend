@@ -3,17 +3,19 @@ package entitypackagers;
 import entities.AddOn;
 import entities.Car;
 
+import java.util.Map;
+
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
-import java.util.Map;
 
 public class PackageCarUseCase {
     private final JsonObjectBuilder completeJsonBuilder;
     private final JsonObjectBuilder thisJsonBuilder;
 
     /**
-     * Constructs a new PackageCarBuyerUseCase that writes
-     * CarBuyer information to the given JsonObjectBuilder
+     * Constructs a new PackageCarBuyerUseCase that writes CarBuyer information to the given
+     * JsonObjectBuilder
+     *
      * @param jsonBuilder the JsonObjectBuilder to write CarBuyer information to
      */
     public PackageCarUseCase(JsonObjectBuilder jsonBuilder) {
@@ -23,6 +25,7 @@ public class PackageCarUseCase {
 
     /**
      * Write the given Car's data to completeJsonBuilder
+     *
      * @param car the Car to serialize
      */
     public void writeEntity(Car car) {
