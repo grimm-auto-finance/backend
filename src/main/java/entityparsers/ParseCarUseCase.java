@@ -22,7 +22,7 @@ public class ParseCarUseCase {
      * Creates a Car object from the fields in jsonObject
      * @return
      */
-    public Car parse() {
+    public Car parse() throws ClassCastException {
         GenerateCarUseCase carGenerator = new GenerateCarUseCase();
         JsonObject carObj = jsonObject.getJsonObject("car");
         String make = jsonObject.getString("make");

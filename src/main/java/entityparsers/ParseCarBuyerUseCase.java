@@ -22,7 +22,7 @@ public class ParseCarBuyerUseCase {
      * Creates a CarBuyer object from the fields in jsonObject
      * @return
      */
-    public CarBuyer parse() {
+    public CarBuyer parse() throws NullPointerException {
         GenerateBuyerUseCase buyerGenerator = new GenerateBuyerUseCase();
 
         JsonObject buyerObj = jsonObject.getJsonObject("car buyer");
