@@ -8,8 +8,8 @@ package entities;
  */
 public class CarBuyer {
 
-    final private Double budget;
-    final private int creditScore;
+    private final Double budget;
+    private final int creditScore;
 
     /**
      * Constructs a new CarBuyer with the specified
