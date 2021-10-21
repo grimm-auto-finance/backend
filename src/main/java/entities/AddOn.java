@@ -5,7 +5,7 @@ package entities;
  * can be added to a car.
  */
 public class AddOn {
-    final private String name;
+    private final  String name;
     private double price;
     private String description;
 
