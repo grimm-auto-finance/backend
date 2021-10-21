@@ -9,11 +9,12 @@ import entities.Car;
 public class GenerateCarUseCase {
     /**
      *
-     * @param name The name of the car being bought
+     * @param make The make of the car being bought
+     * @param model The model of the car being bought
      * @param year The year of the car model
      * @return A new Car object with the provided name and model year
      */
-    public Car GenerateCarUseCase(String name, int year) {
-        return new Car(0, name, year);
+    public Car GenerateCarUseCase(String make, String model, int year) {
+        return new Car(make, model, year);
     }
 }
