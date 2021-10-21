@@ -1,7 +1,6 @@
 package entityparsers;
 
 import entities.AddOn;
-import entities.AddOns;
 import entitybuilder.GenerateAddOnsUseCase;
 import entitybuilder.GenerateBuyerUseCase;
 
