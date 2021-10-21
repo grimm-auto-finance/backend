@@ -14,33 +14,36 @@ public class Car {
     // The Car's price, in dollars.
     private int price;
 
-    // The name and year of the Car
-    private String name;
-    private int year;
+    // The make, model and year of the Car
+    final private String make;
+    final private String model;
+    final private int year;
 
     // TODO: decide if we want to use Factory method instead
     /**
      * Constructs a new Car with the given price, name, year
      * and empty AddOns map.
-     * @param price
-     * @param name
+     * @param make
+     * @param model
      * @param year
      */
-    public Car(int price, String name, int year) {
-        this(price, name, year, new HashMap<>());
+    public Car(String make, String model, int year) {
+        this(-1, make, model, year, new HashMap<>());
     }
 
     /**
      * Constructs a new Car with the given price, name, year
      * and AddOns map.
      * @param price
-     * @param name
+     * @param make
+     * @param model
      * @param year
      * @param addOns
      */
-    public Car(int price, String name, int year, Map<String, AddOn> addOns) {
+    public Car(int price, String make, String model, int year, Map<String, AddOn> addOns) {
         this.price = price;
-        this.name = name;
+        this.make = make;
+        this.model = model;
         this.year = year;
         this.addOns = addOns;
     }
@@ -78,35 +81,29 @@ public class Car {
     }
 
     /**
-     * Returns this Car's name (Brand + Model)
+     * returns the make of this car
      * @return
      */
-    public String getName() {
-        return name;
-    }
-
-    // TODO: are setters necessary? maybe should just make new Car object
-    /**
-     * Updates this Car's name
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
+    public String getMake() {
+        return make;
     }
 
     /**
-     * Returns this Car's year
+     * returns the model of this car
      * @return
      */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * Returns this Car's model year
+     * @return
+     */
+
     public int getYear() {
         return year;
     }
 
-    /**
-     * Updates this Car's year
-     * @param year
-     */
-    public void setYear(int year) {
-        this.year = year;
-    }
+
 }
