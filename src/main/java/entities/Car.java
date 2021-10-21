@@ -65,6 +65,10 @@ public class Car {
         addOns.remove(addOn.getName());
     }
 
+    public Map<String, AddOn> getAddOns() {
+        return new HashMap<>(this.addOns);
+    }
+
     /**
      * Returns this Car's price, in dollars.
      * @return
