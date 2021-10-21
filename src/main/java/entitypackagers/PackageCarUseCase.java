@@ -27,7 +27,8 @@ public class PackageCarUseCase {
      */
     public void writeEntity(Car car) {
         thisJsonBuilder.add("price", car.getPrice());
-        thisJsonBuilder.add("name", car.getName());
+        thisJsonBuilder.add("make", car.getMake());
+        thisJsonBuilder.add("model", car.getModel());
         thisJsonBuilder.add("year", car.getYear());
 
         // create a new JsonObjectBuilder to handle serializing this car's add-ons
