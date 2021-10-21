@@ -5,7 +5,7 @@ package entities;
  * can be added to a car.
  */
 public class AddOn {
-    private String name;
+    final private String name;
     private double price;
     private String description;
 
@@ -39,14 +39,6 @@ public class AddOn {
         return name;
     }
 
-    // TODO: is this needed?
-    /**
-     * Updates the name of this add-on
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * Returns the price of this AddOn
