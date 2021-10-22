@@ -26,8 +26,8 @@ public class ParseCarBuyerUseCase {
         GenerateBuyerUseCase buyerGenerator = new GenerateBuyerUseCase();
 
         JsonObject buyerObj = jsonObject.getJsonObject("car buyer");
-        double budget = buyerObj.getJsonNumber("budget").doubleValue();
-        int creditScore = buyerObj.getInt("credit score");
+        double budget = Double.parseDouble(buyerObj.getString("pytBudget"));
+        int creditScore = Integer.parseInt(buyerObj.getString("creditScore"));
         return buyerGenerator.GenerateBuyerDataUseCase(budget, creditScore);
     }
 }
