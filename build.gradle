@@ -1,10 +1,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
 
 group 'org.example'
-version '1.0-SNAPSHOT'
+version '0.1'
 
 repositories {
     mavenCentral()
@@ -16,15 +17,6 @@ dependencies {
     compileOnly 'com.sun.net.httpserver:http:20070405'
     implementation 'javax.json:javax.json-api:1.1.4'
     implementation 'org.glassfish:javax.json:1.1.4'
-    runtimeClasspath 'javax.json:javax.json-api:1.1.4'
-    runtimeClasspath 'org.glassfish:javax.json:1.1.4'
-}
-
-jar {
-    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
-    manifest {
-        attributes 'Main-Class': 'server.Server'
-    }
 }
 
 test {
