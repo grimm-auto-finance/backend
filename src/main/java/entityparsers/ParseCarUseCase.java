@@ -27,7 +27,8 @@ public class ParseCarUseCase {
         JsonObject carObj = jsonObject.getJsonObject("car");
         String make = carObj.getString("vehicleMake");
         String model = carObj.getString("vehicleModel");
-        int year = Integer.parseInt(carObj.getString("vehicleYear"));
-        return carGenerator.GenerateCarUseCase(make, model, year);
+        int year = carObj.getInt("vehicleYear");
+        int price = carObj.getInt("vehiclePrice");
+        return carGenerator.GenerateCarUseCase(price, make, model, year);
     }
 }

@@ -14,7 +14,7 @@ public class GenerateCarUseCase {
      * @param year The year of the car model
      * @return A new Car object with the provided name and model year
      */
-    public Car GenerateCarUseCase(String make, String model, int year) {
-        return new Car(make, model, year);
+    public Car GenerateCarUseCase(int price, String make, String model, int year) {
+        return new Car(price, make, model, year);
     }
 }

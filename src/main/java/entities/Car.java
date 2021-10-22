@@ -28,8 +28,8 @@ public class Car {
      * @param model The model of the car
      * @param year The model year of the car
      */
-    public Car(String make, String model, int year) {
-        this(-1, make, model, year, new HashMap<>());
+    public Car(int price, String make, String model, int year) {
+        this(price, make, model, year, new HashMap<>());
     }
 
     /**
