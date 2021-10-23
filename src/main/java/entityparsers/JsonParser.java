@@ -1,9 +1,8 @@
 package entityparsers;
 
-import entities.*;
+import attributes.*;
 
 import javax.json.*;
-import java.util.Map;
 import java.util.Set;
 
 public class JsonParser implements Parser {

@@ -1,8 +1,6 @@
 package entityparsers;
 
-import entities.AttributeMap;
-
-import java.util.Map;
+import attributes.AttributeMap;
 
 public interface Parser {
 
