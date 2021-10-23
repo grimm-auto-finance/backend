@@ -1,8 +1,8 @@
 package entities;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
 
 class ChildCarBuyer extends CarBuyer {
     public ChildCarBuyer(double budget, int creditScore) {
