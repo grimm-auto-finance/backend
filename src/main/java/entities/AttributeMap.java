@@ -11,7 +11,7 @@ public class AttributeMap extends Attribute {
         items = new HashMap<>();
     }
 
-    public void addItem(String name, AttributeMap item) {
+    public void addItem(String name, Attribute item) {
         items.put(name, item);
     }
 
