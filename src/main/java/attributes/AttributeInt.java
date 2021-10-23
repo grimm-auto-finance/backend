@@ -1,4 +1,4 @@
-package entities;
+package attributes;
 
 public class AttributeInt extends Attribute {
 

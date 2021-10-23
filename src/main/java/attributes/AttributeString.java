@@ -1,4 +1,4 @@
-package entities;
+package attributes;
 
 public class AttributeString extends Attribute {
 
