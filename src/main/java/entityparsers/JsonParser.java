@@ -25,23 +25,24 @@ public class JsonParser implements Parser {
             JsonValue item = object.get(key);
             Attribute itemAttribute;
             switch (item.getValueType()) {
-                case NUMBER -> {
+                case NUMBER:
                     JsonNumber itemNum = (JsonNumber) item;
                     if (itemNum.isIntegral()) {
                         itemAttribute = new AttributeInt(itemNum.intValue());
                     } else {
                         itemAttribute = new AttributeDouble(itemNum.doubleValue());
                     }
-                }
-                case STRING -> {
+                    break;
+                case STRING:
                     JsonString itemString = (JsonString) item;
                     itemAttribute = new AttributeString(itemString.getString());
-                }
-                case OBJECT -> {
+                    break;
+                case OBJECT:
                     JsonObject itemObject = item.asJsonObject();
                     itemAttribute = parseJsonObject(itemObject);
-                }
-                default -> throw new JsonException("Error in Parsing JsonObject to AttributeMap");
+                    break;
+                default:
+                    throw new JsonException("Error in Parsing JsonObject to AttributeMap");
             }
             map.addItem(key, itemAttribute);
         }
