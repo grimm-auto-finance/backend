@@ -1,21 +1,25 @@
 package routes;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import constants.Exceptions;
+
 import entities.Car;
 import entities.CarBuyer;
 import entities.LoanData;
+
 import entitypackagers.PackageAllUseCase;
-import entitypackagers.PackageLoanDataUseCase;
+
 import entityparsers.ParseCarBuyerUseCase;
 import entityparsers.ParseCarUseCase;
+
 import fetchers.LoanDataFetcher;
-import constants.Exceptions;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import com.sun.net.httpserver.HttpExchange;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.json.*;
-import server.Env;
-import java.io.BufferedReader;
 
 public class Loan extends controllers.Route {
     @Override
@@ -54,7 +58,6 @@ public class Loan extends controllers.Route {
             os.close();
             return;
         }
-
 
         try {
             LoanData loanData = LoanDataFetcher.fetch(buyer, car);

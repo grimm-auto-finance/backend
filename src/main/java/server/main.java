@@ -1,15 +1,12 @@
 package server;
 
-import controllers.Routes;
+import com.sun.net.httpserver.HttpServer;
+
 import controllers.Route;
+import controllers.Routes;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
-
-import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpExchange;
 
 class Server {
     public static void main(String[] args) throws IOException {

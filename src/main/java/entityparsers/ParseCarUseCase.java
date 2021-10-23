@@ -1,7 +1,7 @@
 package entityparsers;
 
 import entities.Car;
-import entitybuilder.GenerateBuyerUseCase;
+
 import entitybuilder.GenerateCarUseCase;
 
 import javax.json.JsonObject;
@@ -10,8 +10,8 @@ public class ParseCarUseCase {
     private final JsonObject jsonObject;
 
     /**
-     * Constructs a new ParseCarUseCase to create a Car
-     * using the given JsonObject
+     * Constructs a new ParseCarUseCase to create a Car using the given JsonObject
+     *
      * @param jsonObject
      */
     public ParseCarUseCase(JsonObject jsonObject) {
@@ -20,6 +20,7 @@ public class ParseCarUseCase {
 
     /**
      * Creates a Car object from the fields in jsonObject
+     *
      * @return
      */
     public Car parse() throws ClassCastException {

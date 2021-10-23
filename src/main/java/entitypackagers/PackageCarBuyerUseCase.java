@@ -10,8 +10,9 @@ public class PackageCarBuyerUseCase {
     private final JsonObjectBuilder thisJsonBuilder;
 
     /**
-     * Constructs a new PackageCarBuyerUseCase that writes
-     * CarBuyer information to the given JsonObjectBuilder
+     * Constructs a new PackageCarBuyerUseCase that writes CarBuyer information to the given
+     * JsonObjectBuilder
+     *
      * @param jsonBuilder the JsonObjectBuilder to write CarBuyer information to
      */
     public PackageCarBuyerUseCase(JsonObjectBuilder jsonBuilder) {
@@ -21,6 +22,7 @@ public class PackageCarBuyerUseCase {
 
     /**
      * Write the given CarBuyer's data to completeJsonBuilder
+     *
      * @param carBuyer the CarBuyer to serialize
      */
     public void writeEntity(CarBuyer carBuyer) {

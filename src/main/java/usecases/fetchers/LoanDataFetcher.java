@@ -1,22 +1,25 @@
 package fetchers;
 
+import constants.Exceptions;
+
 import entities.*;
 import entities.LoanData;
+
+import server.Env;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonString;
-import javax.json.JsonValue;
-import server.Env;
-import constants.Exceptions;
 
 public class LoanDataFetcher {
     public static LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
@@ -26,7 +29,8 @@ public class LoanDataFetcher {
         try {
             rateConn = (HttpURLConnection) Env.SENSO_RATE_URL.openConnection();
         } catch (IOException e) {
-            throw (Exceptions.CodedException) new Exceptions.FetchException("Error connecting to Senso API");
+            throw (Exceptions.CodedException)
+                    new Exceptions.FetchException("Error connecting to Senso API");
         }
 
         rateConn.setDoOutput(true);
@@ -36,18 +40,21 @@ public class LoanDataFetcher {
         rateConn.setRequestProperty("Accept", "application/json");
         try {
             rateConn.setRequestMethod("POST");
-        } catch (java.net.ProtocolException e) {}
+        } catch (java.net.ProtocolException e) {
+        }
 
-        JsonObject rateBody = Json.createObjectBuilder()
-            .add("loanAmount", car.getPrice())
-            .add("creditScore", buyer.getCreditScore())
-            .add("pytBudget", buyer.getBudget())
-            // TODO: Pull make and model separately instead
-            .add("vehicleMake", car.getMake())
-            .add("vehicleModel", car.getModel())
-            .add("vehicleYear", car.getYear())
-            // TODO: Consider allowing this to be modified
-            .add("vehicleKms", 0).build();
+        JsonObject rateBody =
+                Json.createObjectBuilder()
+                        .add("loanAmount", car.getPrice())
+                        .add("creditScore", buyer.getCreditScore())
+                        .add("pytBudget", buyer.getBudget())
+                        // TODO: Pull make and model separately instead
+                        .add("vehicleMake", car.getMake())
+                        .add("vehicleModel", car.getModel())
+                        .add("vehicleYear", car.getYear())
+                        // TODO: Consider allowing this to be modified
+                        .add("vehicleKms", 0)
+                        .build();
 
         try {
             OutputStreamWriter rateWriter = new OutputStreamWriter(rateConn.getOutputStream());
@@ -64,13 +71,15 @@ public class LoanDataFetcher {
             if (rateConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 StringBuilder responseBuilder = new StringBuilder();
                 String line;
-                BufferedReader reader = new BufferedReader(new InputStreamReader(rateConn.getInputStream()));
+                BufferedReader reader =
+                        new BufferedReader(new InputStreamReader(rateConn.getInputStream()));
                 while ((line = reader.readLine()) != null) {
-                responseBuilder.append(line);
+                    responseBuilder.append(line);
                 }
                 reader.close();
 
-                JsonReader jsonReader = Json.createReader(new StringReader(responseBuilder.toString()));
+                JsonReader jsonReader =
+                        Json.createReader(new StringReader(responseBuilder.toString()));
                 rateResponse = jsonReader.readObject();
             } else {
                 // TODO: switch this to use Logging class once implemented
@@ -84,9 +93,16 @@ public class LoanDataFetcher {
 
         try {
             loanData.setInterestRate(((JsonNumber) rateResponse.get("interestRate")).intValue());
-            loanData.setInstallment(((JsonNumber) ((JsonObject) ((JsonArray) rateResponse.get("installments")).get(0)).get("installment")).doubleValue());
+            loanData.setInstallment(
+                    ((JsonNumber)
+                                    ((JsonObject)
+                                                    ((JsonArray) rateResponse.get("installments"))
+                                                            .get(0))
+                                            .get("installment"))
+                            .doubleValue());
             loanData.setLoanAmount(((JsonNumber) rateResponse.get("capitalSum")).doubleValue());
-            loanData.setTermLength(Integer.parseInt(((JsonString) rateResponse.get("term")).getString()));
+            loanData.setTermLength(
+                    Integer.parseInt(((JsonString) rateResponse.get("term")).getString()));
             loanData.setInterestSum(((JsonNumber) rateResponse.get("interestSum")).doubleValue());
         } catch (ClassCastException e) {
             // TODO: Document this and break it up
@@ -98,7 +114,8 @@ public class LoanDataFetcher {
         try {
             scoreConn = (HttpURLConnection) Env.SENSO_SCORE_URL.openConnection();
         } catch (IOException e) {
-            throw (Exceptions.CodedException) new Exceptions.FetchException("Error connecting to Senso API");
+            throw (Exceptions.CodedException)
+                    new Exceptions.FetchException("Error connecting to Senso API");
         }
 
         scoreConn.setDoOutput(true);
@@ -109,16 +126,19 @@ public class LoanDataFetcher {
 
         try {
             scoreConn.setRequestMethod("POST");
-        } catch (java.net.ProtocolException e) {}
+        } catch (java.net.ProtocolException e) {
+        }
 
-        JsonObject scoreBody = Json.createObjectBuilder()
-            .add("remainingBalance", car.getPrice())
-            .add("creditScore", buyer.getCreditScore())
-            .add("loanAge", loanData.getTermLength())
-            // TODO: Pull make and model separately instead
-            .add("vehicleMake", car.getMake())
-            .add("vehicleModel", car.getModel())
-            .add("vehicleYear", 2021).build();
+        JsonObject scoreBody =
+                Json.createObjectBuilder()
+                        .add("remainingBalance", car.getPrice())
+                        .add("creditScore", buyer.getCreditScore())
+                        .add("loanAge", loanData.getTermLength())
+                        // TODO: Pull make and model separately instead
+                        .add("vehicleMake", car.getMake())
+                        .add("vehicleModel", car.getModel())
+                        .add("vehicleYear", 2021)
+                        .build();
 
         try {
             OutputStreamWriter scoreWriter = new OutputStreamWriter(scoreConn.getOutputStream());
@@ -135,13 +155,15 @@ public class LoanDataFetcher {
             if (scoreConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 StringBuilder responseBuilder = new StringBuilder();
                 String line;
-                BufferedReader reader = new BufferedReader(new InputStreamReader(scoreConn.getInputStream()));
+                BufferedReader reader =
+                        new BufferedReader(new InputStreamReader(scoreConn.getInputStream()));
                 while ((line = reader.readLine()) != null) {
                     responseBuilder.append(line);
                 }
                 reader.close();
 
-                JsonReader jsonReader = Json.createReader(new StringReader(responseBuilder.toString()));
+                JsonReader jsonReader =
+                        Json.createReader(new StringReader(responseBuilder.toString()));
                 scoreResponse = jsonReader.readObject();
             } else {
                 // TODO: switch this to use Logging class once implemented

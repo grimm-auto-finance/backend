@@ -1,0 +1,26 @@
+name: CI with Google Java Format
+on:
+  push:
+    branches: [ "**" ]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java JDK
+        with:
+          java-version: 11
+          distribution: adopt
+        uses: actions/setup-java@v2.3.1
+      - name: Set up Google Java Format
+        # TOOD: Fetch latest version
+        run: curl -L https://github.com/google/google-java-format/releases/download/v1.12.0/google-java-format-1.12.0-all-deps.jar -o google-java-format.jar
+      - name: Lint files
+        run: >
+          exec java \
+            --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
+            --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
+            --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
+            --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
+            --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
+            -jar 'google-java-format.jar' --aosp --dry-run --set-exit-if-changed $(find . -name '*.java')

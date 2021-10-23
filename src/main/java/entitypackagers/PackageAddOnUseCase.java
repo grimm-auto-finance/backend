@@ -10,8 +10,9 @@ public class PackageAddOnUseCase {
     private final JsonObjectBuilder thisJsonBuilder;
 
     /**
-     * Constructs a new PackageAddOnUseCase that writes
-     * AddOn information to the given JsonObjectBuilder
+     * Constructs a new PackageAddOnUseCase that writes AddOn information to the given
+     * JsonObjectBuilder
+     *
      * @param jsonBuilder the JsonObjectBuilder to write AddOn information to
      */
     public PackageAddOnUseCase(JsonObjectBuilder jsonBuilder) {
@@ -21,6 +22,7 @@ public class PackageAddOnUseCase {
 
     /**
      * Write the given AddOn's data to completeJsonBuilder
+     *
      * @param addOn the AddOn to serialize
      */
     public void writeEntity(AddOn addOn) {

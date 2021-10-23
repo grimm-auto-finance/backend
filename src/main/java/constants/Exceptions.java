@@ -1,8 +1,8 @@
 package constants;
 
 public class Exceptions {
-    abstract public static class CodedException extends Exception {
-        abstract public int getCode();
+    public abstract static class CodedException extends Exception {
+        public abstract int getCode();
 
         public CodedException() {
             super();
@@ -14,7 +14,9 @@ public class Exceptions {
     }
 
     public static class FetchException extends CodedException {
-        public int getCode() { return 500; }
+        public int getCode() {
+            return 500;
+        }
 
         public FetchException() {}
 

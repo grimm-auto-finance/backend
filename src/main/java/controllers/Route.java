@@ -1,13 +1,11 @@
 package controllers;
 
-import java.io.IOException;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 
+import java.io.IOException;
 
-/**
- * The generic route class that all routes will inherit from
- */
+/** The generic route class that all routes will inherit from */
 public abstract class Route implements HttpHandler {
     public abstract String getContext();
 
@@ -48,9 +46,8 @@ public abstract class Route implements HttpHandler {
     }
 
     /**
-     * The main handler for all routes, which decides which sub-method to
-     * call based on all possible request methods, and closes the request for
-     * convenience.
+     * The main handler for all routes, which decides which sub-method to call based on all possible
+     * request methods, and closes the request for convenience.
      *
      * @param t The exchange
      */

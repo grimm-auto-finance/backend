@@ -1,17 +1,15 @@
 package entities;
 
-/**
- * A class to represent an individual add-on that
- * can be added to a car.
- */
+/** A class to represent an individual add-on that can be added to a car. */
 public class AddOn {
-    private final  String name;
+    private final String name;
     private double price;
     private String description;
 
     /**
-     * Constructs a new AddOn object with the given name.
-     * The price and description fields are not initialized.
+     * Constructs a new AddOn object with the given name. The price and description fields are not
+     * initialized.
+     *
      * @param name
      */
     public AddOn(String name) {
@@ -19,8 +17,8 @@ public class AddOn {
     }
 
     /**
-     * Constructs a new AddOn objects with the given name, price,
-     * and description.
+     * Constructs a new AddOn objects with the given name, price, and description.
+     *
      * @param name
      * @param price
      * @param description
@@ -33,15 +31,16 @@ public class AddOn {
 
     /**
      * Returns the name of this add-on
+     *
      * @return
      */
     public String getName() {
         return name;
     }
 
-
     /**
      * Returns the price of this AddOn
+     *
      * @return
      */
     public double getPrice() {
@@ -50,6 +49,7 @@ public class AddOn {
 
     /**
      * Updates the price of this AddOn
+     *
      * @param price
      */
     public void setPrice(double price) {
@@ -58,6 +58,7 @@ public class AddOn {
 
     /**
      * Returns the description of this AddOn
+     *
      * @return
      */
     public String getDescription() {
@@ -66,6 +67,7 @@ public class AddOn {
 
     /**
      * Updates the description of this AddOn
+     *
      * @param description
      */
     public void setDescription(String description) {

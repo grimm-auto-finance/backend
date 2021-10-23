@@ -1,5 +1,5 @@
 package server;
-import java.lang.ExceptionInInitializerError;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -8,7 +8,8 @@ public class Env {
     private static final String SENSO_API_KEY = System.getenv("SENSO_API_KEY");
     public static final URL SENSO_SCORE_URL = createScoreURL();
     public static final URL SENSO_RATE_URL = createRateURL();
-    public static final int PORT = System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 8080;
+    public static final int PORT =
+            System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 8080;
 
     private static URL createScoreURL() throws ExceptionInInitializerError {
         try {
