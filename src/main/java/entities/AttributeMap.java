@@ -3,9 +3,9 @@ package entities;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AttributeMap {
+public class AttributeMap extends Attribute {
 
-    private final Map<String, AttributeMap> items;
+    private final Map<String, Attribute> items;
 
     public AttributeMap() {
         items = new HashMap<>();
@@ -15,10 +15,14 @@ public class AttributeMap {
         items.put(name, item);
     }
 
-    public AttributeMap getItem(String name) {
+    public Attribute getItem(String name) {
         if (!items.containsKey(name)) {
             throw new NullPointerException("No item in map with this name");
         }
         return items.get(name);
+    }
+
+    public Map<String, Attribute> getAttribute() {
+        return items;
     }
 }
