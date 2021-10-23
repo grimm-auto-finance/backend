@@ -39,8 +39,6 @@ public class Loan extends controllers.Route {
             ParseCarUseCase carParser = new ParseCarUseCase(inputObj);
             ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(inputObj);
             car = carParser.parse();
-            // TODO: Remove this temporary setting to fetch from the database instead of being hard-coded
-            car.setPrice(5000);
             buyer = buyerParser.parse();
             if (car.getMake() == null || car.getModel() == null) {
                 String message = "Error in Payload JSON parsing";
