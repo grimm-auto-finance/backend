@@ -25,4 +25,25 @@ public class AttributeMap extends Attribute {
     public Map<String, Attribute> getAttribute() {
         return items;
     }
+
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (String key : items.keySet()) {
+            builder.append(key).append(": ");
+            builder.append(items.get(key));
+            builder.append("\n");
+        }
+        return builder.toString();
+    }
+
+    public static void main(String[] args) {
+        AttributeMap test = new AttributeMap();
+        test.addItem("Bruh", new AttributeInt(5));
+        test.addItem("String", new AttributeString("hello"));
+        test.addItem("double", new AttributeDouble(56.5));
+        AttributeMap subMap = new AttributeMap();
+        subMap.addItem("sub-string", new AttributeString("substring!"));
+        test.addItem("submap", subMap);
+        System.out.println(test);
+    }
 }

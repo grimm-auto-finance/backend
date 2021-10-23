@@ -11,4 +11,8 @@ public class AttributeInt extends Attribute {
     public Integer getAttribute() {
         return item;
     }
+
+    public String toString() {
+        return Integer.toString(item);
+    }
 }

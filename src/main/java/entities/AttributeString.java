@@ -11,4 +11,8 @@ public class AttributeString extends Attribute {
     public String getAttribute() {
         return item;
     }
+
+    public String toString() {
+        return item;
+    }
 }

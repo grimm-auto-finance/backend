@@ -11,4 +11,8 @@ public class AttributeDouble extends Attribute {
     public Double getAttribute() {
         return item;
     }
+
+    public String toString() {
+        return Double.toString(item);
+    }
 }
