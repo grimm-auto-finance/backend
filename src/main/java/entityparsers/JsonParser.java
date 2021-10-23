@@ -27,14 +27,14 @@ public class JsonParser implements Parser {
                 case NUMBER:
                     JsonNumber itemNum = (JsonNumber) item;
                     if (itemNum.isIntegral()) {
-                        itemAttribute = new AttributeInt(itemNum.intValue());
+                        itemAttribute = new IntAttribute(itemNum.intValue());
                     } else {
-                        itemAttribute = new AttributeDouble(itemNum.doubleValue());
+                        itemAttribute = new DoubleAttribute(itemNum.doubleValue());
                     }
                     break;
                 case STRING:
                     JsonString itemString = (JsonString) item;
-                    itemAttribute = new AttributeString(itemString.getString());
+                    itemAttribute = new StringAttribute(itemString.getString());
                     break;
                 case OBJECT:
                     JsonObject itemObject = item.asJsonObject();
