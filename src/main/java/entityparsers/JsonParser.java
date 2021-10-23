@@ -1,8 +1,8 @@
 package entityparsers;
 
-import entities.AttributeMap;
+import entities.*;
 
-import javax.json.JsonObject;
+import javax.json.*;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,10 +15,36 @@ public class JsonParser implements Parser {
     }
 
     public AttributeMap parse() {
-        AttributeMap entityMap = new AttributeMap();
-        Set<String> keys = jsonObject.keySet();
-        for (String key : keys) {
+        return parseJsonObject(this.jsonObject);
+    }
 
+    public AttributeMap parseJsonObject(JsonObject object) throws JsonException {
+        AttributeMap map = new AttributeMap();
+        Set<String> keys = object.keySet();
+        for (String key : keys) {
+            JsonValue item = object.get(key);
+            Attribute itemAttribute;
+            switch (item.getValueType()) {
+                case NUMBER -> {
+                    JsonNumber itemNum = (JsonNumber) item;
+                    if (itemNum.isIntegral()) {
+                        itemAttribute = new AttributeInt(itemNum.intValue());
+                    } else {
+                        itemAttribute = new AttributeDouble(itemNum.doubleValue());
+                    }
+                }
+                case STRING -> {
+                    JsonString itemString = (JsonString) item;
+                    itemAttribute = new AttributeString(itemString.getString());
+                }
+                case OBJECT -> {
+                    JsonObject itemObject = item.asJsonObject();
+                    itemAttribute = parseJsonObject(itemObject);
+                }
+                default -> throw new JsonException("Error in Parsing JsonObject to AttributeMap");
+            }
+            map.addItem(key, itemAttribute);
         }
+        return map;
     }
 }
