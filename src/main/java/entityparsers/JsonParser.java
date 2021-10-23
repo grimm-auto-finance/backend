@@ -9,14 +9,29 @@ public class JsonParser implements Parser {
 
     private final JsonObject jsonObject;
 
+    /**
+     * Construct a new JsonParser to parse the given JsonObject
+     * @param jsonObject
+     */
     public JsonParser(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
     }
 
+    /**
+     * Parse jsonObject into an AttributeMap with keys and values pulled from jsonObject
+     * @return
+     */
     public AttributeMap parse() {
         return parseJsonObject(this.jsonObject);
     }
 
+    /**
+     * The recursive helper method for parse().
+     * This method is recursive since JsonObjects can contain other JsonObjects.
+     * @param object
+     * @return
+     * @throws JsonException
+     */
     public AttributeMap parseJsonObject(JsonObject object) throws JsonException {
         AttributeMap map = new AttributeMap();
         Set<String> keys = object.keySet();
