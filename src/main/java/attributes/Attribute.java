@@ -6,7 +6,7 @@ public abstract class Attribute {
      * Return the item stored in this Attribute.
      * @return
      */
-    abstract Object getAttribute();
+    public abstract Object getAttribute();
 
     /**
      * Returns a string representation of this Attribute.
