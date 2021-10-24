@@ -1,4 +1,4 @@
-name: CI with Google Java Format
+name: Lint with Google Java Format
 on:
   push:
     branches: [ "**" ]
