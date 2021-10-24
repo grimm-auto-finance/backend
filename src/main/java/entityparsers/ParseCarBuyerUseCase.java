@@ -1,5 +1,7 @@
 package entityparsers;
 
+import attributes.AttributeMap;
+import constants.EntityStringNames;
 import entities.CarBuyer;
 
 import entitybuilder.GenerateBuyerUseCase;
@@ -8,15 +10,15 @@ import javax.json.JsonObject;
 
 public class ParseCarBuyerUseCase {
 
-    private final JsonObject jsonObject;
+    private final AttributeMap map;
 
     /**
      * Constructs a new ParseCarBuyerUseCase to create a CarBuyer using the given JsonObject
      *
-     * @param jsonObject
+     * @param parser
      */
-    public ParseCarBuyerUseCase(JsonObject jsonObject) {
-        this.jsonObject = jsonObject;
+    public ParseCarBuyerUseCase(Parser parser) {
+        this.map = parser.parse();
     }
 
     /**
@@ -24,12 +26,11 @@ public class ParseCarBuyerUseCase {
      *
      * @return
      */
-    public CarBuyer parse() throws NullPointerException {
+    public CarBuyer parse() throws ClassCastException {
         GenerateBuyerUseCase buyerGenerator = new GenerateBuyerUseCase();
-
-        JsonObject buyerObj = jsonObject.getJsonObject("car buyer");
-        double budget = buyerObj.getJsonNumber("pytBudget").doubleValue();
-        int creditScore = buyerObj.getJsonNumber("creditScore").intValue();
+        AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
+        double budget = (double) buyerMap.getItem("pytBudget").getAttribute();
+        int creditScore = (int) buyerMap.getItem("creditScore").getAttribute();
         return buyerGenerator.GenerateBuyerDataUseCase(budget, creditScore);
     }
 }

@@ -2,6 +2,7 @@ package entityparsers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import constants.EntityStringNames;
 import entities.CarBuyer;
 
 import org.junit.jupiter.api.Test;
@@ -15,13 +16,14 @@ public class ParseCarBuyerUseCaseTest {
         JsonObject obj =
                 Json.createObjectBuilder()
                         .add(
-                                "car buyer",
+                                EntityStringNames.BUYER_STRING,
                                 Json.createObjectBuilder()
-                                        .add("pytBudget", 123.456)
-                                        .add("creditScore", 750)
+                                        .add(EntityStringNames.BUYER_BUDGET, 123.456)
+                                        .add(EntityStringNames.BUYER_CREDIT, 750)
                                         .build())
                         .build();
-        ParseCarBuyerUseCase parseCarBuyerUseCase = new ParseCarBuyerUseCase(obj);
+        Parser parser = new JsonParser(obj);
+        ParseCarBuyerUseCase parseCarBuyerUseCase = new ParseCarBuyerUseCase(parser);
         CarBuyer parsed = parseCarBuyerUseCase.parse();
         CarBuyer carBuyer = new CarBuyer(123.456, 750);
         assertEquals(carBuyer.getBudget(), parsed.getBudget());
