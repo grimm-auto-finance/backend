@@ -34,4 +34,3 @@ public class ParseCarUseCase {
         return carGenerator.GenerateCarUseCase(price, make, model, year);
     }
 }
-
