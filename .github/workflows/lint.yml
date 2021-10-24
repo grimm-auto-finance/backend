@@ -13,9 +13,8 @@ jobs:
           distribution: adopt
         uses: actions/setup-java@v2.3.1
       - name: Set up Google Java Format
-        # TOOD: Fetch latest version
-        run: curl -L https://github.com/google/google-java-format/releases/download/v1.12.0/google-java-format-1.12.0-all-deps.jar -o google-java-format.jar
-      - name: Lint files
+        run: curl -L "$(curl --silent -X 'GET' https://api.github.com/repos/google/google-java-format/releases/latest | jq -r '.assets[]|select(.name|endswith("-all-deps.jar")).browser_download_url')" -o google-java-format.jar
+      - name: Lint with Google Java Format
         run: >
           exec java \
             --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
