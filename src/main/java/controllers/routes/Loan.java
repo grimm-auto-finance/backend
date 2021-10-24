@@ -10,9 +10,11 @@ import entities.LoanData;
 
 import entitypackagers.PackageAllUseCase;
 
+import entityparsers.JsonParser;
 import entityparsers.ParseCarBuyerUseCase;
 import entityparsers.ParseCarUseCase;
 
+import entityparsers.Parser;
 import fetchers.LoanDataFetcher;
 
 import java.io.*;
@@ -40,8 +42,9 @@ public class Loan extends controllers.Route {
         CarBuyer buyer;
         try {
             JsonObject inputObj = jsonReader.readObject();
-            ParseCarUseCase carParser = new ParseCarUseCase(inputObj);
-            ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(inputObj);
+            Parser jsonParser = new JsonParser(inputObj);
+            ParseCarUseCase carParser = new ParseCarUseCase(jsonParser);
+            ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(jsonParser);
             car = carParser.parse();
             buyer = buyerParser.parse();
             if (car.getMake() == null || car.getModel() == null) {
