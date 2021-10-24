@@ -1,5 +1,6 @@
 package entitypackagers;
 
+import constants.EntityStringNames;
 import entities.AddOn;
 import entities.Car;
 
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
+import javax.swing.text.html.parser.Entity;
 
 public class PackageCarUseCase {
     private final JsonObjectBuilder completeJsonBuilder;
@@ -29,10 +31,10 @@ public class PackageCarUseCase {
      * @param car the Car to serialize
      */
     public void writeEntity(Car car) {
-        thisJsonBuilder.add("price", car.getPrice());
-        thisJsonBuilder.add("make", car.getMake());
-        thisJsonBuilder.add("model", car.getModel());
-        thisJsonBuilder.add("year", car.getYear());
+        thisJsonBuilder.add(EntityStringNames.CAR_PRICE, car.getPrice());
+        thisJsonBuilder.add(EntityStringNames.CAR_MAKE, car.getMake());
+        thisJsonBuilder.add(EntityStringNames.CAR_MODEL, car.getModel());
+        thisJsonBuilder.add(EntityStringNames.CAR_YEAR, car.getYear());
 
         // create a new JsonObjectBuilder to handle serializing this car's add-ons
         // this ensures that the add-ons are listed together in a sub-entry of the Json object
@@ -44,6 +46,6 @@ public class PackageCarUseCase {
         }
 
         thisJsonBuilder.add("add-ons", addOnJsonBuilder);
-        completeJsonBuilder.add("car", thisJsonBuilder);
+        completeJsonBuilder.add(EntityStringNames.CAR_STRING, thisJsonBuilder);
     }
 }

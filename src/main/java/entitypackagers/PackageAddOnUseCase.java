@@ -1,5 +1,6 @@
 package entitypackagers;
 
+import constants.EntityStringNames;
 import entities.AddOn;
 
 import javax.json.Json;
@@ -26,9 +27,9 @@ public class PackageAddOnUseCase {
      * @param addOn the AddOn to serialize
      */
     public void writeEntity(AddOn addOn) {
-        thisJsonBuilder.add("name", addOn.getName());
-        thisJsonBuilder.add("price", addOn.getPrice());
-        thisJsonBuilder.add("description", addOn.getDescription());
-        completeJsonBuilder.add(addOn.getName() + " add-on", thisJsonBuilder);
+        thisJsonBuilder.add(EntityStringNames.ADD_ON_NAME, addOn.getName());
+        thisJsonBuilder.add(EntityStringNames.ADD_ON_PRICE, addOn.getPrice());
+        thisJsonBuilder.add(EntityStringNames.ADD_ON_DESCRIPTION, addOn.getDescription());
+        completeJsonBuilder.add(EntityStringNames.ADD_ON_STRING + ": " + addOn.getName(), thisJsonBuilder);
     }
 }

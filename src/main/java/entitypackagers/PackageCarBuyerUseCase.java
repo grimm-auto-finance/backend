@@ -1,9 +1,11 @@
 package entitypackagers;
 
+import constants.EntityStringNames;
 import entities.CarBuyer;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
+import javax.swing.text.html.parser.Entity;
 
 public class PackageCarBuyerUseCase {
     private final JsonObjectBuilder completeJsonBuilder;
@@ -26,8 +28,8 @@ public class PackageCarBuyerUseCase {
      * @param carBuyer the CarBuyer to serialize
      */
     public void writeEntity(CarBuyer carBuyer) {
-        thisJsonBuilder.add("budget", carBuyer.getBudget());
-        thisJsonBuilder.add("credit score", carBuyer.getCreditScore());
-        completeJsonBuilder.add("car buyer", thisJsonBuilder);
+        thisJsonBuilder.add(EntityStringNames.BUYER_BUDGET, carBuyer.getBudget());
+        thisJsonBuilder.add(EntityStringNames.BUYER_CREDIT, carBuyer.getCreditScore());
+        completeJsonBuilder.add(EntityStringNames.BUYER_STRING, thisJsonBuilder);
     }
 }

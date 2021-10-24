@@ -1,9 +1,11 @@
 package entitypackagers;
 
+import constants.EntityStringNames;
 import entities.LoanData;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
+import javax.swing.text.html.parser.Entity;
 
 public class PackageLoanDataUseCase {
     private final JsonObjectBuilder completeJsonBuilder;
@@ -26,13 +28,13 @@ public class PackageLoanDataUseCase {
      * @param loanData the LoanData to serialize
      */
     public void writeEntity(LoanData loanData) {
-        thisJsonBuilder.add("interest rate", loanData.getInterestRate());
-        thisJsonBuilder.add("installment", loanData.getInstallment());
-        thisJsonBuilder.add("senso score", loanData.getSensoScore());
-        thisJsonBuilder.add("loan amount", loanData.getLoanAmount());
-        thisJsonBuilder.add("term length", loanData.getTermLength());
-        thisJsonBuilder.add("interest sum", loanData.getInterestSum());
+        thisJsonBuilder.add(EntityStringNames.LOAN_INTEREST_RATE, loanData.getInterestRate());
+        thisJsonBuilder.add(EntityStringNames.LOAN_INSTALLMENT, loanData.getInstallment());
+        thisJsonBuilder.add(EntityStringNames.LOAN_SCORE, loanData.getSensoScore());
+        thisJsonBuilder.add(EntityStringNames.LOAN_AMOUNT, loanData.getLoanAmount());
+        thisJsonBuilder.add(EntityStringNames.LOAN_TERM_LENGTH, loanData.getTermLength());
+        thisJsonBuilder.add(EntityStringNames.LOAN_INTEREST_SUM, loanData.getInterestSum());
 
-        completeJsonBuilder.add("loan data", thisJsonBuilder);
+        completeJsonBuilder.add(EntityStringNames.LOAN_STRING, thisJsonBuilder);
     }
 }
