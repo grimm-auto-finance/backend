@@ -11,7 +11,7 @@ public class Car {
     private Map<String, AddOn> addOns;
 
     // The Car's price, in dollars.
-    private int price;
+    private Double price;
 
     // The make, model and year of the Car
     private final String make;
@@ -27,7 +27,7 @@ public class Car {
      * @param model The model of the car
      * @param year The model year of the car
      */
-    public Car(int price, String make, String model, int year) {
+    public Car(Double price, String make, String model, int year) {
         this(price, make, model, year, new HashMap<>());
     }
 
@@ -40,7 +40,7 @@ public class Car {
      * @param year The model year of the calr
      * @param addOns A mapping of addon names to AddOn objects
      */
-    public Car(int price, String make, String model, int year, Map<String, AddOn> addOns) {
+    public Car(Double price, String make, String model, int year, Map<String, AddOn> addOns) {
         this.price = price;
         this.make = make;
         this.model = model;
@@ -75,7 +75,7 @@ public class Car {
      *
      * @return
      */
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -84,7 +84,7 @@ public class Car {
      *
      * @param price
      */
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
