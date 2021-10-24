@@ -29,8 +29,9 @@ public class ParseCarUseCase {
         String make = carObj.getString("vehicleMake");
         String model = carObj.getString("vehicleModel");
         int year = carObj.getInt("vehicleYear");
-        int price = carObj.getInt("vehiclePrice");
+        Double price = carObj.getJsonNumber("vehiclePrice").doubleValue();
         // TODO: Support optional inclusion of addons?
         return carGenerator.GenerateCarUseCase(price, make, model, year);
     }
 }
+
