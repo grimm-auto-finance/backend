@@ -10,10 +10,19 @@ public class JsonPackager implements Packager {
 
     private final AttributeMap packageMap;
 
+    /**
+     * Constructs a new JsonPackager to serialize the given AttributeMap
+     * @param packageMap
+     */
     public JsonPackager(AttributeMap packageMap) {
         this.packageMap = packageMap;
     }
 
+    /**
+     * Writes packageMap to a JsonObject
+     * @return a JsonPackage containing the JsonObject with packageMap's data
+     * @throws Exception if an item in the AttributeMap is of unknown type
+     */
     public JsonPackage writePackage() throws Exception {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         Map<String, Attribute> map = packageMap.getAttribute();
