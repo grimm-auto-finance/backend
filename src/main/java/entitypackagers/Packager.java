@@ -1,6 +1,8 @@
 package entitypackagers;
 
+import attributes.AttributeMap;
+
 public interface Packager {
 
-    Package writePackage() throws Exception;
+    Package writePackage(AttributeMap map) throws Exception;
 }
