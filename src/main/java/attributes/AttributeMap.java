@@ -15,6 +15,12 @@ public class AttributeMap extends Attribute {
         items = new HashMap<>();
     }
 
+    /**
+     * Adds the given item Object to the map with the given name
+     * @param name
+     * @param item the Object to be added to the map
+     * @throws ClassCastException
+     */
     public void addItem(String name, Object item) throws ClassCastException {
         this.addItem(name, AttributeFactory.getAttribute(item));
     }
