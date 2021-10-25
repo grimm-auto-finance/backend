@@ -30,24 +30,15 @@ public class AttributizeCarUseCase {
      */
     public AttributeMap attributizeEntity() {
         AttributeMap carMap = new AttributeMap();
-        carMap.addItem(EntityStringNames.CAR_PRICE, new IntAttribute(car.getPrice()));
-        carMap.addItem(EntityStringNames.CAR_MAKE, new StringAttribute(car.getMake()));
-        carMap.addItem(EntityStringNames.CAR_MODEL, new StringAttribute(car.getModel()));
-        carMap.addItem(EntityStringNames.CAR_YEAR, new IntAttribute(car.getYear()));
-
-        // create a new JsonObjectBuilder to handle serializing this car's add-ons
-        // this ensures that the add-ons are listed together in a sub-entry of the Json object
-        JsonObjectBuilder addOnJsonBuilder = Json.createObjectBuilder();
-        PackageAddOnUseCase addOnPackager = new PackageAddOnUseCase(addOnJsonBuilder);
-        Map<String, AddOn> addOns = car.getAddOns();
-        for (String addOnName : addOns.keySet()) {
-            addOnPackager.writeEntity(addOns.get(addOnName));
-        }
+        carMap.addItem(EntityStringNames.CAR_PRICE, car.getPrice());
+        carMap.addItem(EntityStringNames.CAR_MAKE, car.getMake());
+        carMap.addItem(EntityStringNames.CAR_MODEL, car.getModel());
+        carMap.addItem(EntityStringNames.CAR_YEAR, car.getYear());
 
         AttributeMap addOnMap = new AttributeMap();
         Map<String, AddOn> addOns = car.getAddOns();
         for (String addOnName : addOns.keySet()) {
-            PackageAddOnUseCase addOnAttributizer = new PackageAddOnUseCase(addOns.get(addOnName));
+            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOns.get(addOnName));
             carMap.addItem(addOnName + " " + EntityStringNames.ADD_ON_STRING, addOnAttributizer.attributizeEntity());
         }
         return carMap;
