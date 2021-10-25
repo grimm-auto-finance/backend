@@ -28,8 +28,8 @@ public class PackageAllUseCase {
      * @param loanData the LoanData to serialize
      */
     public void writeEntities(Car car, CarBuyer buyer, LoanData loanData) {
-        PackageCarUseCase carPackager = new PackageCarUseCase(builder);
-        carPackager.writeEntity(car);
+        AttributizeCarUseCase carPackager = new AttributizeCarUseCase(builder);
+        carPackager.attributizeEntity(car);
         PackageCarBuyerUseCase buyerPackager = new PackageCarBuyerUseCase(builder);
         buyerPackager.writeEntity(buyer);
         PackageLoanDataUseCase loanPackager = new PackageLoanDataUseCase(builder);
