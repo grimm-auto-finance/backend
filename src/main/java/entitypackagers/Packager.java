@@ -2,5 +2,5 @@ package entitypackagers;
 
 public interface Packager {
 
-    Package writePackage();
+    Package writePackage() throws Exception;
 }
