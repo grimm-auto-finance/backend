@@ -1,7 +1,7 @@
 package attributes;
 
 public class AttributeFactory {
-    
+
     public static Attribute getAttribute(Object obj) throws ClassCastException {
         if (obj instanceof Integer) {
             return new IntAttribute((Integer) obj);
