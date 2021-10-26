@@ -8,7 +8,7 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 
 public class PackageAddOnUseCase {
-    
+
     private final AddOn addOn;
 
     /**

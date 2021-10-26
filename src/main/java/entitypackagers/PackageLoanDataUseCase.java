@@ -1,5 +1,6 @@
 package entitypackagers;
 
+import attributes.AttributeMap;
 import constants.EntityStringNames;
 import entities.LoanData;
 
@@ -8,33 +9,26 @@ import javax.json.JsonObjectBuilder;
 import javax.swing.text.html.parser.Entity;
 
 public class PackageLoanDataUseCase {
-    private final JsonObjectBuilder completeJsonBuilder;
-    private final JsonObjectBuilder thisJsonBuilder;
+
+    private final LoanData loan;
 
     /**
-     * Constructs a new PackageLoanDataUseCase that writes LoanData information to the given
-     * JsonObjectBuilder
-     *
-     * @param jsonBuilder the JsonObjectBuilder to write LoanData information to
+     * Constructs a new PackageLoanDataUseCase to write the data of the given loan
+     * @param loan
      */
-    public PackageLoanDataUseCase(JsonObjectBuilder jsonBuilder) {
-        this.completeJsonBuilder = jsonBuilder;
-        this.thisJsonBuilder = Json.createObjectBuilder();
+    public PackageLoanDataUseCase(LoanData loan) {
+        this.loan = loan;
     }
 
     /**
-     * Write the given LoanData's data to completeJsonBuilder
-     *
-     * @param loanData the LoanData to serialize
+     * Write the given LoanData to a Package using the given Packager
+     * @param packager
+     * @return
+     * @throws Exception
      */
-    public void writeEntity(LoanData loanData) {
-        thisJsonBuilder.add(EntityStringNames.LOAN_INTEREST_RATE, loanData.getInterestRate());
-        thisJsonBuilder.add(EntityStringNames.LOAN_INSTALLMENT, loanData.getInstallment());
-        thisJsonBuilder.add(EntityStringNames.LOAN_SCORE, loanData.getSensoScore());
-        thisJsonBuilder.add(EntityStringNames.LOAN_AMOUNT, loanData.getLoanAmount());
-        thisJsonBuilder.add(EntityStringNames.LOAN_TERM_LENGTH, loanData.getTermLength());
-        thisJsonBuilder.add(EntityStringNames.LOAN_INTEREST_SUM, loanData.getInterestSum());
-
-        completeJsonBuilder.add(EntityStringNames.LOAN_STRING, thisJsonBuilder);
+    public Package writeEntity(Packager packager) throws Exception {
+        AttributizeLoanDataUseCase loanDataAttributizer = new AttributizeLoanDataUseCase(loan);
+        AttributeMap loanMap = loanDataAttributizer.attributizeEntity();
+        return packager.writePackage(loanMap);
     }
 }
