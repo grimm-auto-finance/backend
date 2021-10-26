@@ -1,5 +1,6 @@
 package entitypackagers;
 
+import attributes.AttributeMap;
 import constants.EntityStringNames;
 import entities.CarBuyer;
 
@@ -8,28 +9,26 @@ import javax.json.JsonObjectBuilder;
 import javax.swing.text.html.parser.Entity;
 
 public class PackageCarBuyerUseCase {
-    private final JsonObjectBuilder completeJsonBuilder;
-    private final JsonObjectBuilder thisJsonBuilder;
+    private final CarBuyer carBuyer;
 
     /**
-     * Constructs a new PackageCarBuyerUseCase that writes CarBuyer information to the given
-     * JsonObjectBuilder
+     * Constructs a new PackageCarBuyerUseCase that writes CarBuyer information to
+     * given Packagers
      *
-     * @param jsonBuilder the JsonObjectBuilder to write CarBuyer information to
+     * @param carBuyer the CarBuyer to serialize
      */
-    public PackageCarBuyerUseCase(JsonObjectBuilder jsonBuilder) {
-        this.completeJsonBuilder = jsonBuilder;
-        this.thisJsonBuilder = Json.createObjectBuilder();
+    public PackageCarBuyerUseCase(CarBuyer carBuyer) {
+        this.carBuyer = carBuyer;
     }
 
     /**
      * Write the given CarBuyer's data to completeJsonBuilder
      *
-     * @param carBuyer the CarBuyer to serialize
+     * @param packager the Packager to use to package carBuyer
      */
-    public void writeEntity(CarBuyer carBuyer) {
-        thisJsonBuilder.add(EntityStringNames.BUYER_BUDGET, carBuyer.getBudget());
-        thisJsonBuilder.add(EntityStringNames.BUYER_CREDIT, carBuyer.getCreditScore());
-        completeJsonBuilder.add(EntityStringNames.BUYER_STRING, thisJsonBuilder);
+    public Package packageEntity(Packager packager) throws Exception {
+        AttributizeCarBuyerUseCase buyerAttributizer = new AttributizeCarBuyerUseCase(carBuyer);
+        AttributeMap buyerMap = buyerAttributizer.attributizeEntity();
+        return packager.writePackage(buyerMap);
     }
 }
