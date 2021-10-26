@@ -16,6 +16,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     compileOnly 'com.sun.net.httpserver:http:20070405'
+    implementation 'org.postgresql:postgresql:42.3.0'
     implementation 'javax.json:javax.json-api:1.1.4'
     implementation 'org.glassfish:javax.json:1.1.4'
 }

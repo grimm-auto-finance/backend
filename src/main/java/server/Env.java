@@ -10,6 +10,7 @@ public class Env {
     public static final URL SENSO_RATE_URL = createRateURL();
     public static final int PORT =
             System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 8080;
+    public static final String POSTGRES_PASSWORD = System.getenv("POSTGRES_PASSWORD");
 
     private static URL createScoreURL() throws ExceptionInInitializerError {
         try {

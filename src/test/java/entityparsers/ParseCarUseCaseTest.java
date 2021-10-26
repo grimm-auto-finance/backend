@@ -25,7 +25,7 @@ public class ParseCarUseCaseTest {
                         .build();
         ParseCarUseCase parseCarUseCase = new ParseCarUseCase(obj);
         Car parsed = parseCarUseCase.parse();
-        Car car = new Car(10000, "Honda", "Civic", 2002);
+        Car car = new Car(10000.0, "Honda", "Civic", 2002);
         assertEquals(car.getAddOns(), parsed.getAddOns());
         assertEquals(car.getMake(), parsed.getMake());
         assertEquals(car.getModel(), parsed.getModel());
