@@ -5,7 +5,7 @@ import entities.Entity;
 
 public class PackageEntityUseCase {
 
-    private final Entity entity;
+    private Entity entity;
 
     /**
      * Constructs a new PackageEntityUseCase to write the given Entity to a Package
@@ -13,6 +13,14 @@ public class PackageEntityUseCase {
      */
     public PackageEntityUseCase(Entity entity) {
         this.entity = entity;
+    }
+
+    /**
+     * Sets the Entity that this PackageEntityUseCase pacakges to newEntity
+     * @param newEntity the new Entity to be packaged
+     */
+    public void setEntity(Entity newEntity) {
+        this.entity = newEntity;
     }
 
     /**
