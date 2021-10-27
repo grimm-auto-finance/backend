@@ -33,9 +33,6 @@ public class Loan extends controllers.Route {
 
     @Override
     protected void post(HttpExchange t) throws IOException {
-        // TODO: Parse request body
-        // TODO: Create objects from body
-
         OutputStream os = t.getResponseBody();
 
         InputStream is = t.getRequestBody();
