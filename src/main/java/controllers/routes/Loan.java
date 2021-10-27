@@ -46,6 +46,7 @@ public class Loan extends controllers.Route {
             ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(jsonParser);
             car = carParser.parse();
             buyer = buyerParser.parse();
+            //TODO: this check should be happening with ParseCarUseCase and ParseCarBuyerUseCase
             if (car.getMake() == null || car.getModel() == null) {
                 String message = "Error in Payload JSON parsing";
                 t.sendResponseHeaders(400, message.length());
@@ -53,7 +54,8 @@ public class Loan extends controllers.Route {
                 os.close();
                 return;
             }
-        } catch (Exceptions.ParseException | ClassCastException e) {
+        } catch (Exceptions.ParseException e) {
+            //TODO: printing this should be handled by the Logger
             e.printStackTrace();
             String message = "Error in Payload JSON parsing";
             t.sendResponseHeaders(400, message.length());
@@ -84,6 +86,7 @@ public class Loan extends controllers.Route {
             t.sendResponseHeaders(200, responseString.length());
             os.write(responseString.getBytes());
         } catch (Exceptions.CodedException e) {
+
             String message = e.getMessage();
             if (message != null) {
                 t.sendResponseHeaders(e.getCode(), message.length());
