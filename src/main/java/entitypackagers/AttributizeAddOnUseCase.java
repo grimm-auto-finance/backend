@@ -4,7 +4,7 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 import entities.AddOn;
 
-public class AttributizeAddOnUseCase {
+public class AttributizeAddOnUseCase implements Attributizer {
 
     private final AddOn addOn;
 

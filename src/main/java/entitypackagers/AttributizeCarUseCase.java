@@ -13,7 +13,7 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.swing.text.html.parser.Entity;
 
-public class AttributizeCarUseCase {
+public class AttributizeCarUseCase implements Attributizer {
     private final Car car;
 
     /**

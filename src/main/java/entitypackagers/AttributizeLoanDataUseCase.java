@@ -4,7 +4,7 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 import entities.LoanData;
 
-public class AttributizeLoanDataUseCase {
+public class AttributizeLoanDataUseCase implements Attributizer {
 
     private final LoanData loan;
 

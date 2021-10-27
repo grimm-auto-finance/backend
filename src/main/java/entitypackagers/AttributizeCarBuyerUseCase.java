@@ -4,7 +4,7 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 import entities.CarBuyer;
 
-public class AttributizeCarBuyerUseCase {
+public class AttributizeCarBuyerUseCase implements Attributizer {
 
     private final CarBuyer buyer;
 
