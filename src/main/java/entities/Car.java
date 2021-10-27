@@ -1,5 +1,7 @@
 package entities;
 
+import constants.EntityStringNames;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,5 +115,10 @@ public class Car extends Entity {
      */
     public int getYear() {
         return year;
+    }
+
+    @Override
+    public String getStringName() {
+        return EntityStringNames.CAR_STRING;
     }
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import constants.EntityStringNames;
+
 /**
  * A class to represent an individual person buying a car Stores all necessary information about the
  * person that is used by the Senso API and our functions to determine the returned loan.
@@ -36,5 +38,10 @@ public class CarBuyer extends Entity {
      */
     public int getCreditScore() {
         return creditScore;
+    }
+
+    @Override
+    public String getStringName() {
+        return EntityStringNames.BUYER_STRING;
     }
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import constants.EntityStringNames;
+
 /**
  * A class to represent a loan, as determined by the Senso API /rate and /score functions based on a
  * given CarBuyer and Car.
@@ -146,5 +148,10 @@ public class LoanData extends Entity {
      */
     public void setInterestSum(double interestSum) {
         this.interestSum = interestSum;
+    }
+
+    @Override
+    public String getStringName() {
+        return EntityStringNames.LOAN_STRING;
     }
 }
