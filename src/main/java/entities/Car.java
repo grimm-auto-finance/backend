@@ -11,7 +11,7 @@ public class Car extends Entity {
     private Map<String, AddOn> addOns;
 
     // The Car's price, in dollars.
-    private int price;
+    private double price;
 
     // The make, model and year of the Car
     private final String make;
@@ -27,7 +27,7 @@ public class Car extends Entity {
      * @param model The model of the car
      * @param year The model year of the car
      */
-    public Car(int price, String make, String model, int year) {
+    public Car(double price, String make, String model, int year) {
         this(price, make, model, year, new HashMap<>());
     }
 
@@ -37,10 +37,10 @@ public class Car extends Entity {
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car
-     * @param year The model year of the calr
+     * @param year The model year of the car
      * @param addOns A mapping of addon names to AddOn objects
      */
-    public Car(int price, String make, String model, int year, Map<String, AddOn> addOns) {
+    public Car(double price, String make, String model, int year, Map<String, AddOn> addOns) {
         this.price = price;
         this.make = make;
         this.model = model;
@@ -75,7 +75,7 @@ public class Car extends Entity {
      *
      * @return
      */
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -84,7 +84,7 @@ public class Car extends Entity {
      *
      * @param price
      */
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
