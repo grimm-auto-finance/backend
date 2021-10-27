@@ -2,6 +2,7 @@ package entityparsers;
 
 import attributes.AttributeMap;
 import constants.EntityStringNames;
+import constants.Exceptions;
 import entities.CarBuyer;
 
 import entitybuilder.GenerateBuyerUseCase;
@@ -17,7 +18,7 @@ public class ParseCarBuyerUseCase {
      *
      * @param parser
      */
-    public ParseCarBuyerUseCase(Parser parser) {
+    public ParseCarBuyerUseCase(Parser parser) throws Exceptions.ParseException {
         this.map = parser.parse();
     }
 

@@ -24,4 +24,12 @@ public class Exceptions {
             super(message);
         }
     }
+
+    public static class ParseException extends CodedException {
+        public int getCode() { return 400; }
+
+        public ParseException() {}
+
+        public ParseException(String message) { super(message); }
+    }
 }

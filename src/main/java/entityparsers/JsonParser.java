@@ -1,6 +1,7 @@
 package entityparsers;
 
 import attributes.*;
+import constants.Exceptions;
 
 import javax.json.*;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class JsonParser implements Parser {
      * Parse jsonObject into an AttributeMap with keys and values pulled from jsonObject
      * @return
      */
-    public AttributeMap parse() {
+    public AttributeMap parse() throws Exceptions.ParseException {
         return parseJsonObject(this.jsonObject);
     }
 
@@ -32,7 +33,7 @@ public class JsonParser implements Parser {
      * @return
      * @throws JsonException
      */
-    private AttributeMap parseJsonObject(JsonObject object) throws JsonException {
+    private AttributeMap parseJsonObject(JsonObject object) throws Exceptions.ParseException {
         AttributeMap map = new AttributeMap();
         Set<String> keys = object.keySet();
         for (String key : keys) {
@@ -60,7 +61,7 @@ public class JsonParser implements Parser {
                     itemAttribute = parseJsonObject(itemObject);
                     break;
                 default:
-                    throw new JsonException("Error in Parsing JsonObject to AttributeMap");
+                    throw new Exceptions.ParseException("Json item doesn't correspond to any Attribute types");
             }
             map.addItem(key, itemAttribute);
         }
