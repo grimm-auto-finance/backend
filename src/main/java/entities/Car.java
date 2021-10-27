@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * A class to represent an individual car that is being viewed and configured in the user interface.
  */
-public class Car {
+public class Car extends Entity {
     // A Map between add-on names and AddOn objects representing those addons
     private Map<String, AddOn> addOns;
 
