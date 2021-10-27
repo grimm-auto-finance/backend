@@ -29,8 +29,9 @@ public class ParseCarBuyerUseCase {
     public CarBuyer parse() throws ClassCastException {
         GenerateBuyerUseCase buyerGenerator = new GenerateBuyerUseCase();
         AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
-        double budget = (double) buyerMap.getItem("pytBudget").getAttribute();
-        int creditScore = (int) buyerMap.getItem("creditScore").getAttribute();
+        System.out.println(buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute());
+        double budget = (double) buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
+        int creditScore = (int) Math.round((Double) buyerMap.getItem(EntityStringNames.BUYER_CREDIT).getAttribute());
         return buyerGenerator.GenerateBuyerDataUseCase(budget, creditScore);
     }
 }

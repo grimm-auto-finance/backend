@@ -54,6 +54,7 @@ public class Loan extends controllers.Route {
                 return;
             }
         } catch (NullPointerException | ClassCastException e) {
+            e.printStackTrace();
             String message = "Error in Payload JSON parsing";
             t.sendResponseHeaders(400, message.length());
             os.write(message.getBytes());

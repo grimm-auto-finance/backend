@@ -32,7 +32,7 @@ public class JsonParser implements Parser {
      * @return
      * @throws JsonException
      */
-    public AttributeMap parseJsonObject(JsonObject object) throws JsonException {
+    private AttributeMap parseJsonObject(JsonObject object) throws JsonException {
         AttributeMap map = new AttributeMap();
         Set<String> keys = object.keySet();
         for (String key : keys) {
@@ -41,11 +41,15 @@ public class JsonParser implements Parser {
             switch (item.getValueType()) {
                 case NUMBER:
                     JsonNumber itemNum = (JsonNumber) item;
-                    if (itemNum.isIntegral()) {
-                        itemAttribute = new IntAttribute(itemNum.intValue());
-                    } else {
-                        itemAttribute = new DoubleAttribute(itemNum.doubleValue());
-                    }
+                    // TODO: figure out how to differentiate ints and doubles better?
+                    // isIntegral returns true if the value has .0 at the end even though
+                    // it should be a double
+//                    if (itemNum.isIntegral()) {
+//                        itemAttribute = new IntAttribute(itemNum.intValue());
+//                    } else {
+//                        itemAttribute = new DoubleAttribute(itemNum.doubleValue());
+//                    }
+                    itemAttribute = new DoubleAttribute(itemNum.doubleValue());
                     break;
                 case STRING:
                     JsonString itemString = (JsonString) item;
