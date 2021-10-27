@@ -1,6 +1,7 @@
 package entitypackagers;
 
 import attributes.*;
+import constants.Exceptions;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -13,7 +14,7 @@ public class JsonPackager implements Packager {
      * @return a JsonPackage containing the JsonObject with packageMap's data
      * @throws Exception if an item in the AttributeMap is of unknown type
      */
-    public JsonPackage writePackage(AttributeMap packageMap) throws Exception {
+    public JsonPackage writePackage(AttributeMap packageMap) throws Exceptions.PackageException {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         Map<String, Attribute> map = packageMap.getAttribute();
         for (String key: map.keySet()) {
@@ -31,7 +32,7 @@ public class JsonPackager implements Packager {
                 JsonPackager subPackager = new JsonPackager();
                 builder.add(key, subPackager.writePackage((AttributeMap) item).getPackage());
             } else {
-                throw new Exception("Unhandled Attribute type");
+                throw new Exceptions.PackageException("Unhandled Attribute type");
             }
         }
         return new JsonPackage(builder.build());

@@ -1,11 +1,14 @@
 package entitypackagers;
 
 import attributes.AttributeMap;
+import constants.Exceptions;
 import entities.Entity;
 
 public class PackageEntityUseCase {
 
     private Entity entity;
+
+    public PackageEntityUseCase() { }
 
     /**
      * Constructs a new PackageEntityUseCase to write the given Entity to a Package
@@ -23,13 +26,15 @@ public class PackageEntityUseCase {
         this.entity = newEntity;
     }
 
-    /**
-     * Writes entity to a Package using the given Packager
-     * @param packager
-     * @return
-     * @throws Exception
-     */
-    public Package writeEntity(Packager packager) throws Exception {
+  /**
+   * Writes entity to a Package using the given Packager
+   *
+   * @param packager
+   * @return
+   * @throws Exception
+   */
+  public Package writeEntity(Packager packager) throws Exceptions.PackageException {
+        if (entity == null) { throw new NullPointerException(); }
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(entity);
         AttributeMap entityMap = entityAttributizer.attributizeEntity();
         return packager.writePackage(entityMap);

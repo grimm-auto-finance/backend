@@ -7,6 +7,7 @@ import constants.Exceptions;
 
 import entities.Car;
 import entities.CarBuyer;
+import entities.Entity;
 import entities.LoanData;
 
 import entitypackagers.JsonPackage;
@@ -22,6 +23,8 @@ import fetchers.LoanDataFetcher;
 import java.io.*;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.json.*;
 
@@ -54,7 +57,7 @@ public class Loan extends controllers.Route {
                 os.close();
                 return;
             }
-        } catch (Exceptions.ParseException e) {
+        } catch (Exceptions.CodedException e) {
             //TODO: printing this should be handled by the Logger
             e.printStackTrace();
             String message = "Error in Payload JSON parsing";
@@ -68,19 +71,17 @@ public class Loan extends controllers.Route {
             LoanData loanData = LoanDataFetcher.fetch(buyer, car);
             // TODO: Abstract this more?
             JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-
-            PackageEntityUseCase packageEntities = new PackageEntityUseCase(car);
-            JsonPackager jsonPackager = new JsonPackager();
-            JsonPackage entityPackage = (JsonPackage) packageEntities.writeEntity(jsonPackager);
-            jsonBuilder.add(EntityStringNames.CAR_STRING, entityPackage.getPackage());
-
-            packageEntities.setEntity(buyer);
-            entityPackage = (JsonPackage) packageEntities.writeEntity(jsonPackager);
-            jsonBuilder.add(EntityStringNames.BUYER_STRING, entityPackage.getPackage());
-
-            packageEntities.setEntity(loanData);
-            entityPackage = (JsonPackage) packageEntities.writeEntity(jsonPackager);
-            jsonBuilder.add(EntityStringNames.LOAN_STRING, entityPackage.getPackage());
+            List<Entity> entities = new ArrayList<>();
+            entities.add(car);
+            entities.add(buyer);
+            entities.add(loanData);
+            PackageEntityUseCase packageEntity = new PackageEntityUseCase();
+            for (Entity e: entities) {
+                packageEntity.setEntity(e);
+                JsonPackager jsonPackager = new JsonPackager();
+                JsonPackage entityPackage = (JsonPackage) packageEntity.writeEntity(jsonPackager);
+                jsonBuilder.add(e.getStringName(), entityPackage.getPackage());
+            }
 
             String responseString = jsonBuilder.build().toString();
             t.sendResponseHeaders(200, responseString.length());
@@ -94,8 +95,6 @@ public class Loan extends controllers.Route {
             } else {
                 t.sendResponseHeaders(e.getCode(), 0);
             }
-        } catch (Exception e) { //
-            e.printStackTrace();
         }
         os.close();
     }

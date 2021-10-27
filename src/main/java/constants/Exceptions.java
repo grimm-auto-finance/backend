@@ -32,4 +32,12 @@ public class Exceptions {
 
         public ParseException(String message) { super(message); }
     }
+
+    public static class PackageException extends CodedException {
+        public int getCode() { return 400; }
+
+        public PackageException() {}
+
+        public PackageException(String message) { super(message); }
+    }
 }
