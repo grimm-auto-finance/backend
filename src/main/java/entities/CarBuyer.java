@@ -6,7 +6,7 @@ package entities;
  */
 public class CarBuyer extends Entity {
 
-    private final int budget;
+    private final double budget;
     private final int creditScore;
 
     /**
@@ -15,7 +15,7 @@ public class CarBuyer extends Entity {
      * @param budget
      * @param creditScore
      */
-    public CarBuyer(int budget, int creditScore) {
+    public CarBuyer(double budget, int creditScore) {
         this.budget = budget;
         this.creditScore = creditScore;
     }
@@ -25,7 +25,7 @@ public class CarBuyer extends Entity {
      *
      * @return
      */
-    public int getBudget() {
+    public double getBudget() {
         return budget;
     }
 

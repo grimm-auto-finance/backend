@@ -32,7 +32,6 @@ public class JsonParser implements Parser {
      * @return
      * @throws JsonException
      */
-    //TODO: Change this to throw ParseException (make this class!)
     public AttributeMap parseJsonObject(JsonObject object) throws JsonException {
         AttributeMap map = new AttributeMap();
         Set<String> keys = object.keySet();
