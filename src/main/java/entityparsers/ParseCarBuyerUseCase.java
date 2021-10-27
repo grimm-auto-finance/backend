@@ -32,6 +32,7 @@ public class ParseCarBuyerUseCase {
         double budget;
         int creditScore;
         try {
+            //TODO: should throw an exception if any of these are null
             AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
             budget = (double) buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
             creditScore = (int) Math.round((Double) buyerMap.getItem(EntityStringNames.BUYER_CREDIT).getAttribute());

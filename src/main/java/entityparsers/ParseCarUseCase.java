@@ -33,6 +33,7 @@ public class ParseCarUseCase {
         int year;
         double price;
         try {
+            // TODO: should throw an Exception if any of these are null
             AttributeMap carMap = (AttributeMap) map.getItem(EntityStringNames.CAR_STRING);
             make = (String) carMap.getItem(EntityStringNames.CAR_MAKE).getAttribute();
             model = (String) carMap.getItem(EntityStringNames.CAR_MODEL).getAttribute();
