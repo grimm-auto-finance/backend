@@ -2,14 +2,16 @@ package routes;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import constants.EntityStringNames;
 import constants.Exceptions;
 
 import entities.Car;
 import entities.CarBuyer;
 import entities.LoanData;
 
-import entitypackagers.PackageAllUseCase;
-
+import entitypackagers.JsonPackage;
+import entitypackagers.JsonPackager;
+import entitypackagers.PackageEntityUseCase;
 import entityparsers.JsonParser;
 import entityparsers.ParseCarBuyerUseCase;
 import entityparsers.ParseCarUseCase;
@@ -64,10 +66,22 @@ public class Loan extends controllers.Route {
 
         try {
             LoanData loanData = LoanDataFetcher.fetch(buyer, car);
-
+            // TODO: Abstract this more?
             JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-            PackageAllUseCase allPackager = new PackageAllUseCase(jsonBuilder);
-            allPackager.writeEntities(car, buyer, loanData);
+
+            PackageEntityUseCase packageEntities = new PackageEntityUseCase(car);
+            JsonPackager jsonPackager = new JsonPackager();
+            JsonPackage entityPackage = (JsonPackage) packageEntities.writeEntity(jsonPackager);
+            jsonBuilder.add(EntityStringNames.CAR_STRING, entityPackage.getPackage());
+
+            packageEntities.setEntity(buyer);
+            entityPackage = (JsonPackage) packageEntities.writeEntity(jsonPackager);
+            jsonBuilder.add(EntityStringNames.BUYER_STRING, entityPackage.getPackage());
+
+            packageEntities.setEntity(loanData);
+            entityPackage = (JsonPackage) packageEntities.writeEntity(jsonPackager);
+            jsonBuilder.add(EntityStringNames.LOAN_STRING, entityPackage.getPackage());
+
             String responseString = jsonBuilder.build().toString();
             t.sendResponseHeaders(200, responseString.length());
             os.write(responseString.getBytes());
@@ -79,6 +93,8 @@ public class Loan extends controllers.Route {
             } else {
                 t.sendResponseHeaders(e.getCode(), 0);
             }
+        } catch (Exception e) { //
+            e.printStackTrace();
         }
         os.close();
     }
