@@ -18,14 +18,14 @@ public class ParseCarBuyerUseCaseTest {
                         .add(
                                 EntityStringNames.BUYER_STRING,
                                 Json.createObjectBuilder()
-                                        .add(EntityStringNames.BUYER_BUDGET, 123.456)
+                                        .add(EntityStringNames.BUYER_BUDGET, 123)
                                         .add(EntityStringNames.BUYER_CREDIT, 750)
                                         .build())
                         .build();
         Parser parser = new JsonParser(obj);
         ParseCarBuyerUseCase parseCarBuyerUseCase = new ParseCarBuyerUseCase(parser);
         CarBuyer parsed = parseCarBuyerUseCase.parse();
-        CarBuyer carBuyer = new CarBuyer(123.456, 750);
+        CarBuyer carBuyer = new CarBuyer(123, 750);
         assertEquals(carBuyer.getBudget(), parsed.getBudget());
         assertEquals(carBuyer.getCreditScore(), parsed.getCreditScore());
     }
