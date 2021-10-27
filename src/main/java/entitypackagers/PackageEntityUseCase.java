@@ -34,7 +34,7 @@ public class PackageEntityUseCase {
    * @throws Exception
    */
   public Package writeEntity(Packager packager) throws Exceptions.PackageException {
-        if (entity == null) { throw new NullPointerException(); }
+        if (entity == null) { throw new NullPointerException("Can't extract Attributes from null Entity"); }
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(entity);
         AttributeMap entityMap = entityAttributizer.attributizeEntity();
         return packager.writePackage(entityMap);
