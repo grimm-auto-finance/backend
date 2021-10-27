@@ -27,12 +27,20 @@ public class ParseCarBuyerUseCase {
      *
      * @return
      */
-    public CarBuyer parse() throws ClassCastException {
+    public CarBuyer parse() throws Exceptions.ParseException {
         GenerateBuyerUseCase buyerGenerator = new GenerateBuyerUseCase();
-        AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
-        System.out.println(buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute());
-        double budget = (double) buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
-        int creditScore = (int) Math.round((Double) buyerMap.getItem(EntityStringNames.BUYER_CREDIT).getAttribute());
+        double budget;
+        int creditScore;
+        try {
+            AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
+            budget = (double) buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
+            creditScore = (int) Math.round((Double) buyerMap.getItem(EntityStringNames.BUYER_CREDIT).getAttribute());
+        } catch (ClassCastException e) {
+            Exceptions.ParseException ex = new Exceptions.ParseException(e.getMessage());
+            ex.setStackTrace(e.getStackTrace());
+            throw ex;
+        }
+
         return buyerGenerator.GenerateBuyerDataUseCase(budget, creditScore);
     }
 }

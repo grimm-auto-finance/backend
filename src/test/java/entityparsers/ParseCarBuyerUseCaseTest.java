@@ -1,8 +1,10 @@
 package entityparsers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import constants.EntityStringNames;
+import constants.Exceptions;
 import entities.CarBuyer;
 
 import org.junit.jupiter.api.Test;
@@ -23,8 +25,14 @@ public class ParseCarBuyerUseCaseTest {
                                         .build())
                         .build();
         Parser parser = new JsonParser(obj);
-        ParseCarBuyerUseCase parseCarBuyerUseCase = new ParseCarBuyerUseCase(parser);
-        CarBuyer parsed = parseCarBuyerUseCase.parse();
+        ParseCarBuyerUseCase parseCarBuyerUseCase;
+        CarBuyer parsed = null;
+        try {
+            parseCarBuyerUseCase = new ParseCarBuyerUseCase(parser);
+            parsed = parseCarBuyerUseCase.parse();
+        } catch (Exceptions.ParseException e) {
+            fail();
+        }
         CarBuyer carBuyer = new CarBuyer(123.456, 750);
         assertEquals(carBuyer.getBudget(), parsed.getBudget());
         assertEquals(carBuyer.getCreditScore(), parsed.getCreditScore());

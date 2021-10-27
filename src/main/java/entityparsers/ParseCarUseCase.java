@@ -27,13 +27,22 @@ public class ParseCarUseCase {
      *
      * @return
      */
-    public Car parse() throws ClassCastException {
+    public Car parse() throws Exceptions.ParseException {
         GenerateCarUseCase carGenerator = new GenerateCarUseCase();
-        AttributeMap carMap = (AttributeMap) map.getItem(EntityStringNames.CAR_STRING);
-        String make = (String) carMap.getItem(EntityStringNames.CAR_MAKE).getAttribute();
-        String model = (String) carMap.getItem(EntityStringNames.CAR_MODEL).getAttribute();
-        int year = (int) Math.round((Double) carMap.getItem(EntityStringNames.CAR_YEAR).getAttribute());
-        double price = (double) carMap.getItem(EntityStringNames.CAR_PRICE).getAttribute();
+        String make, model;
+        int year;
+        double price;
+        try {
+            AttributeMap carMap = (AttributeMap) map.getItem(EntityStringNames.CAR_STRING);
+            make = (String) carMap.getItem(EntityStringNames.CAR_MAKE).getAttribute();
+            model = (String) carMap.getItem(EntityStringNames.CAR_MODEL).getAttribute();
+            year = (int) Math.round((Double) carMap.getItem(EntityStringNames.CAR_YEAR).getAttribute());
+            price = (double) carMap.getItem(EntityStringNames.CAR_PRICE).getAttribute();
+        } catch (ClassCastException e) {
+            Exceptions.ParseException ex = new Exceptions.ParseException(e.getMessage());
+            ex.setStackTrace(e.getStackTrace());
+            throw ex;
+        }
 
         // TODO: Support optional inclusion of addons?
         return carGenerator.GenerateCarUseCase(price, make, model, year);
