@@ -7,9 +7,6 @@ import entities.Car;
 
 import entitybuilder.GenerateCarUseCase;
 
-import javax.json.JsonObject;
-import javax.swing.text.html.parser.Entity;
-
 public class ParseCarUseCase {
     private final AttributeMap map;
 
@@ -44,7 +41,6 @@ public class ParseCarUseCase {
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }
-
         // TODO: Support optional inclusion of addons?
         return carGenerator.GenerateCarUseCase(price, make, model, year);
     }

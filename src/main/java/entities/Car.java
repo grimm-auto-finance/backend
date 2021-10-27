@@ -15,6 +15,7 @@ public class Car extends Entity {
     // The Car's price, in dollars.
     private double price;
 
+
     // The make, model and year of the Car
     private final String make;
     private final String model;
