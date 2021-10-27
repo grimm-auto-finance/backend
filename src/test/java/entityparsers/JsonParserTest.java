@@ -1,10 +1,13 @@
 package entityparsers;
 
+import constants.Exceptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class JsonParserTest {
 
@@ -24,6 +27,10 @@ public class JsonParserTest {
     @Test
     public void testJsonParser() {
         JsonParser parser = new JsonParser(builder.build());
+        try {
         System.out.println(parser.parse());
+        } catch (Exceptions.ParseException e) {
+            fail();
+        }
     }
 }
