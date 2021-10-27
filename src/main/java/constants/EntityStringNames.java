@@ -2,13 +2,13 @@ package constants;
 
 public class EntityStringNames {
 
-    public static final String CAR_STRING = "vehicle";
+    public static final String CAR_STRING = "car";
     public static final String CAR_MAKE = "vehicleMake";
     public static final String CAR_MODEL = "vehicleModel";
     public static final String CAR_YEAR = "vehicleYear";
     public static final String CAR_PRICE = "vehiclePrice";
 
-    public static final String BUYER_STRING = "carBuyer";
+    public static final String BUYER_STRING = "car buyer";
     public static final String BUYER_BUDGET = "pytBudget";
     public static final String BUYER_CREDIT = "creditScore";
 
