@@ -1,7 +1,9 @@
 package entities;
 
+import constants.EntityStringNames;
+
 /** A class to represent an individual add-on that can be added to a car. */
-public class AddOn {
+public class AddOn extends Entity {
     private final String name;
     private double price;
     private String description;
@@ -72,5 +74,10 @@ public class AddOn {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String getStringName() {
+        return EntityStringNames.ADD_ON_STRING;
     }
 }

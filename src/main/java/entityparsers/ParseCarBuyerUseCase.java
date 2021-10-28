@@ -1,22 +1,25 @@
 package entityparsers;
 
+import attributes.AttributeMap;
+
+import constants.EntityStringNames;
+import constants.Exceptions;
+
 import entities.CarBuyer;
 
 import entitybuilder.GenerateBuyerUseCase;
 
-import javax.json.JsonObject;
-
 public class ParseCarBuyerUseCase {
 
-    private final JsonObject jsonObject;
+    private final AttributeMap map;
 
     /**
      * Constructs a new ParseCarBuyerUseCase to create a CarBuyer using the given JsonObject
      *
-     * @param jsonObject
+     * @param parser
      */
-    public ParseCarBuyerUseCase(JsonObject jsonObject) {
-        this.jsonObject = jsonObject;
+    public ParseCarBuyerUseCase(Parser parser) throws Exceptions.ParseException {
+        this.map = parser.parse();
     }
 
     /**
@@ -24,12 +27,26 @@ public class ParseCarBuyerUseCase {
      *
      * @return
      */
-    public CarBuyer parse() throws NullPointerException {
+    public CarBuyer parse() throws Exceptions.ParseException {
         GenerateBuyerUseCase buyerGenerator = new GenerateBuyerUseCase();
+        double budget;
+        int creditScore;
+        try {
+            // TODO: should throw an exception if any of these are null
+            AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
+            budget = (double) buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
+            creditScore =
+                    (int)
+                            Math.round(
+                                    (Double)
+                                            buyerMap.getItem(EntityStringNames.BUYER_CREDIT)
+                                                    .getAttribute());
+        } catch (ClassCastException e) {
+            Exceptions.ParseException ex = new Exceptions.ParseException(e.getMessage());
+            ex.setStackTrace(e.getStackTrace());
+            throw ex;
+        }
 
-        JsonObject buyerObj = jsonObject.getJsonObject("car buyer");
-        double budget = buyerObj.getJsonNumber("pytBudget").doubleValue();
-        int creditScore = buyerObj.getJsonNumber("creditScore").intValue();
         return buyerGenerator.GenerateBuyerDataUseCase(budget, creditScore);
     }
 }

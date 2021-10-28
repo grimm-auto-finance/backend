@@ -1,17 +1,19 @@
 package entities;
 
+import constants.EntityStringNames;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * A class to represent an individual car that is being viewed and configured in the user interface.
  */
-public class Car {
+public class Car extends Entity {
     // A Map between add-on names and AddOn objects representing those addons
     private Map<String, AddOn> addOns;
 
     // The Car's price, in dollars.
-    private Double price;
+    private double price;
 
     // The make, model and year of the Car
     private final String make;
@@ -27,7 +29,7 @@ public class Car {
      * @param model The model of the car
      * @param year The model year of the car
      */
-    public Car(Double price, String make, String model, int year) {
+    public Car(double price, String make, String model, int year) {
         this(price, make, model, year, new HashMap<>());
     }
 
@@ -37,10 +39,10 @@ public class Car {
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car
-     * @param year The model year of the calr
+     * @param year The model year of the car
      * @param addOns A mapping of addon names to AddOn objects
      */
-    public Car(Double price, String make, String model, int year, Map<String, AddOn> addOns) {
+    public Car(double price, String make, String model, int year, Map<String, AddOn> addOns) {
         this.price = price;
         this.make = make;
         this.model = model;
@@ -75,7 +77,7 @@ public class Car {
      *
      * @return
      */
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -84,7 +86,7 @@ public class Car {
      *
      * @param price
      */
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -113,5 +115,10 @@ public class Car {
      */
     public int getYear() {
         return year;
+    }
+
+    @Override
+    public String getStringName() {
+        return EntityStringNames.CAR_STRING;
     }
 }
