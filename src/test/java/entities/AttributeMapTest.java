@@ -1,9 +1,10 @@
 package entities;
 
+import attributes.AttributeMap;
 import attributes.DoubleAttribute;
 import attributes.IntAttribute;
-import attributes.AttributeMap;
 import attributes.StringAttribute;
+
 import org.junit.jupiter.api.Test;
 
 public class AttributeMapTest {

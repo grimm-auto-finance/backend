@@ -4,5 +4,5 @@ import attributes.AttributeMap;
 
 public interface Attributizer {
 
-  public AttributeMap attributizeEntity();
+    public AttributeMap attributizeEntity();
 }

@@ -8,40 +8,40 @@ import constants.EntityStringNames;
  */
 public class CarBuyer extends Entity {
 
-  private final double budget;
-  private final int creditScore;
+    private final double budget;
+    private final int creditScore;
 
-  /**
-   * Constructs a new CarBuyer with the specified budget and credit score.
-   *
-   * @param budget
-   * @param creditScore
-   */
-  public CarBuyer(double budget, int creditScore) {
-    this.budget = budget;
-    this.creditScore = creditScore;
-  }
+    /**
+     * Constructs a new CarBuyer with the specified budget and credit score.
+     *
+     * @param budget
+     * @param creditScore
+     */
+    public CarBuyer(double budget, int creditScore) {
+        this.budget = budget;
+        this.creditScore = creditScore;
+    }
 
-  /**
-   * Returns this CarBuyer's budget.
-   *
-   * @return
-   */
-  public double getBudget() {
-    return budget;
-  }
+    /**
+     * Returns this CarBuyer's budget.
+     *
+     * @return
+     */
+    public double getBudget() {
+        return budget;
+    }
 
-  /**
-   * Returns this CarBuyer's credit score.
-   *
-   * @return
-   */
-  public int getCreditScore() {
-    return creditScore;
-  }
+    /**
+     * Returns this CarBuyer's credit score.
+     *
+     * @return
+     */
+    public int getCreditScore() {
+        return creditScore;
+    }
 
-  @Override
-  public String getStringName() {
-    return EntityStringNames.BUYER_STRING;
-  }
+    @Override
+    public String getStringName() {
+        return EntityStringNames.BUYER_STRING;
+    }
 }
