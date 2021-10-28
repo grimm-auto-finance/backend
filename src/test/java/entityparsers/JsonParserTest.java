@@ -11,26 +11,26 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class JsonParserTest {
 
-    static JsonObjectBuilder builder;
+  static JsonObjectBuilder builder;
 
-    @BeforeAll
-    static void setup() {
-        builder = Json.createObjectBuilder();
-        builder.add("Int value", 5);
-        builder.add("String value", "hello");
-        builder.add("Double value", 5.5);
-        JsonObjectBuilder subObj = Json.createObjectBuilder();
-        subObj.add("Sub-String value", "sub-string");
-        builder.add("Sub-object", subObj);
-    }
+  @BeforeAll
+  static void setup() {
+    builder = Json.createObjectBuilder();
+    builder.add("Int value", 5);
+    builder.add("String value", "hello");
+    builder.add("Double value", 5.5);
+    JsonObjectBuilder subObj = Json.createObjectBuilder();
+    subObj.add("Sub-String value", "sub-string");
+    builder.add("Sub-object", subObj);
+  }
 
-    @Test
-    public void testJsonParser() {
-        JsonParser parser = new JsonParser(builder.build());
-        try {
-        System.out.println(parser.parse());
-        } catch (Exceptions.ParseException e) {
-            fail();
-        }
+  @Test
+  public void testJsonParser() {
+    JsonParser parser = new JsonParser(builder.build());
+    try {
+      System.out.println(parser.parse());
+    } catch (Exceptions.ParseException e) {
+      fail();
     }
+  }
 }
