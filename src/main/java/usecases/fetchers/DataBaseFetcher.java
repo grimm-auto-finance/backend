@@ -5,6 +5,8 @@ import entities.Car;
 
 import server.Env;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class DataBaseFetcher {
     private static Connection connection;
@@ -44,6 +47,27 @@ public class DataBaseFetcher {
         Statement st = connection.createStatement();
         st.execute(migrations);
         DataBaseFetcher.connection = connection;
+    }
+
+    public static void insertPlaceholderData()
+            throws SQLException, FileNotFoundException, Exception {
+        Scanner scanner = new Scanner(new File("data/cars.csv"));
+        scanner.useDelimiter("\n");
+        scanner.next();
+        String line;
+        while (scanner.hasNext()) {
+            line = scanner.next();
+            String[] fields = line.split(",");
+            String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = connection.prepareStatement(statement);
+            pst.setInt(1, Integer.parseInt(fields[0]));
+            pst.setDouble(2, Double.parseDouble(fields[4]));
+            pst.setString(3, fields[1]);
+            pst.setString(4, fields[2]);
+            pst.setInt(5, Integer.parseInt(fields[3]));
+            pst.setInt(6, 0);
+            pst.execute();
+        }
     }
 
     public static Car getCar(int id, boolean addOns) throws SQLException {
