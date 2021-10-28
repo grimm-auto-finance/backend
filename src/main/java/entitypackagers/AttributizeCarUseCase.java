@@ -34,10 +34,11 @@ public class AttributizeCarUseCase implements Attributizer {
         for (String addOnName : addOns.keySet()) {
             AttributizeAddOnUseCase addOnAttributizer =
                     new AttributizeAddOnUseCase(addOns.get(addOnName));
-            carMap.addItem(
+            addOnMap.addItem(
                     addOnName + " " + EntityStringNames.ADD_ON_STRING,
                     addOnAttributizer.attributizeEntity());
         }
+        carMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnMap);
         return carMap;
     }
 }
