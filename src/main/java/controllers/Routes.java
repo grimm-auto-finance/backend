@@ -4,6 +4,6 @@ import routes.*;
 
 public class Routes {
     public static Route[] routes = {
-        new Loan(),
+        new Loan(), new Search(),
     };
 }
