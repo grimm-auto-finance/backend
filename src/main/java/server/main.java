@@ -14,6 +14,11 @@ import java.sql.SQLException;
 class Server {
     public static void main(String[] args) throws IOException, SQLException {
         DataBaseFetcher.connectAndMigrate();
+        try {
+            DataBaseFetcher.insertPlaceholderData();
+        } catch (Exception e) {
+            System.out.println("Placeholder data may already exist.");
+        }
         HttpServer server = HttpServer.create(new InetSocketAddress(Env.PORT), 0);
         for (Route route : Routes.routes) {
             server.createContext(route.getContext(), route);
