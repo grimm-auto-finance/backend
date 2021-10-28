@@ -1,0 +1,10 @@
+id,make,model,Year,Price,Addons
+1,Honda,Civic,2002,7000,"rustProofing: 1200, winterTires:300, nitrogen: 450, exhaustTip: 350, wheelLocks:850, doorEdgeProtection:  350"
+2,Aston Martin,Vanquish,2011,20000,"rustProofing: 1200, winterTires:375, nitrogen: 450, exhaustTip: 350, wheelLocks:850, doorEdgeProtection:  350"
+3,Aston Martin,Zagato Coupe,2016,35000,"rustProofing: 1200, winterTires:350, nitrogen: 450, exhaustTip: 350, wheelLocks:850, doorEdgeProtection:  350"
+4,Audi,A1,2010,1700,"rustProofing: 1200, winterTires:500, nitrogen: 450, exhaustTip: 350, wheelLocks:850, doorEdgeProtection:  350"
+5,Toyota,Corolla,2000,1500,"rustProofing: 1200, winterTires:300, nitrogen: 450, exhaustTip: 350, wheelLocks:850, doorEdgeProtection:  350"
+6,Audi,A3,1996,500,"rustProofing: 1200, winterTires:300, nitrogen: 450, exhaustTip: 350, wheelLocks:850, doorEdgeProtection:  350"
+7,Audi,A4,1995,11000,"rustProofing: 1200, winterTires:300, nitrogen: 450, exhaustTip: 350, wheelLocks:850, "
+8,Mercedes,Benz,2009,23450,"rustProofing: 1200, winterTires:300, nitrogen: 450, exhaustTip: 350, wheelLocks:850, doorEdgeProtection:  350"
+9,Audi,A5,2007,6000,"rustProofing: 1200, winterTires:300, nitrogen: 450, exhaustTip: 350, wheelLocks:850, doorEdgeProtection:  350"
