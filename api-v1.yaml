@@ -24,7 +24,7 @@ paths:
       - "vehicles"
       summary: "Get vehicles matching data"
       consumes:
-      - "application/json"
+      - "text/plain"
       produces:
       - "application/json"
       parameters:
@@ -33,10 +33,7 @@ paths:
         description: "Vehicle string to search for"
         required: true
         schema:
-          type: "object"
-          properties:
-            searchString:
-              type: "string"
+          type: "string"
       responses:
         '200':
           description: "All matching cars"
