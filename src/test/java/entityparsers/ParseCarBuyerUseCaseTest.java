@@ -8,24 +8,30 @@ import constants.Exceptions;
 
 import entities.CarBuyer;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 public class ParseCarBuyerUseCaseTest {
+
+    static JsonObjectBuilder builder;
+
+    @BeforeEach
+    public void setup() {
+        builder = Json.createObjectBuilder();
+    }
+
+
     @Test
-    void parse() {
-        JsonObject obj =
-                Json.createObjectBuilder()
-                        .add(
-                                EntityStringNames.BUYER_STRING,
-                                Json.createObjectBuilder()
-                                        .add(EntityStringNames.BUYER_BUDGET, 123.456)
-                                        .add(EntityStringNames.BUYER_CREDIT, 750)
-                                        .build())
-                        .build();
-        Parser parser = new JsonParser(obj);
+    public void testCarParseComplete() {
+        JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
+        buyerBuilder.add(EntityStringNames.BUYER_BUDGET, 123.456);
+        buyerBuilder.add(EntityStringNames.BUYER_CREDIT, 750);
+        builder.add(EntityStringNames.BUYER_STRING, buyerBuilder);
+        Parser parser = new JsonParser(builder.build());
         ParseCarBuyerUseCase parseCarBuyerUseCase;
         CarBuyer parsed = null;
         try {

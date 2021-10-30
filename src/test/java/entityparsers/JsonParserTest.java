@@ -24,6 +24,11 @@ public class JsonParserTest {
         testMap = new AttributeMap();
     }
 
+    /**
+     * Adds the given String value to both builder and testMap with the given name
+     * @param name
+     * @param value
+     */
     static void addToBoth(String name, String value) {
         builder.add(name, value);
         testMap.addItem(name, value);
@@ -55,7 +60,7 @@ public class JsonParserTest {
         testEq(parser);
     }
 
-    // Fails since JsonParser currently can't find ints
+    // Fails since JsonParser currently treats all numbers as doubles
 //    @Test
 //    public void testParserAllInts() {
 //        addToBoth("int value", 16);
