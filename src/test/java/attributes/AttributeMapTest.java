@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AttributeMapTest {
-    public IntAttribute intAt = new IntAttribute(1);
-    DoubleAttribute doubAt = new DoubleAttribute((1.1));
-    StringAttribute strAt = new StringAttribute("Hello");
 
     @Test
     public void TestaddItemAttributeAndGet(){
