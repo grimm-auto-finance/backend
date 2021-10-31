@@ -2,7 +2,11 @@
 
 ## Style
 
-This project uses `google-java-format` for code formatting. Please see that project's [README](https://github.com/google/google-java-format#using-the-formatter) for usage instructions.
+This project uses `google-java-format` with the `--aosp` flag for code formatting. Please see that project's [README](https://github.com/google/google-java-format#using-the-formatter) for usage instructions.
+
+### IntelliJ Plugin
+
+If you're using IntellJ, the plugin can be found [here](https://plugins.jetbrains.com/plugin/8527-google-java-format). Be sure to enable it in settings and set the style to AOSP.
 
 ## Code Coverage
 
