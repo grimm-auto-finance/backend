@@ -1,7 +1,5 @@
 package attributes;
-import constants.Exceptions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static attributes.AttributeFactory.getAttribute;
 import static org.junit.jupiter.api.Assertions.*;
