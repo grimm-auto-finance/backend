@@ -15,7 +15,7 @@ public class AttributeMapTest {
             fail();
         }
 
-        assertEquals(attMap.getItem("integer_Attribute"), new IntAttribute(1));
+        assertEquals(new IntAttribute(1), attMap.getItem("integer_Attribute"));
 
     }
 
@@ -28,7 +28,7 @@ public class AttributeMapTest {
             fail();
         }
 
-        assertEquals(attMap.getItem("integer_Object"), new IntAttribute(1));
+        assertEquals(new IntAttribute(1), attMap.getItem("integer_Object"));
 
     }
     @Test
@@ -41,7 +41,7 @@ public class AttributeMapTest {
             fail();
         }
         System.out.println(attMap);
-        assertEquals(attMap.getAttribute().toString(), "{double_Attribute=1.1, integer_Attribute=1}");
+        assertEquals( "{double_Attribute=1.1, integer_Attribute=1}", attMap.getAttribute().toString());
 
     }
 
