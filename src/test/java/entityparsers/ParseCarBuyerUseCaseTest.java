@@ -27,7 +27,7 @@ public class ParseCarBuyerUseCaseTest {
 
 
     @Test
-    public void testCarParseComplete() {
+    public void testBuyerParseComplete() {
         JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
         buyerBuilder.add(EntityStringNames.BUYER_BUDGET, 123.456);
         buyerBuilder.add(EntityStringNames.BUYER_CREDIT, 750);
@@ -47,7 +47,7 @@ public class ParseCarBuyerUseCaseTest {
     }
 
     @Test
-    public void testCarParseBadTypes() {
+    public void testBuyerParseBadTypes() {
         JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
         buyerBuilder.add(EntityStringNames.BUYER_BUDGET, "oops! i'm not a double!");
         buyerBuilder.add(EntityStringNames.BUYER_CREDIT, 750);
@@ -67,7 +67,7 @@ public class ParseCarBuyerUseCaseTest {
     }
 
     @Test
-    public void testCarParseWrongNames() {
+    public void testBuyerParseWrongNames() {
         JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
         buyerBuilder.add("not the correct string for buyer budget", 15);
         buyerBuilder.add("wrong string for buyer credit", 38);
