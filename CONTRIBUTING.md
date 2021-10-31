@@ -8,6 +8,8 @@ This project uses `google-java-format` with the `--aosp` flag for code formattin
 
 If you're using IntellJ, the plugin can be found [here](https://plugins.jetbrains.com/plugin/8527-google-java-format). Be sure to enable it in settings and set the style to AOSP.
 
+![2021-10-31T12:39:32,557256036-04:00](https://user-images.githubusercontent.com/36740602/139593711-d0588aa8-04da-4874-9c8d-f31b31d3d316.png)
+
 ## Code Coverage
 
 After running `gradle build` or `gradle test`, a file contaiing code coverage details can be found at `build/reports/jacoco/test/html/index.html`.
