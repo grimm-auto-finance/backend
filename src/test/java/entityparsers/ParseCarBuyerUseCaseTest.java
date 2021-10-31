@@ -8,6 +8,7 @@ import constants.Exceptions;
 
 import entities.CarBuyer;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,5 +44,46 @@ public class ParseCarBuyerUseCaseTest {
         CarBuyer carBuyer = new CarBuyer(123.456, 750);
         assertEquals(carBuyer.getBudget(), parsed.getBudget());
         assertEquals(carBuyer.getCreditScore(), parsed.getCreditScore());
+    }
+
+    @Test
+    public void testCarParseBadTypes() {
+        JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
+        buyerBuilder.add(EntityStringNames.BUYER_BUDGET, "oops! i'm not a double!");
+        buyerBuilder.add(EntityStringNames.BUYER_CREDIT, 750);
+        builder.add(EntityStringNames.BUYER_STRING, buyerBuilder);
+        Parser parser = new JsonParser(builder.build());
+        ParseCarBuyerUseCase parseCarBuyerUseCase = null;
+        try {
+            parseCarBuyerUseCase = new ParseCarBuyerUseCase(parser);
+        } catch (Exceptions.ParseException e) {
+            fail(); // This part shouldn't be throwing an exception
+        }
+        try {
+            parseCarBuyerUseCase.parse();
+        } catch (Exceptions.ParseException e) {
+
+        }
+    }
+
+    @Test
+    public void testCarParseWrongNames() {
+        JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
+        buyerBuilder.add("not the correct string for buyer budget", 15);
+        buyerBuilder.add("wrong string for buyer credit", 38);
+        builder.add(EntityStringNames.BUYER_STRING, buyerBuilder);
+        Parser parser = new JsonParser(builder.build());
+        ParseCarBuyerUseCase parseCarBuyerUseCase = null;
+        try {
+            parseCarBuyerUseCase = new ParseCarBuyerUseCase(parser);
+        } catch (Exceptions.ParseException e) {
+            fail(); // this part shouldn't be throwing an exception
+        }
+        try {
+            parseCarBuyerUseCase.parse();
+        } catch (Exceptions.ParseException e) {
+            return;
+        }
+        fail(); // exception should definitely be thrown as input values were null
     }
 }
