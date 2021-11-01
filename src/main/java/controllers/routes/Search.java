@@ -54,7 +54,6 @@ public class Search extends controllers.Route {
                 }
             }
             String responseString = arrayBuilder.build().toString();
-            System.out.println(responseString);
             t.sendResponseHeaders(200, responseString.length());
             os.write(responseString.getBytes());
         } catch (SQLException e) {
