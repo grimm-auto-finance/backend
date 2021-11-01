@@ -15,7 +15,8 @@ public class AttributeMapTest {
             fail();
         }
 
-        assertEquals(new IntAttribute(1), attMap.getItem("integer_Attribute"));
+        assertEquals(new IntAttribute(1).getAttribute(),
+                attMap.getItem("integer_Attribute").getAttribute());
 
     }
 
@@ -23,12 +24,13 @@ public class AttributeMapTest {
     public void TestaddItemObjectAndGet(){
         AttributeMap attMap = new AttributeMap();
         try {
-            attMap.addItem("integer_Object", (Object) 1);
+            attMap.addItem("integer_Object", 1);
         } catch(ClassCastException e){
             fail();
         }
 
-        assertEquals(new IntAttribute(1), attMap.getItem("integer_Object"));
+        assertEquals(new IntAttribute(1).getAttribute(),
+                attMap.getItem("integer_Object").getAttribute());
 
     }
     @Test
@@ -40,7 +42,6 @@ public class AttributeMapTest {
         } catch(ClassCastException e){
             fail();
         }
-        System.out.println(attMap);
         assertEquals( "{double_Attribute=1.1, integer_Attribute=1}", attMap.getAttribute().toString());
 
     }
