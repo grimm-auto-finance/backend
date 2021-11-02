@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IntAttributeTest {
     @Test
-    public void TestGetAttribute() {
+    public void testGetAttribute() {
         IntAttribute intAtt = new IntAttribute(1);
         assertEquals(1, intAtt.getAttribute());
     }
