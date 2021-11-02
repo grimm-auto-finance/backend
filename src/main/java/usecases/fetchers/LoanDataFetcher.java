@@ -5,6 +5,9 @@ import constants.Exceptions;
 import entities.*;
 import entities.LoanData;
 
+import logging.Logger;
+import logging.LoggerFactory;
+
 import server.Env;
 
 import java.io.BufferedReader;
@@ -23,6 +26,7 @@ import javax.json.JsonString;
 
 public class LoanDataFetcher {
     public static LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
+        Logger l = LoggerFactory.getLogger();
         LoanData loanData = new LoanData();
 
         HttpURLConnection rateConn;
@@ -82,8 +86,7 @@ public class LoanDataFetcher {
                         Json.createReader(new StringReader(responseBuilder.toString()));
                 rateResponse = jsonReader.readObject();
             } else {
-                // TODO: switch this to use Logging class once implemented
-                System.out.println("Request to the Senso Rate API failed");
+                l.error("request to the senso rate API failed");
                 throw (Exceptions.CodedException) new Exceptions.FetchException();
             }
         } catch (IOException e) {
@@ -166,8 +169,7 @@ public class LoanDataFetcher {
                         Json.createReader(new StringReader(responseBuilder.toString()));
                 scoreResponse = jsonReader.readObject();
             } else {
-                // TODO: switch this to use Logging class once implemented
-                System.out.println("Request to the Senso API failed");
+                l.error("request to the senso score API failed");
                 throw (Exceptions.CodedException) new Exceptions.FetchException();
             }
         } catch (IOException e) {
