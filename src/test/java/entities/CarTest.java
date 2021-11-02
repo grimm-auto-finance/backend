@@ -30,7 +30,7 @@ public class CarTest {
         Car car = new Car(10000.0, "Honda", "Civic", 2002);
         AddOn marshmallows = new AddOn("Marshmallows", 5.59, "Very Tasty");
         car.addAddOn(marshmallows);
-        HashMap hashMap = new HashMap();
+        HashMap<String, AddOn> hashMap = new HashMap<>();
         hashMap.put(marshmallows.getName(), marshmallows);
         assertEquals(car.getAddOns(), hashMap);
         car.removeAddOn(marshmallows);
