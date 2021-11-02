@@ -8,6 +8,8 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class JsonPackageTest {
 
     static JsonObject obj;
@@ -27,6 +29,12 @@ public class JsonPackageTest {
     @Test
     public void testJSONPackageGetPackage() {
         JsonPackage jsonPackage = new JsonPackage(obj);
-        Assertions.assertEquals(obj, jsonPackage.getPackage());
+        assertEquals(obj, jsonPackage.getPackage());
+    }
+
+    @Test
+    public void testJSONPackageToString() {
+        Package jsonPackage = new JsonPackage(obj);
+        assertEquals(obj.toString(), jsonPackage.toString());
     }
 }
