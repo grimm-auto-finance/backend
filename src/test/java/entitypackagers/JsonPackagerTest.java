@@ -1,5 +1,6 @@
 package entitypackagers;
 
+import attributes.Attribute;
 import attributes.AttributeMap;
 import constants.Exceptions;
 import entityparsers.JsonParser;
@@ -105,6 +106,27 @@ public class JsonPackagerTest {
         testBuilder.add("Sub-object", subBuilder);
         JsonPackager packager = new JsonPackager();
         testEq(packager);
+    }
+
+    static class FakeAttribute extends Attribute {
+        private final Object item;
+
+        public FakeAttribute(Object item) { this.item = item; }
+
+        public Object getAttribute() { return this.item; }
+    }
+
+    @Test
+    public void testJsonPackagerUnhandledAttribute() {
+        map.addItem("fake attribute item", new FakeAttribute(5));
+        JsonPackager jsonPackager = new JsonPackager();
+        try {
+            // Throws a PackageException because FakeAttribute doesn't have handling code in writePackage()
+            jsonPackager.writePackage(map);
+        } catch (Exceptions.PackageException e) {
+            return;
+        }
+        fail();
     }
 
 }
