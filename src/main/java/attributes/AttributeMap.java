@@ -21,7 +21,7 @@ public class AttributeMap extends Attribute {
      * @throws ClassCastException
      */
     public void addItem(String name, Object item) throws ClassCastException {
-        this.addItem(name, AttributeFactory.getAttribute(item));
+        this.addItem(name, AttributeFactory.createAttribute(item));
     }
 
     /**
