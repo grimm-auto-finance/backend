@@ -2,6 +2,7 @@ package entitypackagers;
 
 import attributes.Attribute;
 import attributes.AttributeMap;
+import attributes.FakeAttribute;
 import constants.Exceptions;
 import entityparsers.JsonParser;
 import org.junit.jupiter.api.BeforeEach;
@@ -106,14 +107,6 @@ public class JsonPackagerTest {
         testBuilder.add("Sub-object", subBuilder);
         JsonPackager packager = new JsonPackager();
         testEq(packager);
-    }
-
-    static class FakeAttribute extends Attribute {
-        private final Object item;
-
-        public FakeAttribute(Object item) { this.item = item; }
-
-        public Object getAttribute() { return this.item; }
     }
 
     @Test
