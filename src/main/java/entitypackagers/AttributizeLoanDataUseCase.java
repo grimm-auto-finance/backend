@@ -10,10 +10,16 @@ public class AttributizeLoanDataUseCase implements Attributizer {
 
     private final LoanData loan;
 
+    /**
+     * Constructs a new AttributizeLoanDataUseCase that writes LoanData information to an AttributeMap
+     *
+     * @param loan the LoanData object to attributize
+     */
     public AttributizeLoanDataUseCase(LoanData loan) {
         this.loan = loan;
     }
 
+    /** Write the given LoanData's data to an AttributeMap */
     public AttributeMap attributizeEntity() {
         AttributeMap loanMap = new AttributeMap();
         loanMap.addItem(EntityStringNames.LOAN_AMOUNT, loan.getLoanAmount());

@@ -29,6 +29,13 @@ public class AttributizeCarUseCase implements Attributizer {
         carMap.addItem(EntityStringNames.CAR_MODEL, car.getModel());
         carMap.addItem(EntityStringNames.CAR_YEAR, car.getYear());
 
+        AttributeMap addOnMap = getAddOnMap();
+        carMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnMap);
+        return carMap;
+    }
+
+    /** Write the given Car's map of Addons to an AttributeMap */
+    private AttributeMap getAddOnMap() {
         AttributeMap addOnMap = new AttributeMap();
         Map<String, AddOn> addOns = car.getAddOns();
         for (String addOnName : addOns.keySet()) {
@@ -38,7 +45,6 @@ public class AttributizeCarUseCase implements Attributizer {
                     addOnName + " " + EntityStringNames.ADD_ON_STRING,
                     addOnAttributizer.attributizeEntity());
         }
-        carMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnMap);
-        return carMap;
+        return addOnMap;
     }
 }
