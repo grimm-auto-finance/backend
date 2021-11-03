@@ -28,7 +28,7 @@ import java.util.List;
 
 import javax.json.*;
 
-public class Loan extends controllers.Route {
+public class Loan extends Route {
     @Override
     public String getContext() {
         return "/loan";

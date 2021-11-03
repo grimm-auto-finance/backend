@@ -1,6 +1,4 @@
-package controllers;
-
-import routes.*;
+package routes;
 
 public class Routes {
     public static Route[] routes = {

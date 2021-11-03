@@ -21,7 +21,7 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
-public class Search extends controllers.Route {
+public class Search extends Route {
     @Override
     public String getContext() {
         return "/search";
