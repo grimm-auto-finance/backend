@@ -22,6 +22,8 @@ If you're using IntelliJ, the plugin can be found [here](https://plugins.jetbrai
 
 Also, make sure you use <kbd>Ctrl+Alt+Shift+L</kbd> to open the reformat menu and check the following boxes.
 
+![2021-11-03T17:49:26,139580320-04:00](https://user-images.githubusercontent.com/36740602/140198396-c1db7d97-3288-4efc-8fa0-fcbb469a9521.png)
+
 After doing that once, you can format with <kbd>Ctrl+Alt+L</kbd> as usual.
 
 ## Code Coverage
