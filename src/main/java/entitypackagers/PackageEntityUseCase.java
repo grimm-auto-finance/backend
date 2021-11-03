@@ -22,12 +22,22 @@ public class PackageEntityUseCase {
     }
 
     /**
-     * Sets the Entity that this PackageEntityUseCase pacakges to newEntity
+     * Sets the Entity that this PackageEntityUseCase packages to newEntity
      *
      * @param newEntity the new Entity to be packaged
      */
     public void setEntity(Entity newEntity) {
         this.entity = newEntity;
+    }
+
+    /**
+     * Returns the Entity that this PackageEntityUseCase has been set to package Should only be used
+     * for testing
+     *
+     * @return
+     */
+    public Entity getEntity() {
+        return this.entity;
     }
 
     /**

@@ -36,7 +36,7 @@ public class JsonParser implements Parser {
      *
      * @param object
      * @return
-     * @throws JsonException
+     * @throws constants.Exceptions.ParseException
      */
     private AttributeMap parseJsonObject(JsonObject object) throws Exceptions.ParseException {
         AttributeMap map = new AttributeMap();

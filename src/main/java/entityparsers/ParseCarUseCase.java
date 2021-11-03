@@ -32,7 +32,6 @@ public class ParseCarUseCase {
         int year;
         double price;
         try {
-            // TODO: should throw an Exception if any of these are null
             AttributeMap carMap = (AttributeMap) map.getItem(EntityStringNames.CAR_STRING);
             make = (String) carMap.getItem(EntityStringNames.CAR_MAKE).getAttribute();
             model = (String) carMap.getItem(EntityStringNames.CAR_MODEL).getAttribute();
@@ -43,7 +42,7 @@ public class ParseCarUseCase {
                                             carMap.getItem(EntityStringNames.CAR_YEAR)
                                                     .getAttribute());
             price = (double) carMap.getItem(EntityStringNames.CAR_PRICE).getAttribute();
-        } catch (ClassCastException e) {
+        } catch (ClassCastException | NullPointerException e) {
             Exceptions.ParseException ex = new Exceptions.ParseException(e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;

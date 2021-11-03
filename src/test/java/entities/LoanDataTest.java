@@ -2,34 +2,88 @@ package entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import constants.EntityStringNames;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class LoanDataTest {
+
+    static LoanData loanData;
+
+    @BeforeEach
+    public void setup() {
+        loanData = new LoanData(1.25, 500.45, "Medium", 10000, 36, 2000);
+    }
+
     @Test
-    public void gettersAndSetters() {
-        LoanData loanData = new LoanData(5.5, 600, "Very high", 15000, 24, 3000);
-        loanData.setLoanAmount(10000);
-        loanData.setInstallment(500.45);
-        loanData.setInterestRate(1.25);
-        loanData.setInterestSum(2000);
-        loanData.setSensoScore("Medium");
-        loanData.setTermLength(36);
-        assertEquals(10000, loanData.getLoanAmount());
-        assertEquals(500.45, loanData.getInstallment());
+    public void testGetInterestRate() {
         assertEquals(1.25, loanData.getInterestRate());
+    }
+
+    @Test
+    public void testSetInterestRate() {
+        loanData.setInterestRate(5.6);
+        assertEquals(5.6, loanData.getInterestRate());
+    }
+
+    @Test
+    public void testGetInstallment() {
+        assertEquals(500.45, loanData.getInstallment());
+    }
+
+    @Test
+    public void testSetInstallment() {
+        loanData.setInstallment(600.23);
+        assertEquals(600.23, loanData.getInstallment());
+    }
+
+    @Test
+    public void testGetLoanAmount() {
+        assertEquals(10000, loanData.getLoanAmount());
+    }
+
+    @Test
+    public void testSetLoanAmount() {
+        loanData.setLoanAmount(15000.25);
+        assertEquals(15000.25, loanData.getLoanAmount());
+    }
+
+    @Test
+    public void testGetInterestSum() {
         assertEquals(2000, loanData.getInterestSum());
+    }
+
+    @Test
+    public void testSetInterestSum() {
+        loanData.setInterestSum(2500.25);
+        assertEquals(2500.25, loanData.getInterestSum());
+    }
+
+    @Test
+    public void testGetSensoScore() {
         assertEquals("Medium", loanData.getSensoScore());
+    }
+
+    @Test
+    public void testSetSensoScore() {
+        loanData.setSensoScore("Very high");
+        assertEquals("Very high", loanData.getSensoScore());
+    }
+
+    @Test
+    public void testGetTermLength() {
         assertEquals(36, loanData.getTermLength());
     }
 
     @Test
-    public void constructor2() {
-        LoanData loanData = new LoanData(1.25, 500.45, "Medium", 10000, 36, 2000);
-        assertEquals(10000, loanData.getLoanAmount());
-        assertEquals(500.45, loanData.getInstallment());
-        assertEquals(1.25, loanData.getInterestRate());
-        assertEquals(2000, loanData.getInterestSum());
-        assertEquals("Medium", loanData.getSensoScore());
-        assertEquals(36, loanData.getTermLength());
+    public void testSetTermLength() {
+        loanData.setTermLength(24);
+        assertEquals(24, loanData.getTermLength());
+    }
+
+    @Test
+    public void testGetStringName() {
+        assertEquals(EntityStringNames.LOAN_STRING, loanData.getStringName());
     }
 }
