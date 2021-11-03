@@ -1,9 +1,7 @@
 package entitypackagers;
 
 import attributes.AttributeMap;
-
 import constants.EntityStringNames;
-
 import entities.LoanData;
 
 public class AttributizeLoanDataUseCase implements Attributizer {
@@ -11,7 +9,8 @@ public class AttributizeLoanDataUseCase implements Attributizer {
     private final LoanData loan;
 
     /**
-     * Constructs a new AttributizeLoanDataUseCase that writes LoanData information to an AttributeMap
+     * Constructs a new AttributizeLoanDataUseCase that writes LoanData information to an
+     * AttributeMap
      *
      * @param loan the LoanData object to attributize
      */

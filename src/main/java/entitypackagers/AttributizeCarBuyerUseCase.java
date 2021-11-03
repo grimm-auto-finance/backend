@@ -1,9 +1,7 @@
 package entitypackagers;
 
 import attributes.AttributeMap;
-
 import constants.EntityStringNames;
-
 import entities.CarBuyer;
 
 public class AttributizeCarBuyerUseCase implements Attributizer {
@@ -11,7 +9,8 @@ public class AttributizeCarBuyerUseCase implements Attributizer {
     private final CarBuyer buyer;
 
     /**
-     * Constructs a new AttributizeCarBuyerUseCase that writes CarBuyer information to an AttributeMap
+     * Constructs a new AttributizeCarBuyerUseCase that writes CarBuyer information to an
+     * AttributeMap
      *
      * @param buyer the CarBuyer object to attributize
      */

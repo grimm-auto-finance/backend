@@ -1,9 +1,7 @@
 package entitypackagers;
 
 import attributes.AttributeMap;
-
 import constants.EntityStringNames;
-
 import entities.AddOn;
 
 public class AttributizeAddOnUseCase implements Attributizer {
