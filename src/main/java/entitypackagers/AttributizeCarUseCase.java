@@ -34,7 +34,7 @@ public class AttributizeCarUseCase implements Attributizer {
         return carMap;
     }
 
-    /** Write the given Car's map of Addons to an AttributeMap */
+    /** Write the given Car's map of Addons : to an AttributeMap */
     private AttributeMap getAddOnMap() {
         AttributeMap addOnMap = new AttributeMap();
         Map<String, AddOn> addOns = car.getAddOns();
