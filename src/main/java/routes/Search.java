@@ -21,12 +21,18 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
+/** The Route handling the `/search` route which allows users to search for a car with a string. */
 public class Search extends Route {
     @Override
     public String getContext() {
         return "/search";
     }
 
+    /**
+     * The post method for the `/search` route.
+     *
+     * @param t the httpexchange that this method must handle
+     */
     @Override
     protected void post(HttpExchange t) throws IOException {
         OutputStream os = t.getResponseBody();

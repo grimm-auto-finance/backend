@@ -30,12 +30,18 @@ import java.util.List;
 
 import javax.json.*;
 
+/** The Route handling the `/loan` route which allows users to fetch information about a loan. */
 public class Loan extends Route {
     @Override
     public String getContext() {
         return "/loan";
     }
 
+    /**
+     * The post method for the `/loan` route.
+     *
+     * @param t the httpexchange that this method must handle
+     */
     @Override
     protected void post(HttpExchange t) throws IOException {
         OutputStream os = t.getResponseBody();

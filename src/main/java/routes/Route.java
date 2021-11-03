@@ -10,6 +10,10 @@ import java.io.IOException;
 
 /** The generic route class that all routes will inherit from */
 public abstract class Route implements HttpHandler {
+    /**
+     * A method that must be overriden by implementers which sets the URL route that the Route class
+     * will handle.
+     */
     public abstract String getContext();
 
     protected void get(HttpExchange t) throws IOException {
@@ -52,7 +56,7 @@ public abstract class Route implements HttpHandler {
      * The main handler for all routes, which decides which sub-method to call based on all possible
      * request methods, and closes the request for convenience.
      *
-     * @param t The exchange
+     * @param t the httpexchange that this method must handle
      */
     public final void handle(HttpExchange t) throws IOException {
         String method = t.getRequestMethod();
