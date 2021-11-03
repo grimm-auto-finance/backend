@@ -31,11 +31,14 @@ public class PackageEntityUseCase {
     }
 
     /**
-     * Returns the Entity that this PackageEntityUseCase has been set to package
-     * Should only be used for testing
+     * Returns the Entity that this PackageEntityUseCase has been set to package Should only be used
+     * for testing
+     *
      * @return
      */
-    public Entity getEntity() { return this.entity; }
+    public Entity getEntity() {
+        return this.entity;
+    }
 
     /**
      * Writes entity to a Package using the given Packager

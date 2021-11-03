@@ -1,10 +1,11 @@
 package entitypackagers;
 
-import entities.*;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import entities.*;
+
+import org.junit.jupiter.api.Test;
 
 public class AttributizerFactoryTest {
 
@@ -17,7 +18,8 @@ public class AttributizerFactoryTest {
     @Test
     public void testGetBuyerAttributizer() {
         Entity buyer = new CarBuyer(50000, 750);
-        assertTrue(AttributizerFactory.getAttributizer(buyer) instanceof AttributizeCarBuyerUseCase);
+        assertTrue(
+                AttributizerFactory.getAttributizer(buyer) instanceof AttributizeCarBuyerUseCase);
     }
 
     @Test
@@ -28,8 +30,10 @@ public class AttributizerFactoryTest {
 
     @Test
     public void testGetLoanDataAttributizer() {
-        Entity loanData = new LoanData(0,0, "very low", 100, 36, 200);
-        assertTrue(AttributizerFactory.getAttributizer(loanData) instanceof AttributizeLoanDataUseCase);
+        Entity loanData = new LoanData(0, 0, "very low", 100, 36, 200);
+        assertTrue(
+                AttributizerFactory.getAttributizer(loanData)
+                        instanceof AttributizeLoanDataUseCase);
     }
 
     @Test

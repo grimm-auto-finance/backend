@@ -1,12 +1,15 @@
 package entitypackagers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
+
 import entities.LoanData;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AttributizeLoanDataUseCaseTest {
 
@@ -18,7 +21,7 @@ public class AttributizeLoanDataUseCaseTest {
     public void setup() {
         testMap = new AttributeMap();
     }
-    
+
     static void addLoanDataToTestMap() {
         testMap.addItem(EntityStringNames.LOAN_AMOUNT, loanData.getLoanAmount());
         testMap.addItem(EntityStringNames.LOAN_INSTALLMENT, loanData.getInstallment());
@@ -27,13 +30,14 @@ public class AttributizeLoanDataUseCaseTest {
         testMap.addItem(EntityStringNames.LOAN_INTEREST_SUM, loanData.getInterestSum());
         testMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, loanData.getTermLength());
     }
-    
+
     @Test
     public void testAttributizeLoanData() {
         loanData = new LoanData(1.25, 500.25, "Medium", 50000, 36, 200.25);
         addLoanDataToTestMap();
         loanDataAttributizer = new AttributizeLoanDataUseCase(loanData);
-        assertEquals(testMap.getAttribute().toString(), loanDataAttributizer.attributizeEntity().getAttribute().toString());
+        assertEquals(
+                testMap.getAttribute().toString(),
+                loanDataAttributizer.attributizeEntity().getAttribute().toString());
     }
-    
 }

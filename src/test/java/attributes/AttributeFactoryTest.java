@@ -1,9 +1,10 @@
 package attributes;
 
-import org.junit.jupiter.api.Test;
-
 import static attributes.AttributeFactory.createAttribute;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
 
 public class AttributeFactoryTest {
     static Attribute testAtt;

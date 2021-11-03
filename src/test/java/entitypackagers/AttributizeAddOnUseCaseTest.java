@@ -1,12 +1,15 @@
 package entitypackagers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
+
 import entities.AddOn;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AttributizeAddOnUseCaseTest {
 
@@ -30,6 +33,8 @@ public class AttributizeAddOnUseCaseTest {
         addOn = new AddOn("Rust proofing", 1000, "no rust allowed!");
         addAddOnToTestMap();
         addOnAttributizer = new AttributizeAddOnUseCase(addOn);
-        assertEquals(testMap.getAttribute().toString(), addOnAttributizer.attributizeEntity().getAttribute().toString());
+        assertEquals(
+                testMap.getAttribute().toString(),
+                addOnAttributizer.attributizeEntity().getAttribute().toString());
     }
 }

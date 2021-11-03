@@ -1,18 +1,18 @@
 package entitypackagers;
 
-import attributes.Attribute;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import attributes.AttributeMap;
 import attributes.FakeAttribute;
+
 import constants.Exceptions;
-import entityparsers.JsonParser;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class JsonPackagerTest {
 
@@ -114,12 +114,12 @@ public class JsonPackagerTest {
         map.addItem("fake attribute item", new FakeAttribute(5));
         JsonPackager jsonPackager = new JsonPackager();
         try {
-            // Throws a PackageException because FakeAttribute doesn't have handling code in writePackage()
+            // Throws a PackageException because FakeAttribute doesn't have handling code in
+            // writePackage()
             jsonPackager.writePackage(map);
         } catch (Exceptions.PackageException e) {
             return;
         }
         fail();
     }
-
 }

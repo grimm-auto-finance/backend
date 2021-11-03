@@ -1,12 +1,15 @@
 package entitypackagers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
+
 import entities.CarBuyer;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AttributizeCarBuyerUseCaseTest {
 
@@ -29,6 +32,8 @@ public class AttributizeCarBuyerUseCaseTest {
 
     @Test
     public void testAttributizeCarBuyer() {
-        assertEquals(testMap.getAttribute().toString(), buyerAttributizer.attributizeEntity().getAttribute().toString());
+        assertEquals(
+                testMap.getAttribute().toString(),
+                buyerAttributizer.attributizeEntity().getAttribute().toString());
     }
 }

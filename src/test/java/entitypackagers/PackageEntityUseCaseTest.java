@@ -1,16 +1,18 @@
 package entitypackagers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import attributes.AttributeMap;
+
 import constants.Exceptions;
-import entities.AddOn;
+
 import entities.Car;
 import entities.CarBuyer;
 import entities.Entity;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class PackageEntityUseCaseTest {
 
@@ -45,7 +47,9 @@ public class PackageEntityUseCaseTest {
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(car);
         AttributeMap entityMap = entityAttributizer.attributizeEntity();
         try {
-            assertEquals(jsonPackager.writePackage(entityMap).getPackage(), entityPackager.writeEntity(jsonPackager).getPackage());
+            assertEquals(
+                    jsonPackager.writePackage(entityMap).getPackage(),
+                    entityPackager.writeEntity(jsonPackager).getPackage());
         } catch (Exceptions.PackageException e) {
             fail();
         }

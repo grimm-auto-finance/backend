@@ -8,13 +8,10 @@ import constants.Exceptions;
 
 import entities.Car;
 
-import entities.CarBuyer;
-import entities.Entity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 public class ParseCarUseCaseTest {
@@ -26,8 +23,9 @@ public class ParseCarUseCaseTest {
         builder = Json.createObjectBuilder();
     }
 
-    /** Test ParseCarUseCase in a "working" situation, with all values
-     * present in the JSONObject and with the correct types
+    /**
+     * Test ParseCarUseCase in a "working" situation, with all values present in the JSONObject and
+     * with the correct types
      */
     @Test
     public void testCarParseWorking() {
@@ -53,8 +51,9 @@ public class ParseCarUseCaseTest {
         assertEquals(car.getYear(), parsed.getYear());
     }
 
-    /** Test ParseCarUseCase when the JsonObject has incorrect types for Car attributes
-     *  Make sure that parseCarUseCase.parse throws a ParseException.
+    /**
+     * Test ParseCarUseCase when the JsonObject has incorrect types for Car attributes Make sure
+     * that parseCarUseCase.parse throws a ParseException.
      */
     @Test
     public void testCarParseBadTypes() {
@@ -78,8 +77,9 @@ public class ParseCarUseCaseTest {
         }
     }
 
-    /** Test ParseCarUseCase when the attribute names in the JSONObject
-     * do not correspond to the expected attribute names for a Car object
+    /**
+     * Test ParseCarUseCase when the attribute names in the JSONObject do not correspond to the
+     * expected attribute names for a Car object
      */
     @Test
     public void testBuyerParseWrongNames() {

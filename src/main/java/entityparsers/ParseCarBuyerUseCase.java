@@ -32,7 +32,8 @@ public class ParseCarBuyerUseCase {
         double budget;
         int creditScore;
         try {
-            // TODO: decide whether these should expect a complete attributmap (with multiple objects) or just the buyer part (where does the extraction occur?)
+            // TODO: decide whether these should expect a complete attributmap (with multiple
+            // objects) or just the buyer part (where does the extraction occur?)
             AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
             budget = (double) buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
             creditScore =

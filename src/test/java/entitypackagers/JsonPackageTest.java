@@ -1,14 +1,13 @@
 package entitypackagers;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonPackageTest {
 

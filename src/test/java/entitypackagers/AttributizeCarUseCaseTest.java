@@ -1,16 +1,16 @@
 package entitypackagers;
 
-import attributes.Attribute;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
+
 import entities.AddOn;
 import entities.Car;
-import entities.Entity;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AttributizeCarUseCaseTest {
 
@@ -36,7 +36,9 @@ public class AttributizeCarUseCaseTest {
     @Test
     public void testAttributizeCarNoAddOns() {
         testMap.addItem(EntityStringNames.CAR_ADD_ONS, new AttributeMap());
-        assertEquals(testMap.getAttribute().toString(), carAttributizer.attributizeEntity().getAttribute().toString());
+        assertEquals(
+                testMap.getAttribute().toString(),
+                carAttributizer.attributizeEntity().getAttribute().toString());
     }
 
     @Test
@@ -47,11 +49,16 @@ public class AttributizeCarUseCaseTest {
         testCar.addAddOn(marshmallows);
         AttributeMap addOnMap = new AttributeMap();
         AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(rustProofing);
-        addOnMap.addItem("Rust proofing " + EntityStringNames.ADD_ON_STRING, addOnAttributizer.attributizeEntity());
+        addOnMap.addItem(
+                "Rust proofing " + EntityStringNames.ADD_ON_STRING,
+                addOnAttributizer.attributizeEntity());
         addOnAttributizer = new AttributizeAddOnUseCase(marshmallows);
-        addOnMap.addItem("Marshmallows " + EntityStringNames.ADD_ON_STRING, addOnAttributizer.attributizeEntity());
+        addOnMap.addItem(
+                "Marshmallows " + EntityStringNames.ADD_ON_STRING,
+                addOnAttributizer.attributizeEntity());
         testMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnMap);
-        assertEquals(testMap.getAttribute().toString(), carAttributizer.attributizeEntity().getAttribute().toString());
+        assertEquals(
+                testMap.getAttribute().toString(),
+                carAttributizer.attributizeEntity().getAttribute().toString());
     }
-
 }

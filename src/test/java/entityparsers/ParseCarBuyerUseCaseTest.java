@@ -8,12 +8,10 @@ import constants.Exceptions;
 
 import entities.CarBuyer;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 public class ParseCarBuyerUseCaseTest {
@@ -25,8 +23,9 @@ public class ParseCarBuyerUseCaseTest {
         builder = Json.createObjectBuilder();
     }
 
-    /** Test ParseCarBuyerUseCase in a "working" situation, with
-     * all values present in the JSONObject and with the correct types.
+    /**
+     * Test ParseCarBuyerUseCase in a "working" situation, with all values present in the JSONObject
+     * and with the correct types.
      */
     @Test
     public void testBuyerParseWorking() {
@@ -48,9 +47,9 @@ public class ParseCarBuyerUseCaseTest {
         assertEquals(carBuyer.getCreditScore(), parsed.getCreditScore());
     }
 
-    /** Test that ParseBuyerUseCase correctly throws a ParseException when
-     * the types of objects in the JSONObject don't match the needed types
-     * for creating a CarBuyer
+    /**
+     * Test that ParseBuyerUseCase correctly throws a ParseException when the types of objects in
+     * the JSONObject don't match the needed types for creating a CarBuyer
      */
     @Test
     public void testBuyerParseBadTypes() {
@@ -72,9 +71,10 @@ public class ParseCarBuyerUseCaseTest {
         }
     }
 
-    /** Test that ParseCarBuyerUseCase correctly throws a ParseException
-     * when the JSONObject attribute names needed for creating a CarBuyer
-     * either don't match or don't exist in the JsonObject
+    /**
+     * Test that ParseCarBuyerUseCase correctly throws a ParseException when the JSONObject
+     * attribute names needed for creating a CarBuyer either don't match or don't exist in the
+     * JsonObject
      */
     @Test
     public void testBuyerParseWrongNames() {

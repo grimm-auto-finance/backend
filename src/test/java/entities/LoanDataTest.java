@@ -1,11 +1,11 @@
 package entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import constants.EntityStringNames;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class LoanDataTest {
 
@@ -81,7 +81,6 @@ public class LoanDataTest {
         loanData.setTermLength(24);
         assertEquals(24, loanData.getTermLength());
     }
-
 
     @Test
     public void testGetStringName() {
