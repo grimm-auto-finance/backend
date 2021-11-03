@@ -79,7 +79,7 @@ public class JsonParserTest {
     }
 
     @Test
-    public void testJsonParser() {
+    public void testJsonParserManyValues() {
         // addToBoth("Int value", 5);
         addToBoth("String value", "hello");
         addToBoth("Double value", 5.5);

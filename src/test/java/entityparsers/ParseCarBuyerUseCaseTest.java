@@ -25,8 +25,11 @@ public class ParseCarBuyerUseCaseTest {
         builder = Json.createObjectBuilder();
     }
 
+    /** Test ParseCarBuyerUseCase in a "working" situation, with
+     * all values present in the JSONObject and with the correct types.
+     */
     @Test
-    public void testBuyerParseComplete() {
+    public void testBuyerParseWorking() {
         JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
         buyerBuilder.add(EntityStringNames.BUYER_BUDGET, 123.456);
         buyerBuilder.add(EntityStringNames.BUYER_CREDIT, 750);
@@ -45,6 +48,10 @@ public class ParseCarBuyerUseCaseTest {
         assertEquals(carBuyer.getCreditScore(), parsed.getCreditScore());
     }
 
+    /** Test that ParseBuyerUseCase correctly throws a ParseException when
+     * the types of objects in the JSONObject don't match the needed types
+     * for creating a CarBuyer
+     */
     @Test
     public void testBuyerParseBadTypes() {
         JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
@@ -65,6 +72,10 @@ public class ParseCarBuyerUseCaseTest {
         }
     }
 
+    /** Test that ParseCarBuyerUseCase correctly throws a ParseException
+     * when the JSONObject attribute names needed for creating a CarBuyer
+     * either don't match or don't exist in the JsonObject
+     */
     @Test
     public void testBuyerParseWrongNames() {
         JsonObjectBuilder buyerBuilder = Json.createObjectBuilder();
@@ -83,6 +94,6 @@ public class ParseCarBuyerUseCaseTest {
         } catch (Exceptions.ParseException e) {
             return;
         }
-        fail(); // exception should definitely be thrown as input values were null
+        fail(); // exception should definitely be thrown as input values were missing
     }
 }

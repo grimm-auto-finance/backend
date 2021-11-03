@@ -18,35 +18,6 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 public class ParseCarUseCaseTest {
-    @Test
-    void parse() {
-        JsonObject obj =
-                Json.createObjectBuilder()
-                        .add(
-                                EntityStringNames.CAR_STRING,
-                                Json.createObjectBuilder()
-                                        .add(EntityStringNames.CAR_PRICE, 10000.0)
-                                        .add(EntityStringNames.CAR_MAKE, "Honda")
-                                        .add(EntityStringNames.CAR_MODEL, "Civic")
-                                        .add(EntityStringNames.CAR_YEAR, 2002)
-                                        .build())
-                        .build();
-        Parser jsonParser = new JsonParser(obj);
-        ParseCarUseCase parseCarUseCase;
-        Car parsed = null;
-        try {
-            parseCarUseCase = new ParseCarUseCase(jsonParser);
-            parsed = parseCarUseCase.parse();
-        } catch (Exceptions.ParseException e) {
-            fail();
-        }
-        Car car = new Car(10000.0, "Honda", "Civic", 2002);
-        assertEquals(car.getAddOns(), parsed.getAddOns());
-        assertEquals(car.getMake(), parsed.getMake());
-        assertEquals(car.getModel(), parsed.getModel());
-        assertEquals(car.getPrice(), parsed.getPrice());
-        assertEquals(car.getYear(), parsed.getYear());
-    }
 
     static JsonObjectBuilder builder;
 
@@ -55,8 +26,11 @@ public class ParseCarUseCaseTest {
         builder = Json.createObjectBuilder();
     }
 
+    /** Test ParseCarUseCase in a "working" situation, with all values
+     * present in the JSONObject and with the correct types
+     */
     @Test
-    public void testCarParseComplete() {
+    public void testCarParseWorking() {
         JsonObjectBuilder carBuilder = Json.createObjectBuilder();
         carBuilder.add(EntityStringNames.CAR_PRICE, 123.456);
         carBuilder.add(EntityStringNames.CAR_YEAR, 2021);
@@ -79,6 +53,9 @@ public class ParseCarUseCaseTest {
         assertEquals(car.getYear(), parsed.getYear());
     }
 
+    /** Test ParseCarUseCase when the JsonObject has incorrect types for Car attributes
+     *  Make sure that parseCarUseCase.parse throws a ParseException.
+     */
     @Test
     public void testCarParseBadTypes() {
         JsonObjectBuilder carBuilder = Json.createObjectBuilder();
@@ -101,6 +78,9 @@ public class ParseCarUseCaseTest {
         }
     }
 
+    /** Test ParseCarUseCase when the attribute names in the JSONObject
+     * do not correspond to the expected attribute names for a Car object
+     */
     @Test
     public void testBuyerParseWrongNames() {
         JsonObjectBuilder carBuilder = Json.createObjectBuilder();

@@ -40,7 +40,7 @@ public class PackageEntityUseCaseTest {
     }
 
     @Test
-    public void testPackageEntity() {
+    public void testPackageEntityWorking() {
         entityPackager.setEntity(car);
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(car);
         AttributeMap entityMap = entityAttributizer.attributizeEntity();
