@@ -64,8 +64,8 @@ public class Car extends Entity {
      *
      * @param addOn
      */
-    public void removeAddOn(AddOn addOn) {
-        addOns.remove(addOn.getName());
+    public void removeAddOn(String addOnName) {
+        addOns.remove(addOnName);
     }
 
     public Map<String, AddOn> getAddOns() {
