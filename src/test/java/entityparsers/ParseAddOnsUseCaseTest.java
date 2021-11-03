@@ -8,17 +8,17 @@ import javax.json.JsonObject;
 public class ParseAddOnsUseCaseTest {
     @Test
     void parse() {
-        JsonObject obj =
-                Json.createObjectBuilder()
-                        .add(
-                                "add-ons",
-                                Json.createObjectBuilder()
-                                        .add("name", "Marshmallows")
-                                        .add("price", 5.59)
-                                        .add("description", "Very Tasty")
-                                        .build())
-                        .build();
-        ParseAddOnsUseCase parseAddOnsUseCase = new ParseAddOnsUseCase(obj);
+//        JsonObject obj =
+//                Json.createObjectBuilder()
+//                        .add(
+//                                "add-ons",
+//                                Json.createObjectBuilder()
+//                                        .add("name", "Marshmallows")
+//                                        .add("price", 5.59)
+//                                        .add("description", "Very Tasty")
+//                                        .build())
+//                        .build();
+//        ParseAddOnsUseCase parseAddOnsUseCase = new ParseAddOnsUseCase(obj);
         // TODO: Uncomment this when ParseAddOnsUseCase.parse() is implemented
         // AddOn parsed = parseAddOnsUseCase.parse();
         // AddOn addOn = new AddOn("Marshmallows", 5.59, "Very Tasty");

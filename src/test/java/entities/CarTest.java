@@ -19,7 +19,7 @@ public class CarTest {
     public void setup() {
         car = new Car(30000, "Honda", "Civic", 2002);
         addOns = new HashMap<>();
-        addOns.put("Marshmallows", new AddOn("Marshmallows"));
+        addOns.put("Marshmallows", new AddOn("Marshmallows", 100, "fluffy goodness"));
         addOns.put("Rust proofing", new AddOn("Rust proofing", 1000, "no rust allowed!"));
     }
 

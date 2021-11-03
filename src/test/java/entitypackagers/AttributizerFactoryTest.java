@@ -22,13 +22,13 @@ public class AttributizerFactoryTest {
 
     @Test
     public void testGetAddOnAttributizer() {
-        Entity addOn = new AddOn("Marshmallows");
+        Entity addOn = new AddOn("Marshmallows", 100, "fluffy goodness");
         assertTrue(AttributizerFactory.getAttributizer(addOn) instanceof AttributizeAddOnUseCase);
     }
 
     @Test
     public void testGetLoanDataAttributizer() {
-        Entity loanData = new LoanData();
+        Entity loanData = new LoanData(0,0, "very low", 100, 36, 200);
         assertTrue(AttributizerFactory.getAttributizer(loanData) instanceof AttributizeLoanDataUseCase);
     }
 

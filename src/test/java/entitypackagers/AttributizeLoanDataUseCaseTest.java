@@ -28,13 +28,6 @@ public class AttributizeLoanDataUseCaseTest {
         testMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, loanData.getTermLength());
     }
     
-    // TODO: Uncomment or remove this test when LoanData constructor has been figured out
-//    @Test
-//    public void testAttributizeEmptyLoanData() {
-//        loanData = new LoanData();
-//        
-//    }
-    
     @Test
     public void testAttributizeLoanData() {
         loanData = new LoanData(1.25, 500.25, "Medium", 50000, 36, 200.25);

@@ -42,14 +42,14 @@ public class AttributizeCarUseCaseTest {
     @Test
     public void testAttributizeCarWithAddOns() {
         AddOn rustProofing = new AddOn("Rust proofing", 1000, "no rust allowed");
-        //testCar.addAddOn(marshmallows);
+        AddOn marshmallows = new AddOn("Marshmallows", 100, "fluffy goodness");
         testCar.addAddOn(rustProofing);
+        testCar.addAddOn(marshmallows);
         AttributeMap addOnMap = new AttributeMap();
-        // TODO: uncomment this part of test when AddOn constructor situation has been figured out
-        //AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(marshmallows);
-        //addOnMap.addItem("Marshmallows " + EntityStringNames.ADD_ON_STRING, (Attribute) addOnAttributizer.attributizeEntity());
         AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(rustProofing);
-        addOnMap.addItem("Rust proofing " + EntityStringNames.ADD_ON_STRING, (Attribute) addOnAttributizer.attributizeEntity());
+        addOnMap.addItem("Rust proofing " + EntityStringNames.ADD_ON_STRING, addOnAttributizer.attributizeEntity());
+        addOnAttributizer = new AttributizeAddOnUseCase(marshmallows);
+        addOnMap.addItem("Marshmallows " + EntityStringNames.ADD_ON_STRING, addOnAttributizer.attributizeEntity());
         testMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnMap);
         assertEquals(testMap.getAttribute().toString(), carAttributizer.attributizeEntity().getAttribute().toString());
     }
