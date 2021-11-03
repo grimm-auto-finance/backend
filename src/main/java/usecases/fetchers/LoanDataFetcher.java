@@ -6,6 +6,7 @@ import entities.*;
 import entities.LoanData;
 
 import entitybuilder.GenerateLoanUseCase;
+
 import logging.Logger;
 import logging.LoggerFactory;
 
@@ -98,7 +99,13 @@ public class LoanDataFetcher {
         double installment, loanAmount, interestSum;
         try {
             interestRate = ((JsonNumber) rateResponse.get("interestRate")).intValue();
-            installment = ((JsonNumber) ((JsonObject) ((JsonArray) rateResponse.get("installments")).get(0)).get("installment")).doubleValue();
+            installment =
+                    ((JsonNumber)
+                                    ((JsonObject)
+                                                    ((JsonArray) rateResponse.get("installments"))
+                                                            .get(0))
+                                            .get("installment"))
+                            .doubleValue();
             loanAmount = ((JsonNumber) rateResponse.get("capitalSum")).doubleValue();
             termLength = Integer.parseInt(((JsonString) rateResponse.get("term")).getString());
             interestSum = ((JsonNumber) rateResponse.get("interestSum")).doubleValue();
@@ -180,6 +187,7 @@ public class LoanDataFetcher {
             throw (Exceptions.CodedException) new Exceptions.FetchException();
         }
 
-        return GenerateLoanUseCase.generateLoanData(interestRate, installment, sensoScore, loanAmount, termLength, interestSum);
+        return GenerateLoanUseCase.generateLoanData(
+                interestRate, installment, sensoScore, loanAmount, termLength, interestSum);
     }
 }

@@ -9,7 +9,14 @@ public class GenerateLoanUseCase {
      *
      * @return Returns a Loan Data object
      */
-    public static LoanData generateLoanData(double interestRate, double installment, String sensoScore, double loanAmount, int termLength, double interestSum) {
-        return new LoanData(interestRate, installment, sensoScore, loanAmount, termLength, interestSum);
+    public static LoanData generateLoanData(
+            double interestRate,
+            double installment,
+            String sensoScore,
+            double loanAmount,
+            int termLength,
+            double interestSum) {
+        return new LoanData(
+                interestRate, installment, sensoScore, loanAmount, termLength, interestSum);
     }
 }
