@@ -3,6 +3,7 @@ package entities;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import constants.EntityStringNames;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,5 +47,10 @@ public class AddOnTest {
     public void testSetDescription() {
         emptyAddOn.setDescription("sweet yummy goodness");
         assertEquals("sweet yummy goodness", emptyAddOn.getDescription());
+    }
+
+    @Test
+    public void testGetStringName() {
+        assertEquals(EntityStringNames.ADD_ON_STRING, emptyAddOn.getStringName());
     }
 }

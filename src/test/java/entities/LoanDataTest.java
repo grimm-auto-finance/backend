@@ -3,6 +3,7 @@ package entities;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import constants.EntityStringNames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -81,7 +82,6 @@ public class LoanDataTest {
         assertEquals(24, loanData.getTermLength());
     }
 
-
     @Test
     public void testEmptyConstructor() {
         loanData = new LoanData();
@@ -91,5 +91,10 @@ public class LoanDataTest {
         assertEquals(0, loanData.getInterestSum());
         assertEquals(0, loanData.getTermLength());
         assertNull(loanData.getSensoScore());
+    }
+
+    @Test
+    public void testGetStringName() {
+        assertEquals(EntityStringNames.LOAN_STRING, loanData.getStringName());
     }
 }

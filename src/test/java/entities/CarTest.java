@@ -3,6 +3,7 @@ package entities;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import constants.EntityStringNames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -71,5 +72,10 @@ public class CarTest {
         car = new Car(30000, "Honda", "Civic", 2002, addOns);
         car.removeAddOn("Marshmallows");
         assertFalse(addOns.containsKey("Marshmallows"));
+    }
+
+    @Test
+    public void testGetStringName() {
+        assertEquals(EntityStringNames.CAR_STRING, car.getStringName());
     }
 }
