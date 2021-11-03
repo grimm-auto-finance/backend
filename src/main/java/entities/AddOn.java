@@ -14,6 +14,7 @@ public class AddOn extends Entity {
      *
      * @param name
      */
+    // TODO: remove this constructor?
     public AddOn(String name) {
         this.name = name;
     }
