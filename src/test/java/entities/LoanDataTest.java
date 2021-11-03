@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class LoanDataTest {
     @Test
     public void gettersAndSetters() {
-        LoanData loanData = new LoanData();
+        LoanData loanData = new LoanData(5.5, 600, "Very high", 15000, 24, 3000);
         loanData.setLoanAmount(10000);
         loanData.setInstallment(500.45);
         loanData.setInterestRate(1.25);
