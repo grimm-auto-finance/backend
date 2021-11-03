@@ -20,6 +20,8 @@ import entityparsers.Parser;
 
 import fetchers.LoanDataFetcher;
 
+import logging.LoggerFactory;
+
 import java.io.*;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -58,8 +60,7 @@ public class Loan extends Route {
                 return;
             }
         } catch (Exceptions.CodedException e) {
-            // TODO: printing this should be handled by the Logger
-            e.printStackTrace();
+            LoggerFactory.getLogger().error(e.getStackTrace().toString());
             String message = "Error in Payload JSON parsing";
             t.sendResponseHeaders(400, message.length());
             os.write(message.getBytes());

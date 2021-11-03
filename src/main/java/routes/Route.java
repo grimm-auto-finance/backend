@@ -3,6 +3,9 @@ package routes;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import logging.Logger;
+import logging.LoggerFactory;
+
 import java.io.IOException;
 
 /** The generic route class that all routes will inherit from */
@@ -53,6 +56,15 @@ public abstract class Route implements HttpHandler {
      */
     public final void handle(HttpExchange t) throws IOException {
         String method = t.getRequestMethod();
+
+        Logger l = LoggerFactory.getLogger();
+        l.info(
+                "recieved "
+                        + method
+                        + " request on "
+                        + t.getRequestURI()
+                        + " from "
+                        + t.getRemoteAddress());
         switch (method) {
             case "GET":
                 this.get(t);
@@ -82,6 +94,7 @@ public abstract class Route implements HttpHandler {
                 this.patch(t);
                 break;
             default:
+                l.error("recieved request with unknown method: " + method);
         }
         t.close();
     }
