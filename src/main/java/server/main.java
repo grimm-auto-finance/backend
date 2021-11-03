@@ -2,12 +2,12 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 
-import controllers.Route;
-import controllers.Routes;
-
 import fetchers.DataBaseFetcher;
 
 import logging.LoggerFactory;
+
+import routes.Route;
+import routes.Routes;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

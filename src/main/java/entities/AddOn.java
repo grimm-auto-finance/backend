@@ -9,17 +9,6 @@ public class AddOn extends Entity {
     private String description;
 
     /**
-     * Constructs a new AddOn object with the given name. The price and description fields are not
-     * initialized.
-     *
-     * @param name
-     */
-    // TODO: remove this constructor?
-    public AddOn(String name) {
-        this.name = name;
-    }
-
-    /**
      * Constructs a new AddOn objects with the given name, price, and description.
      *
      * @param name

@@ -18,4 +18,9 @@ class SystemLogger implements Logger {
     public void error(String string) {
         System.err.println("[ \u001B[31mERROR\u001B[0m ] " + string);
     }
+
+    @Override
+    public void error(String string, Exception e) {
+        error(string + e.getStackTrace().toString());
+    }
 }

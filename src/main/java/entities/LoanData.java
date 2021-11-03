@@ -14,10 +14,6 @@ public class LoanData extends Entity {
     private int termLength;
     private double interestSum;
 
-    // TODO: Decide if this constructor is necessary
-    /** Constructs an empty LoanData object. */
-    public LoanData() {}
-
     /**
      * Constructs a new LoanData object with the given values.
      *

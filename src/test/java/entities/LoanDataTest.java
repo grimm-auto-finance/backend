@@ -82,16 +82,6 @@ public class LoanDataTest {
         assertEquals(24, loanData.getTermLength());
     }
 
-    @Test
-    public void testEmptyConstructor() {
-        loanData = new LoanData();
-        assertEquals(0, loanData.getInterestRate());
-        assertEquals(0, loanData.getInstallment());
-        assertEquals(0, loanData.getLoanAmount());
-        assertEquals(0, loanData.getInterestSum());
-        assertEquals(0, loanData.getTermLength());
-        assertNull(loanData.getSensoScore());
-    }
 
     @Test
     public void testGetStringName() {

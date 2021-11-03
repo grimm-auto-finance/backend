@@ -5,11 +5,18 @@ import entities.LoanData;
 /** Class to generate an empty LoanData object */
 public class GenerateLoanUseCase {
     /**
-     * Constructor that generates the empty LoanData and returns it
+     * Constructor that generates a LoanData object with the given parameters
      *
-     * @return Returns an empty Loan Data object
+     * @return Returns a Loan Data object
      */
-    public LoanData GenerateLoanDataUseCase() {
-        return new LoanData();
+    public static LoanData generateLoanData(
+            double interestRate,
+            double installment,
+            String sensoScore,
+            double loanAmount,
+            int termLength,
+            double interestSum) {
+        return new LoanData(
+                interestRate, installment, sensoScore, loanAmount, termLength, interestSum);
     }
 }

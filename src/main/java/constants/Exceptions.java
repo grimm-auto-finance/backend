@@ -48,4 +48,16 @@ public class Exceptions {
             super(message);
         }
     }
+
+    public static class MissingMethodException extends CodedException {
+        public int getCode() {
+            return 404;
+        }
+
+        public MissingMethodException() {}
+
+        public MissingMethodException(String message) {
+            super(message);
+        }
+    }
 }
