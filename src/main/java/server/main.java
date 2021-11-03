@@ -2,10 +2,12 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 
-import controllers.Route;
-import controllers.Routes;
-
 import fetchers.DataBaseFetcher;
+
+import logging.LoggerFactory;
+
+import routes.Route;
+import routes.Routes;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -17,7 +19,7 @@ class Server {
         try {
             DataBaseFetcher.insertPlaceholderData();
         } catch (Exception e) {
-            System.out.println("Placeholder data may already exist.");
+            LoggerFactory.getLogger().info("placeholder data may already exist");
         }
         HttpServer server = HttpServer.create(new InetSocketAddress(Env.PORT), 0);
         for (Route route : Routes.routes) {

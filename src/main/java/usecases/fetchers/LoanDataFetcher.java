@@ -5,6 +5,11 @@ import constants.Exceptions;
 import entities.*;
 import entities.LoanData;
 
+import entitybuilder.GenerateLoanUseCase;
+
+import logging.Logger;
+import logging.LoggerFactory;
+
 import server.Env;
 
 import java.io.BufferedReader;
@@ -23,7 +28,7 @@ import javax.json.JsonString;
 
 public class LoanDataFetcher {
     public static LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
-        LoanData loanData = new LoanData();
+        Logger l = LoggerFactory.getLogger();
 
         HttpURLConnection rateConn;
         try {
@@ -82,8 +87,7 @@ public class LoanDataFetcher {
                         Json.createReader(new StringReader(responseBuilder.toString()));
                 rateResponse = jsonReader.readObject();
             } else {
-                // TODO: switch this to use Logging class once implemented
-                System.out.println("Request to the Senso Rate API failed");
+                l.error("request to the senso rate API failed");
                 throw (Exceptions.CodedException) new Exceptions.FetchException();
             }
         } catch (IOException e) {
@@ -91,19 +95,20 @@ public class LoanDataFetcher {
             throw (Exceptions.CodedException) new Exceptions.FetchException();
         }
 
+        int interestRate, termLength;
+        double installment, loanAmount, interestSum;
         try {
-            loanData.setInterestRate(((JsonNumber) rateResponse.get("interestRate")).intValue());
-            loanData.setInstallment(
+            interestRate = ((JsonNumber) rateResponse.get("interestRate")).intValue();
+            installment =
                     ((JsonNumber)
                                     ((JsonObject)
                                                     ((JsonArray) rateResponse.get("installments"))
                                                             .get(0))
                                             .get("installment"))
-                            .doubleValue());
-            loanData.setLoanAmount(((JsonNumber) rateResponse.get("capitalSum")).doubleValue());
-            loanData.setTermLength(
-                    Integer.parseInt(((JsonString) rateResponse.get("term")).getString()));
-            loanData.setInterestSum(((JsonNumber) rateResponse.get("interestSum")).doubleValue());
+                            .doubleValue();
+            loanAmount = ((JsonNumber) rateResponse.get("capitalSum")).doubleValue();
+            termLength = Integer.parseInt(((JsonString) rateResponse.get("term")).getString());
+            interestSum = ((JsonNumber) rateResponse.get("interestSum")).doubleValue();
         } catch (ClassCastException e) {
             // TODO: Document this and break it up
             throw (Exceptions.CodedException) new Exceptions.FetchException();
@@ -133,7 +138,7 @@ public class LoanDataFetcher {
                 Json.createObjectBuilder()
                         .add("remainingBalance", car.getPrice())
                         .add("creditScore", buyer.getCreditScore())
-                        .add("loanAge", loanData.getTermLength())
+                        .add("loanAge", termLength)
                         // TODO: Pull make and model separately instead
                         .add("vehicleMake", car.getMake())
                         .add("vehicleModel", car.getModel())
@@ -166,8 +171,7 @@ public class LoanDataFetcher {
                         Json.createReader(new StringReader(responseBuilder.toString()));
                 scoreResponse = jsonReader.readObject();
             } else {
-                // TODO: switch this to use Logging class once implemented
-                System.out.println("Request to the Senso API failed");
+                l.error("request to the senso score API failed");
                 throw (Exceptions.CodedException) new Exceptions.FetchException();
             }
         } catch (IOException e) {
@@ -175,13 +179,15 @@ public class LoanDataFetcher {
             throw (Exceptions.CodedException) new Exceptions.FetchException();
         }
 
+        String sensoScore;
         try {
-            loanData.setSensoScore(((JsonString) scoreResponse.get("sensoScore")).getString());
+            sensoScore = ((JsonString) scoreResponse.get("sensoScore")).getString();
         } catch (ClassCastException e) {
             // TODO: Document this and break it up
             throw (Exceptions.CodedException) new Exceptions.FetchException();
         }
 
-        return loanData;
+        return GenerateLoanUseCase.generateLoanData(
+                interestRate, installment, sensoScore, loanAmount, termLength, interestSum);
     }
 }
