@@ -56,12 +56,8 @@ public class Search extends Route {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         for (Car car : cars) {
             AttributizeCarUseCase uc = new AttributizeCarUseCase(car);
-            try {
-                JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
-                arrayBuilder.add(json);
-            } catch (constants.Exceptions.PackageException e) {
-                e.printStackTrace();
-            }
+            JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
+            arrayBuilder.add(json);
         }
         String responseString = arrayBuilder.build().toString();
         respond(t, 200, responseString.getBytes());

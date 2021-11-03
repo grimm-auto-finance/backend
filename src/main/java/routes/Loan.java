@@ -2,7 +2,6 @@ package routes;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import constants.Exceptions;
 import constants.Exceptions.CodedException;
 
 import entities.Car;
@@ -20,8 +19,6 @@ import entityparsers.ParseCarUseCase;
 import entityparsers.Parser;
 
 import fetchers.LoanDataFetcher;
-
-import logging.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -45,28 +42,22 @@ public class Loan extends Route {
     protected void post(HttpExchange t) throws CodedException {
         InputStream is = t.getRequestBody();
         JsonReader jsonReader = Json.createReader(is);
-        Car car;
-        CarBuyer buyer;
-        try {
-            JsonObject inputObj = jsonReader.readObject();
-            Parser jsonParser = new JsonParser(inputObj);
-            ParseCarUseCase carParser = new ParseCarUseCase(jsonParser);
-            ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(jsonParser);
-            car = carParser.parse();
-            buyer = buyerParser.parse();
-            // TODO: this check should be happening with ParseCarUseCase and ParseCarBuyerUseCase
-            if (car.getMake() == null || car.getModel() == null) {
-                String message = "Error in Payload JSON parsing";
-                respond(t, 400, message.getBytes());
-                return;
-            }
-        } catch (Exceptions.CodedException e) {
-            LoggerFactory.getLogger().error(e.getStackTrace().toString());
+        JsonObject inputObj = jsonReader.readObject();
+        Parser jsonParser = new JsonParser(inputObj);
+        ParseCarUseCase carParser = new ParseCarUseCase(jsonParser);
+        ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(jsonParser);
+        Car car = carParser.parse();
+        CarBuyer buyer = buyerParser.parse();
+        // TODO: this check should be happening with ParseCarUseCase and ParseCarBuyerUseCase
+        if (car.getMake() == null || car.getModel() == null) {
             String message = "Error in Payload JSON parsing";
             respond(t, 400, message.getBytes());
             return;
         }
+        respond(t, 200, getResponse(buyer, car).getBytes());
+    }
 
+    String getResponse(entities.CarBuyer buyer, entities.Car car) throws CodedException {
         LoanData loanData = LoanDataFetcher.fetch(buyer, car);
         // TODO: Abstract this more?
         JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
@@ -82,7 +73,6 @@ public class Loan extends Route {
             jsonBuilder.add(e.getStringName(), entityPackage.getPackage());
         }
 
-        String responseString = jsonBuilder.build().toString();
-        respond(t, 200, responseString.getBytes());
+        return jsonBuilder.build().toString();
     }
 }
