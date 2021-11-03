@@ -2,19 +2,25 @@ package entities;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class ChildCarBuyer extends CarBuyer {
-    public ChildCarBuyer(double budget, int creditScore) {
-        super(budget, creditScore);
-    }
-}
-
 public class CarBuyerTest {
+
+    static CarBuyer buyer;
+
+    @BeforeAll
+    static void setup() {
+        buyer = new CarBuyer(50000, 750);
+    }
+
     @Test
-    public void constructorAndGetters() {
-        CarBuyer carBuyer = new CarBuyer(529.56, 540);
-        assertEquals(529.56, carBuyer.getBudget());
-        assertEquals(540, carBuyer.getCreditScore());
+    public void testGetBudget() {
+        assertEquals(50000, buyer.getBudget());
+    }
+
+    @Test
+    public void testGetCreditScore() {
+        assertEquals(750, buyer.getCreditScore());
     }
 }
