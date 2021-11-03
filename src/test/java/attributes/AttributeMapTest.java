@@ -11,68 +11,68 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class AttributeMapTest {
 
-    static AttributeMap attMap;
-    static IntAttribute intAtt = new IntAttribute(1);
-    static DoubleAttribute doubleAtt = new DoubleAttribute(1.1);
+  static AttributeMap attMap;
+  static IntAttribute intAtt = new IntAttribute(1);
+  static DoubleAttribute doubleAtt = new DoubleAttribute(1.1);
 
-    @BeforeEach
-    public void setup() {
-        attMap = new AttributeMap();
+  @BeforeEach
+  public void setup() {
+    attMap = new AttributeMap();
+  }
+
+  @Test
+  public void testAddAttributeItem() {
+    try {
+      attMap.addItem("integer attribute", intAtt);
+    } catch (ClassCastException e) {
+      fail();
     }
 
-    @Test
-    public void testAddAttributeItem() {
-        try {
-            attMap.addItem("integer attribute", intAtt);
-        } catch (ClassCastException e) {
-            fail();
-        }
+    assertEquals(intAtt, attMap.getItem("integer attribute"));
+  }
 
-        assertEquals(intAtt, attMap.getItem("integer attribute"));
+  @Test
+  public void testAddObjectItem() {
+    try {
+      attMap.addItem("integer object", 1);
+    } catch (ClassCastException e) {
+      fail();
     }
 
-    @Test
-    public void testAddObjectItem() {
-        try {
-            attMap.addItem("integer object", 1);
-        } catch (ClassCastException e) {
-            fail();
-        }
+    assertEquals(intAtt.getAttribute(), attMap.getItem("integer object").getAttribute());
+  }
 
-        assertEquals(intAtt.getAttribute(), attMap.getItem("integer object").getAttribute());
+  @Test
+  public void testGetAttribute() {
+    Map<String, Attribute> testMap = new HashMap<>();
+    testMap.put("integer attribute", intAtt);
+    testMap.put("double attribute", doubleAtt);
+    try {
+      attMap.addItem("integer attribute", intAtt);
+      attMap.addItem("double attribute", doubleAtt);
+    } catch (ClassCastException e) {
+      fail();
     }
+    assertEquals(testMap, attMap.getAttribute());
+  }
 
-    @Test
-    public void testGetAttribute() {
-        Map<String, Attribute> testMap = new HashMap<>();
-        testMap.put("integer attribute", intAtt);
-        testMap.put("double attribute", doubleAtt);
-        try {
-            attMap.addItem("integer attribute", intAtt);
-            attMap.addItem("double attribute", doubleAtt);
-        } catch (ClassCastException e) {
-            fail();
-        }
-        assertEquals(testMap, attMap.getAttribute());
+  @Test
+  public void testGetItemMissingItem() {
+    try {
+      attMap.getItem("this item doesn't exist!");
+    } catch (NullPointerException e) {
+      return;
     }
+    fail();
+  }
 
-    @Test
-    public void testGetItemMissingItem() {
-        try {
-            attMap.getItem("this item doesn't exist!");
-        } catch (NullPointerException e) {
-            return;
-        }
-        fail();
+  @Test
+  public void testAddUnhandledItem() {
+    try {
+      attMap.addItem("no corresponding Attribute", new Object());
+    } catch (ClassCastException e) {
+      return;
     }
-
-    @Test
-    public void testAddUnhandledItem() {
-        try {
-            attMap.addItem("no corresponding Attribute", new Object());
-        } catch (ClassCastException e) {
-            return;
-        }
-        fail();
-    }
+    fail();
+  }
 }

@@ -4,23 +4,23 @@ import javax.json.JsonObject;
 
 public class JsonPackage extends Package {
 
-    private final JsonObject obj;
+  private final JsonObject obj;
 
-    /**
-     * Constructs a new JsonPackage to contain the given JsonObject
-     *
-     * @param obj
-     */
-    public JsonPackage(JsonObject obj) {
-        this.obj = obj;
-    }
+  /**
+   * Constructs a new JsonPackage to contain the given JsonObject
+   *
+   * @param obj
+   */
+  public JsonPackage(JsonObject obj) {
+    this.obj = obj;
+  }
 
-    /**
-     * Get this package's contents
-     *
-     * @return the JsonObject stored in this JsonPackage
-     */
-    public JsonObject getPackage() {
-        return obj;
-    }
+  /**
+   * Get this package's contents
+   *
+   * @return the JsonObject stored in this JsonPackage
+   */
+  public JsonObject getPackage() {
+    return obj;
+  }
 }

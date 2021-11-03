@@ -1,13 +1,11 @@
 package entitypackagers;
 
 import attributes.*;
-
 import constants.Exceptions;
-
-import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
+import java.util.Map;
 
 public class JsonPackager implements Packager {
 
@@ -29,7 +27,7 @@ public class JsonPackager implements Packager {
                 double itemDouble = (double) item.getAttribute();
                 builder.add(key, itemDouble);
             } else if (item instanceof StringAttribute) {
-                String itemString = (String) item.getAttribute();
+        String itemString = (String) item.getAttribute();
                 builder.add(key, itemString);
             } else if (item instanceof AttributeMap) {
                 JsonPackager subPackager = new JsonPackager();
