@@ -3,6 +3,7 @@ package routes;
 import com.sun.net.httpserver.HttpExchange;
 
 import constants.Exceptions;
+import constants.Exceptions.CodedException;
 
 import entities.Car;
 import entities.CarBuyer;
@@ -23,8 +24,6 @@ import fetchers.LoanDataFetcher;
 import logging.LoggerFactory;
 
 import java.io.*;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +42,7 @@ public class Loan extends Route {
      * @param t the httpexchange that this method must handle
      */
     @Override
-    protected void post(HttpExchange t) throws IOException {
-        OutputStream os = t.getResponseBody();
-
+    protected void post(HttpExchange t) throws CodedException {
         InputStream is = t.getRequestBody();
         JsonReader jsonReader = Json.createReader(is);
         Car car;
@@ -60,49 +57,32 @@ public class Loan extends Route {
             // TODO: this check should be happening with ParseCarUseCase and ParseCarBuyerUseCase
             if (car.getMake() == null || car.getModel() == null) {
                 String message = "Error in Payload JSON parsing";
-                t.sendResponseHeaders(400, message.length());
-                os.write(message.getBytes());
-                os.close();
+                respond(t, 400, message.getBytes());
                 return;
             }
         } catch (Exceptions.CodedException e) {
             LoggerFactory.getLogger().error(e.getStackTrace().toString());
             String message = "Error in Payload JSON parsing";
-            t.sendResponseHeaders(400, message.length());
-            os.write(message.getBytes());
-            os.close();
+            respond(t, 400, message.getBytes());
             return;
         }
 
-        try {
-            LoanData loanData = LoanDataFetcher.fetch(buyer, car);
-            // TODO: Abstract this more?
-            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-            List<Entity> entities = new ArrayList<>();
-            entities.add(car);
-            entities.add(buyer);
-            entities.add(loanData);
-            PackageEntityUseCase packageEntity = new PackageEntityUseCase();
-            for (Entity e : entities) {
-                packageEntity.setEntity(e);
-                JsonPackager jsonPackager = new JsonPackager();
-                JsonPackage entityPackage = (JsonPackage) packageEntity.writeEntity(jsonPackager);
-                jsonBuilder.add(e.getStringName(), entityPackage.getPackage());
-            }
-
-            String responseString = jsonBuilder.build().toString();
-            t.sendResponseHeaders(200, responseString.length());
-            os.write(responseString.getBytes());
-        } catch (Exceptions.CodedException e) {
-
-            String message = e.getMessage();
-            if (message != null) {
-                t.sendResponseHeaders(e.getCode(), message.length());
-                os.write(message.getBytes());
-            } else {
-                t.sendResponseHeaders(e.getCode(), 0);
-            }
+        LoanData loanData = LoanDataFetcher.fetch(buyer, car);
+        // TODO: Abstract this more?
+        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+        List<Entity> entities = new ArrayList<>();
+        entities.add(car);
+        entities.add(buyer);
+        entities.add(loanData);
+        PackageEntityUseCase packageEntity = new PackageEntityUseCase();
+        for (Entity e : entities) {
+            packageEntity.setEntity(e);
+            JsonPackager jsonPackager = new JsonPackager();
+            JsonPackage entityPackage = (JsonPackage) packageEntity.writeEntity(jsonPackager);
+            jsonBuilder.add(e.getStringName(), entityPackage.getPackage());
         }
-        os.close();
+
+        String responseString = jsonBuilder.build().toString();
+        respond(t, 200, responseString.getBytes());
     }
 }

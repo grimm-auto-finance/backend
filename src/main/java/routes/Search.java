@@ -2,6 +2,9 @@ package routes;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import constants.Exceptions.CodedException;
+import constants.Exceptions.ParseException;
+
 import entities.Car;
 
 import entitypackagers.AttributizeCarUseCase;
@@ -13,8 +16,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.json.Json;
@@ -34,36 +35,35 @@ public class Search extends Route {
      * @param t the httpexchange that this method must handle
      */
     @Override
-    protected void post(HttpExchange t) throws IOException {
-        OutputStream os = t.getResponseBody();
+    protected void post(HttpExchange t) throws CodedException {
         InputStream is = t.getRequestBody();
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
         StringBuilder sb = new StringBuilder();
         String str;
-        while ((str = reader.readLine()) != null) {
-            sb.append(str);
+        try {
+            while ((str = reader.readLine()) != null) {
+                sb.append(str);
+            }
+        } catch (IOException e) {
+            throw (CodedException) new ParseException(e.getMessage());
         }
         String searchString = sb.toString();
 
-        try {
-            List<Car> cars = DataBaseFetcher.search(searchString);
-            JsonPackager jp = new JsonPackager();
-            JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-            for (Car car : cars) {
-                AttributizeCarUseCase uc = new AttributizeCarUseCase(car);
-                try {
-                    JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
-                    arrayBuilder.add(json);
-                } catch (constants.Exceptions.PackageException e) {
-                    e.printStackTrace();
-                }
+        List<Car> cars;
+        cars = DataBaseFetcher.search(searchString);
+        JsonPackager jp = new JsonPackager();
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        for (Car car : cars) {
+            AttributizeCarUseCase uc = new AttributizeCarUseCase(car);
+            try {
+                JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
+                arrayBuilder.add(json);
+            } catch (constants.Exceptions.PackageException e) {
+                e.printStackTrace();
             }
-            String responseString = arrayBuilder.build().toString();
-            t.sendResponseHeaders(200, responseString.length());
-            os.write(responseString.getBytes());
-        } catch (SQLException e) {
-            throw new IOException();
         }
+        String responseString = arrayBuilder.build().toString();
+        respond(t, 200, responseString.getBytes());
     }
 }
