@@ -8,7 +8,7 @@ public class IntAttribute extends Attribute {
     /**
      * Constructs a new IntAttribute with the given int item
      *
-     * @param item
+     * @param item The int item to be attributized
      */
     public IntAttribute(int item) {
         this.item = item;
@@ -17,7 +17,7 @@ public class IntAttribute extends Attribute {
     /**
      * Returns an Integer representation of the int stored in this IntAttribute
      *
-     * @return
+     * @return The int item stored in the attribute
      */
     public Integer getAttribute() {
         return item;
