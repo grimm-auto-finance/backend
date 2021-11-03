@@ -9,8 +9,8 @@ public class EntityStringNames {
     public static final String CAR_PRICE = "price";
     public static final String CAR_ADD_ONS = "addOns";
 
-    public static final String BUYER_STRING = "car buyer";
-    public static final String BUYER_BUDGET = "pytBudget";
+    public static final String BUYER_STRING = "carBuyer";
+    public static final String BUYER_BUDGET = "budget";
     public static final String BUYER_CREDIT = "creditScore";
 
     public static final String LOAN_STRING = "loan";
