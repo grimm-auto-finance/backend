@@ -3,7 +3,6 @@ package entities;
 import attributes.AttributeMap;
 import constants.EntityStringNames;
 import constants.Exceptions;
-import entitybuilder.GenerateBuyerUseCase;
 
 public class CarBuyerFactory {
 

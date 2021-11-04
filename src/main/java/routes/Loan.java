@@ -1,13 +1,11 @@
 package routes;
 
+import attributes.AttributeMap;
 import com.sun.net.httpserver.HttpExchange;
 
 import constants.Exceptions.CodedException;
 
-import entities.Car;
-import entities.CarBuyer;
-import entities.Entity;
-import entities.LoanData;
+import entities.*;
 
 import entitypackagers.JsonPackage;
 import entitypackagers.JsonPackager;
@@ -44,16 +42,9 @@ public class Loan extends Route {
         JsonReader jsonReader = Json.createReader(is);
         JsonObject inputObj = jsonReader.readObject();
         Parser jsonParser = new JsonParser(inputObj);
-        ParseCarUseCase carParser = new ParseCarUseCase(jsonParser);
-        ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(jsonParser);
-        Car car = carParser.parse();
-        CarBuyer buyer = buyerParser.parse();
-        // TODO: this check should be happening with ParseCarUseCase and ParseCarBuyerUseCase
-        if (car.getMake() == null || car.getModel() == null) {
-            String message = "Error in Payload JSON parsing";
-            respond(t, 400, message.getBytes());
-            return;
-        }
+        AttributeMap entitiesMap = jsonParser.parse();
+        Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
+        CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
         respond(t, 200, getResponse(buyer, car).getBytes());
     }
 
