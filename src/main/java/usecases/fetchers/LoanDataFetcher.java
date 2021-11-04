@@ -60,7 +60,7 @@ public class LoanDataFetcher {
                         .add("vehicleKms", 0)
                         // TODO: Understand what listPrice and downpayment are and incorporate them
                         .add("listPrice", car.getPrice())
-                        .add("downpayment", car.getPrice()/10)
+                        .add("downpayment", car.getPrice() / 10)
                         .build();
 
         try {
@@ -144,7 +144,8 @@ public class LoanDataFetcher {
                         .add("vehicleMake", car.getMake())
                         .add("vehicleModel", car.getModel())
                         .add("vehicleYear", car.getYear())
-                        //TODO: Understand what carValue and loanStartDate are, and make them not hardcoded
+                        // TODO: Understand what carValue and loanStartDate are, and make them not
+                        // hardcoded
                         .add("carValue", car.getPrice())
                         .add("loanStartDate", String.valueOf(java.time.LocalDate.now()))
                         .build();
