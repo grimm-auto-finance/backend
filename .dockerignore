@@ -1,1 +1,11 @@
-.gitignore
+/.classpath
+/.project
+/.gradle/
+/.settings/
+/bin/
+/build/
+/.idea
+/.vscode
+/.git
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
