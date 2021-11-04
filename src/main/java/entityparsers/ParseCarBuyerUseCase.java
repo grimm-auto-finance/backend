@@ -35,7 +35,7 @@ public class ParseCarBuyerUseCase {
         try {
             AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
             budget = (double) buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
-            creditScore = (int) Math.round((Double) buyerMap.getItem(EntityStringNames.BUYER_CREDIT).getAttribute());
+            creditScore = (int) buyerMap.getItem(EntityStringNames.BUYER_CREDIT).getAttribute();
         } catch (ClassCastException e) {
             Exceptions.ParseException ex = new Exceptions.ParseException(e.getMessage());
             ex.setStackTrace(e.getStackTrace());
