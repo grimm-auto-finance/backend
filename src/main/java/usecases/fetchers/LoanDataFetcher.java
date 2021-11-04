@@ -53,12 +53,14 @@ public class LoanDataFetcher {
                         .add("loanAmount", car.getPrice())
                         .add("creditScore", buyer.getCreditScore())
                         .add("pytBudget", buyer.getBudget())
-                        // TODO: Pull make and model separately instead
                         .add("vehicleMake", car.getMake())
                         .add("vehicleModel", car.getModel())
                         .add("vehicleYear", car.getYear())
                         // TODO: Consider allowing this to be modified
                         .add("vehicleKms", 0)
+                        // TODO: Understand what listPrice and downpayment are and incorporate them
+                        .add("listPrice", car.getPrice())
+                        .add("downpayment", car.getPrice() / 10)
                         .build();
 
         try {
@@ -139,10 +141,13 @@ public class LoanDataFetcher {
                         .add("remainingBalance", car.getPrice())
                         .add("creditScore", buyer.getCreditScore())
                         .add("loanAge", termLength)
-                        // TODO: Pull make and model separately instead
                         .add("vehicleMake", car.getMake())
                         .add("vehicleModel", car.getModel())
-                        .add("vehicleYear", 2021)
+                        .add("vehicleYear", car.getYear())
+                        // TODO: Understand what carValue and loanStartDate are, and make them not
+                        // hardcoded
+                        .add("carValue", car.getPrice())
+                        .add("loanStartDate", String.valueOf(java.time.LocalDate.now()))
                         .build();
 
         try {
