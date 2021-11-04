@@ -5,9 +5,9 @@ import constants.EntityStringNames;
 import constants.Exceptions;
 import entitybuilder.GenerateBuyerUseCase;
 
-public class CarBuyerFactory implements EntityFactory {
+public class CarBuyerFactory {
 
-    public CarBuyer getEntity(AttributeMap map) throws Exceptions.FactoryException {
+    public static CarBuyer getEntity(AttributeMap map) throws Exceptions.FactoryException {
         double budget;
         int creditScore;
         try {

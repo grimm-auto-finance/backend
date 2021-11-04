@@ -4,9 +4,9 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 import constants.Exceptions;
 
-public class AddOnFactory implements EntityFactory {
+public class AddOnFactory {
 
-    public AddOn getEntity(AttributeMap map) throws Exceptions.FactoryException {
+    public static AddOn getEntity(AttributeMap map) throws Exceptions.FactoryException {
         String name;
         double price;
         String description;

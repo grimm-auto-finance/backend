@@ -4,9 +4,9 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 import constants.Exceptions;
 
-public class CarFactory implements EntityFactory {
+public class CarFactory {
 
-  public Car getEntity(AttributeMap map) throws Exceptions.FactoryException {
+  public static Car getEntity(AttributeMap map) throws Exceptions.FactoryException {
       String make, model;
       int year;
       double price;

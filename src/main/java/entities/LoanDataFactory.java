@@ -4,9 +4,9 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 import constants.Exceptions;
 
-public class LoanDataFactory implements EntityFactory {
+public class LoanDataFactory {
 
-    public LoanData getEntity(AttributeMap map) throws Exceptions.FactoryException {
+    public static LoanData getEntity(AttributeMap map) throws Exceptions.FactoryException {
         double interestRate;
         double installment;
         String sensoScore;
