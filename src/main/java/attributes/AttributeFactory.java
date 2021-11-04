@@ -9,6 +9,8 @@ public class AttributeFactory {
             return new DoubleAttribute((Double) obj);
         } else if (obj instanceof String) {
             return new StringAttribute((String) obj);
+        } else if (obj instanceof Attribute[]) {
+            return new ArrayAttribute((Attribute[]) obj);
         } else {
             throw new ClassCastException(
                     "Unable to find appropriate Attribute for Object" + obj.toString());
