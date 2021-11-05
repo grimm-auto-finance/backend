@@ -1,6 +1,5 @@
 package entitypackagers;
 
-import attributes.ArrayAttribute;
 import attributes.Attribute;
 import attributes.AttributeFactory;
 import attributes.AttributeMap;

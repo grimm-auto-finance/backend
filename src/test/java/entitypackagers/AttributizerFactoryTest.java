@@ -8,7 +8,6 @@ import entities.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class AttributizerFactoryTest {
 

@@ -82,9 +82,9 @@ public class LoanData extends Entity {
         this.installment = installment;
     }
 
-
     /**
      * Returns this loan's amortization table
+     *
      * @return
      */
     public List<Map<String, Double>> getAmortizationTable() {

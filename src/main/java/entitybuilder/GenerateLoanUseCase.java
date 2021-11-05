@@ -21,6 +21,12 @@ public class GenerateLoanUseCase {
             double interestSum,
             List<Map<String, Double>> amortizationTable) {
         return new LoanData(
-                interestRate, installment, sensoScore, loanAmount, termLength, interestSum, amortizationTable);
+                interestRate,
+                installment,
+                sensoScore,
+                loanAmount,
+                termLength,
+                interestSum,
+                amortizationTable);
     }
 }

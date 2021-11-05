@@ -70,6 +70,7 @@ public class Car extends Entity {
 
     /**
      * Returns the AddOns stored in this Car
+     *
      * @return
      */
     public Map<String, AddOn> getAddOns() {

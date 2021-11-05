@@ -4,7 +4,6 @@ import attributes.*;
 
 import constants.Exceptions;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.json.*;

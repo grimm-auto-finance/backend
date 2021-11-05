@@ -86,11 +86,13 @@ public class JsonPackagerTest {
         AttributeMap subMap = new AttributeMap();
         subMap.addItem("sub string", "sub-string");
         Attribute[] subAttArray = {AttributeFactory.createAttribute("sub array value")};
-        Attribute[] attArray = {AttributeFactory.createAttribute(5),
-                AttributeFactory.createAttribute(10.5),
-                AttributeFactory.createAttribute("Hello"),
-                subMap,
-                AttributeFactory.createAttribute(subAttArray)};
+        Attribute[] attArray = {
+            AttributeFactory.createAttribute(5),
+            AttributeFactory.createAttribute(10.5),
+            AttributeFactory.createAttribute("Hello"),
+            subMap,
+            AttributeFactory.createAttribute(subAttArray)
+        };
         JsonObjectBuilder subBuilder = Json.createObjectBuilder();
         subBuilder.add("sub string", "sub-string");
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();

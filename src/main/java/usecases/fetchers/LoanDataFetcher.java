@@ -202,6 +202,12 @@ public class LoanDataFetcher {
         }
 
         return GenerateLoanUseCase.generateLoanData(
-                interestRate, installment, sensoScore, loanAmount, termLength, interestSum, ammortizationTable);
+                interestRate,
+                installment,
+                sensoScore,
+                loanAmount,
+                termLength,
+                interestSum,
+                ammortizationTable);
     }
 }

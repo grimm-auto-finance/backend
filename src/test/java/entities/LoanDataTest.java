@@ -21,13 +21,7 @@ public class LoanDataTest {
         List<Map<String, Double>> ammortizationTable = new ArrayList<>();
         ammortizationTable.add(new HashMap<>());
         ammortizationTable.get(0).put("installment", 100.25);
-        loanData = new LoanData(1.25,
-                500.45,
-                "Medium",
-                10000,
-                36,
-                2000,
-                ammortizationTable);
+        loanData = new LoanData(1.25, 500.45, "Medium", 10000, 36, 2000, ammortizationTable);
     }
 
     @Test

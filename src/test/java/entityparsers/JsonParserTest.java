@@ -89,10 +89,12 @@ public class JsonParserTest {
         arrayBuilder.add("Hello");
         AttributeMap subMap = new AttributeMap();
         subMap.addItem("sub item", "woah!");
-        Attribute[] attArray = {AttributeFactory.createAttribute(5.0),
-                AttributeFactory.createAttribute(10.5),
-                AttributeFactory.createAttribute("Hello"),
-                subMap};
+        Attribute[] attArray = {
+            AttributeFactory.createAttribute(5.0),
+            AttributeFactory.createAttribute(10.5),
+            AttributeFactory.createAttribute("Hello"),
+            subMap
+        };
         JsonObjectBuilder subBuilder = Json.createObjectBuilder();
         subBuilder.add("sub item", "woah!");
         arrayBuilder.add(subBuilder.build());

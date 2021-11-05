@@ -4,9 +4,11 @@ public class AttributeFactory {
 
     /**
      * Constructs and returns the Attribute corresponding to the type of obj
+     *
      * @param obj the object to be stored in the newly created Attribute
      * @return an Attribute that stores obj
-     * @throws ClassCastException if the type of obj does not correspond to any known Attribute types
+     * @throws ClassCastException if the type of obj does not correspond to any known Attribute
+     *     types
      */
     public static Attribute createAttribute(Object obj) throws ClassCastException {
         if (obj instanceof Integer) {
