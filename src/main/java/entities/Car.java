@@ -62,12 +62,16 @@ public class Car extends Entity {
     /**
      * Removes the given AddOn from this Car's set of AddOns
      *
-     * @param addOn
+     * @param addOnName the name of the AddOn to be removed
      */
     public void removeAddOn(String addOnName) {
         addOns.remove(addOnName);
     }
 
+    /**
+     * Returns the AddOns stored in this Car
+     * @return
+     */
     public Map<String, AddOn> getAddOns() {
         return new HashMap<>(this.addOns);
     }

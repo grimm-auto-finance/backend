@@ -51,7 +51,7 @@ public class LoanDataTest {
         List<Map<String, Double>> ammortizationTable = new ArrayList<>();
         ammortizationTable.add(new HashMap<>());
         ammortizationTable.get(0).put("installment", 100.25);
-        assertEquals(ammortizationTable.toString(), loanData.getAmmortizationTable().toString());
+        assertEquals(ammortizationTable.toString(), loanData.getAmortizationTable().toString());
     }
 
     @Test
