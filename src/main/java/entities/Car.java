@@ -2,15 +2,17 @@ package entities;
 
 import constants.EntityStringNames;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * A class to represent an individual car that is being viewed and configured in the user interface.
  */
 public class Car extends Entity {
-    // A Map between add-on names and AddOn objects representing those addons
-    private Map<String, AddOn> addOns;
+    // A list of AddOns
+    private List<AddOn> addOns;
 
     // The Car's price, in dollars.
     private double price;
@@ -20,7 +22,6 @@ public class Car extends Entity {
     private final String model;
     private final int year;
 
-    // TODO: decide if we want to use Factory method instead
     /**
      * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
      * initially set to -1 as price of the car is not know during initialization
@@ -30,7 +31,7 @@ public class Car extends Entity {
      * @param year The model year of the car
      */
     public Car(double price, String make, String model, int year) {
-        this(price, make, model, year, new HashMap<>());
+        this(price, make, model, year, new ArrayList<>());
     }
 
     /**
@@ -42,7 +43,7 @@ public class Car extends Entity {
      * @param year The model year of the car
      * @param addOns A mapping of addon names to AddOn objects
      */
-    public Car(double price, String make, String model, int year, Map<String, AddOn> addOns) {
+    public Car(double price, String make, String model, int year, List<AddOn> addOns) {
         this.price = price;
         this.make = make;
         this.model = model;
@@ -56,20 +57,25 @@ public class Car extends Entity {
      * @param addOn
      */
     public void addAddOn(AddOn addOn) {
-        addOns.put(addOn.getName(), addOn);
+        addOns.add(addOn);
     }
 
     /**
-     * Removes the given AddOn from this Car's set of AddOns
+     * Removes the first instance of the given AddOn from this Car's list of AddOns
      *
-     * @param addOn
+     * @param addOnName the name of the AddOn to remove
      */
     public void removeAddOn(String addOnName) {
-        addOns.remove(addOnName);
+        for (AddOn a : addOns) {
+            if (a.getName().equals(addOnName)) {
+                addOns.remove(a);
+                return;
+            }
+        }
     }
 
-    public Map<String, AddOn> getAddOns() {
-        return new HashMap<>(this.addOns);
+    public List<AddOn> getAddOns() {
+        return new ArrayList<>(this.addOns);
     }
 
     /**
