@@ -2,6 +2,9 @@ package entitybuilder;
 
 import entities.LoanData;
 
+import java.util.List;
+import java.util.Map;
+
 /** Class to generate an empty LoanData object */
 public class GenerateLoanUseCase {
     /**
@@ -15,8 +18,9 @@ public class GenerateLoanUseCase {
             String sensoScore,
             double loanAmount,
             int termLength,
-            double interestSum) {
+            double interestSum,
+            List<Map<String, Double>> ammortizationTable) {
         return new LoanData(
-                interestRate, installment, sensoScore, loanAmount, termLength, interestSum);
+                interestRate, installment, sensoScore, loanAmount, termLength, interestSum, ammortizationTable);
     }
 }

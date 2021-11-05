@@ -2,6 +2,9 @@ package entities;
 
 import constants.EntityStringNames;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * A class to represent a loan, as determined by the Senso API /rate and /score functions based on a
  * given CarBuyer and Car.
@@ -13,6 +16,7 @@ public class LoanData extends Entity {
     private double loanAmount;
     private int termLength;
     private double interestSum;
+    private List<Map<String, Double>> ammortizationTable;
 
     /**
      * Constructs a new LoanData object with the given values.
@@ -23,6 +27,7 @@ public class LoanData extends Entity {
      * @param loanAmount
      * @param termLength
      * @param interestSum
+     * @param ammortizationTable
      */
     public LoanData(
             double interestRate,
@@ -30,13 +35,15 @@ public class LoanData extends Entity {
             String sensoScore,
             double loanAmount,
             int termLength,
-            double interestSum) {
+            double interestSum,
+            List<Map<String, Double>> ammortizationTable) {
         this.interestRate = interestRate;
         this.installment = installment;
         this.sensoScore = sensoScore;
         this.loanAmount = loanAmount;
         this.termLength = termLength;
         this.interestSum = interestSum;
+        this.ammortizationTable = ammortizationTable;
     }
 
     /**
@@ -73,6 +80,11 @@ public class LoanData extends Entity {
      */
     public void setInstallment(double installment) {
         this.installment = installment;
+    }
+
+
+    public List<Map<String, Double>> getAmmortizationTable() {
+        return ammortizationTable;
     }
 
     /**
