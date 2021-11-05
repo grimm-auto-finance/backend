@@ -17,7 +17,7 @@ public class JsonPackager implements Packager {
      * Writes packageMap to a JsonObject
      *
      * @return a JsonPackage containing the JsonObject with packageMap's data
-     * @throws Exception if an item in the AttributeMap is of unknown type
+     * @throws Exceptions.PackageException if an item in the AttributeMap is of unknown type
      */
     public JsonPackage writePackage(AttributeMap packageMap) throws Exceptions.PackageException {
         JsonObjectBuilder builder = Json.createObjectBuilder();
@@ -57,7 +57,7 @@ public class JsonPackager implements Packager {
                 arrayBuilder.add((String) a.getAttribute());
             } else if (a instanceof AttributeMap) {
                 JsonPackager subPackager = new JsonPackager();
-                arrayBuilder.add(subPackager.writePackage((AttributeMap) a.getAttribute()).getPackage());
+                arrayBuilder.add(subPackager.writePackage((AttributeMap) a).getPackage());
             } else if (a instanceof ArrayAttribute) {
                 JsonArray subArray = getJsonArray((ArrayAttribute) a);
                 arrayBuilder.add(subArray);
