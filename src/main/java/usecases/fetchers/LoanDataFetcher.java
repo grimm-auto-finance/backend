@@ -18,13 +18,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonNumber;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonString;
+import javax.json.*;
 
 public class LoanDataFetcher {
     public static LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
@@ -99,6 +98,7 @@ public class LoanDataFetcher {
 
         int interestRate, termLength;
         double installment, loanAmount, interestSum;
+        List<Map<String, Double>> ammortizationTable = new ArrayList<>();
         try {
             interestRate = ((JsonNumber) rateResponse.get("interestRate")).intValue();
             installment =
@@ -108,6 +108,15 @@ public class LoanDataFetcher {
                                                             .get(0))
                                             .get("installment"))
                             .doubleValue();
+            JsonArray installments = (JsonArray) rateResponse.get("installments");
+            for (JsonValue i : installments) {
+                Map<String, Double> installmentMap = new HashMap<>();
+                JsonObject installmentObject = i.asJsonObject();
+                for (String s : installmentObject.keySet()) {
+                    installmentMap.put(s, installmentObject.getJsonNumber(s).doubleValue());
+                }
+                ammortizationTable.add(installmentMap);
+            }
             loanAmount = ((JsonNumber) rateResponse.get("capitalSum")).doubleValue();
             termLength = Integer.parseInt(((JsonString) rateResponse.get("term")).getString());
             interestSum = ((JsonNumber) rateResponse.get("interestSum")).doubleValue();
@@ -193,6 +202,6 @@ public class LoanDataFetcher {
         }
 
         return GenerateLoanUseCase.generateLoanData(
-                interestRate, installment, sensoScore, loanAmount, termLength, interestSum);
+                interestRate, installment, sensoScore, loanAmount, termLength, interestSum, ammortizationTable);
     }
 }

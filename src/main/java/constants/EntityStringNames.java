@@ -20,6 +20,7 @@ public class EntityStringNames {
     public static final String LOAN_AMOUNT = "loanAmount";
     public static final String LOAN_TERM_LENGTH = "termLength";
     public static final String LOAN_INTEREST_SUM = "interestSum";
+    public static final String LOAN_AMMORTIZATION = "ammortizationTable";
 
     public static final String ADD_ON_STRING = "addOn";
     public static final String ADD_ON_NAME = "name";
