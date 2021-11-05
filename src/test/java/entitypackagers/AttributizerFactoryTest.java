@@ -7,6 +7,9 @@ import entities.*;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class AttributizerFactoryTest {
 
     @Test
@@ -30,7 +33,7 @@ public class AttributizerFactoryTest {
 
     @Test
     public void testGetLoanDataAttributizer() {
-        Entity loanData = new LoanData(0, 0, "very low", 100, 36, 200);
+        Entity loanData = new LoanData(0, 0, "very low", 100, 36, 200, new ArrayList<>());
         assertTrue(
                 AttributizerFactory.getAttributizer(loanData)
                         instanceof AttributizeLoanDataUseCase);
