@@ -1,5 +1,7 @@
 package attributes;
 
+import java.util.Arrays;
+
 public class ArrayAttribute extends Attribute {
 
     private final Attribute[] items;
@@ -10,5 +12,10 @@ public class ArrayAttribute extends Attribute {
 
     public Attribute[] getAttribute() {
         return items;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(items);
     }
 }
