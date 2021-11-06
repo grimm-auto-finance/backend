@@ -23,7 +23,6 @@ public class AttributizeCarUseCaseTest {
         testCar = new Car(50000, "Honda", "Civic", 2020);
         carAttributizer = new AttributizeCarUseCase(testCar);
         testMap = new AttributeMap();
-        addCarToTestMap();
     }
 
     static void addCarToTestMap() {
@@ -31,11 +30,14 @@ public class AttributizeCarUseCaseTest {
         testMap.addItem(EntityStringNames.CAR_MAKE, testCar.getMake());
         testMap.addItem(EntityStringNames.CAR_MODEL, testCar.getModel());
         testMap.addItem(EntityStringNames.CAR_YEAR, testCar.getYear());
+        testMap.addItem(
+                EntityStringNames.CAR_ADD_ONS,
+                AttributizeCarUseCase.getAddOnAttArray(testCar.getAddOns()));
     }
 
     @Test
     public void testAttributizeCarNoAddOns() {
-        testMap.addItem(EntityStringNames.CAR_ADD_ONS, new AttributeMap());
+        addCarToTestMap();
         assertEquals(
                 testMap.getAttribute().toString(),
                 carAttributizer.attributizeEntity().getAttribute().toString());
@@ -47,16 +49,7 @@ public class AttributizeCarUseCaseTest {
         AddOn marshmallows = new AddOn("Marshmallows", 100, "fluffy goodness");
         testCar.addAddOn(rustProofing);
         testCar.addAddOn(marshmallows);
-        AttributeMap addOnMap = new AttributeMap();
-        AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(rustProofing);
-        addOnMap.addItem(
-                "Rust proofing " + EntityStringNames.ADD_ON_STRING,
-                addOnAttributizer.attributizeEntity());
-        addOnAttributizer = new AttributizeAddOnUseCase(marshmallows);
-        addOnMap.addItem(
-                "Marshmallows " + EntityStringNames.ADD_ON_STRING,
-                addOnAttributizer.attributizeEntity());
-        testMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnMap);
+        addCarToTestMap();
         assertEquals(
                 testMap.getAttribute().toString(),
                 carAttributizer.attributizeEntity().getAttribute().toString());

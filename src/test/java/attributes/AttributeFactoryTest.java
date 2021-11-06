@@ -31,6 +31,16 @@ public class AttributeFactoryTest {
     }
 
     @Test
+    public void testAttributeFactoryArrayAttribute() {
+        DoubleAttribute doub = new DoubleAttribute(2.25);
+        IntAttribute num = new IntAttribute(3);
+        Attribute[] items = {doub, num};
+        testAtt = createAttribute(items);
+        assertTrue(testAtt instanceof ArrayAttribute);
+        assertEquals(items, testAtt.getAttribute());
+    }
+
+    @Test
     public void testAttributeFactoryNoAttributeType() {
         try {
             testAtt = createAttribute(new Object());

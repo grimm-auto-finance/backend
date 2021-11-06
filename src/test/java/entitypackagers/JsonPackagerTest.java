@@ -3,6 +3,8 @@ package entitypackagers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import attributes.Attribute;
+import attributes.AttributeFactory;
 import attributes.AttributeMap;
 import attributes.FakeAttribute;
 
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 
 public class JsonPackagerTest {
@@ -74,6 +77,31 @@ public class JsonPackagerTest {
     public void testPackagerAllDoubles() {
         addToBoth("double value", 18.0);
         addToBoth("double value 2", 20.56);
+        JsonPackager packager = new JsonPackager();
+        testEq(packager);
+    }
+
+    @Test
+    public void testPackagerArrays() {
+        AttributeMap subMap = new AttributeMap();
+        subMap.addItem("sub string", "sub-string");
+        Attribute[] subAttArray = {AttributeFactory.createAttribute("sub array value")};
+        Attribute[] attArray = {
+            AttributeFactory.createAttribute(5),
+            AttributeFactory.createAttribute(10.5),
+            AttributeFactory.createAttribute("Hello"),
+            subMap,
+            AttributeFactory.createAttribute(subAttArray)
+        };
+        JsonObjectBuilder subBuilder = Json.createObjectBuilder();
+        subBuilder.add("sub string", "sub-string");
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        arrayBuilder.add(5).add(10.5).add("Hello").add(subBuilder.build());
+        JsonArrayBuilder subArrayBuilder = Json.createArrayBuilder();
+        subArrayBuilder.add("sub array value");
+        arrayBuilder.add(subArrayBuilder.build());
+        map.addItem("Array!", attArray);
+        testBuilder.add("Array!", arrayBuilder.build());
         JsonPackager packager = new JsonPackager();
         testEq(packager);
     }
