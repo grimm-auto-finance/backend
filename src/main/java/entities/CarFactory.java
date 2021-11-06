@@ -1,8 +1,13 @@
 package entities;
 
+import attributes.ArrayAttribute;
 import attributes.AttributeMap;
 import constants.EntityStringNames;
 import constants.Exceptions;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CarFactory {
 
@@ -10,6 +15,7 @@ public class CarFactory {
       String make, model;
       int year;
       double price;
+      Map<String, AddOn> addOnMap;
       try {
           make = (String) map.getItem(EntityStringNames.CAR_MAKE).getAttribute();
           model = (String) map.getItem(EntityStringNames.CAR_MODEL).getAttribute();
@@ -20,12 +26,17 @@ public class CarFactory {
                                           map.getItem(EntityStringNames.CAR_YEAR)
                                                   .getAttribute());
           price = (double) map.getItem(EntityStringNames.CAR_PRICE).getAttribute();
+          ArrayAttribute addOnArray = (ArrayAttribute) map.getItem(EntityStringNames.ADD_ON_STRING);
+          List<AddOn> addOnList = AddOnFactory.getEntities(addOnArray);
+          addOnMap = new HashMap<>();
+          for (AddOn a : addOnList) {
+              addOnMap.put(a.getName(), a);
+          }
       } catch (ClassCastException | NullPointerException e) {
           Exceptions.FactoryException ex = new Exceptions.FactoryException(e.getMessage());
           ex.setStackTrace(e.getStackTrace());
           throw ex;
       }
-      // TODO: Support optional inclusion of addons?
-      return new Car(price, make, model, year);
+      return new Car(price, make, model, year, addOnMap);
   }
 }

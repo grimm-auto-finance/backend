@@ -1,8 +1,12 @@
 package entities;
 
+import attributes.ArrayAttribute;
 import attributes.AttributeMap;
 import constants.EntityStringNames;
 import constants.Exceptions;
+
+import java.lang.reflect.Array;
+import java.util.List;
 
 public class GenerateEntitiesUseCase {
 
@@ -16,9 +20,9 @@ public class GenerateEntitiesUseCase {
         return CarBuyerFactory.getEntity(buyerMap);
     }
 
-    public static AddOn generateAddOn(AttributeMap map) throws Exceptions.FactoryException {
-        AttributeMap addOnMap = (AttributeMap) map.getItem(EntityStringNames.ADD_ON_STRING);
-        return AddOnFactory.getEntity(addOnMap);
+    public static List<AddOn> generateAddOn(AttributeMap map) throws Exceptions.FactoryException {
+        ArrayAttribute addOnArray = (ArrayAttribute) map.getItem(EntityStringNames.ADD_ON_STRING);
+        return AddOnFactory.getEntities(addOnArray);
     }
 
     public static LoanData generateLoanData(AttributeMap map) throws Exceptions.FactoryException {
