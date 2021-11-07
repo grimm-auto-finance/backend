@@ -11,6 +11,13 @@ import java.util.Map;
 
 public class CarFactory {
 
+    /**
+     * Constructs a new Car using the values in the given AttributeMap
+     * If the given map contains an ArrayAttribute with the correct string name, will also initialize the Car's stored AddOns
+     * @param map an AttributeMap containing keys and values corresponding to the attributes of a Car
+     * @return a Car constructed from the values in map
+     * @throws Exceptions.FactoryException if the required key/value pairs for Car construction are not present in map
+     */
   public static Car getEntity(AttributeMap map) throws Exceptions.FactoryException {
       String make, model;
       int year;

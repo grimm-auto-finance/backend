@@ -11,6 +11,12 @@ import java.util.List;
 
 public class AddOnFactory {
 
+    /**
+     * Construct a new AddOn using the values in the given AttributeMap
+     * @param map an AttributeMap containing keys and values corresponding to an AddOn
+     * @return a new AddOn constructed from the values in map
+     * @throws Exceptions.FactoryException if the required values for AddOn construction aren't present in map
+     */
     public static AddOn getEntity(AttributeMap map) throws Exceptions.FactoryException {
         String name;
         double price;
@@ -28,6 +34,12 @@ public class AddOnFactory {
         return new AddOn(name, price, description);
     }
 
+    /**
+     * Construct a List of AddOns using the values in the given ArrayAttribute
+     * @param attArray an ArrayAttribute containing AttributeMaps, each corresponding to an AddOn
+     * @return a List of AddOns constructed from the AttributeMaps in attArray
+     * @throws Exceptions.FactoryException if the required AttributeMaps aren't present in attArray, or if those maps do not contain the correct keys and values for AddOn construction
+     */
     public static List<AddOn> getEntities(ArrayAttribute attArray) throws Exceptions.FactoryException {
         Attribute[] attributes = attArray.getAttribute();
         List<AddOn> addOns = new ArrayList<>();

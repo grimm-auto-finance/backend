@@ -13,6 +13,12 @@ import java.util.Map;
 
 public class LoanDataFactory {
 
+    /**
+     * Constructs a new LoanData using the values in the given AttributeMap
+     * @param map an AttributeMap containing keys and values corresponding to the attributes of a LoanData
+     * @return a LoanData constructed from the values in map
+     * @throws Exceptions.FactoryException if the required key/value pairs for LoanData construction aren't present in map
+     */
     public static LoanData getEntity(AttributeMap map) throws Exceptions.FactoryException {
         double interestRate;
         double installment;
