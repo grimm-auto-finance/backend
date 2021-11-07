@@ -1,5 +1,9 @@
 package fetchers;
 
+import attributes.ArrayAttribute;
+import attributes.Attribute;
+import attributes.AttributeMap;
+import constants.EntityStringNames;
 import constants.Exceptions;
 
 import entities.*;
@@ -7,6 +11,7 @@ import entities.LoanData;
 
 import entitybuilder.GenerateLoanUseCase;
 
+import entityparsers.JsonParser;
 import logging.Logger;
 import logging.LoggerFactory;
 
@@ -96,33 +101,14 @@ public class LoanDataFetcher {
             throw (Exceptions.CodedException) new Exceptions.FetchException();
         }
 
-        int interestRate, termLength;
-        double installment, loanAmount, interestSum;
-        List<Map<String, Double>> ammortizationTable = new ArrayList<>();
+        JsonParser parser = new JsonParser(rateResponse);
+        AttributeMap rateResponseMap;
         try {
-            interestRate = ((JsonNumber) rateResponse.get("interestRate")).intValue();
-            installment =
-                    ((JsonNumber)
-                                    ((JsonObject)
-                                                    ((JsonArray) rateResponse.get("installments"))
-                                                            .get(0))
-                                            .get("installment"))
-                            .doubleValue();
-            JsonArray installments = (JsonArray) rateResponse.get("installments");
-            for (JsonValue i : installments) {
-                Map<String, Double> installmentMap = new HashMap<>();
-                JsonObject installmentObject = i.asJsonObject();
-                for (String s : installmentObject.keySet()) {
-                    installmentMap.put(s, installmentObject.getJsonNumber(s).doubleValue());
-                }
-                ammortizationTable.add(installmentMap);
-            }
-            loanAmount = ((JsonNumber) rateResponse.get("capitalSum")).doubleValue();
-            termLength = Integer.parseInt(((JsonString) rateResponse.get("term")).getString());
-            interestSum = ((JsonNumber) rateResponse.get("interestSum")).doubleValue();
-        } catch (ClassCastException e) {
-            // TODO: Document this and break it up
-            throw (Exceptions.CodedException) new Exceptions.FetchException();
+            rateResponseMap = parser.parse();
+        } catch (Exceptions.ParseException e) {
+            Exceptions.FetchException ex = new Exceptions.FetchException(e.getMessage());
+            ex.setStackTrace(e.getStackTrace());
+            throw ex;
         }
 
         HttpURLConnection scoreConn;
@@ -149,7 +135,7 @@ public class LoanDataFetcher {
                 Json.createObjectBuilder()
                         .add("remainingBalance", car.getPrice())
                         .add("creditScore", buyer.getCreditScore())
-                        .add("loanAge", termLength)
+                        .add("loanAge", (int) rateResponseMap.getItem("term").getAttribute())
                         .add("vehicleMake", car.getMake())
                         .add("vehicleModel", car.getModel())
                         .add("vehicleYear", car.getYear())
@@ -193,21 +179,18 @@ public class LoanDataFetcher {
             throw (Exceptions.CodedException) new Exceptions.FetchException();
         }
 
-        String sensoScore;
+        parser = new JsonParser(scoreResponse);
+        AttributeMap scoreResponseMap;
         try {
-            sensoScore = ((JsonString) scoreResponse.get("sensoScore")).getString();
-        } catch (ClassCastException e) {
-            // TODO: Document this and break it up
-            throw (Exceptions.CodedException) new Exceptions.FetchException();
+            scoreResponseMap = parser.parse();
+        } catch (Exceptions.ParseException e) {
+            Exceptions.FetchException ex = new Exceptions.FetchException(e.getMessage());
+            ex.setStackTrace(e.getStackTrace());
+            throw ex;
         }
 
-        return GenerateLoanUseCase.generateLoanData(
-                interestRate,
-                installment,
-                sensoScore,
-                loanAmount,
-                termLength,
-                interestSum,
-                ammortizationTable);
+        AttributeMap loanMap = AttributeMap.combine(rateResponseMap, scoreResponseMap);
+
+        return GenerateEntitiesUseCase.generateLoanData(loanMap);
     }
 }
