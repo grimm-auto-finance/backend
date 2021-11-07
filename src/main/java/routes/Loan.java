@@ -50,20 +50,13 @@ public class Loan extends Route {
 
     String getResponse(entities.CarBuyer buyer, entities.Car car) throws CodedException {
         LoanData loanData = LoanDataFetcher.fetch(buyer, car);
-        // TODO: Abstract this more?
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
         List<Entity> entities = new ArrayList<>();
         entities.add(car);
         entities.add(buyer);
         entities.add(loanData);
-        PackageEntityUseCase packageEntity = new PackageEntityUseCase();
-        for (Entity e : entities) {
-            packageEntity.setEntity(e);
-            JsonPackager jsonPackager = new JsonPackager();
-            JsonPackage entityPackage = (JsonPackage) packageEntity.writeEntity(jsonPackager);
-            jsonBuilder.add(e.getStringName(), entityPackage.getPackage());
-        }
-
-        return jsonBuilder.build().toString();
+        JsonPackager packager = new JsonPackager();
+        PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
+        JsonPackage entitiesPackage = (JsonPackage) packageEntity.writeEntities(entities);
+        return entitiesPackage.toString();
     }
 }
