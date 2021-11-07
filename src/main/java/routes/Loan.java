@@ -12,8 +12,6 @@ import entitypackagers.JsonPackager;
 import entitypackagers.PackageEntityUseCase;
 
 import entityparsers.JsonParser;
-import entityparsers.ParseCarBuyerUseCase;
-import entityparsers.ParseCarUseCase;
 import entityparsers.Parser;
 
 import fetchers.LoanDataFetcher;
