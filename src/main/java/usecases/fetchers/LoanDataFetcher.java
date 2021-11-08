@@ -9,8 +9,6 @@ import constants.Exceptions;
 import entities.*;
 import entities.LoanData;
 
-import entitybuilder.GenerateLoanUseCase;
-
 import entityparsers.JsonParser;
 import logging.Logger;
 import logging.LoggerFactory;
