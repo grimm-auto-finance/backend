@@ -12,9 +12,6 @@ public class JsonParser implements Parser {
 
     private final JsonObject jsonObject;
 
-    public JsonObject getJsonObject() {
-        return jsonObject;
-    }
 
     /**
      * Construct a new JsonParser to parse the given JsonObject
