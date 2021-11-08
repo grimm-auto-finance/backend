@@ -12,7 +12,6 @@ public class JsonParser implements Parser {
 
     private final JsonObject jsonObject;
 
-
     /**
      * Construct a new JsonParser to parse the given JsonObject
      *
@@ -21,7 +20,6 @@ public class JsonParser implements Parser {
     public JsonParser(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
     }
-
 
     /**
      * Parse jsonObject into an AttributeMap with keys and values pulled from jsonObject

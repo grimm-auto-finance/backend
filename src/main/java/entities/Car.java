@@ -35,7 +35,7 @@ public class Car extends Entity {
      * @param model The model of the car
      * @param year The model year of the car
      */
-    public Car(double kilometres,double price, String make, String model, int year) {
+    public Car(double kilometres, double price, String make, String model, int year) {
         this(kilometres, price, make, model, year, new HashMap<>());
     }
 
@@ -49,7 +49,13 @@ public class Car extends Entity {
      * @param addOns A mapping of addon names to AddOn objects
      * @param kilometres The mileage of the car in kilometres
      */
-    public Car(double kilometres,double price, String make, String model, int year, Map<String, AddOn> addOns) {
+    public Car(
+            double kilometres,
+            double price,
+            String make,
+            String model,
+            int year,
+            Map<String, AddOn> addOns) {
         this.kilometres = kilometres;
         this.price = price;
         this.make = make;
