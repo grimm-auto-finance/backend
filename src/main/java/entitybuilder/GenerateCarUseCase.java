@@ -6,7 +6,7 @@ import entities.Car;
 public class GenerateCarUseCase {
     /**
      * @param kilometres The milage of the car being bought in kilometres
-     * @param price The price of the car being bought 
+     * @param price The price of the car being bought
      * @param make The make of the car being bought
      * @param model The model of the car being bought
      * @param year The year of the car model
