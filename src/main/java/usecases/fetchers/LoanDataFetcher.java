@@ -57,7 +57,7 @@ public class LoanDataFetcher {
                         .add("vehicleModel", car.getModel())
                         .add("vehicleYear", car.getYear())
                         // TODO: Consider allowing this to be modified
-                        .add("vehicleKms", 0)
+                        .add("vehicleKms", car.getKilometres())
                         // TODO: Understand what listPrice and downpayment are and incorporate them
                         .add("listPrice", car.getPrice())
                         .add("downpayment", car.getPrice() / 10)

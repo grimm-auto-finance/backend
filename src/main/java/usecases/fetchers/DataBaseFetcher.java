@@ -86,7 +86,8 @@ public class DataBaseFetcher {
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                Car car = new Car(rs.getDouble(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                Car car =
+                        new Car(0, rs.getDouble(2), rs.getString(3), rs.getString(4), rs.getInt(5));
                 if (addOns) {
                     for (AddOn addOn : getAddOns(id)) {
                         car.addAddOn(addOn);
@@ -116,7 +117,13 @@ public class DataBaseFetcher {
             ResultSet rs = pst.executeQuery();
             List<Car> cars = new ArrayList<>();
             while (rs.next()) {
-                cars.add(new Car(rs.getDouble(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+                cars.add(
+                        new Car(
+                                0,
+                                rs.getDouble(2),
+                                rs.getString(3),
+                                rs.getString(4),
+                                rs.getInt(5)));
             }
             return cars;
         } catch (SQLException e) {

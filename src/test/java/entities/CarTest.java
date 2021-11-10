@@ -18,10 +18,15 @@ public class CarTest {
 
     @BeforeEach
     public void setup() {
-        car = new Car(30000, "Honda", "Civic", 2002);
+        car = new Car(10000, 30000, "Honda", "Civic", 2002);
         addOns = new HashMap<>();
         addOns.put("Marshmallows", new AddOn("Marshmallows", 100, "fluffy goodness"));
         addOns.put("Rust proofing", new AddOn("Rust proofing", 1000, "no rust allowed!"));
+    }
+
+    @Test
+    public void testGetKilometres() {
+        assertEquals(10000, car.getKilometres());
     }
 
     @Test
@@ -51,7 +56,7 @@ public class CarTest {
 
     @Test
     public void testAddOnConstructor() {
-        car = new Car(30000, "Honda", "Civic", 2002, addOns);
+        car = new Car(10000, 30000, "Honda", "Civic", 2002, addOns);
         assertEquals(addOns, car.getAddOns());
     }
 
@@ -70,7 +75,7 @@ public class CarTest {
 
     @Test
     public void testRemoveAddOns() {
-        car = new Car(30000, "Honda", "Civic", 2002, addOns);
+        car = new Car(10000, 30000, "Honda", "Civic", 2002, addOns);
         car.removeAddOn("Marshmallows");
         assertFalse(addOns.containsKey("Marshmallows"));
     }
