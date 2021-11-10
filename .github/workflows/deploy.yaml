@@ -11,17 +11,17 @@ jobs:
     steps:
       - name: Make repository dispatch request
         run: >
-          curl -X "POST" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/dispatches -d '{"event_type": "deploy"}'
+          curl -v -X "POST" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/dispatches -d '{"event_type": "deploy"}'
       - name: Wait for action to start
         run: >
-          while curl -X "GET" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e '.workflow_runs[0].conclusion != null'; do
+          while curl --silent -X "GET" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e '.workflow_runs[0].conclusion != null' > /dev/null; do
               sleep 1
           done
       - name: Wait for action to finish
         run: >
-          while curl -X "GET" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e '.workflow_runs[0].conclusion == null'; do
+          while curl --silent -X "GET" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e '.workflow_runs[0].conclusion == null' > /dev/null; do
               sleep 1
           done
       - name: Register result
         run: >
-          curl -X "GET" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e '.workflow_runs[0].conclusion == "success"'
+          curl -v -X "GET" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e '.workflow_runs[0].conclusion == "success"'
