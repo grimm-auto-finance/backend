@@ -23,6 +23,11 @@ public class Exceptions {
         public FetchException(String message) {
             super(message);
         }
+
+        public FetchException(String message, Exception e) {
+            super(message);
+            this.setStackTrace(e.getStackTrace());
+        }
     }
 
     public static class ParseException extends CodedException {

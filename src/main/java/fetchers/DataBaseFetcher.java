@@ -98,9 +98,7 @@ public class DataBaseFetcher {
                 return null;
             }
         } catch (SQLException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw (CodedException) new FetchException("could not fetch car from database", e);
         }
     }
 
@@ -127,9 +125,8 @@ public class DataBaseFetcher {
             }
             return cars;
         } catch (SQLException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw (CodedException)
+                    new FetchException("could not get seach result from database", e);
         }
     }
 
@@ -145,9 +142,7 @@ public class DataBaseFetcher {
             }
             return addOns;
         } catch (SQLException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw (CodedException) new FetchException("could not get addd-ons from database", e);
         }
     }
 }
