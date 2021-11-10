@@ -84,6 +84,10 @@ public class Car extends Entity {
         addOns.remove(addOnName);
     }
 
+    /**
+    *
+    * @return A a hasmap of the cars addons
+    */
     public Map<String, AddOn> getAddOns() {
         return new HashMap<>(this.addOns);
     }
@@ -133,6 +137,10 @@ public class Car extends Entity {
         return year;
     }
 
+    /**
+    *
+    * @return Returns the string name of the car 
+    */
     @Override
     public String getStringName() {
         return EntityStringNames.CAR_STRING;
