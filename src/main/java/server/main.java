@@ -18,6 +18,18 @@ import java.sql.SQLException;
 class Server {
     public static void main(String[] args) {
         Logger l = LoggerFactory.getLogger();
+        for (int retries = 0; retries < 5; retries++) {
+            try {
+                DataBaseFetcher.connectAndMigrate();
+                break;
+            } catch (SQLException e) {
+                l.warn("could not connect to database, retrying");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException te) {
+                }
+            }
+        }
         try {
             DataBaseFetcher.connectAndMigrate();
         } catch (SQLException e) {
