@@ -20,7 +20,6 @@ public class Car extends Entity {
     private final String model;
     private final int year;
 
-    // TODO: decide if we want to use Factory method instead
     /**
      * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
      * initially set to -1 as price of the car is not know during initialization
@@ -125,5 +124,25 @@ public class Car extends Entity {
     @Override
     public String getStringName() {
         return EntityStringNames.CAR_STRING;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Car)) {
+            return false;
+        }
+        Car otherCar = (Car) other;
+        for (String s : addOns.keySet()) {
+            if (!otherCar.addOns.containsKey(s)) {
+                return false;
+            }
+            if (!addOns.get(s).equals(otherCar.addOns.get(s))) {
+                return false;
+            }
+        }
+        return (this.make.equals(otherCar.make))
+                && (this.model.equals(otherCar.model))
+                && (this.year == otherCar.year)
+                && (this.price == otherCar.price);
     }
 }

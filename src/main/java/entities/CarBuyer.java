@@ -44,4 +44,15 @@ public class CarBuyer extends Entity {
     public String getStringName() {
         return EntityStringNames.BUYER_STRING;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof CarBuyer)) {
+            return false;
+        }
+        CarBuyer otherBuyer = (CarBuyer) other;
+
+        return (this.budget == otherBuyer.budget)
+                && (this.creditScore == otherBuyer.creditScore);
+    }
 }
