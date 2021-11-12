@@ -1,5 +1,7 @@
 package entitypackagers;
 
+import attributes.Attribute;
+import attributes.AttributeFactory;
 import attributes.AttributeMap;
 
 import constants.EntityStringNames;
@@ -7,6 +9,8 @@ import constants.EntityStringNames;
 import entities.AddOn;
 import entities.Car;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class AttributizeCarUseCase implements Attributizer {
@@ -30,16 +34,20 @@ public class AttributizeCarUseCase implements Attributizer {
         carMap.addItem(EntityStringNames.CAR_YEAR, car.getYear());
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, car.getKilometres());
 
-        AttributeMap addOnMap = new AttributeMap();
         Map<String, AddOn> addOns = car.getAddOns();
-        for (String addOnName : addOns.keySet()) {
-            AttributizeAddOnUseCase addOnAttributizer =
-                    new AttributizeAddOnUseCase(addOns.get(addOnName));
-            addOnMap.addItem(
-                    addOnName + " " + EntityStringNames.ADD_ON_STRING,
-                    addOnAttributizer.attributizeEntity());
-        }
-        carMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnMap);
+        Attribute[] addOnMaps = getAddOnAttArray(addOns);
+        Attribute addOnArray = AttributeFactory.createAttribute(addOnMaps);
+
+        carMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnArray);
         return carMap;
+    }
+
+    public static Attribute[] getAddOnAttArray(Map<String, AddOn> addOns) {
+        List<Attribute> addOnMapsList = new ArrayList<>();
+        for (String s : addOns.keySet()) {
+            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOns.get(s));
+            addOnMapsList.add(addOnAttributizer.attributizeEntity());
+        }
+        return addOnMapsList.toArray(new Attribute[0]);
     }
 }

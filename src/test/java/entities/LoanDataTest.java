@@ -7,13 +7,21 @@ import constants.EntityStringNames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class LoanDataTest {
 
     static LoanData loanData;
 
     @BeforeEach
     public void setup() {
-        loanData = new LoanData(1.25, 500.45, "Medium", 10000, 36, 2000);
+        List<Map<String, Double>> ammortizationTable = new ArrayList<>();
+        ammortizationTable.add(new HashMap<>());
+        ammortizationTable.get(0).put("installment", 100.25);
+        loanData = new LoanData(1.25, 500.45, "Medium", 10000, 36, 2000, ammortizationTable);
     }
 
     @Test
@@ -30,6 +38,14 @@ public class LoanDataTest {
     @Test
     public void testGetInstallment() {
         assertEquals(500.45, loanData.getInstallment());
+    }
+
+    @Test
+    public void testGetAmmortizationTable() {
+        List<Map<String, Double>> ammortizationTable = new ArrayList<>();
+        ammortizationTable.add(new HashMap<>());
+        ammortizationTable.get(0).put("installment", 100.25);
+        assertEquals(ammortizationTable.toString(), loanData.getAmortizationTable().toString());
     }
 
     @Test
