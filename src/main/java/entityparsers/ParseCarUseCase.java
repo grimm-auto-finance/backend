@@ -31,6 +31,7 @@ public class ParseCarUseCase {
         String make, model;
         int year;
         double price;
+        double kilometres;
         try {
             AttributeMap carMap = (AttributeMap) map.getItem(EntityStringNames.CAR_STRING);
             make = (String) carMap.getItem(EntityStringNames.CAR_MAKE).getAttribute();
@@ -42,12 +43,13 @@ public class ParseCarUseCase {
                                             carMap.getItem(EntityStringNames.CAR_YEAR)
                                                     .getAttribute());
             price = (double) carMap.getItem(EntityStringNames.CAR_PRICE).getAttribute();
+            kilometres = (double) carMap.getItem(EntityStringNames.CAR_KILOMETRES).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
             Exceptions.ParseException ex = new Exceptions.ParseException(e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }
         // TODO: Support optional inclusion of addons?
-        return carGenerator.GenerateCarUseCase(price, make, model, year);
+        return carGenerator.GenerateCarUseCase(kilometres, price, make, model, year);
     }
 }

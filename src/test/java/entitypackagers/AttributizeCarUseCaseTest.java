@@ -20,7 +20,7 @@ public class AttributizeCarUseCaseTest {
 
     @BeforeEach
     public void setup() {
-        testCar = new Car(50000, "Honda", "Civic", 2020);
+        testCar = new Car(0, 50000, "Honda", "Civic", 2020);
         carAttributizer = new AttributizeCarUseCase(testCar);
         testMap = new AttributeMap();
     }
@@ -33,6 +33,8 @@ public class AttributizeCarUseCaseTest {
         testMap.addItem(
                 EntityStringNames.CAR_ADD_ONS,
                 AttributizeCarUseCase.getAddOnAttArray(testCar.getAddOns()));
+        testMap.addItem(EntityStringNames.CAR_KILOMETRES, testCar.getKilometres());
+
     }
 
     @Test

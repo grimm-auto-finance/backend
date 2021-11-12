@@ -34,6 +34,7 @@ public class ParseCarUseCaseTest {
         carBuilder.add(EntityStringNames.CAR_YEAR, 2021);
         carBuilder.add(EntityStringNames.CAR_MAKE, "Honda");
         carBuilder.add(EntityStringNames.CAR_MODEL, "Civic");
+        carBuilder.add(EntityStringNames.CAR_KILOMETRES, 100);
         builder.add(EntityStringNames.CAR_STRING, carBuilder);
         Parser parser = new JsonParser(builder.build());
         ParseCarUseCase parseCarUseCase;
@@ -44,11 +45,12 @@ public class ParseCarUseCaseTest {
         } catch (Exceptions.ParseException e) {
             fail();
         }
-        Car car = new Car(123.456, "Honda", "Civic", 2021);
+        Car car = new Car(100, 123.456, "Honda", "Civic", 2021);
         assertEquals(car.getPrice(), parsed.getPrice());
         assertEquals(car.getMake(), parsed.getMake());
         assertEquals(car.getModel(), parsed.getModel());
         assertEquals(car.getYear(), parsed.getYear());
+        assertEquals(car.getKilometres(), parsed.getKilometres());
     }
 
     /**

@@ -13,7 +13,7 @@ public class AttributizerFactoryTest {
 
     @Test
     public void testGetCarAttributizer() {
-        Entity car = new Car(5, "Test", "Car", 2021);
+        Entity car = new Car(0, 5, "Test", "Car", 2021);
         assertTrue(AttributizerFactory.getAttributizer(car) instanceof AttributizeCarUseCase);
     }
 

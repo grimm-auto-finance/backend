@@ -8,6 +8,7 @@ public class EntityStringNames {
     public static final String CAR_YEAR = "year";
     public static final String CAR_PRICE = "price";
     public static final String CAR_ADD_ONS = "addOns";
+    public static final String CAR_KILOMETRES = "kilometres";
 
     public static final String BUYER_STRING = "carBuyer";
     public static final String BUYER_BUDGET = "budget";

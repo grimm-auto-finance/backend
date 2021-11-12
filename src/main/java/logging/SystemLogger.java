@@ -21,6 +21,7 @@ class SystemLogger implements Logger {
 
     @Override
     public void error(String string, Exception e) {
-        error(string + e.getStackTrace().toString());
+        error(string);
+        e.printStackTrace();
     }
 }
