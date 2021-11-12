@@ -16,9 +16,9 @@ public class AttributeMap extends Attribute {
     /**
      * Adds the given item Object to the map with the given name
      *
-     * @param name
-     * @param item the Object to be added to the map
-     * @throws ClassCastException
+     * @param name The name of the attribute created by the attributized Object
+     * @param item the Object to be attributized and added to the map
+     * @throws ClassCastException This is because an incorrect class is used for the parameter
      */
     public void addItem(String name, Object item) throws ClassCastException {
         this.addItem(name, AttributeFactory.createAttribute(item));
@@ -27,8 +27,8 @@ public class AttributeMap extends Attribute {
     /**
      * Adds the given item (Attribute) to the map with the given name
      *
-     * @param name
-     * @param item
+     * @param name The name of the Attribute to be added to the map
+     * @param item The Attribute to be added to the map
      */
     public void addItem(String name, Attribute item) {
         items.put(name, item);
@@ -38,7 +38,7 @@ public class AttributeMap extends Attribute {
      * Returns the item with the given name from this map If no item in the map exists with this
      * name, throws NullPointerException
      *
-     * @param name
+     * @param name The key corresponding to name of the Attribute
      * @return
      * @throws NullPointerException if no item exists in the map with the given name
      */

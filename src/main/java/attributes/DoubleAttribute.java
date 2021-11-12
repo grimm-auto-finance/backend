@@ -8,7 +8,7 @@ public class DoubleAttribute extends Attribute {
     /**
      * Creates a new DoubleAttribute with the given double item
      *
-     * @param item
+     * @param item The Double item to be attributized
      */
     public DoubleAttribute(double item) {
         this.item = item;
@@ -17,7 +17,7 @@ public class DoubleAttribute extends Attribute {
     /**
      * Returns the double stored in this Attribute
      *
-     * @return
+     * @return The Double item stored in the attribute
      */
     public Double getAttribute() {
         return item;
