@@ -11,11 +11,12 @@ public class EntityStringNames {
     public static final String CAR_YEAR = "year";
     public static final String CAR_PRICE = "price";
     public static final String CAR_ADD_ONS = "addOns";
+    public static final String CAR_KILOMETRES = "kilometres";
 
     /** String representation of the instance variable names in the CarBuyer entity */
-    public static final String BUYER_STRING = "car buyer";
+    public static final String BUYER_STRING = "carBuyer";
 
-    public static final String BUYER_BUDGET = "pytBudget";
+    public static final String BUYER_BUDGET = "budget";
     public static final String BUYER_CREDIT = "creditScore";
 
     /** String representation of the instance variable names in the LoanData entity */
@@ -27,6 +28,7 @@ public class EntityStringNames {
     public static final String LOAN_AMOUNT = "loanAmount";
     public static final String LOAN_TERM_LENGTH = "termLength";
     public static final String LOAN_INTEREST_SUM = "interestSum";
+    public static final String LOAN_AMORTIZATION = "ammortizationTable";
 
     /** String representation of the instance variable names in the AddOn entity */
     public static final String ADD_ON_STRING = "addOn";

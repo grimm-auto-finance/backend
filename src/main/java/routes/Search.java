@@ -46,7 +46,9 @@ public class Search extends Route {
                 sb.append(str);
             }
         } catch (IOException e) {
-            throw (CodedException) new ParseException(e.getMessage());
+            CodedException err = new ParseException(e.getMessage());
+            err.setStackTrace(e.getStackTrace());
+            throw err;
         }
         String searchString = sb.toString();
 
