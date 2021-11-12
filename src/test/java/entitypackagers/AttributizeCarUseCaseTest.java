@@ -34,7 +34,6 @@ public class AttributizeCarUseCaseTest {
                 EntityStringNames.CAR_ADD_ONS,
                 AttributizeCarUseCase.getAddOnAttArray(testCar.getAddOns()));
         testMap.addItem(EntityStringNames.CAR_KILOMETRES, testCar.getKilometres());
-
     }
 
     @Test
