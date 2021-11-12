@@ -106,6 +106,9 @@ public abstract class Route implements HttpHandler {
                     l.error("recieved request with unknown method: " + method);
             }
         } catch (CodedException e) {
+            if (e.getCode() > 499) {
+                l.error(e.getMessage() + ": " + e.getStackTrace());
+            }
             respond(t, e.getCode(), e.getMessage().getBytes());
         }
         t.close();
