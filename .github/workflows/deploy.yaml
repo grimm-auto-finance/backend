@@ -11,9 +11,3 @@ jobs:
         run: 'curl -v -X "POST" -H "Authorization: token $REPO_ACCESS_TOKEN" https://api.github.com/repos/tli-group-4-grimm/hosting/dispatches -d "{\"event_type\": \"deploy\"}"'
         env:
           REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
-      - name: Wait for action to start
-        run: 'while curl --silent -X "GET" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e ".workflow_runs[0].conclusion != null" > /dev/null; do sleep 1; done'
-      - name: Wait for action to finish
-        run: 'while curl --silent -X "GET" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e ".workflow_runs[0].conclusion == null" > /dev/null; do sleep 1; done'
-      - name: Register result
-        run: 'curl -v -X "GET" https://api.github.com/repos/tli-group-4-grimm/hosting/actions/runs | jq -e ".workflow_runs[0].conclusion == \"success\""'
