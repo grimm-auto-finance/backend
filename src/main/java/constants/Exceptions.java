@@ -35,7 +35,6 @@ public class Exceptions {
             super(message);
             this.setStackTrace(e.getStackTrace());
         }
-    }
 
         /** 
         * 
