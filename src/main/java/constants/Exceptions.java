@@ -60,7 +60,7 @@ public class Exceptions {
 
         /** @return Returns the specific PackageException code */
         public int getCode() {
-            return 400;
+            return 500;
         }
     }
     /**
