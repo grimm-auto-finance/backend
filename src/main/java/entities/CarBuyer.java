@@ -17,7 +17,7 @@ public class CarBuyer extends Entity {
      * @param budget
      * @param creditScore
      */
-    public CarBuyer(double budget, int creditScore) {
+    protected CarBuyer(double budget, int creditScore) {
         this.budget = budget;
         this.creditScore = creditScore;
     }

@@ -29,7 +29,7 @@ public class LoanData extends Entity {
      * @param interestSum the total amount of interest paid on the loan
      * @param amortizationTable the ammortization table for this loan
      */
-    public LoanData(
+    protected LoanData(
             double interestRate,
             double installment,
             String sensoScore,

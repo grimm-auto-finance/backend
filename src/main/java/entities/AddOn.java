@@ -15,7 +15,7 @@ public class AddOn extends Entity {
      * @param price
      * @param description
      */
-    public AddOn(String name, double price, String description) {
+    protected AddOn(String name, double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;

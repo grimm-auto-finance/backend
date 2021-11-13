@@ -28,7 +28,7 @@ public class Car extends Entity {
      * @param model The model of the car
      * @param year The model year of the car
      */
-    public Car(double price, String make, String model, int year) {
+    protected Car(double price, String make, String model, int year) {
         this(price, make, model, year, new HashMap<>());
     }
 
