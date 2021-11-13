@@ -33,7 +33,7 @@ public class CarFactory {
                                           map.getItem(EntityStringNames.CAR_YEAR)
                                                   .getAttribute());
           price = (double) map.getItem(EntityStringNames.CAR_PRICE).getAttribute();
-          ArrayAttribute addOnArray = (ArrayAttribute) map.getItem(EntityStringNames.ADD_ON_STRING);
+          ArrayAttribute addOnArray = (ArrayAttribute) map.getItem(EntityStringNames.CAR_ADD_ONS);
           List<AddOn> addOnList = AddOnFactory.getEntities(addOnArray);
           addOnMap = new HashMap<>();
           for (AddOn a : addOnList) {
