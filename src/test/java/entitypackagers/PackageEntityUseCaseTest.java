@@ -37,7 +37,7 @@ public class PackageEntityUseCaseTest {
     }
 
     @Test
-    public void testSetEntity() {
+    public void testSetPackager() {
         entityPackager.setPackager(otherPackager);
         assertEquals(otherPackager, entityPackager.getPackager());
     }
@@ -60,7 +60,7 @@ public class PackageEntityUseCaseTest {
     public void testPackageNullPackager() {
         entityPackager = new PackageEntityUseCase();
         try {
-            // Throws a NullPointerException because the value of the stored Entity is null
+            // Throws a NullPointerException because the value of the stored Packager is null
             entityPackager.writeEntity(car);
         } catch (NullPointerException e) {
             assertEquals("Can't use null Packager to package Entity", e.getMessage());
