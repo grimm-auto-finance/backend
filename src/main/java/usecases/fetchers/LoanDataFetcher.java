@@ -188,7 +188,8 @@ public class LoanDataFetcher {
         }
 
         AttributeMap loanMap = AttributeMap.combine(rateResponseMap, scoreResponseMap);
-
-        return GenerateEntitiesUseCase.generateLoanData(loanMap);
+        AttributeMap entityMap = new AttributeMap();
+        entityMap.addItem(EntityStringNames.LOAN_STRING, loanMap);
+        return LoanDataFactory.getEntity(entityMap);
     }
 }
