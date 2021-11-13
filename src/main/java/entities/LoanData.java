@@ -185,7 +185,7 @@ public class LoanData extends Entity {
                 return false;
             }
         }
-        
+
         return (Math.abs(this.interestRate - otherLoan.interestRate) < .001)
                 && (Math.abs(this.installment - otherLoan.installment) < .001)
                 && (Math.abs(this.loanAmount - otherLoan.loanAmount) < .001)
