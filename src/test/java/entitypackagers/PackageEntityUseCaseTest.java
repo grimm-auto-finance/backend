@@ -26,8 +26,8 @@ public class PackageEntityUseCaseTest {
     static void setup() {
         entityPackager = new PackageEntityUseCase();
         jsonPackager = new JsonPackager();
-        car = new Car(15.0, "Honda", "Civic", 2020);
-        carBuyer = new CarBuyer(15000, 700);
+        car = TestEntityCreator.getTestCar();
+        carBuyer = TestEntityCreator.getTestBuyer();
     }
 
     @Test

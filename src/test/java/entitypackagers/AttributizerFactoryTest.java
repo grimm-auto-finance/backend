@@ -13,26 +13,26 @@ public class AttributizerFactoryTest {
 
     @Test
     public void testGetCarAttributizer() {
-        Entity car = new Car(5, "Test", "Car", 2021);
+        Entity car = TestEntityCreator.getTestCar();
         assertTrue(AttributizerFactory.getAttributizer(car) instanceof AttributizeCarUseCase);
     }
 
     @Test
     public void testGetBuyerAttributizer() {
-        Entity buyer = new CarBuyer(50000, 750);
+        Entity buyer = TestEntityCreator.getTestBuyer();
         assertTrue(
                 AttributizerFactory.getAttributizer(buyer) instanceof AttributizeCarBuyerUseCase);
     }
 
     @Test
     public void testGetAddOnAttributizer() {
-        Entity addOn = new AddOn("Marshmallows", 100, "fluffy goodness");
+        Entity addOn = TestEntityCreator.getTestAddOn();
         assertTrue(AttributizerFactory.getAttributizer(addOn) instanceof AttributizeAddOnUseCase);
     }
 
     @Test
     public void testGetLoanDataAttributizer() {
-        Entity loanData = new LoanData(0, 0, "very low", 100, 36, 200, new ArrayList<>());
+        Entity loanData = TestEntityCreator.getTestLoanData();
         assertTrue(
                 AttributizerFactory.getAttributizer(loanData)
                         instanceof AttributizeLoanDataUseCase);

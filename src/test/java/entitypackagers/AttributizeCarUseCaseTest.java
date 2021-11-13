@@ -20,7 +20,7 @@ public class AttributizeCarUseCaseTest {
 
     @BeforeEach
     public void setup() {
-        testCar = new Car(50000, "Honda", "Civic", 2020);
+        testCar = TestEntityCreator.getTestCar();
         carAttributizer = new AttributizeCarUseCase(testCar);
         testMap = new AttributeMap();
     }
@@ -45,10 +45,8 @@ public class AttributizeCarUseCaseTest {
 
     @Test
     public void testAttributizeCarWithAddOns() {
-        AddOn rustProofing = new AddOn("Rust proofing", 1000, "no rust allowed");
-        AddOn marshmallows = new AddOn("Marshmallows", 100, "fluffy goodness");
+        AddOn rustProofing = TestEntityCreator.getTestAddOn();
         testCar.addAddOn(rustProofing);
-        testCar.addAddOn(marshmallows);
         addCarToTestMap();
         assertEquals(
                 testMap.getAttribute().toString(),

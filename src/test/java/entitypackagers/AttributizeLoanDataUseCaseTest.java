@@ -12,10 +12,7 @@ import entities.LoanData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AttributizeLoanDataUseCaseTest {
 
@@ -43,11 +40,7 @@ public class AttributizeLoanDataUseCaseTest {
 
     @Test
     public void testAttributizeLoanData() {
-        List<Map<String, Double>> ammortizationTable = new ArrayList<>();
-        Map<String, Double> installment = new HashMap<>();
-        installment.put("Test String", 5.5);
-        ammortizationTable.add(installment);
-        loanData = new LoanData(1.25, 500.25, "Medium", 50000, 36, 200.25, ammortizationTable);
+        loanData = TestEntityCreator.getTestLoanData();
         addLoanDataToTestMap();
         loanDataAttributizer = new AttributizeLoanDataUseCase(loanData);
         assertEquals(
