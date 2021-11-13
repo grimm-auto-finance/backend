@@ -177,7 +177,7 @@ public class LoanData extends Entity {
         for (Map<String, Double> firstEntry : amortizationTable) {
             boolean amortizationMatch = false;
             for (Map<String, Double> secondEntry : otherLoan.amortizationTable) {
-                if (compareAmortizationEntries(firstEntry, secondEntry, .001)) {
+                if (compareAmortizationEntries(firstEntry, secondEntry)) {
                     amortizationMatch = true;
                 }
             }
@@ -192,6 +192,10 @@ public class LoanData extends Entity {
                 && (Math.abs(this.interestSum - otherLoan.interestSum) < .001)
                 && (this.termLength == otherLoan.termLength)
                 && (this.sensoScore.equals(otherLoan.sensoScore));
+    }
+
+    private boolean compareAmortizationEntries(Map<String, Double> first, Map<String, Double> second) {
+        return compareAmortizationEntries(first, second, .001);
     }
 
     private boolean compareAmortizationEntries(Map<String, Double> first, Map<String, Double> second, double epsilon) {

@@ -63,7 +63,7 @@ public class CarFactoryTest {
     }
 
     @Test
-    public void testCarFactoryMissingKeys() {
+    public void testGetEntityMissingKeys() {
         AttributeMap carMap = new AttributeMap();
         carMap.addItem("wrong key", "not gonna work");
         try {
@@ -75,7 +75,7 @@ public class CarFactoryTest {
     }
 
     @Test
-    public void testCarFactoryWrongValueTypes() {
+    public void testGetEntityWrongValueTypes() {
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_MAKE, 15);
         carMap.addItem(EntityStringNames.CAR_MODEL, 36.5);
