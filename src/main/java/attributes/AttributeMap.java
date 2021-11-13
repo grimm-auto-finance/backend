@@ -47,7 +47,7 @@ public class AttributeMap extends Attribute {
      */
     public Attribute getItem(String name) throws NullPointerException {
         if (!items.containsKey(name)) {
-            throw new NullPointerException("No item in map with this name");
+            throw new NullPointerException("No item in map with name " + name);
         }
         return items.get(name);
     }
