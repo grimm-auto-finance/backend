@@ -37,7 +37,7 @@ public class AttributizeCarUseCase implements Attributizer {
         Attribute[] addOnMaps = getAddOnAttArray(addOns);
         Attribute addOnArray = AttributeFactory.createAttribute(addOnMaps);
 
-        carMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnArray);
+        carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
         return carMap;
     }
 

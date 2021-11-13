@@ -25,7 +25,7 @@ public class CarFactoryTest {
         // TODO: update this to be an int once we have parsing ints/doubles figured out
         carMap.addItem(EntityStringNames.CAR_YEAR, 2020.0);
         ArrayAttribute addOnArray = (ArrayAttribute) AttributeFactory.createAttribute(new Attribute[0]);
-        carMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnArray);
+        carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
         Car testCar = new Car(3000.0, "Honda", "Civic", 2020);
         try {
             assertEquals(testCar, CarFactory.getEntity(carMap));
@@ -48,7 +48,7 @@ public class CarFactoryTest {
         addOnMap.addItem(EntityStringNames.ADD_ON_DESCRIPTION, "no rust allowed!");
         Attribute[] addOns = {addOnMap};
         ArrayAttribute addOnArray = (ArrayAttribute) AttributeFactory.createAttribute(addOns);
-        carMap.addItem(EntityStringNames.CAR_ADD_ONS, addOnArray);
+        carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
 
         AddOn addOn = new AddOn("rust-proofing", 15.25, "no rust allowed!");
         Map<String, AddOn> addOnHashMap = new HashMap<>();
@@ -81,7 +81,7 @@ public class CarFactoryTest {
         carMap.addItem(EntityStringNames.CAR_MODEL, 36.5);
         carMap.addItem(EntityStringNames.CAR_PRICE, "whoops");
         carMap.addItem(EntityStringNames.CAR_YEAR, "uh oh");
-        carMap.addItem(EntityStringNames.CAR_ADD_ONS, AttributeFactory.createAttribute("yikes"));
+        carMap.addItem(EntityStringNames.ADD_ON_STRING, AttributeFactory.createAttribute("yikes"));
         try {
             CarFactory.getEntity(carMap);
         } catch (Exceptions.FactoryException e) {
