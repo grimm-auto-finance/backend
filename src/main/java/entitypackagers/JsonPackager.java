@@ -16,6 +16,7 @@ public class JsonPackager implements Packager {
     /**
      * Writes packageMap to a JsonObject
      *
+     * @param packageMap The AttributeMap from which the JsonObject is created
      * @return a JsonPackage containing the JsonObject with packageMap's data
      * @throws Exceptions.PackageException if an item in the AttributeMap is of unknown type
      */

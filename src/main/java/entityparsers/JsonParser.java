@@ -13,9 +13,9 @@ public class JsonParser implements Parser {
     private final JsonObject jsonObject;
 
     /**
-     * Construct a new JsonParser to parse the given JsonObject
+     * Construct a new JsonParser
      *
-     * @param jsonObject The jsonObject
+     * @param jsonObject the given JsonObject parsed to construct JsonParser
      */
     public JsonParser(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
@@ -36,7 +36,8 @@ public class JsonParser implements Parser {
      *
      * @param object The JsonObject to be converted to be parsed
      * @return an attribute map representing the JsonObject
-     * @throws constants.Exceptions.ParseException The exception to be thrown
+     * @throws constants.Exceptions.ParseException if the JsonObject is not a String, Number, or
+     *     Objec
      */
     private AttributeMap parseJsonObject(JsonObject object) throws Exceptions.ParseException {
         AttributeMap map = new AttributeMap();

@@ -23,9 +23,10 @@ public class ParseCarBuyerUseCase {
     }
 
     /**
-     * Creates a CarBuyer object from the fields in jsonObject
+     * Creates a CarBuyer object from the map
      *
-     * @return The car buyer
+     * @throws Exceptions.ParseException if invalid map classes
+     * @return CarBuyer
      */
     public CarBuyer parse() throws Exceptions.ParseException {
         GenerateBuyerUseCase buyerGenerator = new GenerateBuyerUseCase();
