@@ -16,8 +16,8 @@ import java.util.Arrays;
 /** The generic route class that all routes will inherit from */
 public abstract class Route implements HttpHandler {
     /**
-     * A method that must be overridden by implementers which sets the URL route that the Route class
-     * will handle.
+     * A method that must be overridden by implementers which sets the URL route that the Route
+     * class will handle.
      */
     public abstract String getContext();
 

@@ -125,8 +125,7 @@ public class DataBaseFetcher {
             }
             return cars;
         } catch (SQLException e) {
-            throw
-                    new FetchException("could not get seach result from database", e);
+            throw new FetchException("could not get search result from database", e);
         }
     }
 
