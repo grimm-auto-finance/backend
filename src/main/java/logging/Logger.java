@@ -28,7 +28,7 @@ public interface Logger {
      * stacktrace of the exception argument.
      *
      * @param string the message, should not begin with a capital or end with a period
-     * @param exception the exception whose stacktrace will be used
+     * @param e the exception whose stacktrace will be used
      */
     void error(String string, Exception e);
 }

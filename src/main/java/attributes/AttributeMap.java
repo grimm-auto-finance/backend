@@ -39,7 +39,7 @@ public class AttributeMap extends Attribute {
      * name, throws NullPointerException
      *
      * @param name The key corresponding to name of the Attribute
-     * @return
+     * @return The item corresponding to the key in the map
      * @throws NullPointerException if no item exists in the map with the given name
      */
     public Attribute getItem(String name) throws NullPointerException {
@@ -52,7 +52,7 @@ public class AttributeMap extends Attribute {
     /**
      * Returns the map between attribute names and Attributes stored in this AttributeMap
      *
-     * @return
+     * @return The Attribute map
      */
     public Map<String, Attribute> getAttribute() {
         return items;

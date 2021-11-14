@@ -15,7 +15,7 @@ public class ParseCarUseCase {
     /**
      * Constructs a new ParseCarUseCase to create a Car using the given Parser
      *
-     * @param parser
+     * @param parser parser object to be parsed
      */
     public ParseCarUseCase(Parser parser) throws Exceptions.ParseException {
         this.map = parser.parse();
@@ -24,7 +24,7 @@ public class ParseCarUseCase {
     /**
      * Creates a Car object from the fields in jsonObject
      *
-     * @return
+     * @return The car object returned from parsing
      */
     public Car parse() throws Exceptions.ParseException {
         GenerateCarUseCase carGenerator = new GenerateCarUseCase();
@@ -50,6 +50,6 @@ public class ParseCarUseCase {
             throw ex;
         }
         // TODO: Support optional inclusion of addons?
-        return carGenerator.GenerateCarUseCase(kilometres, price, make, model, year);
+        return carGenerator.GenerateCarDataUseCase(kilometres, price, make, model, year);
     }
 }

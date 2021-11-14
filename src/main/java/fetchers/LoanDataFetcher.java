@@ -57,7 +57,7 @@ public class LoanDataFetcher {
         try {
             rateConn = (HttpURLConnection) Env.SENSO_RATE_URL.openConnection();
         } catch (IOException e) {
-            throw (Exceptions.CodedException)
+            throw
                     new Exceptions.FetchException("error connecting to senso rate API", e);
         }
 
@@ -93,7 +93,7 @@ public class LoanDataFetcher {
             rateWriter.write(rateBody.toString());
             rateWriter.close();
         } catch (IOException e) {
-            throw (Exceptions.CodedException)
+            throw
                     new Exceptions.FetchException("error reading response from senso rate API", e);
         }
 
@@ -115,10 +115,10 @@ public class LoanDataFetcher {
                 rateResponse = jsonReader.readObject();
             } else {
                 LoggerFactory.getLogger().error("senso rate API returned an error");
-                throw (Exceptions.CodedException) new Exceptions.FetchException();
+                throw  new Exceptions.FetchException();
             }
         } catch (IOException e) {
-            throw (Exceptions.CodedException)
+            throw
                     new Exceptions.FetchException("error reading senso rate API body", e);
         }
 
@@ -148,7 +148,7 @@ public class LoanDataFetcher {
             termLength = Integer.parseInt(((JsonString) rateResponse.get("term")).getString());
             interestSum = ((JsonNumber) rateResponse.get("interestSum")).doubleValue();
         } catch (ClassCastException e) {
-            throw (Exceptions.CodedException)
+            throw
                     new Exceptions.FetchException("senso rate API returned an invalid body", e);
         }
 
@@ -164,7 +164,7 @@ public class LoanDataFetcher {
         try {
             scoreConn = (HttpURLConnection) Env.SENSO_SCORE_URL.openConnection();
         } catch (IOException e) {
-            throw (Exceptions.CodedException)
+            throw
                     new Exceptions.FetchException("error connecting to senso score API", e);
         }
 
@@ -201,7 +201,7 @@ public class LoanDataFetcher {
             scoreWriter.write(scoreBody.toString());
             scoreWriter.close();
         } catch (IOException e) {
-            throw (Exceptions.CodedException)
+            throw
                     new Exceptions.FetchException("error reading response from senso score API", e);
         }
 
@@ -223,10 +223,10 @@ public class LoanDataFetcher {
                 scoreResponse = jsonReader.readObject();
             } else {
                 LoggerFactory.getLogger().error("senso score API returned an error");
-                throw (Exceptions.CodedException) new Exceptions.FetchException();
+                throw new Exceptions.FetchException();
             }
         } catch (IOException e) {
-            throw (Exceptions.CodedException)
+            throw 
                     new Exceptions.FetchException("error reading senso score API body", e);
         }
 
@@ -235,7 +235,7 @@ public class LoanDataFetcher {
         try {
             sensoScore = ((JsonString) scoreResponse.get("sensoScore")).getString();
         } catch (ClassCastException e) {
-            throw (Exceptions.CodedException)
+            throw
                     new Exceptions.FetchException("senso score API returned an invalid body", e);
         }
 

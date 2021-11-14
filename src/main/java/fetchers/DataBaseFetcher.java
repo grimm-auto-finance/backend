@@ -67,11 +67,11 @@ public class DataBaseFetcher {
                 String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement pst = connection.prepareStatement(statement);
                 pst.setInt(1, Integer.parseInt(fields[0]));
-                pst.setDouble(2, Double.parseDouble(fields[4]));
-                pst.setString(3, fields[1]);
-                pst.setString(4, fields[2]);
-                pst.setInt(5, Integer.parseInt(fields[3]));
-                pst.setInt(6, 0);
+                pst.setDouble(2, Double.parseDouble(fields[5]));
+                pst.setString(3, fields[2]);
+                pst.setString(4, fields[3]);
+                pst.setInt(5, Integer.parseInt(fields[4]));
+                pst.setInt(6, 1);
                 pst.execute();
             }
         } catch (SQLException e) {
@@ -98,7 +98,7 @@ public class DataBaseFetcher {
                 return null;
             }
         } catch (SQLException e) {
-            throw (CodedException) new FetchException("could not fetch car from database", e);
+            throw new FetchException("could not fetch car from database", e);
         }
     }
 
@@ -125,7 +125,7 @@ public class DataBaseFetcher {
             }
             return cars;
         } catch (SQLException e) {
-            throw (CodedException)
+            throw
                     new FetchException("could not get seach result from database", e);
         }
     }
@@ -142,7 +142,7 @@ public class DataBaseFetcher {
             }
             return addOns;
         } catch (SQLException e) {
-            throw (CodedException) new FetchException("could not get addd-ons from database", e);
+            throw new FetchException("could not get addd-ons from database", e);
         }
     }
 }

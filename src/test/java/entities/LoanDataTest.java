@@ -18,10 +18,10 @@ public class LoanDataTest {
 
     @BeforeEach
     public void setup() {
-        List<Map<String, Double>> ammortizationTable = new ArrayList<>();
-        ammortizationTable.add(new HashMap<>());
-        ammortizationTable.get(0).put("installment", 100.25);
-        loanData = new LoanData(1.25, 500.45, "Medium", 10000, 36, 2000, ammortizationTable);
+        List<Map<String, Double>> amortizationTable = new ArrayList<>();
+        amortizationTable.add(new HashMap<>());
+        amortizationTable.get(0).put("installment", 100.25);
+        loanData = new LoanData(1.25, 500.45, "Medium", 10000, 36, 2000, amortizationTable);
     }
 
     @Test
@@ -41,11 +41,11 @@ public class LoanDataTest {
     }
 
     @Test
-    public void testGetAmmortizationTable() {
-        List<Map<String, Double>> ammortizationTable = new ArrayList<>();
-        ammortizationTable.add(new HashMap<>());
-        ammortizationTable.get(0).put("installment", 100.25);
-        assertEquals(ammortizationTable.toString(), loanData.getAmortizationTable().toString());
+    public void testGetAmortizationTable() {
+        List<Map<String, Double>> amortizationTable = new ArrayList<>();
+        amortizationTable.add(new HashMap<>());
+        amortizationTable.get(0).put("installment", 100.25);
+        assertEquals(amortizationTable.toString(), loanData.getAmortizationTable().toString());
     }
 
     @Test
