@@ -32,9 +32,6 @@ public class AttributeMap extends Attribute {
      * @throws NullPointerException if item is null
      */
     public void addItem(String name, Attribute item) throws NullPointerException {
-        if (item == null) {
-            throw new NullPointerException();
-        }
         items.put(name, item);
     }
 
