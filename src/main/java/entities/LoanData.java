@@ -85,7 +85,7 @@ public class LoanData extends Entity {
     /**
      * Returns this loan's amortization table
      *
-     * @return The loans' amortization table
+     * @return The loan's amortization table
      */
     public List<Map<String, Double>> getAmortizationTable() {
         return amortizationTable;
