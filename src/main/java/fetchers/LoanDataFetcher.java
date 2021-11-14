@@ -34,6 +34,7 @@ public class LoanDataFetcher {
         double installment = (double) rateRequestResult[2];
         double loanAmount = (double) rateRequestResult[3];
         double interestSum = (double) rateRequestResult[4];
+        // noinspection unchecked
         List<Map<String, Double>> amortizationTable =
                 (List<Map<String, Double>>) rateRequestResult[5];
 

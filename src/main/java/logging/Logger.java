@@ -7,21 +7,21 @@ public interface Logger {
      *
      * @param string the message, should not begin with a capital or end with a period
      */
-    public void info(String string);
+    void info(String string);
 
     /**
      * Display the given message as a warning, the middle level of log severity.
      *
      * @param string the message, should not begin with a capital or end with a period
      */
-    public void warn(String string);
+    void warn(String string);
 
     /**
      * Display the given message as an error, the highest level of log severity.
      *
      * @param string the message, should not begin with a capital or end with a period
      */
-    public void error(String string);
+    void error(String string);
 
     /**
      * Display the given message as an error, the highest level of log severity, along with the
@@ -30,5 +30,5 @@ public interface Logger {
      * @param string the message, should not begin with a capital or end with a period
      * @param exception the exception whose stacktrace will be used
      */
-    public void error(String string, Exception e);
+    void error(String string, Exception e);
 }
