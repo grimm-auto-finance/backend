@@ -132,7 +132,7 @@ public class Car extends Entity {
     /**
      * Returns this Car's model year
      *
-     * @return The cars model year
+     * @return The car's model year
      */
     public int getYear() {
         return year;
