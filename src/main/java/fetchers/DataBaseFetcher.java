@@ -67,11 +67,11 @@ public class DataBaseFetcher {
                 String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement pst = connection.prepareStatement(statement);
                 pst.setInt(1, Integer.parseInt(fields[0]));
-                pst.setDouble(2, Double.parseDouble(fields[4]));
-                pst.setString(3, fields[1]);
-                pst.setString(4, fields[2]);
-                pst.setInt(5, Integer.parseInt(fields[3]));
-                pst.setInt(6, 0);
+                pst.setDouble(2, Double.parseDouble(fields[5]));
+                pst.setString(3, fields[2]);
+                pst.setString(4, fields[3]);
+                pst.setInt(5, Integer.parseInt(fields[4]));
+                pst.setInt(6, Integer.parseInt(fields[1]));
                 pst.execute();
             }
         } catch (SQLException e) {
