@@ -41,7 +41,8 @@ public class CarFactory {
                 addOnMap.put(a.getName(), a);
             }
         } catch (ClassCastException | NullPointerException e) {
-            Exceptions.FactoryException ex = new Exceptions.FactoryException(e.getMessage());
+            String message = "Failed to generate Car: ";
+            Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }

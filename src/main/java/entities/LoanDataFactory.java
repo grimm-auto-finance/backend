@@ -58,7 +58,8 @@ public class LoanDataFactory {
                 amortizationTable.add(installmentDoubleMap);
             }
         } catch (ClassCastException | NullPointerException e) {
-            Exceptions.FactoryException ex = new Exceptions.FactoryException(e.getMessage());
+            String message = "Failed to generate LoanData:";
+            Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }

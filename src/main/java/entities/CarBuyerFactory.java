@@ -28,7 +28,8 @@ public class CarBuyerFactory {
                                             map.getItem(EntityStringNames.BUYER_CREDIT)
                                                     .getAttribute());
         } catch (ClassCastException | NullPointerException e) {
-            Exceptions.FactoryException ex = new Exceptions.FactoryException(e.getMessage());
+            String message = "Failed to generate CarBuyer: ";
+            Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }

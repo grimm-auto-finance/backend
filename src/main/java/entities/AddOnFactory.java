@@ -29,7 +29,8 @@ public class AddOnFactory {
             price = (double) map.getItem(EntityStringNames.ADD_ON_PRICE).getAttribute();
             description = (String) map.getItem(EntityStringNames.ADD_ON_DESCRIPTION).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
-            Exceptions.FactoryException ex = new Exceptions.FactoryException(e.getMessage());
+            String message = "Failed to generate AddOn: ";
+            Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }
@@ -54,7 +55,8 @@ public class AddOnFactory {
                 AttributeMap map = (AttributeMap) a;
                 addOns.add(getEntity(map));
             } catch (ClassCastException | NullPointerException e) {
-                Exceptions.FactoryException ex = new Exceptions.FactoryException(e.getMessage());
+                String message = "Failed to generate AddOn List: ";
+                Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
                 ex.setStackTrace(e.getStackTrace());
                 throw ex;
             }
