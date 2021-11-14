@@ -129,10 +129,10 @@ public class LoanDataFetcher {
             interestRate = ((JsonNumber) rateResponse.get("interestRate")).intValue();
             installment =
                     ((JsonNumber)
-                                    ((JsonObject)
-                                                    ((JsonArray) rateResponse.get("installments"))
-                                                            .get(0))
-                                            .get("installment"))
+                            ((JsonObject)
+                                    ((JsonArray) rateResponse.get("installments"))
+                                            .get(0))
+                                    .get("installment"))
                             .doubleValue();
             JsonArray installments = (JsonArray) rateResponse.get("installments");
             for (JsonValue i : installments) {
@@ -152,7 +152,7 @@ public class LoanDataFetcher {
         }
 
         return new Object[] {
-            interestRate, termLength, installment, loanAmount, interestSum, amortizationTable
+                interestRate, termLength, installment, loanAmount, interestSum, amortizationTable
         };
     }
 

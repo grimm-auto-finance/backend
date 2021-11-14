@@ -2,9 +2,7 @@ package entitypackagers;
 
 import attributes.Attribute;
 import attributes.AttributeMap;
-
 import constants.EntityStringNames;
-
 import entities.LoanData;
 
 import java.util.ArrayList;
