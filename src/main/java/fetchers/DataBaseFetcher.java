@@ -71,7 +71,7 @@ public class DataBaseFetcher {
                 pst.setString(3, fields[2]);
                 pst.setString(4, fields[3]);
                 pst.setInt(5, Integer.parseInt(fields[4]));
-                pst.setInt(6, 1);
+                pst.setInt(6, Integer.parseInt(fields[1]));
                 pst.execute();
             }
         } catch (SQLException e) {
