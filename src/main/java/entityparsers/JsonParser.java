@@ -1,10 +1,12 @@
 package entityparsers;
 
 import attributes.*;
+
 import constants.Exceptions;
 
-import javax.json.*;
 import java.util.Set;
+
+import javax.json.*;
 
 public class JsonParser implements Parser {
 
@@ -34,7 +36,8 @@ public class JsonParser implements Parser {
      *
      * @param object the given JsonObject used to create the AttributeMap
      * @return AttributeMap
-     * @throws constants.Exceptions.ParseException if the JsonObject is not a String, Number, or Object
+     * @throws constants.Exceptions.ParseException if the JsonObject is not a String, Number, or
+     *     Object
      */
     private AttributeMap parseJsonObject(JsonObject object) throws Exceptions.ParseException {
         AttributeMap map = new AttributeMap();

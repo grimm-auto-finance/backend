@@ -10,8 +10,7 @@ public class AttributizerFactory {
 
     /**
      * @param entity The Entity from which the attributizerUseCase object is created
-     * @return a Car, CarBuyer or AddOn Attributizer, depending on the entity in the
-     *     parameter
+     * @return a Car, CarBuyer or AddOn Attributizer, depending on the entity in the parameter
      * @throws ClassCastException This is because an incorrect class is used for the parameter
      */
     public static Attributizer getAttributizer(Entity entity) {
