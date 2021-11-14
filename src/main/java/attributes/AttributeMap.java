@@ -29,8 +29,9 @@ public class AttributeMap extends Attribute {
      *
      * @param name The name of the Attribute to be added to the map
      * @param item The Attribute to be added to the map
+     * @throws NullPointerException if item is null
      */
-    public void addItem(String name, Attribute item) {
+    public void addItem(String name, Attribute item) throws NullPointerException {
         items.put(name, item);
     }
 

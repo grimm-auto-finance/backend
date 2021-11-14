@@ -22,7 +22,7 @@ public class ParseCarUseCase {
     }
 
     /**
-     * Creates a Car object from the fields in jsonObject
+     * Creates a Car object from the map
      *
      * @return The car object returned from parsing
      */
