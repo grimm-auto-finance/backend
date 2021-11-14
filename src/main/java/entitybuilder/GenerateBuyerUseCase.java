@@ -9,7 +9,7 @@ public class GenerateBuyerUseCase {
      *
      * @param budget The budget of the car buyer
      * @param creditScore The car buyers credit score
-     * @return
+     * @return The CarBuyer object
      */
     public CarBuyer GenerateBuyerDataUseCase(double budget, int creditScore) {
         return new CarBuyer(budget, creditScore);

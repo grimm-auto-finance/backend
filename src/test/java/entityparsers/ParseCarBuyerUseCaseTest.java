@@ -67,7 +67,7 @@ public class ParseCarBuyerUseCaseTest {
         try {
             parseCarBuyerUseCase.parse();
         } catch (Exceptions.ParseException e) {
-
+            // We expect this exception to be thrown
         }
     }
 

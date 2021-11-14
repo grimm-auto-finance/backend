@@ -98,7 +98,7 @@ public class DataBaseFetcher {
                 return null;
             }
         } catch (SQLException e) {
-            throw (CodedException) new FetchException("could not fetch car from database", e);
+            throw new FetchException("could not fetch car from database", e);
         }
     }
 
@@ -125,8 +125,7 @@ public class DataBaseFetcher {
             }
             return cars;
         } catch (SQLException e) {
-            throw (CodedException)
-                    new FetchException("could not get seach result from database", e);
+            throw new FetchException("could not get search result from database", e);
         }
     }
 
@@ -142,7 +141,7 @@ public class DataBaseFetcher {
             }
             return addOns;
         } catch (SQLException e) {
-            throw (CodedException) new FetchException("could not get addd-ons from database", e);
+            throw new FetchException("could not get addd-ons from database", e);
         }
     }
 }

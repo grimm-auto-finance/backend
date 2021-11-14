@@ -16,7 +16,7 @@ public class ParseCarBuyerUseCase {
     /**
      * Constructs a new ParseCarBuyerUseCase to create a CarBuyer using the given JsonObject
      *
-     * @param parser object to be parsed
+     * @param parser The parser object to be parsed
      */
     public ParseCarBuyerUseCase(Parser parser) throws Exceptions.ParseException {
         this.map = parser.parse();
@@ -33,7 +33,7 @@ public class ParseCarBuyerUseCase {
         double budget;
         int creditScore;
         try {
-            // TODO: decide whether these should expect a complete attributmap (with multiple
+            // TODO: decide whether these should expect a complete attribute map (with multiple
             // objects) or just the buyer part (where does the extraction occur?)
             AttributeMap buyerMap = (AttributeMap) map.getItem(EntityStringNames.BUYER_STRING);
             budget = (double) buyerMap.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();

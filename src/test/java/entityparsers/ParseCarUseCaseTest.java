@@ -55,7 +55,7 @@ public class ParseCarUseCaseTest {
 
     /**
      * Test ParseCarUseCase when the JsonObject has incorrect types for Car attributes Make sure
-     * that parseCarUseCase.parse throws a ParseException.
+     * that parseCarUseCase. parse throws a ParseException.
      */
     @Test
     public void testCarParseBadTypes() {
@@ -75,7 +75,7 @@ public class ParseCarUseCaseTest {
         try {
             parseCarUseCase.parse();
         } catch (Exceptions.ParseException e) {
-
+            // Catch block is currently empty
         }
     }
 

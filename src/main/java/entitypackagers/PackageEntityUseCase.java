@@ -34,7 +34,7 @@ public class PackageEntityUseCase {
      * Returns the Entity that this PackageEntityUseCase has been set to package Should only be used
      * for testing
      *
-     * @return
+     * @return The entity to be packaged
      */
     public Entity getEntity() {
         return this.entity;
@@ -43,9 +43,9 @@ public class PackageEntityUseCase {
     /**
      * Writes entity to a Package using the given Packager
      *
-     * @param packager
-     * @return
-     * @throws Exception
+     * @param packager The type of package to be used
+     * @return the package
+     * @throws Exceptions.PackageException A PackageException
      */
     public Package writeEntity(Packager packager) throws Exceptions.PackageException {
         if (entity == null) {

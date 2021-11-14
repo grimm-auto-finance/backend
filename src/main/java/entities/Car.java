@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Car extends Entity {
     // A Map between add-on names and AddOn objects representing those addons
-    private Map<String, AddOn> addOns;
+    private final Map<String, AddOn> addOns;
 
     // The Car's price, in dollars.
     private double price;
@@ -69,7 +69,7 @@ public class Car extends Entity {
     /**
      * Adds the given AddOn to this Car's set of AddOns
      *
-     * @param addOn
+     * @param addOn The addon to be added to the addon map
      */
     public void addAddOn(AddOn addOn) {
         addOns.put(addOn.getName(), addOn);
@@ -87,7 +87,7 @@ public class Car extends Entity {
     /**
      * Returns the AddOns stored in this Car
      *
-     * @return
+     * @return The addon map of the car
      */
     public Map<String, AddOn> getAddOns() {
         return new HashMap<>(this.addOns);
@@ -96,7 +96,7 @@ public class Car extends Entity {
     /**
      * Returns this Car's price, in dollars.
      *
-     * @return
+     * @return The price of the car in dollars
      */
     public double getPrice() {
         return price;
@@ -105,7 +105,7 @@ public class Car extends Entity {
     /**
      * Updates this Car's price to the specified value.
      *
-     * @param price
+     * @param price The car's price
      */
     public void setPrice(double price) {
         this.price = price;
@@ -114,7 +114,7 @@ public class Car extends Entity {
     /**
      * returns the make of this car
      *
-     * @return
+     * @return The make of the car
      */
     public String getMake() {
         return make;
@@ -123,7 +123,7 @@ public class Car extends Entity {
     /**
      * returns the model of this car
      *
-     * @return
+     * @return The model of the car
      */
     public String getModel() {
         return model;
@@ -132,7 +132,7 @@ public class Car extends Entity {
     /**
      * Returns this Car's model year
      *
-     * @return
+     * @return The car's model year
      */
     public int getYear() {
         return year;
