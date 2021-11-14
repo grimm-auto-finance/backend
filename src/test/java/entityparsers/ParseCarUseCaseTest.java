@@ -75,7 +75,7 @@ public class ParseCarUseCaseTest {
         try {
             parseCarUseCase.parse();
         } catch (Exceptions.ParseException e) {
-
+            // Catch block is currently empty
         }
     }
 

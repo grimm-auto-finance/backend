@@ -27,6 +27,7 @@ class Server {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException te) {
+                    // Catch block is currently empty
                 }
             }
         }
