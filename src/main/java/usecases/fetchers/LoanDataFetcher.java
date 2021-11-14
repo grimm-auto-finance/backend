@@ -1,8 +1,7 @@
 package fetchers;
 
-import attributes.ArrayAttribute;
-import attributes.Attribute;
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
 
@@ -10,6 +9,7 @@ import entities.*;
 import entities.LoanData;
 
 import entityparsers.JsonParser;
+
 import logging.Logger;
 import logging.LoggerFactory;
 
@@ -21,10 +21,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.json.*;
 

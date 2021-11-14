@@ -33,8 +33,8 @@ public class PackageEntityUseCase {
     }
 
     /**
-     * Returns the Packager that this PackageEntityUseCase has been set to use to package
-     * Should only be used for testing
+     * Returns the Packager that this PackageEntityUseCase has been set to use to package Should
+     * only be used for testing
      *
      * @return
      */
@@ -75,5 +75,4 @@ public class PackageEntityUseCase {
         }
         return packager.writePackage(entitiesMap);
     }
-
 }

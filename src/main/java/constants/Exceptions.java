@@ -38,11 +38,15 @@ public class Exceptions {
     }
 
     public static class FactoryException extends CodedException {
-        public int getCode() { return 400; }
+        public int getCode() {
+            return 400;
+        }
 
         public FactoryException() {}
 
-        public FactoryException(String message) { super(message); }
+        public FactoryException(String message) {
+            super(message);
+        }
     }
 
     public static class PackageException extends CodedException {

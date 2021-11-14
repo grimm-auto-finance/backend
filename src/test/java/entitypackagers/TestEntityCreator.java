@@ -1,19 +1,20 @@
 package entitypackagers;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import attributes.Attribute;
 import attributes.AttributeFactory;
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
+
 import entities.*;
-import org.w3c.dom.Attr;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestEntityCreator {
 
@@ -24,9 +25,11 @@ public class TestEntityCreator {
         carMap.addItem(EntityStringNames.CAR_MAKE, "Honda");
         carMap.addItem(EntityStringNames.CAR_MODEL, "Civic");
         carMap.addItem(EntityStringNames.CAR_YEAR, 2020.0);
-        carMap.addItem(EntityStringNames.ADD_ON_STRING, AttributeFactory.createAttribute(new Attribute[0]));
+        carMap.addItem(
+                EntityStringNames.ADD_ON_STRING,
+                AttributeFactory.createAttribute(new Attribute[0]));
         try {
-            car =  CarFactory.getEntity(carMap);
+            car = CarFactory.getEntity(carMap);
         } catch (Exceptions.FactoryException e) {
             fail("Factory creation of Car failed");
         }
@@ -39,7 +42,7 @@ public class TestEntityCreator {
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, 30000.5);
         buyerMap.addItem(EntityStringNames.BUYER_CREDIT, 750.0);
         try {
-            buyer =  CarBuyerFactory.getEntity(buyerMap);
+            buyer = CarBuyerFactory.getEntity(buyerMap);
         } catch (Exceptions.FactoryException e) {
             fail("Factory creation of CarBuyer failed");
         }

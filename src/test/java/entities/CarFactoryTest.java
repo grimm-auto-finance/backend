@@ -1,18 +1,20 @@
 package entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import attributes.ArrayAttribute;
 import attributes.Attribute;
 import attributes.AttributeFactory;
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class CarFactoryTest {
 
@@ -24,7 +26,8 @@ public class CarFactoryTest {
         carMap.addItem(EntityStringNames.CAR_PRICE, 3000.0);
         // TODO: update this to be an int once we have parsing ints/doubles figured out
         carMap.addItem(EntityStringNames.CAR_YEAR, 2020.0);
-        ArrayAttribute addOnArray = (ArrayAttribute) AttributeFactory.createAttribute(new Attribute[0]);
+        ArrayAttribute addOnArray =
+                (ArrayAttribute) AttributeFactory.createAttribute(new Attribute[0]);
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
         Car testCar = new Car(3000.0, "Honda", "Civic", 2020);
         try {

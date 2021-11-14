@@ -194,11 +194,13 @@ public class LoanData extends Entity {
                 && (this.sensoScore.equals(otherLoan.sensoScore));
     }
 
-    private boolean compareAmortizationEntries(Map<String, Double> first, Map<String, Double> second) {
+    private boolean compareAmortizationEntries(
+            Map<String, Double> first, Map<String, Double> second) {
         return compareAmortizationEntries(first, second, .001);
     }
 
-    private boolean compareAmortizationEntries(Map<String, Double> first, Map<String, Double> second, double epsilon) {
+    private boolean compareAmortizationEntries(
+            Map<String, Double> first, Map<String, Double> second, double epsilon) {
         for (String s : first.keySet()) {
             if (!second.containsKey(s)) {
                 return false;

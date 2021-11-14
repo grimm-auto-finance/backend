@@ -1,15 +1,17 @@
 package entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import attributes.*;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class AddOnFactoryTest {
 
@@ -82,7 +84,8 @@ public class AddOnFactoryTest {
         IntAttribute badInt = (IntAttribute) AttributeFactory.createAttribute(5);
         DoubleAttribute badDouble = (DoubleAttribute) AttributeFactory.createAttribute(25.3);
         Attribute[] badArray = {badInt, badDouble};
-        ArrayAttribute badArrayAttribute = (ArrayAttribute) AttributeFactory.createAttribute(badArray);
+        ArrayAttribute badArrayAttribute =
+                (ArrayAttribute) AttributeFactory.createAttribute(badArray);
         try {
             AddOnFactory.getEntities(badArrayAttribute);
         } catch (Exceptions.FactoryException e) {

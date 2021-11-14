@@ -7,8 +7,6 @@ import attributes.AttributeMap;
 
 import constants.Exceptions;
 
-import entities.Car;
-import entities.CarBuyer;
 import entities.Entity;
 
 import org.junit.jupiter.api.BeforeAll;

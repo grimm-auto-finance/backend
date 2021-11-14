@@ -85,6 +85,8 @@ public class AttributeMapTest {
         AttributeMap testCombined = new AttributeMap();
         testCombined.addItem("test string", "test value");
         testCombined.addItem("second test string", "second test value");
-        assertEquals(testCombined.getAttribute().toString(), AttributeMap.combine(first, second).getAttribute().toString());
+        assertEquals(
+                testCombined.getAttribute().toString(),
+                AttributeMap.combine(first, second).getAttribute().toString());
     }
 }

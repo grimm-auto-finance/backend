@@ -1,6 +1,7 @@
 package entities;
 
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
 
@@ -8,9 +9,12 @@ public class CarBuyerFactory {
 
     /**
      * Constructs a new CarBuyer using the values in the given AttributeMap
-     * @param map an AttributeMap containing keys and values corresponding to the attributes of a CarBuyer
+     *
+     * @param map an AttributeMap containing keys and values corresponding to the attributes of a
+     *     CarBuyer
      * @return a CarBuyer constructed from the values in map
-     * @throws Exceptions.FactoryException if the required key/value pairs for CarBuyer construction aren't present in map
+     * @throws Exceptions.FactoryException if the required key/value pairs for CarBuyer construction
+     *     aren't present in map
      */
     public static CarBuyer getEntity(AttributeMap map) throws Exceptions.FactoryException {
         double budget;

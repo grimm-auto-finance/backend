@@ -1,20 +1,22 @@
 package entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import attributes.ArrayAttribute;
 import attributes.Attribute;
 import attributes.AttributeFactory;
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class LoanDataFactoryTest {
 
@@ -32,7 +34,8 @@ public class LoanDataFactoryTest {
         installmentMap.addItem("installment", 300.25);
         installmentMap.addItem("interestSum", 200.5);
         Attribute[] installments = {installmentMap};
-        ArrayAttribute amortizationArray = (ArrayAttribute) AttributeFactory.createAttribute(installments);
+        ArrayAttribute amortizationArray =
+                (ArrayAttribute) AttributeFactory.createAttribute(installments);
         loanMap.addItem(EntityStringNames.LOAN_AMORTIZATION, amortizationArray);
 
         Map<String, Double> installmentHashMap = new HashMap<>();
@@ -40,7 +43,8 @@ public class LoanDataFactoryTest {
         installmentHashMap.put("interestSum", 200.5);
         List<Map<String, Double>> amortizationList = new ArrayList<>();
         amortizationList.add(installmentHashMap);
-        LoanData testLoan = new LoanData(1.5, 300.25, "very high", 10000.0, 36, 200.5, amortizationList);
+        LoanData testLoan =
+                new LoanData(1.5, 300.25, "very high", 10000.0, 36, 200.5, amortizationList);
 
         try {
             assertEquals(testLoan, LoanDataFactory.getEntity(loanMap));
@@ -70,7 +74,8 @@ public class LoanDataFactoryTest {
         loanMap.addItem(EntityStringNames.LOAN_AMOUNT, "oh no");
         loanMap.addItem(EntityStringNames.LOAN_INTEREST_SUM, "i should not be a string");
         loanMap.addItem(EntityStringNames.LOAN_SCORE, 20);
-        loanMap.addItem(EntityStringNames.LOAN_AMORTIZATION, AttributeFactory.createAttribute("crap"));
+        loanMap.addItem(
+                EntityStringNames.LOAN_AMORTIZATION, AttributeFactory.createAttribute("crap"));
 
         try {
             LoanDataFactory.getEntity(loanMap);

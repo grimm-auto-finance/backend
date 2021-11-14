@@ -52,7 +52,6 @@ public class CarBuyer extends Entity {
         }
         CarBuyer otherBuyer = (CarBuyer) other;
 
-        return (this.budget == otherBuyer.budget)
-                && (this.creditScore == otherBuyer.creditScore);
+        return (this.budget == otherBuyer.budget) && (this.creditScore == otherBuyer.creditScore);
     }
 }

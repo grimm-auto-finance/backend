@@ -3,6 +3,7 @@ package entities;
 import attributes.ArrayAttribute;
 import attributes.Attribute;
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
 
@@ -15,9 +16,12 @@ public class LoanDataFactory {
 
     /**
      * Constructs a new LoanData using the values in the given AttributeMap
-     * @param map an AttributeMap containing keys and values corresponding to the attributes of a LoanData
+     *
+     * @param map an AttributeMap containing keys and values corresponding to the attributes of a
+     *     LoanData
      * @return a LoanData constructed from the values in map
-     * @throws Exceptions.FactoryException if the required key/value pairs for LoanData construction aren't present in map
+     * @throws Exceptions.FactoryException if the required key/value pairs for LoanData construction
+     *     aren't present in map
      */
     public static LoanData getEntity(AttributeMap map) throws Exceptions.FactoryException {
         double interestRate;
@@ -29,13 +33,20 @@ public class LoanDataFactory {
         List<Map<String, Double>> amortizationTable = new ArrayList<>();
 
         try {
-            interestRate = (double) map.getItem(EntityStringNames.LOAN_INTEREST_RATE).getAttribute();
+            interestRate =
+                    (double) map.getItem(EntityStringNames.LOAN_INTEREST_RATE).getAttribute();
             installment = (double) map.getItem(EntityStringNames.LOAN_INSTALLMENT).getAttribute();
             sensoScore = (String) map.getItem(EntityStringNames.LOAN_SCORE).getAttribute();
             loanAmount = (double) map.getItem(EntityStringNames.LOAN_AMOUNT).getAttribute();
-            termLength = (int) Math.round((double) map.getItem(EntityStringNames.LOAN_TERM_LENGTH).getAttribute());
+            termLength =
+                    (int)
+                            Math.round(
+                                    (double)
+                                            map.getItem(EntityStringNames.LOAN_TERM_LENGTH)
+                                                    .getAttribute());
             interestSum = (double) map.getItem(EntityStringNames.LOAN_INTEREST_SUM).getAttribute();
-            ArrayAttribute amortizationArray = (ArrayAttribute) map.getItem(EntityStringNames.LOAN_AMORTIZATION);
+            ArrayAttribute amortizationArray =
+                    (ArrayAttribute) map.getItem(EntityStringNames.LOAN_AMORTIZATION);
             Attribute[] amortization = amortizationArray.getAttribute();
             for (Attribute a : amortization) {
                 AttributeMap installmentAttMap = (AttributeMap) a;
@@ -52,6 +63,13 @@ public class LoanDataFactory {
             throw ex;
         }
 
-        return new LoanData(interestRate, installment, sensoScore, loanAmount, termLength, interestSum, amortizationTable);
+        return new LoanData(
+                interestRate,
+                installment,
+                sensoScore,
+                loanAmount,
+                termLength,
+                interestSum,
+                amortizationTable);
     }
 }

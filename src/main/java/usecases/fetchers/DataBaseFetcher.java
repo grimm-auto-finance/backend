@@ -4,6 +4,7 @@ import attributes.ArrayAttribute;
 import attributes.Attribute;
 import attributes.AttributeFactory;
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
 import constants.Exceptions.CodedException;
@@ -11,8 +12,8 @@ import constants.Exceptions.FetchException;
 
 import entities.AddOn;
 import entities.Car;
-
 import entities.GenerateEntitiesUseCase;
+
 import server.Env;
 
 import java.io.File;
@@ -145,7 +146,9 @@ public class DataBaseFetcher {
         carMap.addItem(EntityStringNames.CAR_MAKE, rs.getString(3));
         carMap.addItem(EntityStringNames.CAR_MODEL, rs.getString(4));
         carMap.addItem(EntityStringNames.CAR_YEAR, rs.getInt(5));
-        carMap.addItem(EntityStringNames.ADD_ON_STRING, AttributeFactory.createAttribute(new Attribute[0]));
+        carMap.addItem(
+                EntityStringNames.ADD_ON_STRING,
+                AttributeFactory.createAttribute(new Attribute[0]));
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
         return GenerateEntitiesUseCase.generateCar(entityMap);
@@ -165,7 +168,8 @@ public class DataBaseFetcher {
                 addOnMap.addItem(EntityStringNames.ADD_ON_DESCRIPTION, rs.getString(4));
                 addOnMapList.add(addOnMap);
             }
-            ArrayAttribute addOnArray = (ArrayAttribute) AttributeFactory.createAttribute(addOnMapList.toArray());
+            ArrayAttribute addOnArray =
+                    (ArrayAttribute) AttributeFactory.createAttribute(addOnMapList.toArray());
             AttributeMap entityMap = new AttributeMap();
             entityMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
             return GenerateEntitiesUseCase.generateAddOns(entityMap);

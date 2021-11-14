@@ -2,8 +2,6 @@ package attributes;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class AttributeMap extends Attribute {
 
@@ -14,7 +12,6 @@ public class AttributeMap extends Attribute {
     public AttributeMap() {
         items = new HashMap<>();
     }
-
 
     /**
      * Adds the given item Object to the map with the given name
