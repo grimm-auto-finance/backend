@@ -16,16 +16,17 @@ public class ParseCarBuyerUseCase {
     /**
      * Constructs a new ParseCarBuyerUseCase to create a CarBuyer using the given JsonObject
      *
-     * @param parser
+     * @param parser object to be parsed
      */
     public ParseCarBuyerUseCase(Parser parser) throws Exceptions.ParseException {
         this.map = parser.parse();
     }
 
     /**
-     * Creates a CarBuyer object from the fields in jsonObject
+     * Creates a CarBuyer object from the map
      *
-     * @return
+     * @throws Exceptions.ParseException if invalid map classes
+     * @return CarBuyer
      */
     public CarBuyer parse() throws Exceptions.ParseException {
         GenerateBuyerUseCase buyerGenerator = new GenerateBuyerUseCase();
