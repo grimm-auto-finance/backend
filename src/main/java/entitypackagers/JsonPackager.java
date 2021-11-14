@@ -14,7 +14,7 @@ import javax.json.JsonObjectBuilder;
 public class JsonPackager implements Packager {
 
     /**
-     * Writes packageMap to a JsonObject'
+     * Writes packageMap to a JsonObject
      *
      * @param packageMap The AttributeMap from which the JsonObject is created
      * @return a JsonPackage containing the JsonObject with packageMap's data
