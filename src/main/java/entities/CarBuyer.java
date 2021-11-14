@@ -25,7 +25,7 @@ public class CarBuyer extends Entity {
     /**
      * Returns this CarBuyer's budget.
      *
-     * @return the car buyers budget
+     * @return the car buyer's budget
      */
     public double getBudget() {
         return budget;
