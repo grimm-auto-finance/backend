@@ -2,6 +2,9 @@ package entities;
 
 import constants.EntityStringNames;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * A class to represent a loan, as determined by the Senso API /rate and /score functions based on a
  * given CarBuyer and Car.
@@ -13,16 +16,18 @@ public class LoanData extends Entity {
     private double loanAmount;
     private int termLength;
     private double interestSum;
+    private List<Map<String, Double>> amortizationTable;
 
     /**
      * Constructs a new LoanData object with the given values.
      *
-     * @param interestRate
-     * @param installment
-     * @param sensoScore
-     * @param loanAmount
-     * @param termLength
-     * @param interestSum
+     * @param interestRate the interest rate of the loan
+     * @param installment the monthly installment value of the loan
+     * @param sensoScore the senso score of the loan
+     * @param loanAmount the principal value of the loan
+     * @param termLength the length of the loan's term
+     * @param interestSum the total amount of interest paid on the loan
+     * @param amortizationTable the ammortization table for this loan
      */
     public LoanData(
             double interestRate,
@@ -30,13 +35,15 @@ public class LoanData extends Entity {
             String sensoScore,
             double loanAmount,
             int termLength,
-            double interestSum) {
+            double interestSum,
+            List<Map<String, Double>> amortizationTable) {
         this.interestRate = interestRate;
         this.installment = installment;
         this.sensoScore = sensoScore;
         this.loanAmount = loanAmount;
         this.termLength = termLength;
         this.interestSum = interestSum;
+        this.amortizationTable = amortizationTable;
     }
 
     /**
@@ -73,6 +80,15 @@ public class LoanData extends Entity {
      */
     public void setInstallment(double installment) {
         this.installment = installment;
+    }
+
+    /**
+     * Returns this loan's amortization table
+     *
+     * @return
+     */
+    public List<Map<String, Double>> getAmortizationTable() {
+        return amortizationTable;
     }
 
     /**

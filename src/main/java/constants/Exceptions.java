@@ -22,8 +22,9 @@ public class Exceptions {
         public FetchException() {}
 
         /** @param message The exception message */
-        public FetchException(String message) {
+        public FetchException(String message, Exception e) {
             super(message);
+            this.setStackTrace(e.getStackTrace());
         }
 
         /** @return Returns the specifc FetchException code */
@@ -60,7 +61,7 @@ public class Exceptions {
 
         /** @return Returns the specific PackageException code */
         public int getCode() {
-            return 400;
+            return 500;
         }
     }
     /**

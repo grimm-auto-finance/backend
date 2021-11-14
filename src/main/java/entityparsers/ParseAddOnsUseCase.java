@@ -1,8 +1,8 @@
 package entityparsers;
 
+import attributes.ArrayAttribute;
+import attributes.Attribute;
 import attributes.AttributeMap;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import constants.EntityStringNames;
 import constants.Exceptions;
@@ -10,49 +10,53 @@ import constants.Exceptions;
 import entities.AddOn;
 
 import entitybuilder.GenerateAddOnsUseCase;
-import entitybuilder.GenerateCarUseCase;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParseAddOnsUseCase {
-
-    private final ArrayList<AttributeMap> addonList;
+    private final AttributeMap map;
 
     /**
-     * Constructs a new ParseCarUseCase to create a Car using the given Parser
+     * Constructs a new ParseAddOnsUseCase to create a list of AddOns using the given Parser
      *
-     * @param parser object to be parsed
+     * @param parser the Parser to use to create the AttributeMap for these AddOns
      */
-    public ParseAddOnsUseCase(ArrayList<Parser> parser) throws Exceptions.ParseException {
-        addonList = new ArrayList<AttributeMap>();
-        for(Parser p: parser) {
-            map.add(p.parse());
-        }
+    public ParseAddOnsUseCase(Parser parser) throws Exceptions.ParseException {
+        this.map = parser.parse();
     }
 
     /**
-     * Creates a map from add-on names to AddOn objects from the fields in jsonObject
+     * Creates a List of AddOns parsed from the AttributeMap returned by parser
      *
-     * @return
+     * @return a List of AddOns
+     * @throws Exceptions.ParseException if the appropriate values aren't present in the
+     *     AttributeMap or have the wrong types
      */
-    //    TODO: Uncomment ParseAddOnsUseCase.parse() when this is implemented
-    public HashMap<String, AddOn> parse() {
-        HashMap<String, AttributeMap> addOns = new HashMap<String, AttributeMap>();
-        GenerateAddOnsUseCase AddOnGenerator = new GenerateAddOnsUseCase();
-        for (AttributeMap a : addonList) {
-            String name, description;
-            double price;
-            AttributeMap addOnMap;
-            try {
-                addOnMap = (AttributeMap) a.getItem(EntityStringNames.ADD_ON_STRING);
-                name = (String) addOnMap.getItem(EntityStringNames.ADD_ON_NAME).getAttribute();
-                price = (double) addOnMap.getItem(EntityStringNames.ADD_ON_PRICE).getAttribute();
-                description = (String) addOnMap.getItem(EntityStringNames.ADD_ON_DESCRIPTION).getAttribute();
-            } catch (ClassCastException e) {
-                Exceptions.ParseException ex = new Exceptions.ParseException(e.getMessage());
-                ex.setStackTrace(e.getStackTrace());
-                throw ex;
+    public List<AddOn> parse() throws Exceptions.ParseException {
+        GenerateAddOnsUseCase addOnGenerator = new GenerateAddOnsUseCase();
+        List<AddOn> addOns = new ArrayList<>();
+        try {
+            ArrayAttribute addOnArrayAtt =
+                    (ArrayAttribute) map.getItem(EntityStringNames.ADD_ON_STRING);
+            Attribute[] addOnArray = addOnArrayAtt.getAttribute();
+            for (Attribute attribute : addOnArray) {
+                AttributeMap addOnMap = (AttributeMap) attribute;
+                String name =
+                        (String) addOnMap.getItem(EntityStringNames.ADD_ON_NAME).getAttribute();
+                String description =
+                        (String)
+                                addOnMap.getItem(EntityStringNames.ADD_ON_DESCRIPTION)
+                                        .getAttribute();
+                double price =
+                        (double) addOnMap.getItem(EntityStringNames.ADD_ON_PRICE).getAttribute();
+                addOns.add(addOnGenerator.generateAddOn(name, price, description));
             }
-            addOns.put(name, addOnMap);
+        } catch (ClassCastException | NullPointerException e) {
+            Exceptions.ParseException ex = new Exceptions.ParseException(e.getMessage());
+            ex.setStackTrace(e.getStackTrace());
+            throw ex;
         }
-        return AddOnGenerator.GenerateAddOnDataUseCase(addOns);
+
+        return addOns;
     }
 }

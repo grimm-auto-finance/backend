@@ -72,7 +72,6 @@ public class Loan extends Route {
             JsonPackage entityPackage = (JsonPackage) packageEntity.writeEntity(jsonPackager);
             jsonBuilder.add(e.getStringName(), entityPackage.getPackage());
         }
-
         return jsonBuilder.build().toString();
     }
 }

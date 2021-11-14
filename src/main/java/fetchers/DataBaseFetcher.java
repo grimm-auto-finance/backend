@@ -6,6 +6,8 @@ import constants.Exceptions.FetchException;
 import entities.AddOn;
 import entities.Car;
 
+import logging.LoggerFactory;
+
 import server.Env;
 
 import java.io.File;
@@ -52,23 +54,17 @@ public class DataBaseFetcher {
         DataBaseFetcher.connection = connection;
     }
 
-    public static void insertPlaceholderData() throws CodedException {
+    public static void insertPlaceholderData() throws FileNotFoundException {
         Scanner scanner;
-        try {
-            scanner = new Scanner(new File("data/cars.csv"));
-        } catch (FileNotFoundException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
-        }
+        scanner = new Scanner(new File("data/cars.csv"));
         scanner.useDelimiter("\n");
         scanner.next();
         String line;
-        while (scanner.hasNext()) {
-            line = scanner.next();
-            String[] fields = line.split(",");
-            String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
-            try {
+        try {
+            while (scanner.hasNext()) {
+                line = scanner.next();
+                String[] fields = line.split(",");
+                String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement pst = connection.prepareStatement(statement);
                 pst.setInt(1, Integer.parseInt(fields[0]));
                 pst.setDouble(2, Double.parseDouble(fields[4]));
@@ -77,11 +73,9 @@ public class DataBaseFetcher {
                 pst.setInt(5, Integer.parseInt(fields[3]));
                 pst.setInt(6, 0);
                 pst.execute();
-            } catch (SQLException e) {
-                CodedException err = new FetchException(e.getMessage());
-                err.setStackTrace(e.getStackTrace());
-                throw err;
             }
+        } catch (SQLException e) {
+            LoggerFactory.getLogger().info("placeholder data may already exist");
         }
     }
 
@@ -92,7 +86,8 @@ public class DataBaseFetcher {
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                Car car = new Car(rs.getDouble(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                Car car =
+                        new Car(0, rs.getDouble(2), rs.getString(3), rs.getString(4), rs.getInt(5));
                 if (addOns) {
                     for (AddOn addOn : getAddOns(id)) {
                         car.addAddOn(addOn);
@@ -103,9 +98,7 @@ public class DataBaseFetcher {
                 return null;
             }
         } catch (SQLException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw (CodedException) new FetchException("could not fetch car from database", e);
         }
     }
 
@@ -122,13 +115,18 @@ public class DataBaseFetcher {
             ResultSet rs = pst.executeQuery();
             List<Car> cars = new ArrayList<>();
             while (rs.next()) {
-                cars.add(new Car(rs.getDouble(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+                cars.add(
+                        new Car(
+                                0,
+                                rs.getDouble(2),
+                                rs.getString(3),
+                                rs.getString(4),
+                                rs.getInt(5)));
             }
             return cars;
         } catch (SQLException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw (CodedException)
+                    new FetchException("could not get seach result from database", e);
         }
     }
 
@@ -144,9 +142,7 @@ public class DataBaseFetcher {
             }
             return addOns;
         } catch (SQLException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw (CodedException) new FetchException("could not get addd-ons from database", e);
         }
     }
 }
