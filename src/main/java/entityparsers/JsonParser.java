@@ -37,7 +37,7 @@ public class JsonParser implements Parser {
      * @param object The JsonObject to be converted to be parsed
      * @return an attribute map representing the JsonObject
      * @throws constants.Exceptions.ParseException if the JsonObject is not a String, Number, or
-     *     Objec
+     *     Object
      */
     private AttributeMap parseJsonObject(JsonObject object) throws Exceptions.ParseException {
         AttributeMap map = new AttributeMap();
