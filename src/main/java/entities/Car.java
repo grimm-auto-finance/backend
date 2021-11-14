@@ -105,7 +105,7 @@ public class Car extends Entity {
     /**
      * Updates this Car's price to the specified value.
      *
-     * @param price The cars price
+     * @param price The car's price
      */
     public void setPrice(double price) {
         this.price = price;
