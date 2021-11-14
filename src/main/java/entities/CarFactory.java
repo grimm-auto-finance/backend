@@ -35,11 +35,12 @@ public class CarFactory {
                                     (Double)
                                             map.getItem(EntityStringNames.CAR_YEAR).getAttribute());
             price = (double) map.getItem(EntityStringNames.CAR_PRICE).getAttribute();
-            List<AddOn> addOnList = GenerateEntitiesUseCase.generateAddOns(map);
-            addOnMap = new HashMap<>();
-            for (AddOn a : addOnList) {
-                addOnMap.put(a.getName(), a);
-            }
+//            List<AddOn> addOnList = GenerateEntitiesUseCase.generateAddOns(map);
+//            addOnMap = new HashMap<>();
+//            for (AddOn a : addOnList) {
+//                addOnMap.put(a.getName(), a);
+//            }
+            addOnMap = GenerateEntitiesUseCase.generateAddOnsFromMap(map);
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate Car: ";
             Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());

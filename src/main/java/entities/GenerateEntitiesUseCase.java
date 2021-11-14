@@ -7,6 +7,7 @@ import constants.EntityStringNames;
 import constants.Exceptions;
 
 import java.util.List;
+import java.util.Map;
 
 public class GenerateEntitiesUseCase {
 
@@ -49,9 +50,14 @@ public class GenerateEntitiesUseCase {
      * @throws Exceptions.FactoryException if the needed ArrayAttribute is not present in map or
      *     does not contain the correct key/value pairs
      */
-    public static List<AddOn> generateAddOns(AttributeMap map) throws Exceptions.FactoryException {
+    public static List<AddOn> generateAddOnsFromArray(AttributeMap map) throws Exceptions.FactoryException {
         ArrayAttribute addOnArray = (ArrayAttribute) map.getItem(EntityStringNames.ADD_ON_STRING);
         return AddOnFactory.getEntities(addOnArray);
+    }
+
+    public static Map<String, AddOn> generateAddOnsFromMap(AttributeMap map) throws Exceptions.FactoryException {
+        AttributeMap addOnMap = (AttributeMap) map.getItem(EntityStringNames.ADD_ON_STRING);
+        return AddOnFactory.getEntities(addOnMap);
     }
 
     /**

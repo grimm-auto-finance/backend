@@ -8,7 +8,9 @@ import constants.EntityStringNames;
 import constants.Exceptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddOnFactory {
 
@@ -54,6 +56,21 @@ public class AddOnFactory {
             try {
                 AttributeMap map = (AttributeMap) a;
                 addOns.add(getEntity(map));
+            } catch (ClassCastException | NullPointerException e) {
+                String message = "Failed to generate AddOn List: ";
+                Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
+                ex.setStackTrace(e.getStackTrace());
+                throw ex;
+            }
+        }
+        return addOns;
+    }
+
+    public static Map<String, AddOn> getEntities(AttributeMap map) throws Exceptions.FactoryException {
+        Map<String, AddOn> addOns = new HashMap<>();
+        for (String name : map.getAttribute().keySet()) {
+            try {
+                addOns.put(name, getEntity((AttributeMap) map.getItem(name)));
             } catch (ClassCastException | NullPointerException e) {
                 String message = "Failed to generate AddOn List: ";
                 Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());

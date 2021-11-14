@@ -145,10 +145,11 @@ public class DataBaseFetcher {
         carMap.addItem(EntityStringNames.CAR_PRICE, rs.getDouble(2));
         carMap.addItem(EntityStringNames.CAR_MAKE, rs.getString(3));
         carMap.addItem(EntityStringNames.CAR_MODEL, rs.getString(4));
-        carMap.addItem(EntityStringNames.CAR_YEAR, rs.getInt(5));
+        carMap.addItem(EntityStringNames.CAR_YEAR, rs.getDouble(5));
         carMap.addItem(
                 EntityStringNames.ADD_ON_STRING,
-                AttributeFactory.createAttribute(new Attribute[0]));
+                new AttributeMap());
+                //AttributeFactory.createAttribute(new Attribute[0]));
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
         return GenerateEntitiesUseCase.generateCar(entityMap);
@@ -172,7 +173,7 @@ public class DataBaseFetcher {
                     (ArrayAttribute) AttributeFactory.createAttribute(addOnMapList.toArray());
             AttributeMap entityMap = new AttributeMap();
             entityMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
-            return GenerateEntitiesUseCase.generateAddOns(entityMap);
+            return GenerateEntitiesUseCase.generateAddOnsFromArray(entityMap);
         } catch (SQLException | Exceptions.FactoryException e) {
             CodedException err = new FetchException(e.getMessage());
             err.setStackTrace(e.getStackTrace());

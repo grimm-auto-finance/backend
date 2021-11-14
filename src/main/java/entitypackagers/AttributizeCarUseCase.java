@@ -34,10 +34,12 @@ public class AttributizeCarUseCase implements Attributizer {
         carMap.addItem(EntityStringNames.CAR_YEAR, car.getYear());
 
         Map<String, AddOn> addOns = car.getAddOns();
-        Attribute[] addOnMaps = getAddOnAttArray(addOns);
-        Attribute addOnArray = AttributeFactory.createAttribute(addOnMaps);
+//        Attribute[] addOnMaps = getAddOnAttArray(addOns);
+//        Attribute addOnArray = AttributeFactory.createAttribute(addOnMaps);
+//        carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
+        Attribute addOnMap = getAddOnMap(addOns);
+        carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnMap);
 
-        carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
         return carMap;
     }
 
@@ -48,5 +50,14 @@ public class AttributizeCarUseCase implements Attributizer {
             addOnMapsList.add(addOnAttributizer.attributizeEntity());
         }
         return addOnMapsList.toArray(new Attribute[0]);
+    }
+
+    public static AttributeMap getAddOnMap(Map<String, AddOn> addOns) {
+        AttributeMap map = new AttributeMap();
+        for (String s : addOns.keySet()) {
+            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOns.get(s));
+            map.addItem(addOns.get(s).getName(), addOnAttributizer.attributizeEntity());
+        }
+        return map;
     }
 }
