@@ -14,8 +14,8 @@ public class CarBuyer extends Entity {
     /**
      * Constructs a new CarBuyer with the specified budget and credit score.
      *
-     * @param budget The car buyers budget for the car with addons
-     * @param creditScore The car buyers credit score
+     * @param budget The car buyer's budget for the car with addons
+     * @param creditScore The car buyer's credit score
      */
     public CarBuyer(double budget, int creditScore) {
         this.budget = budget;
@@ -34,7 +34,7 @@ public class CarBuyer extends Entity {
     /**
      * Returns this CarBuyer's credit score.
      *
-     * @return the car buyers credit score
+     * @return the car buyer's credit score
      */
     public int getCreditScore() {
         return creditScore;
