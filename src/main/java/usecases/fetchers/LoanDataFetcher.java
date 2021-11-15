@@ -1,5 +1,7 @@
 package fetchers;
 
+import attributes.ArrayAttribute;
+import attributes.Attribute;
 import attributes.AttributeMap;
 
 import constants.EntityStringNames;
@@ -45,7 +47,6 @@ public class LoanDataFetcher {
             rateConn.setRequestMethod("POST");
         } catch (java.net.ProtocolException e) {
         }
-
         JsonObject rateBody =
                 Json.createObjectBuilder()
                         .add("loanAmount", car.getPrice())
@@ -71,7 +72,6 @@ public class LoanDataFetcher {
         }
 
         JsonObject rateResponse;
-
         try {
             if (rateConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 StringBuilder responseBuilder = new StringBuilder();
@@ -95,6 +95,8 @@ public class LoanDataFetcher {
             throw (Exceptions.CodedException) new Exceptions.FetchException();
         }
 
+        l.info(rateResponse.get("term").toString());
+        l.info(rateResponse.get("term").getValueType().toString());
         JsonParser parser = new JsonParser(rateResponse);
         AttributeMap rateResponseMap;
         try {
@@ -104,6 +106,10 @@ public class LoanDataFetcher {
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }
+        Attribute[] installments = ((ArrayAttribute) rateResponseMap.getItem("installments")).getAttribute();
+        rateResponseMap.addItem("installment", ((AttributeMap) installments[0]).getItem("installment"));
+        //TODO: remove this when we figure out why senso is sending term as a string
+        rateResponseMap.addItem("term", Double.parseDouble((String) rateResponseMap.getItem("term").getAttribute()));
 
         HttpURLConnection scoreConn;
 
@@ -119,26 +125,26 @@ public class LoanDataFetcher {
 
         scoreConn.setRequestProperty("Content-Type", "application/json");
         scoreConn.setRequestProperty("Accept", "application/json");
-
         try {
             scoreConn.setRequestMethod("POST");
         } catch (java.net.ProtocolException e) {
+            l.error("Failed to set scoreConn request method", e);
         }
 
-        JsonObject scoreBody =
-                Json.createObjectBuilder()
-                        .add("remainingBalance", car.getPrice())
-                        .add("creditScore", buyer.getCreditScore())
-                        .add("loanAge", (int) rateResponseMap.getItem("term").getAttribute())
-                        .add("vehicleMake", car.getMake())
-                        .add("vehicleModel", car.getModel())
-                        .add("vehicleYear", car.getYear())
-                        // TODO: Understand what carValue and loanStartDate are, and make them not
-                        // hardcoded
-                        .add("carValue", car.getPrice())
-                        .add("loanStartDate", String.valueOf(java.time.LocalDate.now()))
-                        .build();
-
+        JsonObjectBuilder scoreBodyBuilder =
+                Json.createObjectBuilder();
+        scoreBodyBuilder.add("remainingBalance", car.getPrice());
+        scoreBodyBuilder.add("creditScore", buyer.getCreditScore());
+        //TODO: figure out why senso api is sending term as a string
+        scoreBodyBuilder.add("loanAge", (int) Math.round((double) rateResponseMap.getItem("term").getAttribute()));
+        scoreBodyBuilder.add("vehicleMake", car.getMake());
+        scoreBodyBuilder.add("vehicleModel", car.getModel());
+        scoreBodyBuilder.add("vehicleYear", car.getYear());
+        // TODO: Understand what carValue and loanStartDate are, and make them not
+        // hardcoded
+        scoreBodyBuilder.add("carValue", car.getPrice());
+        scoreBodyBuilder.add("loanStartDate", String.valueOf(java.time.LocalDate.now()));
+        JsonObject scoreBody = scoreBodyBuilder.build();
         try {
             OutputStreamWriter scoreWriter = new OutputStreamWriter(scoreConn.getOutputStream());
             scoreWriter.write(scoreBody.toString());
@@ -147,7 +153,6 @@ public class LoanDataFetcher {
             // TODO: Document this
             throw (Exceptions.CodedException) new Exceptions.FetchException();
         }
-
         JsonObject scoreResponse;
 
         try {
@@ -186,6 +191,6 @@ public class LoanDataFetcher {
         AttributeMap loanMap = AttributeMap.combine(rateResponseMap, scoreResponseMap);
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.LOAN_STRING, loanMap);
-        return LoanDataFactory.getEntity(entityMap);
+        return GenerateEntitiesUseCase.generateLoanData(entityMap);
     }
 }
