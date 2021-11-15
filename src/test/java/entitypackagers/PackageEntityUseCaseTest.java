@@ -42,7 +42,8 @@ public class PackageEntityUseCaseTest {
     public void testPackageEntityWorking() {
         entityPackager.setPackager(jsonPackager);
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(car);
-        AttributeMap entityMap = entityAttributizer.attributizeEntity();
+        AttributeMap entityMap = new AttributeMap();
+        entityMap.addItem(car.getStringName(), entityAttributizer.attributizeEntity());
         try {
             assertEquals(
                     jsonPackager.writePackage(entityMap).getPackage(),
