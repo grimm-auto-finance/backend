@@ -108,8 +108,6 @@ public class LoanDataFetcher {
             throw new Exceptions.FetchException("error reading senso rate API body", e);
         }
 
-        l.info(rateResponse.get("term").toString());
-        l.info(rateResponse.get("term").getValueType().toString());
         JsonParser parser = new JsonParser(rateResponse);
         AttributeMap rateResponseMap;
         try {
