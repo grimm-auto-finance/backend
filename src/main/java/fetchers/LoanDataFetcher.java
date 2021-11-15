@@ -63,7 +63,6 @@ public class LoanDataFetcher {
             // will only fail if the request method is not a valid request
             // method
         }
-
         JsonObject rateBody =
                 Json.createObjectBuilder()
                         .add("loanAmount", car.getPrice())
@@ -87,7 +86,6 @@ public class LoanDataFetcher {
         }
 
         JsonObject rateResponse;
-
         try {
             if (rateConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 StringBuilder responseBuilder = new StringBuilder();
@@ -110,6 +108,8 @@ public class LoanDataFetcher {
             throw new Exceptions.FetchException("error reading senso rate API body", e);
         }
 
+        l.info(rateResponse.get("term").toString());
+        l.info(rateResponse.get("term").getValueType().toString());
         JsonParser parser = new JsonParser(rateResponse);
         AttributeMap rateResponseMap;
         try {
@@ -140,7 +140,6 @@ public class LoanDataFetcher {
 
         scoreConn.setRequestProperty("Content-Type", "application/json");
         scoreConn.setRequestProperty("Accept", "application/json");
-
         try {
             scoreConn.setRequestMethod("POST");
         } catch (java.net.ProtocolException e) {
@@ -170,7 +169,6 @@ public class LoanDataFetcher {
         } catch (IOException e) {
             throw new Exceptions.FetchException("error reading response from senso score API", e);
         }
-
         JsonObject scoreResponse;
 
         try {

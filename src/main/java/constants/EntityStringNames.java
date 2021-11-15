@@ -24,8 +24,8 @@ public class EntityStringNames {
     public static final String LOAN_INTEREST_RATE = "interestRate";
     public static final String LOAN_INSTALLMENT = "installment";
     public static final String LOAN_SCORE = "sensoScore";
-    public static final String LOAN_AMOUNT = "loanAmount";
-    public static final String LOAN_TERM_LENGTH = "termLength";
+    public static final String LOAN_AMOUNT = "amount";
+    public static final String LOAN_TERM_LENGTH = "term";
     public static final String LOAN_INTEREST_SUM = "interestSum";
     public static final String LOAN_AMORTIZATION = "installments";
 
