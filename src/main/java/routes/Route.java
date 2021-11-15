@@ -11,49 +11,50 @@ import logging.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 /** The generic route class that all routes will inherit from */
 public abstract class Route implements HttpHandler {
     /**
-     * A method that must be overriden by implementers which sets the URL route that the Route class
-     * will handle.
+     * A method that must be overridden by implementers which sets the URL route that the Route
+     * class will handle.
      */
     public abstract String getContext();
 
     protected void get(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     protected void head(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     protected void post(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     protected void put(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     protected void delete(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     protected void connect(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     protected void options(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     protected void trace(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     protected void patch(HttpExchange t) throws CodedException {
-        throw (CodedException) new MissingMethodException();
+        throw new MissingMethodException();
     }
 
     /**
@@ -67,7 +68,7 @@ public abstract class Route implements HttpHandler {
 
         Logger l = LoggerFactory.getLogger();
         l.info(
-                "recieved "
+                "received "
                         + method
                         + " request on "
                         + t.getRequestURI()
@@ -103,9 +104,12 @@ public abstract class Route implements HttpHandler {
                     this.patch(t);
                     break;
                 default:
-                    l.error("recieved request with unknown method: " + method);
+                    l.error("received request with unknown method: " + method);
             }
         } catch (CodedException e) {
+            if (e.getCode() > 499) {
+                l.error(e.getMessage() + ": " + Arrays.toString(e.getStackTrace()));
+            }
             respond(t, e.getCode(), e.getMessage().getBytes());
         }
         t.close();

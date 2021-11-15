@@ -16,9 +16,9 @@ public class AttributeMap extends Attribute {
     /**
      * Adds the given item Object to the map with the given name
      *
-     * @param name
-     * @param item the Object to be added to the map
-     * @throws ClassCastException
+     * @param name The name of the attribute created by the attributized Object
+     * @param item the Object to be attributized and added to the map
+     * @throws ClassCastException This is because an incorrect class is used for the parameter
      */
     public void addItem(String name, Object item) throws ClassCastException {
         this.addItem(name, AttributeFactory.createAttribute(item));
@@ -27,10 +27,11 @@ public class AttributeMap extends Attribute {
     /**
      * Adds the given item (Attribute) to the map with the given name
      *
-     * @param name
-     * @param item
+     * @param name The name of the Attribute to be added to the map
+     * @param item The Attribute to be added to the map
+     * @throws NullPointerException if item is null
      */
-    public void addItem(String name, Attribute item) {
+    public void addItem(String name, Attribute item) throws NullPointerException {
         items.put(name, item);
     }
 
@@ -38,8 +39,8 @@ public class AttributeMap extends Attribute {
      * Returns the item with the given name from this map If no item in the map exists with this
      * name, throws NullPointerException
      *
-     * @param name
-     * @return
+     * @param name The key corresponding to name of the Attribute
+     * @return The item corresponding to the key in the map
      * @throws NullPointerException if no item exists in the map with the given name
      */
     public Attribute getItem(String name) throws NullPointerException {
@@ -52,7 +53,7 @@ public class AttributeMap extends Attribute {
     /**
      * Returns the map between attribute names and Attributes stored in this AttributeMap
      *
-     * @return
+     * @return The Attribute map
      */
     public Map<String, Attribute> getAttribute() {
         return items;

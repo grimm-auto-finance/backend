@@ -14,6 +14,8 @@ import entities.AddOn;
 import entities.Car;
 import entities.GenerateEntitiesUseCase;
 
+import logging.LoggerFactory;
+
 import server.Env;
 
 import java.io.File;
@@ -60,36 +62,28 @@ public class DataBaseFetcher {
         DataBaseFetcher.connection = connection;
     }
 
-    public static void insertPlaceholderData() throws CodedException {
+    public static void insertPlaceholderData() throws FileNotFoundException {
         Scanner scanner;
-        try {
-            scanner = new Scanner(new File("data/cars.csv"));
-        } catch (FileNotFoundException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
-        }
+        scanner = new Scanner(new File("data/cars.csv"));
         scanner.useDelimiter("\n");
         scanner.next();
         String line;
-        while (scanner.hasNext()) {
-            line = scanner.next();
-            String[] fields = line.split(",");
-            String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
-            try {
+        try {
+            while (scanner.hasNext()) {
+                line = scanner.next();
+                String[] fields = line.split(",");
+                String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement pst = connection.prepareStatement(statement);
                 pst.setInt(1, Integer.parseInt(fields[0]));
-                pst.setDouble(2, Double.parseDouble(fields[4]));
-                pst.setString(3, fields[1]);
-                pst.setString(4, fields[2]);
-                pst.setInt(5, Integer.parseInt(fields[3]));
-                pst.setInt(6, 0);
+                pst.setDouble(2, Double.parseDouble(fields[5]));
+                pst.setString(3, fields[2]);
+                pst.setString(4, fields[3]);
+                pst.setInt(5, Integer.parseInt(fields[4]));
+                pst.setInt(6, Integer.parseInt(fields[1]));
                 pst.execute();
-            } catch (SQLException e) {
-                CodedException err = new FetchException(e.getMessage());
-                err.setStackTrace(e.getStackTrace());
-                throw err;
             }
+        } catch (SQLException e) {
+            LoggerFactory.getLogger().info("placeholder data may already exist");
         }
     }
 
@@ -111,9 +105,7 @@ public class DataBaseFetcher {
                 return null;
             }
         } catch (SQLException | Exceptions.FactoryException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw new FetchException("could not fetch car from database: " + e.getMessage(), e);
         }
     }
 
@@ -134,9 +126,7 @@ public class DataBaseFetcher {
             }
             return cars;
         } catch (SQLException | Exceptions.FactoryException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw new FetchException("could not get search result from database: " + e.getMessage(), e);
         }
     }
 
@@ -146,6 +136,7 @@ public class DataBaseFetcher {
         carMap.addItem(EntityStringNames.CAR_MAKE, rs.getString(3));
         carMap.addItem(EntityStringNames.CAR_MODEL, rs.getString(4));
         carMap.addItem(EntityStringNames.CAR_YEAR, rs.getDouble(5));
+        carMap.addItem(EntityStringNames.CAR_KILOMETRES, 0.0);
         carMap.addItem(
                 EntityStringNames.ADD_ON_STRING,
                 new AttributeMap());
@@ -175,9 +166,7 @@ public class DataBaseFetcher {
             entityMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
             return GenerateEntitiesUseCase.generateAddOnsFromArray(entityMap);
         } catch (SQLException | Exceptions.FactoryException e) {
-            CodedException err = new FetchException(e.getMessage());
-            err.setStackTrace(e.getStackTrace());
-            throw err;
+            throw new FetchException("could not get add-ons from database: " + e.getMessage(), e);
         }
     }
 }

@@ -30,18 +30,21 @@ public class JsonParserTest {
     /**
      * Adds the given String value to both builder and testMap with the given name
      *
-     * @param name
-     * @param value
+     * @param name Name of string value to be added
+     * @param value String value to be added
      */
     static void addToBoth(String name, String value) {
         builder.add(name, value);
         testMap.addItem(name, value);
     }
 
-    static void addToBoth(String name, int value) {
-        builder.add(name, value);
-        testMap.addItem(name, value);
-    }
+    /*
+    Not used as test can't be initialized at the moment
+     static void addToBoth(String name, int value) {
+         builder.add(name, value);
+         testMap.addItem(name, value);
+     }
+    */
 
     static void addToBoth(String name, double value) {
         builder.add(name, value);
@@ -64,14 +67,16 @@ public class JsonParserTest {
         testEq(parser);
     }
 
-    // Fails since JsonParser currently treats all numbers as doubles
-    //    @Test
-    //    public void testParserAllInts() {
-    //        addToBoth("int value", 16);
-    //        addToBoth("int value 2", 18);
-    //        JsonParser parser = new JsonParser(builder.build());
-    //        testEq(parser);
-    //    }
+    /*
+     Fails since JsonParser currently treats all numbers as doubles
+        @Test
+        public void testParserAllInts() {
+            addToBoth("int value", 16);
+            addToBoth("int value 2", 18);
+            JsonParser parser = new JsonParser(builder.build());
+            testEq(parser);
+        }
+    */
 
     @Test
     public void testParserAllDoubles() {

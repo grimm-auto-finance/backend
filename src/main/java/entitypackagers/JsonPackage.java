@@ -9,7 +9,7 @@ public class JsonPackage extends Package {
     /**
      * Constructs a new JsonPackage to contain the given JsonObject
      *
-     * @param obj
+     * @param obj The jsonObject
      */
     public JsonPackage(JsonObject obj) {
         this.obj = obj;

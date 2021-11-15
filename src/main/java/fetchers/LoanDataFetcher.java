@@ -1,5 +1,7 @@
 package fetchers;
 
+import attributes.ArrayAttribute;
+import attributes.Attribute;
 import attributes.AttributeMap;
 
 import constants.EntityStringNames;
@@ -10,7 +12,7 @@ import entities.LoanData;
 
 import entityparsers.JsonParser;
 
-import logging.Logger;
+import entityparsers.Parser;
 import logging.LoggerFactory;
 
 import server.Env;
@@ -26,14 +28,27 @@ import javax.json.*;
 
 public class LoanDataFetcher {
     public static LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
-        Logger l = LoggerFactory.getLogger();
 
+        AttributeMap rateRequestResult = makeRateRequest(buyer, car);
+
+        AttributeMap scoreRequestResult = makeScoreRequest(buyer, car, (int) Math.round((double) rateRequestResult.getItem(EntityStringNames.LOAN_TERM_LENGTH).getAttribute()));
+
+        AttributeMap loanMap = AttributeMap.combine(rateRequestResult, scoreRequestResult);
+
+        AttributeMap entityMap = new AttributeMap();
+        entityMap.addItem(EntityStringNames.LOAN_STRING, loanMap);
+
+        return GenerateEntitiesUseCase.generateLoanData(entityMap);
+    }
+
+    public static AttributeMap makeRateRequest(CarBuyer buyer, Car car)
+            throws Exceptions.CodedException {
         HttpURLConnection rateConn;
+
         try {
             rateConn = (HttpURLConnection) Env.SENSO_RATE_URL.openConnection();
         } catch (IOException e) {
-            throw (Exceptions.CodedException)
-                    new Exceptions.FetchException("Error connecting to Senso API");
+            throw new Exceptions.FetchException("error connecting to senso rate API", e);
         }
 
         rateConn.setDoOutput(true);
@@ -44,6 +59,9 @@ public class LoanDataFetcher {
         try {
             rateConn.setRequestMethod("POST");
         } catch (java.net.ProtocolException e) {
+            // This is safe to leave uncaught because the `setRequestMethod`
+            // will only fail if the request method is not a valid request
+            // method
         }
 
         JsonObject rateBody =
@@ -54,10 +72,9 @@ public class LoanDataFetcher {
                         .add("vehicleMake", car.getMake())
                         .add("vehicleModel", car.getModel())
                         .add("vehicleYear", car.getYear())
-                        // TODO: Consider allowing this to be modified
-                        .add("vehicleKms", 0)
-                        // TODO: Understand what listPrice and downpayment are and incorporate them
+                        .add("vehicleKms", car.getKilometres())
                         .add("listPrice", car.getPrice())
+                        // TODO: make this not hardcoded
                         .add("downpayment", car.getPrice() / 10)
                         .build();
 
@@ -66,8 +83,7 @@ public class LoanDataFetcher {
             rateWriter.write(rateBody.toString());
             rateWriter.close();
         } catch (IOException e) {
-            // TODO: Document this
-            throw (Exceptions.CodedException) new Exceptions.FetchException();
+            throw new Exceptions.FetchException("error reading response from senso rate API", e);
         }
 
         JsonObject rateResponse;
@@ -87,12 +103,11 @@ public class LoanDataFetcher {
                         Json.createReader(new StringReader(responseBuilder.toString()));
                 rateResponse = jsonReader.readObject();
             } else {
-                l.error("request to the senso rate API failed");
-                throw (Exceptions.CodedException) new Exceptions.FetchException();
+                LoggerFactory.getLogger().error("senso rate API returned an error");
+                throw new Exceptions.FetchException();
             }
         } catch (IOException e) {
-            // TODO: Document this and break it up
-            throw (Exceptions.CodedException) new Exceptions.FetchException();
+            throw new Exceptions.FetchException("error reading senso rate API body", e);
         }
 
         JsonParser parser = new JsonParser(rateResponse);
@@ -100,18 +115,24 @@ public class LoanDataFetcher {
         try {
             rateResponseMap = parser.parse();
         } catch (Exceptions.ParseException e) {
-            Exceptions.FetchException ex = new Exceptions.FetchException(e.getMessage());
-            ex.setStackTrace(e.getStackTrace());
-            throw ex;
+            throw new Exceptions.FetchException("failed to parse result from senso rate API: " + e.getMessage(), e);
         }
+        Attribute[] installments = ((ArrayAttribute) rateResponseMap.getItem("installments")).getAttribute();
+        rateResponseMap.addItem(EntityStringNames.LOAN_INSTALLMENT, ((AttributeMap) installments[0]).getItem("installment"));
+        //TODO: remove this when we figure out why senso is sending term as a string
+        rateResponseMap.addItem("term", Double.parseDouble((String) rateResponseMap.getItem("term").getAttribute()));
 
+        return rateResponseMap;
+    }
+
+    public static AttributeMap makeScoreRequest(CarBuyer buyer, Car car, int termLength)
+            throws Exceptions.CodedException {
         HttpURLConnection scoreConn;
 
         try {
             scoreConn = (HttpURLConnection) Env.SENSO_SCORE_URL.openConnection();
         } catch (IOException e) {
-            throw (Exceptions.CodedException)
-                    new Exceptions.FetchException("Error connecting to Senso API");
+            throw new Exceptions.FetchException("error connecting to senso score API", e);
         }
 
         scoreConn.setDoOutput(true);
@@ -123,13 +144,16 @@ public class LoanDataFetcher {
         try {
             scoreConn.setRequestMethod("POST");
         } catch (java.net.ProtocolException e) {
+            // This is safe to leave uncaught because the `setRequestMethod`
+            // will only fail if the request method is not a valid request
+            // method
         }
 
         JsonObject scoreBody =
                 Json.createObjectBuilder()
                         .add("remainingBalance", car.getPrice())
                         .add("creditScore", buyer.getCreditScore())
-                        .add("loanAge", (int) rateResponseMap.getItem("term").getAttribute())
+                        .add("loanAge", termLength)
                         .add("vehicleMake", car.getMake())
                         .add("vehicleModel", car.getModel())
                         .add("vehicleYear", car.getYear())
@@ -144,8 +168,7 @@ public class LoanDataFetcher {
             scoreWriter.write(scoreBody.toString());
             scoreWriter.close();
         } catch (IOException e) {
-            // TODO: Document this
-            throw (Exceptions.CodedException) new Exceptions.FetchException();
+            throw new Exceptions.FetchException("error reading response from senso score API", e);
         }
 
         JsonObject scoreResponse;
@@ -165,27 +188,19 @@ public class LoanDataFetcher {
                         Json.createReader(new StringReader(responseBuilder.toString()));
                 scoreResponse = jsonReader.readObject();
             } else {
-                l.error("request to the senso score API failed");
-                throw (Exceptions.CodedException) new Exceptions.FetchException();
+                LoggerFactory.getLogger().error("senso score API returned an error");
+                throw new Exceptions.FetchException();
             }
         } catch (IOException e) {
-            // TODO: Document this and break this up
-            throw (Exceptions.CodedException) new Exceptions.FetchException();
+            throw new Exceptions.FetchException("error reading senso score API body", e);
         }
 
-        parser = new JsonParser(scoreResponse);
+        Parser parser = new JsonParser(scoreResponse);
         AttributeMap scoreResponseMap;
         try {
-            scoreResponseMap = parser.parse();
+            return scoreResponseMap = parser.parse();
         } catch (Exceptions.ParseException e) {
-            Exceptions.FetchException ex = new Exceptions.FetchException(e.getMessage());
-            ex.setStackTrace(e.getStackTrace());
-            throw ex;
+            throw new Exceptions.FetchException("error parsing senso score API response: " + e.getMessage(), e);
         }
-
-        AttributeMap loanMap = AttributeMap.combine(rateResponseMap, scoreResponseMap);
-        AttributeMap entityMap = new AttributeMap();
-        entityMap.addItem(EntityStringNames.LOAN_STRING, loanMap);
-        return LoanDataFactory.getEntity(entityMap);
     }
 }

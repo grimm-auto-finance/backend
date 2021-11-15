@@ -36,7 +36,7 @@ public class PackageEntityUseCase {
      * Returns the Packager that this PackageEntityUseCase has been set to use to package Should
      * only be used for testing
      *
-     * @return
+     * @return The entity to be packaged
      */
     public Packager getPackager() {
         return this.packager;
