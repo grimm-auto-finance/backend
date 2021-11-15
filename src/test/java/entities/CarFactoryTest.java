@@ -3,8 +3,6 @@ package entities;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import attributes.ArrayAttribute;
-import attributes.Attribute;
 import attributes.AttributeFactory;
 import attributes.AttributeMap;
 

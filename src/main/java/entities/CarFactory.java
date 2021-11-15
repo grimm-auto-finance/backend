@@ -5,8 +5,6 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 import constants.Exceptions;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CarFactory {
@@ -40,7 +38,8 @@ public class CarFactory {
             kilometres = (double) map.getItem(EntityStringNames.CAR_KILOMETRES).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate Car: ";
-            Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
+            Exceptions.FactoryException ex =
+                    new Exceptions.FactoryException(message + '\n' + e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }

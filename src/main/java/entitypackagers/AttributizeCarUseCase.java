@@ -1,7 +1,6 @@
 package entitypackagers;
 
 import attributes.Attribute;
-import attributes.AttributeFactory;
 import attributes.AttributeMap;
 
 import constants.EntityStringNames;
@@ -9,8 +8,6 @@ import constants.EntityStringNames;
 import entities.AddOn;
 import entities.Car;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class AttributizeCarUseCase implements Attributizer {

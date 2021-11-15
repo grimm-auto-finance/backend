@@ -29,7 +29,8 @@ public class CarBuyerFactory {
                                                     .getAttribute());
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate CarBuyer: ";
-            Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
+            Exceptions.FactoryException ex =
+                    new Exceptions.FactoryException(message + '\n' + e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }

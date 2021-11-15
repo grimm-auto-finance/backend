@@ -35,13 +35,15 @@ public class Exceptions {
 
     /** ParseException class that is thrown whenever a Json object is parsed */
     public static class ParseException extends CodedException {
-        public int getCode() { return 400; }
+        public int getCode() {
+            return 400;
+        }
 
         public ParseException() {}
 
         /** @param message The exception message */
         public ParseException(String message) {
-          super(message);
+            super(message);
         }
     }
 
@@ -56,7 +58,6 @@ public class Exceptions {
             super(message);
         }
     }
-
 
     /**
      * PackageException class that is thrown whenever a java object is packaged into a Json object

@@ -32,7 +32,8 @@ public class AddOnFactory {
             description = (String) map.getItem(EntityStringNames.ADD_ON_DESCRIPTION).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate AddOn: ";
-            Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
+            Exceptions.FactoryException ex =
+                    new Exceptions.FactoryException(message + '\n' + e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }
@@ -58,7 +59,8 @@ public class AddOnFactory {
                 addOns.add(getEntity(map));
             } catch (ClassCastException | NullPointerException e) {
                 String message = "Failed to generate AddOn List: ";
-                Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
+                Exceptions.FactoryException ex =
+                        new Exceptions.FactoryException(message + '\n' + e.getMessage());
                 ex.setStackTrace(e.getStackTrace());
                 throw ex;
             }
@@ -66,14 +68,16 @@ public class AddOnFactory {
         return addOns;
     }
 
-    public static Map<String, AddOn> getEntities(AttributeMap map) throws Exceptions.FactoryException {
+    public static Map<String, AddOn> getEntities(AttributeMap map)
+            throws Exceptions.FactoryException {
         Map<String, AddOn> addOns = new HashMap<>();
         for (String name : map.getAttribute().keySet()) {
             try {
                 addOns.put(name, getEntity((AttributeMap) map.getItem(name)));
             } catch (ClassCastException | NullPointerException e) {
                 String message = "Failed to generate AddOn List: ";
-                Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
+                Exceptions.FactoryException ex =
+                        new Exceptions.FactoryException(message + '\n' + e.getMessage());
                 ex.setStackTrace(e.getStackTrace());
                 throw ex;
             }

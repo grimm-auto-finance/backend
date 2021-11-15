@@ -46,8 +46,8 @@ public class PackageEntityUseCase {
      * Writes the given Entity to a Package using packager
      *
      * @param entity the Entity to be packaged using Packager
-     * @return
-     * @throws Exceptions.PackageException
+     * @return a Package storing a representation of entity, made using Packager
+     * @throws Exceptions.PackageException if the Attributization of entity fails
      */
     public Package writeEntity(Entity entity) throws Exceptions.PackageException {
         if (entity == null) {

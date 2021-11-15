@@ -126,7 +126,8 @@ public class DataBaseFetcher {
             }
             return cars;
         } catch (SQLException | Exceptions.FactoryException e) {
-            throw new FetchException("could not get search result from database: " + e.getMessage(), e);
+            throw new FetchException(
+                    "could not get search result from database: " + e.getMessage(), e);
         }
     }
 
@@ -137,10 +138,8 @@ public class DataBaseFetcher {
         carMap.addItem(EntityStringNames.CAR_MODEL, rs.getString(4));
         carMap.addItem(EntityStringNames.CAR_YEAR, rs.getDouble(5));
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 0.0);
-        carMap.addItem(
-                EntityStringNames.ADD_ON_STRING,
-                new AttributeMap());
-                //AttributeFactory.createAttribute(new Attribute[0]));
+        carMap.addItem(EntityStringNames.ADD_ON_STRING, new AttributeMap());
+        // AttributeFactory.createAttribute(new Attribute[0]));
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
         return GenerateEntitiesUseCase.generateCar(entityMap);
