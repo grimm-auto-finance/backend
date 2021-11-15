@@ -47,7 +47,7 @@ public class PackageEntityUseCase {
      *
      * @param entity the Entity to be packaged using Packager
      * @return
-     * @throws Exception
+     * @throws Exceptions.PackageException
      */
     public Package writeEntity(Entity entity) throws Exceptions.PackageException {
         if (entity == null) {
@@ -56,7 +56,8 @@ public class PackageEntityUseCase {
             throw new NullPointerException("Can't use null Packager to package Entity");
         }
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(entity);
-        AttributeMap entityMap = entityAttributizer.attributizeEntity();
+        AttributeMap entityMap = new AttributeMap();
+        entityMap.addItem(entity.getStringName(), entityAttributizer.attributizeEntity());
         return packager.writePackage(entityMap);
     }
 
@@ -70,7 +71,8 @@ public class PackageEntityUseCase {
                 throw new NullPointerException("Can't extract Attributes from null Entity");
             }
             Attributizer entityAttributizer = AttributizerFactory.getAttributizer(e);
-            AttributeMap entityMap = entityAttributizer.attributizeEntity();
+            AttributeMap entityMap = new AttributeMap();
+            entityMap.addItem(e.getStringName(), entityAttributizer.attributizeEntity());
             entitiesMap = AttributeMap.combine(entitiesMap, entityMap);
         }
         return packager.writePackage(entitiesMap);

@@ -18,14 +18,12 @@ public class PackageEntityUseCaseTest {
     static JsonPackager jsonPackager;
     static Packager otherPackager;
     static Entity car;
-    static Entity carBuyer;
 
     @BeforeAll
     static void setup() {
         entityPackager = new PackageEntityUseCase();
         jsonPackager = new JsonPackager();
         car = TestEntityCreator.getTestCar();
-        carBuyer = TestEntityCreator.getTestBuyer();
     }
 
     @Test

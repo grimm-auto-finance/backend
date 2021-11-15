@@ -36,11 +36,6 @@ public class CarFactory {
                                     (Double)
                                             map.getItem(EntityStringNames.CAR_YEAR).getAttribute());
             price = (double) map.getItem(EntityStringNames.CAR_PRICE).getAttribute();
-//            List<AddOn> addOnList = GenerateEntitiesUseCase.generateAddOns(map);
-//            addOnMap = new HashMap<>();
-//            for (AddOn a : addOnList) {
-//                addOnMap.put(a.getName(), a);
-//            }
             addOnMap = GenerateEntitiesUseCase.generateAddOnsFromMap(map);
             kilometres = (double) map.getItem(EntityStringNames.CAR_KILOMETRES).getAttribute();
         } catch (ClassCastException | NullPointerException e) {

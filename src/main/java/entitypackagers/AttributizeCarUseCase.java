@@ -35,22 +35,10 @@ public class AttributizeCarUseCase implements Attributizer {
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, car.getKilometres());
 
         Map<String, AddOn> addOns = car.getAddOns();
-//        Attribute[] addOnMaps = getAddOnAttArray(addOns);
-//        Attribute addOnArray = AttributeFactory.createAttribute(addOnMaps);
-//        carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
         Attribute addOnMap = getAddOnMap(addOns);
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnMap);
 
         return carMap;
-    }
-
-    public static Attribute[] getAddOnAttArray(Map<String, AddOn> addOns) {
-        List<Attribute> addOnMapsList = new ArrayList<>();
-        for (String s : addOns.keySet()) {
-            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOns.get(s));
-            addOnMapsList.add(addOnAttributizer.attributizeEntity());
-        }
-        return addOnMapsList.toArray(new Attribute[0]);
     }
 
     public static AttributeMap getAddOnMap(Map<String, AddOn> addOns) {

@@ -29,7 +29,7 @@ class Server {
                 } catch (InterruptedException te) {
                     // this doesn't need to be handled because it'll only be interrupted
                     // if the program is stopped while it's sleeping,
-                    // in which case the program is already exiting and we don't
+                    // in which case the program is already exiting, and we don't
                     // need to report any errors.
                 }
             }

@@ -192,9 +192,8 @@ public class LoanDataFetcher {
         }
 
         Parser parser = new JsonParser(scoreResponse);
-        AttributeMap scoreResponseMap;
         try {
-            return scoreResponseMap = parser.parse();
+            return parser.parse();
         } catch (Exceptions.ParseException e) {
             throw new Exceptions.FetchException("error parsing senso score API response: " + e.getMessage(), e);
         }

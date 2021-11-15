@@ -12,8 +12,8 @@ import java.util.Map;
 public class AttributeMapTest {
 
     static AttributeMap attMap;
-    static IntAttribute intAtt = new IntAttribute(1);
-    static DoubleAttribute doubleAtt = new DoubleAttribute(1.1);
+    static final IntAttribute intAtt = new IntAttribute(1);
+    static final DoubleAttribute doubleAtt = new DoubleAttribute(1.1);
 
     @BeforeEach
     public void setup() {
