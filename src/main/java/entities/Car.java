@@ -19,7 +19,7 @@ public class Car extends Entity {
     private final String make;
     private final String model;
     private final int year;
-    private final Double kilometres;
+    private final double kilometres;
 
     /**
      * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
@@ -132,7 +132,7 @@ public class Car extends Entity {
         return year;
     }
 
-    public Double getKilometres() {
+    public double getKilometres() {
         return kilometres;
     }
 

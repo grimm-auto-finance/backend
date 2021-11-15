@@ -30,6 +30,7 @@ public class AttributizeCarUseCaseTest {
         testMap.addItem(EntityStringNames.CAR_MAKE, testCar.getMake());
         testMap.addItem(EntityStringNames.CAR_MODEL, testCar.getModel());
         testMap.addItem(EntityStringNames.CAR_YEAR, testCar.getYear());
+        testMap.addItem(EntityStringNames.CAR_KILOMETRES, testCar.getKilometres());
         testMap.addItem(
                 EntityStringNames.ADD_ON_STRING,
                 AttributizeCarUseCase.getAddOnMap(testCar.getAddOns()));

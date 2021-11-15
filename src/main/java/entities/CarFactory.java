@@ -26,6 +26,7 @@ public class CarFactory {
         int year;
         double price;
         Map<String, AddOn> addOnMap;
+        double kilometres;
         try {
             make = (String) map.getItem(EntityStringNames.CAR_MAKE).getAttribute();
             model = (String) map.getItem(EntityStringNames.CAR_MODEL).getAttribute();
@@ -41,12 +42,13 @@ public class CarFactory {
 //                addOnMap.put(a.getName(), a);
 //            }
             addOnMap = GenerateEntitiesUseCase.generateAddOnsFromMap(map);
+            kilometres = (double) map.getItem(EntityStringNames.CAR_KILOMETRES).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate Car: ";
             Exceptions.FactoryException ex = new Exceptions.FactoryException(message + '\n' + e.getMessage());
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }
-        return new Car(price, make, model, year, addOnMap);
+        return new Car(kilometres, price, make, model, year, addOnMap);
     }
 }
