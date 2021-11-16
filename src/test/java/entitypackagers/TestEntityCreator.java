@@ -75,10 +75,10 @@ public class TestEntityCreator {
         Map<String, Double> installment = new HashMap<>();
         installment.put("Test String", 5.5);
         amortizationTable.add(installment);
-        List<AttributeMap> ammortizationAttMap =
+        List<AttributeMap> amortizationAttMap =
                 AttributizeLoanDataUseCase.getAmortizationAttMap(amortizationTable);
         loanMap.addItem(
-                EntityStringNames.LOAN_AMORTIZATION, ammortizationAttMap.toArray(new Attribute[0]));
+                EntityStringNames.LOAN_AMORTIZATION, amortizationAttMap.toArray(new Attribute[0]));
         try {
             loan = LoanDataFactory.getEntity(loanMap);
         } catch (Exceptions.FactoryException e) {
