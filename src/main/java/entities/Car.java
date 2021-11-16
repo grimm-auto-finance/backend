@@ -19,13 +19,7 @@ public class Car extends Entity {
     private final String make;
     private final String model;
     private final int year;
-    private final Double kilometres;
-
-    // TODO: decide if we want to use Factory method instead
-
-    public Double getKilometres() {
-        return kilometres;
-    }
+    private final double kilometres;
 
     /**
      * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
@@ -37,7 +31,7 @@ public class Car extends Entity {
      * @param model The model of the car
      * @param year The model year of the car
      */
-    public Car(double kilometres, double price, String make, String model, int year) {
+    protected Car(double kilometres, double price, String make, String model, int year) {
         this(kilometres, price, make, model, year, new HashMap<>());
     }
 
@@ -138,9 +132,33 @@ public class Car extends Entity {
         return year;
     }
 
+    public double getKilometres() {
+        return kilometres;
+    }
+
     /** @return Returns the string name of the car */
     @Override
     public String getStringName() {
         return EntityStringNames.CAR_STRING;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Car)) {
+            return false;
+        }
+        Car otherCar = (Car) other;
+        for (String s : addOns.keySet()) {
+            if (!otherCar.addOns.containsKey(s)) {
+                return false;
+            }
+            if (!addOns.get(s).equals(otherCar.addOns.get(s))) {
+                return false;
+            }
+        }
+        return (this.make.equals(otherCar.make))
+                && (this.model.equals(otherCar.model))
+                && (this.year == otherCar.year)
+                && (this.price == otherCar.price);
     }
 }

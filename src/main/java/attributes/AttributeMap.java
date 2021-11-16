@@ -45,7 +45,7 @@ public class AttributeMap extends Attribute {
      */
     public Attribute getItem(String name) throws NullPointerException {
         if (!items.containsKey(name)) {
-            throw new NullPointerException("No item in map with this name");
+            throw new NullPointerException("No item in map with name " + name);
         }
         return items.get(name);
     }
@@ -57,5 +57,18 @@ public class AttributeMap extends Attribute {
      */
     public Map<String, Attribute> getAttribute() {
         return items;
+    }
+
+    public static AttributeMap combine(AttributeMap first, AttributeMap second) {
+        Map<String, Attribute> firstItems = first.getAttribute();
+        Map<String, Attribute> secondItems = second.getAttribute();
+        AttributeMap combined = new AttributeMap();
+        for (String s : firstItems.keySet()) {
+            combined.addItem(s, firstItems.get(s));
+        }
+        for (String s : secondItems.keySet()) {
+            combined.addItem(s, secondItems.get(s));
+        }
+        return combined;
     }
 }

@@ -19,7 +19,7 @@ public class AttributizeCarBuyerUseCaseTest {
 
     @BeforeEach
     public void setup() {
-        buyer = new CarBuyer(30000.5, 750);
+        buyer = TestEntityCreator.getTestBuyer();
         testMap = new AttributeMap();
         buyerAttributizer = new AttributizeCarBuyerUseCase(buyer);
         addBuyerToTestMap();

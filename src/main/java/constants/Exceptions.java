@@ -35,16 +35,27 @@ public class Exceptions {
 
     /** ParseException class that is thrown whenever a Json object is parsed */
     public static class ParseException extends CodedException {
+        public int getCode() {
+            return 400;
+        }
+
         public ParseException() {}
 
         /** @param message The exception message */
         public ParseException(String message) {
             super(message);
         }
+    }
 
-        /** @return Returns the specific ParseException code */
+    public static class FactoryException extends CodedException {
         public int getCode() {
             return 400;
+        }
+
+        public FactoryException() {}
+
+        public FactoryException(String message) {
+            super(message);
         }
     }
 

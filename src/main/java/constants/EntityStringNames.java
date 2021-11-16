@@ -10,7 +10,6 @@ public class EntityStringNames {
     public static final String CAR_MODEL = "model";
     public static final String CAR_YEAR = "year";
     public static final String CAR_PRICE = "price";
-    public static final String CAR_ADD_ONS = "addOns";
     public static final String CAR_KILOMETRES = "kilometres";
 
     /** String representation of the instance variable names in the CarBuyer entity */
@@ -25,13 +24,12 @@ public class EntityStringNames {
     public static final String LOAN_INTEREST_RATE = "interestRate";
     public static final String LOAN_INSTALLMENT = "installment";
     public static final String LOAN_SCORE = "sensoScore";
-    public static final String LOAN_AMOUNT = "loanAmount";
-    public static final String LOAN_TERM_LENGTH = "termLength";
+    public static final String LOAN_AMOUNT = "amount";
+    public static final String LOAN_TERM_LENGTH = "term";
     public static final String LOAN_INTEREST_SUM = "interestSum";
-    public static final String LOAN_AMORTIZATION = "amortizationTable";
+    public static final String LOAN_AMORTIZATION = "installments";
 
-    /** String representation of the instance variable names in the AddOn entity */
-    public static final String ADD_ON_STRING = "addOn";
+    public static final String ADD_ON_STRING = "addOns";
 
     public static final String ADD_ON_NAME = "name";
     public static final String ADD_ON_PRICE = "price";

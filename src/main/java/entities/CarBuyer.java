@@ -17,7 +17,7 @@ public class CarBuyer extends Entity {
      * @param budget The car buyer's budget for the car with addons
      * @param creditScore The car buyer's credit score
      */
-    public CarBuyer(double budget, int creditScore) {
+    protected CarBuyer(double budget, int creditScore) {
         this.budget = budget;
         this.creditScore = creditScore;
     }
@@ -43,5 +43,15 @@ public class CarBuyer extends Entity {
     @Override
     public String getStringName() {
         return EntityStringNames.BUYER_STRING;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof CarBuyer)) {
+            return false;
+        }
+        CarBuyer otherBuyer = (CarBuyer) other;
+
+        return (this.budget == otherBuyer.budget) && (this.creditScore == otherBuyer.creditScore);
     }
 }

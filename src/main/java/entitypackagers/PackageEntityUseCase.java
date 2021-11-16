@@ -6,53 +6,75 @@ import constants.Exceptions;
 
 import entities.Entity;
 
+import java.util.List;
+
 public class PackageEntityUseCase {
 
-    private Entity entity;
+    private Packager packager;
 
     public PackageEntityUseCase() {}
 
     /**
      * Constructs a new PackageEntityUseCase to write the given Entity to a Package
      *
-     * @param entity the Entity to be serialized
+     * @param packager the Packager to use to turn Entities into Packages
      */
-    public PackageEntityUseCase(Entity entity) {
-        this.entity = entity;
+    public PackageEntityUseCase(Packager packager) {
+        this.packager = packager;
     }
 
     /**
-     * Sets the Entity that this PackageEntityUseCase packages to newEntity
+     * Sets the Packager that this PackageEntityUseCase uses to turn Entities into Packages
      *
-     * @param newEntity the new Entity to be packaged
+     * @param packager the new Packager to be used
      */
-    public void setEntity(Entity newEntity) {
-        this.entity = newEntity;
+    public void setPackager(Packager packager) {
+        this.packager = packager;
     }
 
     /**
-     * Returns the Entity that this PackageEntityUseCase has been set to package Should only be used
-     * for testing
+     * Returns the Packager that this PackageEntityUseCase has been set to use to package Should
+     * only be used for testing
      *
      * @return The entity to be packaged
      */
-    public Entity getEntity() {
-        return this.entity;
+    public Packager getPackager() {
+        return this.packager;
     }
 
     /**
-     * Writes entity to a Package using the given Packager
+     * Writes the given Entity to a Package using packager
      *
-     * @param packager The type of package to be used
-     * @return the package
-     * @throws Exceptions.PackageException A PackageException
+     * @param entity the Entity to be packaged using Packager
+     * @return a Package storing a representation of entity, made using Packager
+     * @throws Exceptions.PackageException if the Attributization of entity fails
      */
-    public Package writeEntity(Packager packager) throws Exceptions.PackageException {
+    public Package writeEntity(Entity entity) throws Exceptions.PackageException {
         if (entity == null) {
             throw new NullPointerException("Can't extract Attributes from null Entity");
+        } else if (packager == null) {
+            throw new NullPointerException("Can't use null Packager to package Entity");
         }
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(entity);
-        AttributeMap entityMap = entityAttributizer.attributizeEntity();
+        AttributeMap entityMap = new AttributeMap();
+        entityMap.addItem(entity.getStringName(), entityAttributizer.attributizeEntity());
         return packager.writePackage(entityMap);
+    }
+
+    public Package writeEntities(List<Entity> entities) throws Exceptions.PackageException {
+        AttributeMap entitiesMap = new AttributeMap();
+        if (packager == null) {
+            throw new NullPointerException("Can't use null Packager to package Entity");
+        }
+        for (Entity e : entities) {
+            if (e == null) {
+                throw new NullPointerException("Can't extract Attributes from null Entity");
+            }
+            Attributizer entityAttributizer = AttributizerFactory.getAttributizer(e);
+            AttributeMap entityMap = new AttributeMap();
+            entityMap.addItem(e.getStringName(), entityAttributizer.attributizeEntity());
+            entitiesMap = AttributeMap.combine(entitiesMap, entityMap);
+        }
+        return packager.writePackage(entitiesMap);
     }
 }

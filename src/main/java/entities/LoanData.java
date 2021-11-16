@@ -29,7 +29,7 @@ public class LoanData extends Entity {
      * @param interestSum the total amount of interest paid on the loan
      * @param amortizationTable the amortization table for this loan
      */
-    public LoanData(
+    protected LoanData(
             double interestRate,
             double installment,
             String sensoScore,
@@ -166,5 +166,49 @@ public class LoanData extends Entity {
     @Override
     public String getStringName() {
         return EntityStringNames.LOAN_STRING;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof LoanData)) {
+            return false;
+        }
+        LoanData otherLoan = (LoanData) other;
+        for (Map<String, Double> firstEntry : amortizationTable) {
+            boolean amortizationMatch = false;
+            for (Map<String, Double> secondEntry : otherLoan.amortizationTable) {
+                if (compareAmortizationEntries(firstEntry, secondEntry)) {
+                    amortizationMatch = true;
+                }
+            }
+            if (!amortizationMatch) {
+                return false;
+            }
+        }
+
+        return (Math.abs(this.interestRate - otherLoan.interestRate) < .001)
+                && (Math.abs(this.installment - otherLoan.installment) < .001)
+                && (Math.abs(this.loanAmount - otherLoan.loanAmount) < .001)
+                && (Math.abs(this.interestSum - otherLoan.interestSum) < .001)
+                && (this.termLength == otherLoan.termLength)
+                && (this.sensoScore.equals(otherLoan.sensoScore));
+    }
+
+    private boolean compareAmortizationEntries(
+            Map<String, Double> first, Map<String, Double> second) {
+        return compareAmortizationEntries(first, second, .001);
+    }
+
+    private boolean compareAmortizationEntries(
+            Map<String, Double> first, Map<String, Double> second, double epsilon) {
+        for (String s : first.keySet()) {
+            if (!second.containsKey(s)) {
+                return false;
+            }
+            if (Math.abs(first.get(s) - second.get(s)) >= epsilon) {
+                return false;
+            }
+        }
+        return true;
     }
 }
