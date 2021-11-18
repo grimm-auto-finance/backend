@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.json.*;
 
@@ -53,37 +54,8 @@ public class LoanDataFetcher {
             throws Exceptions.CodedException {
         HttpURLConnection rateConn;
 
-        try {
-            rateConn = (HttpURLConnection) Env.SENSO_RATE_URL.openConnection();
-        } catch (IOException e) {
-            throw new Exceptions.FetchException("error connecting to senso rate API", e);
-        }
-
-        rateConn.setDoOutput(true);
-        rateConn.setDoInput(true);
-
-        rateConn.setRequestProperty("Content-Type", "application/json");
-        rateConn.setRequestProperty("Accept", "application/json");
-        try {
-            rateConn.setRequestMethod("POST");
-        } catch (java.net.ProtocolException e) {
-            // This is safe to leave uncaught because the `setRequestMethod`
-            // will only fail if the request method is not a valid request
-            // method
-        }
-        JsonObject rateBody =
-                Json.createObjectBuilder()
-                        .add("loanAmount", car.getPrice())
-                        .add("creditScore", buyer.getCreditScore())
-                        .add("pytBudget", buyer.getBudget())
-                        .add("vehicleMake", car.getMake())
-                        .add("vehicleModel", car.getModel())
-                        .add("vehicleYear", car.getYear())
-                        .add("vehicleKms", car.getKilometres())
-                        .add("listPrice", car.getPrice())
-                        // TODO: make this not hardcoded
-                        .add("downpayment", car.getPrice() / 10)
-                        .build();
+        rateConn = getRateConnection(Env.SENSO_RATE_URL, "error connecting to senso rate API");
+        JsonObject rateBody = getRateBody(buyer, car, rateConn);
 
         try {
             OutputStreamWriter rateWriter = new OutputStreamWriter(rateConn.getOutputStream());
@@ -113,6 +85,12 @@ public class LoanDataFetcher {
             throw new Exceptions.FetchException(
                     "failed to parse result from senso rate API: " + e.getMessage(), e);
         }
+        addInstallments(rateResponseMap);
+
+        return rateResponseMap;
+    }
+
+    private static void addInstallments(AttributeMap rateResponseMap) {
         Attribute[] installments =
                 ((ArrayAttribute) rateResponseMap.getItem("installments")).getAttribute();
         rateResponseMap.addItem(
@@ -122,8 +100,45 @@ public class LoanDataFetcher {
         rateResponseMap.addItem(
                 "term",
                 Double.parseDouble((String) rateResponseMap.getItem("term").getAttribute()));
+    }
 
-        return rateResponseMap;
+    private static JsonObject getRateBody(CarBuyer buyer, Car car, HttpURLConnection rateConn) {
+        try {
+            rateConn.setRequestMethod("POST");
+        } catch (java.net.ProtocolException e) {
+            // This is safe to leave uncaught because the `setRequestMethod`
+            // will only fail if the request method is not a valid request
+            // method
+        }
+        return Json.createObjectBuilder()
+                .add("loanAmount", car.getPrice())
+                .add("creditScore", buyer.getCreditScore())
+                .add("pytBudget", buyer.getBudget())
+                .add("vehicleMake", car.getMake())
+                .add("vehicleModel", car.getModel())
+                .add("vehicleYear", car.getYear())
+                .add("vehicleKms", car.getKilometres())
+                .add("listPrice", car.getPrice())
+                // TODO: make this not hardcoded
+                .add("downpayment", car.getPrice() / 10)
+                .build();
+    }
+
+    private static HttpURLConnection getRateConnection(URL sensoRateUrl, String s)
+            throws Exceptions.FetchException {
+        HttpURLConnection rateConn;
+        try {
+            rateConn = (HttpURLConnection) sensoRateUrl.openConnection();
+        } catch (IOException e) {
+            throw new Exceptions.FetchException(s, e);
+        }
+
+        rateConn.setDoOutput(true);
+        rateConn.setDoInput(true);
+
+        rateConn.setRequestProperty("Content-Type", "application/json");
+        rateConn.setRequestProperty("Accept", "application/json");
+        return rateConn;
     }
 
     private static JsonObject getAPIResponse(HttpURLConnection rateConn) throws IOException {
@@ -144,40 +159,10 @@ public class LoanDataFetcher {
 
     public static AttributeMap makeScoreRequest(CarBuyer buyer, Car car, int termLength)
             throws Exceptions.CodedException {
-        HttpURLConnection scoreConn;
 
-        try {
-            scoreConn = (HttpURLConnection) Env.SENSO_SCORE_URL.openConnection();
-        } catch (IOException e) {
-            throw new Exceptions.FetchException("error connecting to senso score API", e);
-        }
-
-        scoreConn.setDoOutput(true);
-        scoreConn.setDoInput(true);
-
-        scoreConn.setRequestProperty("Content-Type", "application/json");
-        scoreConn.setRequestProperty("Accept", "application/json");
-        try {
-            scoreConn.setRequestMethod("POST");
-        } catch (java.net.ProtocolException e) {
-            // This is safe to leave uncaught because the `setRequestMethod`
-            // will only fail if the request method is not a valid request
-            // method
-        }
-
-        JsonObject scoreBody =
-                Json.createObjectBuilder()
-                        .add("remainingBalance", car.getPrice())
-                        .add("creditScore", buyer.getCreditScore())
-                        .add("loanAge", termLength)
-                        .add("vehicleMake", car.getMake())
-                        .add("vehicleModel", car.getModel())
-                        .add("vehicleYear", car.getYear())
-                        // TODO: Understand what carValue and loanStartDate are, and make them not
-                        // hardcoded
-                        .add("carValue", car.getPrice())
-                        .add("loanStartDate", String.valueOf(java.time.LocalDate.now()))
-                        .build();
+        HttpURLConnection scoreConn =
+                getRateConnection(Env.SENSO_SCORE_URL, "error connecting to senso score API");
+        JsonObject scoreBody = getScoreBody(buyer, car, termLength, scoreConn);
 
         try {
             OutputStreamWriter scoreWriter = new OutputStreamWriter(scoreConn.getOutputStream());
@@ -206,5 +191,29 @@ public class LoanDataFetcher {
             throw new Exceptions.FetchException(
                     "error parsing senso score API response: " + e.getMessage(), e);
         }
+    }
+
+    private static JsonObject getScoreBody(
+            CarBuyer buyer, Car car, int termLength, HttpURLConnection scoreConn) {
+        try {
+            scoreConn.setRequestMethod("POST");
+        } catch (java.net.ProtocolException e) {
+            // This is safe to leave uncaught because the `setRequestMethod`
+            // will only fail if the request method is not a valid request
+            // method
+        }
+
+        return Json.createObjectBuilder()
+                .add("remainingBalance", car.getPrice())
+                .add("creditScore", buyer.getCreditScore())
+                .add("loanAge", termLength)
+                .add("vehicleMake", car.getMake())
+                .add("vehicleModel", car.getModel())
+                .add("vehicleYear", car.getYear())
+                // TODO: Understand what carValue and loanStartDate are, and make them not
+                // hardcoded
+                .add("carValue", car.getPrice())
+                .add("loanStartDate", String.valueOf(java.time.LocalDate.now()))
+                .build();
     }
 }
