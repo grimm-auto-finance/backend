@@ -67,6 +67,7 @@ public class Car extends Entity {
      */
     public void addAddOn(AddOn addOn) {
         addOns.put(addOn.getName(), addOn);
+        this.price += addOn.getPrice();
     }
 
     /**
@@ -76,6 +77,7 @@ public class Car extends Entity {
      */
     public void removeAddOn(String addOnName) {
         addOns.remove(addOnName);
+        this.price = this.price - this.addOns.get(addOnName).getPrice();
     }
 
     /**
