@@ -76,8 +76,8 @@ public class Car extends Entity {
      * @param addOnName the name of the AddOn to be removed
      */
     public void removeAddOn(String addOnName) {
-        addOns.remove(addOnName);
         this.price = this.price - this.addOns.get(addOnName).getPrice();
+        addOns.remove(addOnName);
     }
 
     /**
