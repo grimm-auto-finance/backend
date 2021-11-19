@@ -9,33 +9,33 @@ info:
     url: "https://mit-license.org"
 basePath: "/v1"
 tags:
-- name: "loans"
-  description: "Everything related to loan information"
-- name: "addOns"
-  description: "Things related to car add-ons"
-- name: "vehicles"
-  description: "All things related to vehicles"
+  - name: "loans"
+    description: "Everything related to loan information"
+  - name: "addOns"
+    description: "Things related to car add-ons"
+  - name: "vehicles"
+    description: "All things related to vehicles"
 schemes:
-- "https"
+  - "https"
 paths:
-  /vehicle:
+  /search:
     post:
       tags:
-      - "vehicles"
+        - "vehicles"
       summary: "Get vehicles matching data"
       consumes:
-      - "text/plain"
+        - "text/plain"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Vehicle string to search for"
-        required: true
-        schema:
-          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Vehicle string to search for"
+          required: true
+          schema:
+            type: "string"
       responses:
-        '200':
+        "200":
           description: "All matching cars"
           schema:
             type: "array"
@@ -44,53 +44,59 @@ paths:
   /addOns:
     post:
       tags:
-      - "addOns"
+        - "addOns"
       summary: "Get all available add-ons for a vehicle"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Vehicle to get add-ons for"
-        required: true
-        schema:
-          type: "object"
-          properties:
-            vehicleId:
-              type: "number"
+        - in: "body"
+          name: "body"
+          description: "Vehicle to get add-ons for"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              vehicleId:
+                type: "number"
       responses:
         "200":
           description: "All available add-ons for the given car"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/AddOn"
+              type: "object"
+              properties:
+                id:
+                  type: "number"
+                  minimum: 0
+                car:
+                  $ref: "#/definitions/AddOn"
   /loan:
     post:
       tags:
-      - "loans"
+        - "loans"
       summary: "Get the information of the loan available to a buyer considering a purchase"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "The car (containing add-ons) and car buyer to fetch data for"
-        required: true
-        schema:
-          type: "object"
-          required:
-          - "car"
-          - "carBuyer"
-          properties:
-            car:
-              $ref: "#/definitions/Car"
-            carBuyer:
-              $ref: "#/definitions/CarBuyer"
+        - in: "body"
+          name: "body"
+          description: "The car (containing add-ons) and car buyer to fetch data for"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "car"
+              - "carBuyer"
+            properties:
+              car:
+                $ref: "#/definitions/Car"
+              carBuyer:
+                $ref: "#/definitions/CarBuyer"
       responses:
         "200":
           description: "The data on the loan"
@@ -109,10 +115,10 @@ definitions:
   Car:
     type: "object"
     required:
-    - "id"
-    - "make"
-    - "model"
-    - "year"
+      - "id"
+      - "make"
+      - "model"
+      - "year"
     properties:
       id:
         type: "number"
@@ -131,8 +137,8 @@ definitions:
   CarBuyer:
     type: "object"
     required:
-    - "budget"
-    - "creditScore"
+      - "budget"
+      - "creditScore"
     properties:
       budget:
         type: "number"
@@ -141,12 +147,12 @@ definitions:
   LoanData:
     type: "object"
     required:
-    - 'interestRate'
-    - "installment"
-    - "sensoScore"
-    - "loanAmount"
-    - "termLength"
-    - "interestSum"
+      - "interestRate"
+      - "installment"
+      - "sensoScore"
+      - "loanAmount"
+      - "termLength"
+      - "interestSum"
     properties:
       interestRate:
         type: "number"
