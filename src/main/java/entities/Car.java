@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Car extends Entity {
     // A Map between add-on names and AddOn objects representing those addons
-    private Map<String, AddOn> addOns;
+    private final Map<String, AddOn> addOns;
 
     // The Car's price, in dollars.
     private double price;
@@ -19,13 +19,7 @@ public class Car extends Entity {
     private final String make;
     private final String model;
     private final int year;
-    private final Double kilometres;
-
-    // TODO: decide if we want to use Factory method instead
-
-    public Double getKilometres() {
-        return kilometres;
-    }
+    private final double kilometres;
 
     /**
      * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
@@ -37,7 +31,7 @@ public class Car extends Entity {
      * @param model The model of the car
      * @param year The model year of the car
      */
-    public Car(double kilometres, double price, String make, String model, int year) {
+    protected Car(double kilometres, double price, String make, String model, int year) {
         this(kilometres, price, make, model, year, new HashMap<>());
     }
 
@@ -69,10 +63,11 @@ public class Car extends Entity {
     /**
      * Adds the given AddOn to this Car's set of AddOns
      *
-     * @param addOn
+     * @param addOn The addon to be added to the addon map
      */
     public void addAddOn(AddOn addOn) {
         addOns.put(addOn.getName(), addOn);
+        this.price += addOn.getPrice();
     }
 
     /**
@@ -81,13 +76,14 @@ public class Car extends Entity {
      * @param addOnName the name of the AddOn to be removed
      */
     public void removeAddOn(String addOnName) {
+        this.price = this.price - this.addOns.get(addOnName).getPrice();
         addOns.remove(addOnName);
     }
 
     /**
      * Returns the AddOns stored in this Car
      *
-     * @return
+     * @return The addon map of the car
      */
     public Map<String, AddOn> getAddOns() {
         return new HashMap<>(this.addOns);
@@ -96,7 +92,7 @@ public class Car extends Entity {
     /**
      * Returns this Car's price, in dollars.
      *
-     * @return
+     * @return The price of the car in dollars
      */
     public double getPrice() {
         return price;
@@ -105,7 +101,7 @@ public class Car extends Entity {
     /**
      * Updates this Car's price to the specified value.
      *
-     * @param price
+     * @param price The car's price
      */
     public void setPrice(double price) {
         this.price = price;
@@ -114,7 +110,7 @@ public class Car extends Entity {
     /**
      * returns the make of this car
      *
-     * @return
+     * @return The make of the car
      */
     public String getMake() {
         return make;
@@ -123,7 +119,7 @@ public class Car extends Entity {
     /**
      * returns the model of this car
      *
-     * @return
+     * @return The model of the car
      */
     public String getModel() {
         return model;
@@ -132,15 +128,39 @@ public class Car extends Entity {
     /**
      * Returns this Car's model year
      *
-     * @return
+     * @return The car's model year
      */
     public int getYear() {
         return year;
+    }
+
+    public double getKilometres() {
+        return kilometres;
     }
 
     /** @return Returns the string name of the car */
     @Override
     public String getStringName() {
         return EntityStringNames.CAR_STRING;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Car)) {
+            return false;
+        }
+        Car otherCar = (Car) other;
+        for (String s : addOns.keySet()) {
+            if (!otherCar.addOns.containsKey(s)) {
+                return false;
+            }
+            if (!addOns.get(s).equals(otherCar.addOns.get(s))) {
+                return false;
+            }
+        }
+        return (this.make.equals(otherCar.make))
+                && (this.model.equals(otherCar.model))
+                && (this.year == otherCar.year)
+                && (this.price == otherCar.price);
     }
 }

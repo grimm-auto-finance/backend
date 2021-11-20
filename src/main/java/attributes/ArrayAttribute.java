@@ -8,7 +8,7 @@ public class ArrayAttribute extends Attribute {
     private final Attribute[] items;
 
     /**
-     * Constructs a new ArrayAttribute from the given array of Attribues
+     * Constructs a new ArrayAttribute from the given array of Attributes
      *
      * @param items the array of Attributes to be stored in the new ArrayAttribute
      */

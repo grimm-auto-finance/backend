@@ -25,6 +25,7 @@ public class AttributizeCarBuyerUseCase implements Attributizer {
         AttributeMap buyerMap = new AttributeMap();
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, buyer.getBudget());
         buyerMap.addItem(EntityStringNames.BUYER_CREDIT, buyer.getCreditScore());
+        buyerMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, buyer.getDownPayment());
         return buyerMap;
     }
 }

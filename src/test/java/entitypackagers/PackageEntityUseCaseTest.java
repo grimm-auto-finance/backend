@@ -7,8 +7,6 @@ import attributes.AttributeMap;
 
 import constants.Exceptions;
 
-import entities.Car;
-import entities.CarBuyer;
 import entities.Entity;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -18,49 +16,63 @@ public class PackageEntityUseCaseTest {
 
     static PackageEntityUseCase entityPackager;
     static JsonPackager jsonPackager;
+    static Packager otherPackager;
     static Entity car;
-    static Entity carBuyer;
 
     @BeforeAll
     static void setup() {
         entityPackager = new PackageEntityUseCase();
         jsonPackager = new JsonPackager();
-        car = new Car(0, 15.0, "Honda", "Civic", 2020);
-        carBuyer = new CarBuyer(15000, 700);
+        car = TestEntityCreator.getTestCar();
     }
 
     @Test
     public void testConstructor() {
-        entityPackager = new PackageEntityUseCase(car);
-        assertEquals(car, entityPackager.getEntity());
+        entityPackager = new PackageEntityUseCase(jsonPackager);
+        assertEquals(jsonPackager, entityPackager.getPackager());
     }
 
     @Test
-    public void testSetEntity() {
-        entityPackager.setEntity(carBuyer);
-        assertEquals(carBuyer, entityPackager.getEntity());
+    public void testSetPackager() {
+        entityPackager.setPackager(otherPackager);
+        assertEquals(otherPackager, entityPackager.getPackager());
     }
 
     @Test
     public void testPackageEntityWorking() {
-        entityPackager.setEntity(car);
+        entityPackager.setPackager(jsonPackager);
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(car);
-        AttributeMap entityMap = entityAttributizer.attributizeEntity();
+        AttributeMap entityMap = new AttributeMap();
+        entityMap.addItem(car.getStringName(), entityAttributizer.attributizeEntity());
         try {
             assertEquals(
                     jsonPackager.writePackage(entityMap).getPackage(),
-                    entityPackager.writeEntity(jsonPackager).getPackage());
+                    entityPackager.writeEntity(car).getPackage());
         } catch (Exceptions.PackageException e) {
             fail();
         }
     }
 
     @Test
-    public void testPackageNullEntity() {
+    public void testPackageNullPackager() {
         entityPackager = new PackageEntityUseCase();
         try {
-            // Throws a NullPointerException because the value of the stored Entity is null
-            entityPackager.writeEntity(jsonPackager);
+            // Throws a NullPointerException because the value of the stored Packager is null
+            entityPackager.writeEntity(car);
+        } catch (NullPointerException e) {
+            assertEquals("Can't use null Packager to package Entity", e.getMessage());
+            return;
+        } catch (Exceptions.PackageException e) {
+            fail();
+        }
+        fail();
+    }
+
+    @Test
+    public void testPackageNullEntity() {
+        entityPackager = new PackageEntityUseCase(jsonPackager);
+        try {
+            entityPackager.writeEntity(null);
         } catch (NullPointerException e) {
             assertEquals("Can't extract Attributes from null Entity", e.getMessage());
             return;

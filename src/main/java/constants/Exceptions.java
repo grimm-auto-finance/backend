@@ -17,7 +17,7 @@ public class Exceptions {
         public abstract int getCode();
     }
 
-    /** FetchException class that is thrown when when a fetch request is made */
+    /** FetchException class that is thrown when a fetch request is made */
     public static class FetchException extends CodedException {
         public FetchException() {}
 
@@ -27,7 +27,7 @@ public class Exceptions {
             this.setStackTrace(e.getStackTrace());
         }
 
-        /** @return Returns the specifc FetchException code */
+        /** @return Returns the specific FetchException code */
         public int getCode() {
             return 500;
         }
@@ -35,16 +35,27 @@ public class Exceptions {
 
     /** ParseException class that is thrown whenever a Json object is parsed */
     public static class ParseException extends CodedException {
+        public int getCode() {
+            return 400;
+        }
+
         public ParseException() {}
 
         /** @param message The exception message */
         public ParseException(String message) {
             super(message);
         }
+    }
 
-        /** @return Returns the specific ParseException code */
+    public static class FactoryException extends CodedException {
         public int getCode() {
             return 400;
+        }
+
+        public FactoryException() {}
+
+        public FactoryException(String message) {
+            super(message);
         }
     }
 

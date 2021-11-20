@@ -1,21 +1,18 @@
 package routes;
 
+import attributes.AttributeMap;
+
 import com.sun.net.httpserver.HttpExchange;
 
 import constants.Exceptions.CodedException;
 
-import entities.Car;
-import entities.CarBuyer;
-import entities.Entity;
-import entities.LoanData;
+import entities.*;
 
 import entitypackagers.JsonPackage;
 import entitypackagers.JsonPackager;
 import entitypackagers.PackageEntityUseCase;
 
 import entityparsers.JsonParser;
-import entityparsers.ParseCarBuyerUseCase;
-import entityparsers.ParseCarUseCase;
 import entityparsers.Parser;
 
 import fetchers.LoanDataFetcher;
@@ -44,34 +41,21 @@ public class Loan extends Route {
         JsonReader jsonReader = Json.createReader(is);
         JsonObject inputObj = jsonReader.readObject();
         Parser jsonParser = new JsonParser(inputObj);
-        ParseCarUseCase carParser = new ParseCarUseCase(jsonParser);
-        ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(jsonParser);
-        Car car = carParser.parse();
-        CarBuyer buyer = buyerParser.parse();
-        // TODO: this check should be happening with ParseCarUseCase and ParseCarBuyerUseCase
-        if (car.getMake() == null || car.getModel() == null) {
-            String message = "Error in Payload JSON parsing";
-            respond(t, 400, message.getBytes());
-            return;
-        }
+        AttributeMap entitiesMap = jsonParser.parse();
+        Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
+        CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
         respond(t, 200, getResponse(buyer, car).getBytes());
     }
 
     String getResponse(entities.CarBuyer buyer, entities.Car car) throws CodedException {
         LoanData loanData = LoanDataFetcher.fetch(buyer, car);
-        // TODO: Abstract this more?
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
         List<Entity> entities = new ArrayList<>();
         entities.add(car);
         entities.add(buyer);
         entities.add(loanData);
-        PackageEntityUseCase packageEntity = new PackageEntityUseCase();
-        for (Entity e : entities) {
-            packageEntity.setEntity(e);
-            JsonPackager jsonPackager = new JsonPackager();
-            JsonPackage entityPackage = (JsonPackage) packageEntity.writeEntity(jsonPackager);
-            jsonBuilder.add(e.getStringName(), entityPackage.getPackage());
-        }
-        return jsonBuilder.build().toString();
+        JsonPackager packager = new JsonPackager();
+        PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
+        JsonPackage entitiesPackage = (JsonPackage) packageEntity.writeEntities(entities);
+        return entitiesPackage.toString();
     }
 }

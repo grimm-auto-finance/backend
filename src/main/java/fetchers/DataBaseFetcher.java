@@ -1,10 +1,18 @@
 package fetchers;
 
+import attributes.ArrayAttribute;
+import attributes.Attribute;
+import attributes.AttributeFactory;
+import attributes.AttributeMap;
+
+import constants.EntityStringNames;
+import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.FetchException;
 
 import entities.AddOn;
 import entities.Car;
+import entities.GenerateEntitiesUseCase;
 
 import logging.LoggerFactory;
 
@@ -86,8 +94,7 @@ public class DataBaseFetcher {
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                Car car =
-                        new Car(0, rs.getDouble(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                Car car = extractCar(rs);
                 if (addOns) {
                     for (AddOn addOn : getAddOns(id)) {
                         car.addAddOn(addOn);
@@ -97,8 +104,8 @@ public class DataBaseFetcher {
             } else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw (CodedException) new FetchException("could not fetch car from database", e);
+        } catch (SQLException | Exceptions.FactoryException e) {
+            throw new FetchException("could not fetch car from database: " + e.getMessage(), e);
         }
     }
 
@@ -115,19 +122,27 @@ public class DataBaseFetcher {
             ResultSet rs = pst.executeQuery();
             List<Car> cars = new ArrayList<>();
             while (rs.next()) {
-                cars.add(
-                        new Car(
-                                0,
-                                rs.getDouble(2),
-                                rs.getString(3),
-                                rs.getString(4),
-                                rs.getInt(5)));
+                cars.add(extractCar(rs));
             }
             return cars;
-        } catch (SQLException e) {
-            throw (CodedException)
-                    new FetchException("could not get seach result from database", e);
+        } catch (SQLException | Exceptions.FactoryException e) {
+            throw new FetchException(
+                    "could not get search result from database: " + e.getMessage(), e);
         }
+    }
+
+    private static Car extractCar(ResultSet rs) throws SQLException, Exceptions.FactoryException {
+        AttributeMap carMap = new AttributeMap();
+        carMap.addItem(EntityStringNames.CAR_PRICE, rs.getDouble(2));
+        carMap.addItem(EntityStringNames.CAR_MAKE, rs.getString(3));
+        carMap.addItem(EntityStringNames.CAR_MODEL, rs.getString(4));
+        carMap.addItem(EntityStringNames.CAR_YEAR, rs.getDouble(5));
+        carMap.addItem(EntityStringNames.CAR_KILOMETRES, 0.0);
+        carMap.addItem(EntityStringNames.ADD_ON_STRING, new AttributeMap());
+        // AttributeFactory.createAttribute(new Attribute[0]));
+        AttributeMap entityMap = new AttributeMap();
+        entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
+        return GenerateEntitiesUseCase.generateCar(entityMap);
     }
 
     public static List<AddOn> getAddOns(int carId) throws CodedException {
@@ -136,13 +151,21 @@ public class DataBaseFetcher {
             PreparedStatement pst = connection.prepareStatement(query);
             pst.setInt(1, carId);
             ResultSet rs = pst.executeQuery();
-            List<AddOn> addOns = new ArrayList<>();
+            List<Attribute> addOnMapList = new ArrayList<>();
             while (rs.next()) {
-                addOns.add(new AddOn(rs.getString(2), rs.getDouble(3), rs.getString(4)));
+                AttributeMap addOnMap = new AttributeMap();
+                addOnMap.addItem(EntityStringNames.ADD_ON_NAME, rs.getString(2));
+                addOnMap.addItem(EntityStringNames.ADD_ON_PRICE, rs.getDouble(3));
+                addOnMap.addItem(EntityStringNames.ADD_ON_DESCRIPTION, rs.getString(4));
+                addOnMapList.add(addOnMap);
             }
-            return addOns;
-        } catch (SQLException e) {
-            throw (CodedException) new FetchException("could not get addd-ons from database", e);
+            ArrayAttribute addOnArray =
+                    (ArrayAttribute) AttributeFactory.createAttribute(addOnMapList.toArray());
+            AttributeMap entityMap = new AttributeMap();
+            entityMap.addItem(EntityStringNames.ADD_ON_STRING, addOnArray);
+            return GenerateEntitiesUseCase.generateAddOnsFromArray(entityMap);
+        } catch (SQLException | Exceptions.FactoryException e) {
+            throw new FetchException("could not get add-ons from database: " + e.getMessage(), e);
         }
     }
 }

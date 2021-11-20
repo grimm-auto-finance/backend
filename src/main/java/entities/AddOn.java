@@ -11,11 +11,11 @@ public class AddOn extends Entity {
     /**
      * Constructs a new AddOn objects with the given name, price, and description.
      *
-     * @param name
-     * @param price
-     * @param description
+     * @param name The name of the addon
+     * @param price The price of the addon
+     * @param description A string describing the addon and its use
      */
-    public AddOn(String name, double price, String description) {
+    protected AddOn(String name, double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -24,7 +24,7 @@ public class AddOn extends Entity {
     /**
      * Returns the name of this add-on
      *
-     * @return
+     * @return The name of the addon
      */
     public String getName() {
         return name;
@@ -33,7 +33,7 @@ public class AddOn extends Entity {
     /**
      * Returns the price of this AddOn
      *
-     * @return
+     * @return The price of the addon
      */
     public double getPrice() {
         return price;
@@ -42,7 +42,7 @@ public class AddOn extends Entity {
     /**
      * Updates the price of this AddOn
      *
-     * @param price
+     * @param price The price of the addon
      */
     public void setPrice(double price) {
         this.price = price;
@@ -51,7 +51,7 @@ public class AddOn extends Entity {
     /**
      * Returns the description of this AddOn
      *
-     * @return
+     * @return The description of the addon
      */
     public String getDescription() {
         return description;
@@ -60,7 +60,7 @@ public class AddOn extends Entity {
     /**
      * Updates the description of this AddOn
      *
-     * @param description
+     * @param description The description of the addon
      */
     public void setDescription(String description) {
         this.description = description;
@@ -69,5 +69,16 @@ public class AddOn extends Entity {
     @Override
     public String getStringName() {
         return EntityStringNames.ADD_ON_STRING;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof AddOn)) {
+            return false;
+        }
+        AddOn otherAddOn = (AddOn) other;
+        return (this.name.equals(otherAddOn.name))
+                && (this.price == otherAddOn.price)
+                && (this.description.equals(otherAddOn.description));
     }
 }

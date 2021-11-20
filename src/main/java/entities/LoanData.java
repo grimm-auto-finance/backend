@@ -16,7 +16,7 @@ public class LoanData extends Entity {
     private double loanAmount;
     private int termLength;
     private double interestSum;
-    private List<Map<String, Double>> amortizationTable;
+    private final List<Map<String, Double>> amortizationTable;
 
     /**
      * Constructs a new LoanData object with the given values.
@@ -27,9 +27,9 @@ public class LoanData extends Entity {
      * @param loanAmount the principal value of the loan
      * @param termLength the length of the loan's term
      * @param interestSum the total amount of interest paid on the loan
-     * @param amortizationTable the ammortization table for this loan
+     * @param amortizationTable the amortization table for this loan
      */
-    public LoanData(
+    protected LoanData(
             double interestRate,
             double installment,
             String sensoScore,
@@ -49,7 +49,7 @@ public class LoanData extends Entity {
     /**
      * Returns this LoanData's interest rate.
      *
-     * @return
+     * @return The interest rate
      */
     public double getInterestRate() {
         return interestRate;
@@ -58,7 +58,7 @@ public class LoanData extends Entity {
     /**
      * Updates this LoanData's interest rate with the given value.
      *
-     * @param interestRate
+     * @param interestRate The interest rate
      */
     public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
@@ -67,7 +67,7 @@ public class LoanData extends Entity {
     /**
      * Returns this loan's monthly installment amount
      *
-     * @return
+     * @return The installment amount
      */
     public double getInstallment() {
         return installment;
@@ -76,7 +76,7 @@ public class LoanData extends Entity {
     /**
      * Updates this loan's monthly installment amount with the given value
      *
-     * @param installment
+     * @param installment The installment amount
      */
     public void setInstallment(double installment) {
         this.installment = installment;
@@ -85,7 +85,7 @@ public class LoanData extends Entity {
     /**
      * Returns this loan's amortization table
      *
-     * @return
+     * @return The loan's amortization table
      */
     public List<Map<String, Double>> getAmortizationTable() {
         return amortizationTable;
@@ -94,7 +94,7 @@ public class LoanData extends Entity {
     /**
      * Returns this loan's senso score
      *
-     * @return
+     * @return The loan's senso score
      */
     public String getSensoScore() {
         return sensoScore;
@@ -103,7 +103,7 @@ public class LoanData extends Entity {
     /**
      * Updates this loan's senso score with the given value
      *
-     * @param sensoScore
+     * @param sensoScore The loan's senso score
      */
     public void setSensoScore(String sensoScore) {
         this.sensoScore = sensoScore;
@@ -112,7 +112,7 @@ public class LoanData extends Entity {
     /**
      * Returns this loan's principal dollar value
      *
-     * @return
+     * @return The loan's value
      */
     public double getLoanAmount() {
         return loanAmount;
@@ -121,7 +121,7 @@ public class LoanData extends Entity {
     /**
      * Updates this loan's principal dollar value
      *
-     * @param loanAmount
+     * @param loanAmount The loan's value
      */
     public void setLoanAmount(double loanAmount) {
         this.loanAmount = loanAmount;
@@ -130,7 +130,7 @@ public class LoanData extends Entity {
     /**
      * Returns this loan's term length
      *
-     * @return
+     * @return The loan's term length
      */
     public int getTermLength() {
         return termLength;
@@ -139,7 +139,7 @@ public class LoanData extends Entity {
     /**
      * Updates this loan's term length
      *
-     * @param termLength
+     * @param termLength The loan's term length
      */
     public void setTermLength(int termLength) {
         this.termLength = termLength;
@@ -148,7 +148,7 @@ public class LoanData extends Entity {
     /**
      * Returns the total amount of interest to be paid on this loan
      *
-     * @return
+     * @return The amount of interest to be paid
      */
     public double getInterestSum() {
         return interestSum;
@@ -157,7 +157,7 @@ public class LoanData extends Entity {
     /**
      * Updates the total amount of interest to be paid on this loan
      *
-     * @param interestSum
+     * @param interestSum The amount of interest to be paid
      */
     public void setInterestSum(double interestSum) {
         this.interestSum = interestSum;
@@ -166,5 +166,49 @@ public class LoanData extends Entity {
     @Override
     public String getStringName() {
         return EntityStringNames.LOAN_STRING;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof LoanData)) {
+            return false;
+        }
+        LoanData otherLoan = (LoanData) other;
+        for (Map<String, Double> firstEntry : amortizationTable) {
+            boolean amortizationMatch = false;
+            for (Map<String, Double> secondEntry : otherLoan.amortizationTable) {
+                if (compareAmortizationEntries(firstEntry, secondEntry)) {
+                    amortizationMatch = true;
+                }
+            }
+            if (!amortizationMatch) {
+                return false;
+            }
+        }
+
+        return (Math.abs(this.interestRate - otherLoan.interestRate) < .001)
+                && (Math.abs(this.installment - otherLoan.installment) < .001)
+                && (Math.abs(this.loanAmount - otherLoan.loanAmount) < .001)
+                && (Math.abs(this.interestSum - otherLoan.interestSum) < .001)
+                && (this.termLength == otherLoan.termLength)
+                && (this.sensoScore.equals(otherLoan.sensoScore));
+    }
+
+    private boolean compareAmortizationEntries(
+            Map<String, Double> first, Map<String, Double> second) {
+        return compareAmortizationEntries(first, second, .001);
+    }
+
+    private boolean compareAmortizationEntries(
+            Map<String, Double> first, Map<String, Double> second, double epsilon) {
+        for (String s : first.keySet()) {
+            if (!second.containsKey(s)) {
+                return false;
+            }
+            if (Math.abs(first.get(s) - second.get(s)) >= epsilon) {
+                return false;
+            }
+        }
+        return true;
     }
 }

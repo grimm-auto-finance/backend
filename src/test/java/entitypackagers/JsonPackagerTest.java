@@ -31,8 +31,8 @@ public class JsonPackagerTest {
     /**
      * Adds the given String value to both builder and testMap with the given name
      *
-     * @param name
-     * @param value
+     * @param name Name of string value to be added
+     * @param value String value to be added
      */
     static void addToBoth(String name, String value) {
         testBuilder.add(name, value);

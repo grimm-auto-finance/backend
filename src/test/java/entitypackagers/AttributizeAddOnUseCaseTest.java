@@ -30,7 +30,7 @@ public class AttributizeAddOnUseCaseTest {
 
     @Test
     public void testAttributizeAddOnCompleteAddOn() {
-        addOn = new AddOn("Rust proofing", 1000, "no rust allowed!");
+        addOn = TestEntityCreator.getTestAddOn();
         addAddOnToTestMap();
         addOnAttributizer = new AttributizeAddOnUseCase(addOn);
         assertEquals(

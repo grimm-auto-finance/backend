@@ -4,6 +4,6 @@ package logging;
 public class LoggerFactory {
     /** @return a new object that implements logger */
     public static Logger getLogger() {
-        return (Logger) new SystemLogger();
+        return new SystemLogger();
     }
 }

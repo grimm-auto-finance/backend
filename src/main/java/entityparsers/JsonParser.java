@@ -24,7 +24,7 @@ public class JsonParser implements Parser {
     /**
      * Parse jsonObject into an AttributeMap with keys and values pulled from jsonObject
      *
-     * @return AttributeMap
+     * @return The parsed AttributeMap
      */
     public AttributeMap parse() throws Exceptions.ParseException {
         return parseJsonObject(this.jsonObject);
@@ -34,8 +34,8 @@ public class JsonParser implements Parser {
      * The recursive helper method for parse(). This method is recursive since JsonObjects can
      * contain other JsonObjects.
      *
-     * @param object the given JsonObject used to create the AttributeMap
-     * @return AttributeMap
+     * @param object The JsonObject to be converted to be parsed
+     * @return an attribute map representing the JsonObject
      * @throws constants.Exceptions.ParseException if the JsonObject is not a String, Number, or
      *     Object
      */
@@ -55,15 +55,17 @@ public class JsonParser implements Parser {
         switch (item.getValueType()) {
             case NUMBER:
                 JsonNumber itemNum = (JsonNumber) item;
-                // TODO: figure out how to differentiate ints and doubles better?
-                // isIntegral returns true if the value has .0 at the end even though
-                // it should be a double
-                //                    if (itemNum.isIntegral()) {
-                //                        itemAttribute = new IntAttribute(itemNum.intValue());
-                //                    } else {
-                //                        itemAttribute = new
-                // DoubleAttribute(itemNum.doubleValue());
-                //                    }
+                /*
+                 TODO: figure out how to differentiate ints and doubles better?
+                 isIntegral returns true if the value has .0 at the end even though
+                 it should be a double
+                                    if (itemNum.isIntegral()) {
+                                        itemAttribute = new IntAttribute(itemNum.intValue());
+                                    } else {
+                                        itemAttribute = new
+                 DoubleAttribute(itemNum.doubleValue());
+                                    }
+                */
                 itemAttribute = new DoubleAttribute(itemNum.doubleValue());
                 break;
             case STRING:
