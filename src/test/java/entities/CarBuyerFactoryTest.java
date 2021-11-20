@@ -21,12 +21,6 @@ public class CarBuyerFactoryTest {
         buyerMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, 3000.0);
         CarBuyer testBuyer = new CarBuyer(10000.0, 750, 3000.0);
         try {
-            System.out.println(CarBuyerFactory.getEntity(buyerMap).getBudget());
-            System.out.println(CarBuyerFactory.getEntity(buyerMap).getCreditScore());
-            System.out.println(CarBuyerFactory.getEntity(buyerMap).getDownPayment());
-            System.out.println(testBuyer.getBudget());
-            System.out.println(testBuyer.getCreditScore());
-            System.out.println(testBuyer.getDownPayment());
             assertEquals(testBuyer, CarBuyerFactory.getEntity(buyerMap));
         } catch (Exceptions.FactoryException e) {
             fail();
