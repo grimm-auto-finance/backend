@@ -19,6 +19,7 @@ public class CarBuyerFactory {
     public static CarBuyer getEntity(AttributeMap map) throws Exceptions.FactoryException {
         double budget;
         int creditScore;
+        double downpayment;
         try {
             budget = (double) map.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
             creditScore =
@@ -27,6 +28,7 @@ public class CarBuyerFactory {
                                     (Double)
                                             map.getItem(EntityStringNames.BUYER_CREDIT)
                                                     .getAttribute());
+            downpayment = (double) map.getItem(EntityStringNames.BUYER_DOWNPAYMENT).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate CarBuyer: ";
             Exceptions.FactoryException ex =
@@ -35,6 +37,6 @@ public class CarBuyerFactory {
             throw ex;
         }
 
-        return new CarBuyer(budget, creditScore);
+        return new CarBuyer(budget, creditScore, downpayment);
     }
 }
