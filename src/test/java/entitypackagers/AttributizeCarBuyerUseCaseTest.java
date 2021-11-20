@@ -28,6 +28,7 @@ public class AttributizeCarBuyerUseCaseTest {
     static void addBuyerToTestMap() {
         testMap.addItem(EntityStringNames.BUYER_BUDGET, buyer.getBudget());
         testMap.addItem(EntityStringNames.BUYER_CREDIT, buyer.getCreditScore());
+        testMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, buyer.getDownPayment());
     }
 
     @Test

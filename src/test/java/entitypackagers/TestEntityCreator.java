@@ -40,6 +40,7 @@ public class TestEntityCreator {
         AttributeMap buyerMap = new AttributeMap();
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, 30000.5);
         buyerMap.addItem(EntityStringNames.BUYER_CREDIT, 750.0);
+        buyerMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, 15000.0);
         try {
             buyer = CarBuyerFactory.getEntity(buyerMap);
         } catch (Exceptions.FactoryException e) {
