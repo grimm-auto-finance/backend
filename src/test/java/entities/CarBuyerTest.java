@@ -27,7 +27,7 @@ public class CarBuyerTest {
     }
 
     @Test
-    public void testGetDownPayment(){
+    public void testGetDownPayment() {
         assertEquals(15000.0, buyer.getDownPayment());
     }
 
