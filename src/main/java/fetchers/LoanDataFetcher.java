@@ -120,7 +120,7 @@ public class LoanDataFetcher {
                 .add("vehicleKms", car.getKilometres())
                 .add("listPrice", car.getPrice())
                 // TODO: make this not hardcoded
-                .add("downpayment", car.getPrice() / 10)
+                .add("downpayment", buyer.getDownPayment())
                 .build();
     }
 

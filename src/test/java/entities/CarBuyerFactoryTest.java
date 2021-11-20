@@ -18,7 +18,8 @@ public class CarBuyerFactoryTest {
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, 10000.0);
         // TODO: update this to be an int once we have parsing ints/doubles figured out
         buyerMap.addItem(EntityStringNames.BUYER_CREDIT, 750.0);
-        CarBuyer testBuyer = new CarBuyer(10000.0, 750);
+        buyerMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, 3000.0);
+        CarBuyer testBuyer = new CarBuyer(10000.0, 750, 3000.0);
         try {
             assertEquals(testBuyer, CarBuyerFactory.getEntity(buyerMap));
         } catch (Exceptions.FactoryException e) {
@@ -43,6 +44,7 @@ public class CarBuyerFactoryTest {
         AttributeMap buyerMap = new AttributeMap();
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, "uh oh");
         buyerMap.addItem(EntityStringNames.BUYER_CREDIT, 36.25);
+        buyerMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, "woah");
         try {
             CarBuyerFactory.getEntity(buyerMap);
         } catch (Exceptions.FactoryException e) {

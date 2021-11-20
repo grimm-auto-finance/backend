@@ -17,6 +17,7 @@ public class EntityStringNames {
 
     public static final String BUYER_BUDGET = "budget";
     public static final String BUYER_CREDIT = "creditScore";
+    public static final String BUYER_DOWNPAYMENT = "downpayment";
 
     /** String representation of the instance variable names in the LoanData entity */
     public static final String LOAN_STRING = "loan";
