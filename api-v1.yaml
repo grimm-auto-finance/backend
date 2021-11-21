@@ -40,7 +40,13 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Car"
+              type: "object"
+              properties:
+                id:
+                  type: "number"
+                  minimum: 0
+                car:
+                  $ref: "#/definitions/Car"
   /addOns:
     post:
       tags:
@@ -66,13 +72,7 @@ paths:
           schema:
             type: "array"
             items:
-              type: "object"
-              properties:
-                id:
-                  type: "number"
-                  minimum: 0
-                car:
-                  $ref: "#/definitions/AddOn"
+              $ref: "#/definitions/AddOn"
   /loan:
     post:
       tags:
