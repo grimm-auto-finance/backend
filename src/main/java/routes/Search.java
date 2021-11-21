@@ -1,13 +1,17 @@
 package routes;
 
+import attributes.ArrayAttribute;
+import attributes.Attribute;
+import attributes.AttributeMap;
+
 import com.sun.net.httpserver.HttpExchange;
 
+import constants.EntityStringNames;
+import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.ParseException;
 
-import entities.Car;
-
-import entitypackagers.AttributizeCarUseCase;
+import entitypackagers.AttributizeCarIDUseCase;
 import entitypackagers.JsonPackager;
 
 import fetchers.DataBaseFetcher;
@@ -40,6 +44,28 @@ public class Search extends Route {
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
         StringBuilder sb = new StringBuilder();
+        CreateSbfromSearchInput(reader, sb);
+        String searchString = sb.toString();
+
+        List<Object[]> carsID;
+        carsID = DataBaseFetcher.search(searchString);
+        JsonPackager jp = new JsonPackager();
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        Attribute[] carAndIdMaps = new Attribute[carsID.size()];
+        int count = 0;
+        for (Object[] carsAndId : carsID) {
+            AttributeMap uc = new AttributizeCarIDUseCase(carsAndId).attributizeCarAndId();
+            carAndIdMaps[count] = uc;
+            count += 1;
+        }
+        AddJsonToJsonBuilder(jp, arrayBuilder, carAndIdMaps);
+
+        String responseString = arrayBuilder.build().toString();
+        respond(t, 200, responseString.getBytes());
+    }
+
+    private void CreateSbfromSearchInput(BufferedReader reader, StringBuilder sb)
+            throws CodedException {
         String str;
         try {
             while ((str = reader.readLine()) != null) {
@@ -50,18 +76,15 @@ public class Search extends Route {
             err.setStackTrace(e.getStackTrace());
             throw err;
         }
-        String searchString = sb.toString();
+    }
 
-        List<Car> cars;
-        cars = DataBaseFetcher.search(searchString);
-        JsonPackager jp = new JsonPackager();
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        for (Car car : cars) {
-            AttributizeCarUseCase uc = new AttributizeCarUseCase(car);
-            JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
-            arrayBuilder.add(json);
-        }
-        String responseString = arrayBuilder.build().toString();
-        respond(t, 200, responseString.getBytes());
+    private void AddJsonToJsonBuilder(
+            JsonPackager jp, JsonArrayBuilder arrayBuilder, Attribute[] carAndIdMaps)
+            throws Exceptions.PackageException {
+        ArrayAttribute carAndIdMapArray = new ArrayAttribute(carAndIdMaps);
+        AttributeMap carAndIdMap = new AttributeMap();
+        carAndIdMap.addItem(EntityStringNames.CAR_AND_ID_STRING, carAndIdMapArray);
+        JsonObject json = jp.writePackage(carAndIdMap).getPackage();
+        arrayBuilder.add(json);
     }
 }
