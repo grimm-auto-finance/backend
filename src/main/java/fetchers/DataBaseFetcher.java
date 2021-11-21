@@ -111,7 +111,7 @@ public class DataBaseFetcher {
                         "\n",
                         "SELECT * FROM cars",
                         "WHERE to_tsvector(id || ' ' || price || ' ' || make || ' ' || model || ' '"
-                            + " || year || ' ' || kms) @@ websearch_to_tsquery(?)");
+                                + " || year || ' ' || kms) @@ websearch_to_tsquery(?)");
         try {
             PreparedStatement pst = connection.prepareStatement(query);
             pst.setString(1, searchString);
