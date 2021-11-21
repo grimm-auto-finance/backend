@@ -26,9 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class DataBaseFetcher {
     private static Connection connection;
@@ -87,18 +85,16 @@ public class DataBaseFetcher {
         }
     }
 
-    public static Car getCar(int id, boolean addOns) throws CodedException {
+    public static Car getCar(int id) throws CodedException {
         String query = "SELECT * FROM cars WHERE id = ?;";
         try {
             PreparedStatement pst = connection.prepareStatement(query);
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                Car car = extractCar(rs);
-                if (addOns) {
-                    for (AddOn addOn : getAddOns(id)) {
-                        car.addAddOn(addOn);
-                    }
+                Car car = (Car) extractCarArray(rs)[1];
+                for (AddOn addOn : getAddOns(id)) {
+                    car.addAddOn(addOn);
                 }
                 return car;
             } else {
@@ -109,40 +105,44 @@ public class DataBaseFetcher {
         }
     }
 
-    public static List<Car> search(String searchString) throws CodedException {
+    public static List search(String searchString) throws CodedException {
         String query =
                 String.join(
                         "\n",
                         "SELECT * FROM cars",
-                        "WHERE to_tsvector(make || ' ' || model || ' ' || year) @@"
-                                + " websearch_to_tsquery(?)");
+                        "WHERE to_tsvector(id || ' ' || price || ' ' || make || ' ' || model || ' '"
+                            + " || year || ' ' || kms) @@ websearch_to_tsquery(?)");
         try {
             PreparedStatement pst = connection.prepareStatement(query);
             pst.setString(1, searchString);
             ResultSet rs = pst.executeQuery();
-            List<Car> cars = new ArrayList<>();
+            List<Object[]> carsAndId = new ArrayList<>();
             while (rs.next()) {
-                cars.add(extractCar(rs));
+                carsAndId.add(extractCarArray(rs));
             }
-            return cars;
+            return carsAndId;
         } catch (SQLException | Exceptions.FactoryException e) {
             throw new FetchException(
                     "could not get search result from database: " + e.getMessage(), e);
         }
     }
 
-    private static Car extractCar(ResultSet rs) throws SQLException, Exceptions.FactoryException {
+    private static Object[] extractCarArray(ResultSet rs)
+            throws SQLException, Exceptions.FactoryException {
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_PRICE, rs.getDouble(2));
         carMap.addItem(EntityStringNames.CAR_MAKE, rs.getString(3));
         carMap.addItem(EntityStringNames.CAR_MODEL, rs.getString(4));
         carMap.addItem(EntityStringNames.CAR_YEAR, rs.getDouble(5));
-        carMap.addItem(EntityStringNames.CAR_KILOMETRES, 0.0);
+        carMap.addItem(EntityStringNames.CAR_KILOMETRES, rs.getDouble(6));
         carMap.addItem(EntityStringNames.ADD_ON_STRING, new AttributeMap());
         // AttributeFactory.createAttribute(new Attribute[0]));
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
-        return GenerateEntitiesUseCase.generateCar(entityMap);
+        Object[] idArray = new Object[2];
+        idArray[0] = rs.getDouble(1);
+        idArray[1] = GenerateEntitiesUseCase.generateCar(entityMap);
+        return idArray;
     }
 
     public static List<AddOn> getAddOns(int carId) throws CodedException {
