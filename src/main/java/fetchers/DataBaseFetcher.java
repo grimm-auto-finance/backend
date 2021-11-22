@@ -20,22 +20,22 @@ import server.Env;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class DataBaseFetcher {
+public class DataBaseFetcher implements Fetcher {
 
     private final DataBase database;
+    private Object queryParam;
 
     public DataBaseFetcher(DataBase database) {
         this.database = database;
+    }
+
+    public void setFetchParam(Object queryParam) {
+        this.queryParam = queryParam;
     }
 
     public Car getCar(int id, boolean addOns) throws CodedException {
@@ -89,6 +89,35 @@ public class DataBaseFetcher {
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
         return GenerateEntitiesUseCase.generateCar(entityMap);
+    }
+
+    public ArrayAttribute fetch(String request) throws Exceptions.FetchException {
+        ResultSet queryResult;
+        try {
+            queryResult = database.executeQuery(request, queryParam);
+        } catch (Exceptions.DataBaseException e) {
+            throw new FetchException("Failed to execute DataBase query with request" + request + " and parameter " + queryParam, e);
+        }
+
+        List<AttributeMap> resultsList = new ArrayList<>();
+        try {
+            while (queryResult.next()) {
+                resultsList.add(parseResults(queryResult));
+            }
+        } catch (SQLException e) {
+            throw new FetchException("Failed to parse database query results", e);
+        }
+        Attribute[] resultsArray = resultsList.toArray(new AttributeMap[0]);
+        return (ArrayAttribute) AttributeFactory.createAttribute(resultsArray);
+    }
+
+    private AttributeMap parseResults(ResultSet rs) throws SQLException {
+        AttributeMap resultMap = new AttributeMap();
+        ResultSetMetaData metaData = rs.getMetaData();
+        for (int i = 0; i < metaData.getColumnCount(); i++) {
+            resultMap.addItem(metaData.getColumnName(i), rs.getObject(i));
+        }
+        return resultMap;
     }
 
     public List<AddOn> getAddOns(int carId) throws CodedException {

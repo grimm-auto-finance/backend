@@ -11,14 +11,19 @@ import java.util.Scanner;
 public class PostgresDataBase extends DataBase {
 
     private Connection connection;
-    private final String POSTGRES_PASSWORD;
+    private final String password;
+    private final String URL;
+    private final String username;
 
-    public PostgresDataBase(String POSTGRES_PASSWORD) {
-        this.POSTGRES_PASSWORD = POSTGRES_PASSWORD;
+    public PostgresDataBase(String URL, String username, String password) {
+        this.URL = URL;
+        this.username = username;
+        this.password = password;
     }
 
     public void connectAndMigrate() throws Exceptions.DataBaseException {
         String migrations =
+                //TODO: make column names use EntityStringNames values
                 String.join(
                         "\n",
                         "CREATE TABLE IF NOT EXISTS cars (",
@@ -39,9 +44,10 @@ public class PostgresDataBase extends DataBase {
                         "PRIMARY KEY (id)",
                         ");");
         try {
-            connection =
-                    DriverManager.getConnection(
-                            "jdbc:postgresql://db:5432/postgres", "postgres", POSTGRES_PASSWORD);
+//            connection =
+//                    DriverManager.getConnection(
+//                            "jdbc:postgresql://db:5432/postgres", "postgres", POSTGRES_PASSWORD);
+            connection = DriverManager.getConnection(URL, username, password);
             Statement st = connection.createStatement();
             st.execute(migrations);
         } catch (SQLException e) {

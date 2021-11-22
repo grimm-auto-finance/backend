@@ -19,7 +19,7 @@ import java.sql.SQLException;
 
 class Server {
 
-    public static final DataBase dataBase = new PostgresDataBase(Env.POSTGRES_PASSWORD);
+    public static final DataBase dataBase = new PostgresDataBase("jdbc:postgresql://db:5432/postgres", "postgres", Env.POSTGRES_PASSWORD);
 
     public static void main(String[] args) {
         Logger l = LoggerFactory.getLogger();

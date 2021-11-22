@@ -1,5 +1,6 @@
 package fetchers;
 
+import attributes.Attribute;
 import attributes.AttributeMap;
 import constants.Exceptions;
 
@@ -7,6 +8,8 @@ import java.net.URL;
 
 public interface Fetcher {
 
-  AttributeMap fetch(String request)
+  Attribute fetch(String request)
       throws Exceptions.FetchException;
+
+  void setFetchParam(Object param) throws Exceptions.FetchException;
 }

@@ -14,11 +14,17 @@ import java.net.URL;
 public class HTTPFetcher implements Fetcher {
 
     private final URL connectionURL;
-    private final String requestMethod;
+    private String requestMethod;
 
-    public HTTPFetcher(URL connectionURL, String requestMethod) {
+    public HTTPFetcher(URL connectionURL) {
         this.connectionURL = connectionURL;
-        this.requestMethod = requestMethod;
+    }
+
+    public void setFetchParam(Object param) throws Exceptions.FetchException {
+        if (!(param instanceof String)) {
+            throw new Exceptions.FetchException("Request parameter of invalid type");
+        }
+        this.requestMethod = (String) param;
     }
 
     public AttributeMap fetch(String request) throws Exceptions.FetchException {
@@ -52,6 +58,9 @@ public class HTTPFetcher implements Fetcher {
 
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Accept", "application/json");
+        if (requestMethod == null) {
+            throw new IOException("No request method set");
+        }
         try {
             conn.setRequestMethod(requestMethod);
         } catch (java.net.ProtocolException e) {

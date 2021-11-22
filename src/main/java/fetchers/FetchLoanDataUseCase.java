@@ -47,7 +47,8 @@ public class FetchLoanDataUseCase {
             throws Exceptions.FetchException {
         JsonObject rateBody = getRateBody(buyer, car);
         AttributeMap rateResponseMap;
-        rateResponseMap = rateFetcher.fetch(rateBody.toString());
+        rateFetcher.setFetchParam("POST");
+        rateResponseMap = (AttributeMap) rateFetcher.fetch(rateBody.toString());
         addInstallments(rateResponseMap);
 
         return rateResponseMap;
@@ -83,7 +84,8 @@ public class FetchLoanDataUseCase {
     public AttributeMap makeScoreRequest(CarBuyer buyer, Car car, int termLength)
             throws Exceptions.CodedException {
         JsonObject scoreBody = getScoreBody(buyer, car, termLength);
-        return scoreFetcher.fetch(scoreBody.toString());
+        scoreFetcher.setFetchParam("POST");
+        return (AttributeMap) scoreFetcher.fetch(scoreBody.toString());
     }
 
     private JsonObject getScoreBody(
