@@ -16,8 +16,10 @@ import entityparsers.JsonParser;
 import entityparsers.Parser;
 
 import fetchers.LoanDataFetcher;
+import server.Env;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +27,17 @@ import javax.json.*;
 
 /** The Route handling the `/loan` route which allows users to fetch information about a loan. */
 public class Loan extends Route {
+
+    private final URL SENSO_RATE_URL, SENSO_SCORE_URL;
+
     @Override
     public String getContext() {
         return "/loan";
+    }
+
+    public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL) {
+        this.SENSO_RATE_URL = SENSO_RATE_URL;
+        this.SENSO_SCORE_URL = SENSO_SCORE_URL;
     }
 
     /**
@@ -48,7 +58,8 @@ public class Loan extends Route {
     }
 
     String getResponse(entities.CarBuyer buyer, entities.Car car) throws CodedException {
-        LoanData loanData = LoanDataFetcher.fetch(buyer, car);
+        LoanDataFetcher fetcher = new LoanDataFetcher(SENSO_RATE_URL, SENSO_SCORE_URL);
+        LoanData loanData = fetcher.fetch(buyer, car);
         List<Entity> entities = new ArrayList<>();
         entities.add(car);
         entities.add(buyer);

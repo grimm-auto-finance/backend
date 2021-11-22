@@ -27,7 +27,16 @@ import java.net.URL;
 import javax.json.*;
 
 public class LoanDataFetcher {
-    public static LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
+
+    private final URL SENSO_RATE_URL;
+    private final URL SENSO_SCORE_URL;
+
+    public LoanDataFetcher(URL SENSO_RATE_URL, URL SENSO_SCORE_URL) {
+        this.SENSO_RATE_URL = SENSO_RATE_URL;
+        this.SENSO_SCORE_URL = SENSO_SCORE_URL;
+    }
+
+    public LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
 
         AttributeMap rateRequestResult = makeRateRequest(buyer, car);
 
@@ -50,11 +59,15 @@ public class LoanDataFetcher {
         return GenerateEntitiesUseCase.generateLoanData(entityMap);
     }
 
-    public static AttributeMap makeRateRequest(CarBuyer buyer, Car car)
+    public AttributeMap makeRateRequest(CarBuyer buyer, Car car)
             throws Exceptions.CodedException {
         HttpURLConnection rateConn;
+        try {
+            rateConn = getHTTPConnection(SENSO_RATE_URL);
+        } catch (IOException e) {
+            throw new Exceptions.FetchException("error connecting to senso rate API", e);
+        }
 
-        rateConn = getRateConnection(Env.SENSO_RATE_URL, "error connecting to senso rate API");
         JsonObject rateBody = getRateBody(buyer, car, rateConn);
 
         try {
@@ -90,7 +103,7 @@ public class LoanDataFetcher {
         return rateResponseMap;
     }
 
-    private static void addInstallments(AttributeMap rateResponseMap) {
+    private void addInstallments(AttributeMap rateResponseMap) {
         Attribute[] installments =
                 ((ArrayAttribute) rateResponseMap.getItem("installments")).getAttribute();
         rateResponseMap.addItem(
@@ -102,7 +115,7 @@ public class LoanDataFetcher {
                 Double.parseDouble((String) rateResponseMap.getItem("term").getAttribute()));
     }
 
-    private static JsonObject getRateBody(CarBuyer buyer, Car car, HttpURLConnection rateConn) {
+    private JsonObject getRateBody(CarBuyer buyer, Car car, HttpURLConnection rateConn) {
         try {
             rateConn.setRequestMethod("POST");
         } catch (java.net.ProtocolException e) {
@@ -124,44 +137,43 @@ public class LoanDataFetcher {
                 .build();
     }
 
-    private static HttpURLConnection getRateConnection(URL sensoRateUrl, String s)
-            throws Exceptions.FetchException {
-        HttpURLConnection rateConn;
-        try {
-            rateConn = (HttpURLConnection) sensoRateUrl.openConnection();
-        } catch (IOException e) {
-            throw new Exceptions.FetchException(s, e);
-        }
+    private HttpURLConnection getHTTPConnection(URL CONNECTION_URL)
+            throws IOException {
+        HttpURLConnection conn;
+        conn = (HttpURLConnection) CONNECTION_URL.openConnection();
 
-        rateConn.setDoOutput(true);
-        rateConn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
 
-        rateConn.setRequestProperty("Content-Type", "application/json");
-        rateConn.setRequestProperty("Accept", "application/json");
-        return rateConn;
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
+        return conn;
     }
 
-    private static JsonObject getAPIResponse(HttpURLConnection rateConn) throws IOException {
-        JsonObject rateResponse;
+    private JsonObject getAPIResponse(HttpURLConnection connection) throws IOException {
+        JsonObject response;
         StringBuilder responseBuilder = new StringBuilder();
         String line;
         BufferedReader reader =
-                new BufferedReader(new InputStreamReader(rateConn.getInputStream()));
+                new BufferedReader(new InputStreamReader(connection.getInputStream()));
         while ((line = reader.readLine()) != null) {
             responseBuilder.append(line);
         }
         reader.close();
 
         JsonReader jsonReader = Json.createReader(new StringReader(responseBuilder.toString()));
-        rateResponse = jsonReader.readObject();
-        return rateResponse;
+        response = jsonReader.readObject();
+        return response;
     }
 
-    public static AttributeMap makeScoreRequest(CarBuyer buyer, Car car, int termLength)
+    public AttributeMap makeScoreRequest(CarBuyer buyer, Car car, int termLength)
             throws Exceptions.CodedException {
-
-        HttpURLConnection scoreConn =
-                getRateConnection(Env.SENSO_SCORE_URL, "error connecting to senso score API");
+        HttpURLConnection scoreConn;
+        try {
+            scoreConn = getHTTPConnection(SENSO_SCORE_URL);
+        } catch (IOException e) {
+            throw new Exceptions.FetchException("error connecting to senso score API", e);
+        }
         JsonObject scoreBody = getScoreBody(buyer, car, termLength, scoreConn);
 
         try {
@@ -193,7 +205,7 @@ public class LoanDataFetcher {
         }
     }
 
-    private static JsonObject getScoreBody(
+    private JsonObject getScoreBody(
             CarBuyer buyer, Car car, int termLength, HttpURLConnection scoreConn) {
         try {
             scoreConn.setRequestMethod("POST");
