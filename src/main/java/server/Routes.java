@@ -8,6 +8,6 @@ import routes.Search;
 public class Routes {
     /** The routes of the program. */
     public static final Route[] routes = {
-        new Loan(Env.SENSO_RATE_URL, Env.SENSO_SCORE_URL), new Search(Env.POSTGRES_PASSWORD),
+        new Loan(Env.SENSO_RATE_URL, Env.SENSO_SCORE_URL), new Search(Server.dataBase),
     };
 }

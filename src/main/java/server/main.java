@@ -2,8 +2,11 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 
+import constants.Exceptions;
+import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 
+import fetchers.PostgresDataBase;
 import logging.Logger;
 import logging.LoggerFactory;
 
@@ -15,13 +18,16 @@ import java.net.InetSocketAddress;
 import java.sql.SQLException;
 
 class Server {
+
+    public static final DataBase dataBase = new PostgresDataBase(Env.POSTGRES_PASSWORD);
+
     public static void main(String[] args) {
         Logger l = LoggerFactory.getLogger();
         for (int retries = 0; retries < 5; retries++) {
             try {
-                DataBaseFetcher.connectAndMigrate();
+                dataBase.connectAndMigrate();
                 break;
-            } catch (SQLException e) {
+            } catch (Exceptions.DataBaseException e) {
                 l.warn("could not connect to database, retrying");
                 try {
                     Thread.sleep(1000);
@@ -34,15 +40,15 @@ class Server {
             }
         }
         try {
-            DataBaseFetcher.connectAndMigrate();
-        } catch (SQLException e) {
+            dataBase.connectAndMigrate();
+        } catch (Exceptions.DataBaseException e) {
             l.error("could not connect to database: ", e);
             System.exit(-1);
             return;
         }
         try {
-            DataBaseFetcher.insertPlaceholderData();
-        } catch (FileNotFoundException e) {
+            dataBase.insertPlaceholderData();
+        } catch (Exceptions.DataBaseException e) {
             l.error("placeholder data file not found", e);
             System.exit(-1);
             return;

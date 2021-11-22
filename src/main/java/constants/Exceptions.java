@@ -27,10 +27,29 @@ public class Exceptions {
             this.setStackTrace(e.getStackTrace());
         }
 
+        public FetchException(String message) {
+            super(message);
+        }
+
         /** @return Returns the specific FetchException code */
         public int getCode() {
             return 500;
         }
+    }
+
+    public static class DataBaseException extends CodedException {
+        public DataBaseException() {}
+
+        public DataBaseException(String message, Exception e) {
+            super(message);
+            this.setStackTrace(e.getStackTrace());
+        }
+
+        public DataBaseException(String message) {
+            super(message);
+        }
+
+        public int getCode() { return 502; }
     }
 
     /** ParseException class that is thrown whenever a Json object is parsed */

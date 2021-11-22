@@ -31,68 +31,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DataBaseFetcher {
-    private static Connection connection;
 
-    public static void connectAndMigrate() throws SQLException {
-        String migrations =
-                String.join(
-                        "\n",
-                        "CREATE TABLE IF NOT EXISTS cars (",
-                        "id INT NOT NULL,",
-                        "price NUMERIC(9, 2) NOT NULL,",
-                        "make VARCHAR NOT NULL,",
-                        "model VARCHAR NOT NULL,",
-                        "year INT NOT NULL,",
-                        "kms INT,",
-                        "PRIMARY KEY (id)",
-                        ");",
-                        "CREATE TABLE IF NOT EXISTS addons (",
-                        "id INT NOT NULL,",
-                        "name VARCHAR NOT NULL,",
-                        "price NUMERIC(9, 2) NOT NULL,",
-                        "descr VARCHAR NOT NULL,",
-                        "vid INT NOT NULL,",
-                        "PRIMARY KEY (id)",
-                        ");");
-        Connection connection =
-                DriverManager.getConnection(
-                        "jdbc:postgresql://db:5432/postgres", "postgres", Env.POSTGRES_PASSWORD);
-        Statement st = connection.createStatement();
-        st.execute(migrations);
-        DataBaseFetcher.connection = connection;
+    private final DataBase database;
+
+    public DataBaseFetcher(DataBase database) {
+        this.database = database;
     }
 
-    public static void insertPlaceholderData() throws FileNotFoundException {
-        Scanner scanner;
-        scanner = new Scanner(new File("data/cars.csv"));
-        scanner.useDelimiter("\n");
-        scanner.next();
-        String line;
-        try {
-            while (scanner.hasNext()) {
-                line = scanner.next();
-                String[] fields = line.split(",");
-                String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
-                PreparedStatement pst = connection.prepareStatement(statement);
-                pst.setInt(1, Integer.parseInt(fields[0]));
-                pst.setDouble(2, Double.parseDouble(fields[5]));
-                pst.setString(3, fields[2]);
-                pst.setString(4, fields[3]);
-                pst.setInt(5, Integer.parseInt(fields[4]));
-                pst.setInt(6, Integer.parseInt(fields[1]));
-                pst.execute();
-            }
-        } catch (SQLException e) {
-            LoggerFactory.getLogger().info("placeholder data may already exist");
-        }
-    }
-
-    public static Car getCar(int id, boolean addOns) throws CodedException {
+    public Car getCar(int id, boolean addOns) throws CodedException {
         String query = "SELECT * FROM cars WHERE id = ?;";
         try {
-            PreparedStatement pst = connection.prepareStatement(query);
-            pst.setInt(1, id);
-            ResultSet rs = pst.executeQuery();
+            ResultSet rs = database.executeQuery(query, id);
             if (rs.next()) {
                 Car car = extractCar(rs);
                 if (addOns) {
@@ -109,7 +58,7 @@ public class DataBaseFetcher {
         }
     }
 
-    public static List<Car> search(String searchString) throws CodedException {
+    public List<Car> search(String searchString) throws CodedException {
         String query =
                 String.join(
                         "\n",
@@ -117,9 +66,7 @@ public class DataBaseFetcher {
                         "WHERE to_tsvector(make || ' ' || model || ' ' || year) @@"
                                 + " websearch_to_tsquery(?)");
         try {
-            PreparedStatement pst = connection.prepareStatement(query);
-            pst.setString(1, searchString);
-            ResultSet rs = pst.executeQuery();
+            ResultSet rs = database.executeQuery(query, searchString);
             List<Car> cars = new ArrayList<>();
             while (rs.next()) {
                 cars.add(extractCar(rs));
@@ -139,18 +86,15 @@ public class DataBaseFetcher {
         carMap.addItem(EntityStringNames.CAR_YEAR, rs.getDouble(5));
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 0.0);
         carMap.addItem(EntityStringNames.ADD_ON_STRING, new AttributeMap());
-        // AttributeFactory.createAttribute(new Attribute[0]));
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
         return GenerateEntitiesUseCase.generateCar(entityMap);
     }
 
-    public static List<AddOn> getAddOns(int carId) throws CodedException {
+    public List<AddOn> getAddOns(int carId) throws CodedException {
         String query = "SELECT * FROM addons WHERE vid = ?;";
         try {
-            PreparedStatement pst = connection.prepareStatement(query);
-            pst.setInt(1, carId);
-            ResultSet rs = pst.executeQuery();
+            ResultSet rs = database.executeQuery(query, (Integer) carId);
             List<Attribute> addOnMapList = new ArrayList<>();
             while (rs.next()) {
                 AttributeMap addOnMap = new AttributeMap();

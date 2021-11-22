@@ -10,6 +10,7 @@ import entities.Car;
 import entitypackagers.AttributizeCarUseCase;
 import entitypackagers.JsonPackager;
 
+import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 
 import java.io.BufferedReader;
@@ -24,6 +25,12 @@ import javax.json.JsonObject;
 
 /** The Route handling the `/search` route which allows users to search for a car with a string. */
 public class Search extends Route {
+    private final DataBase dataBase;
+
+    public Search(DataBase dataBase) {
+        this.dataBase = dataBase;
+    }
+
     @Override
     public String getContext() {
         return "/search";
@@ -53,7 +60,8 @@ public class Search extends Route {
         String searchString = sb.toString();
 
         List<Car> cars;
-        cars = DataBaseFetcher.search(searchString);
+        DataBaseFetcher fetcher = new DataBaseFetcher(dataBase);
+        cars = fetcher.search(searchString);
         JsonPackager jp = new JsonPackager();
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         for (Car car : cars) {
