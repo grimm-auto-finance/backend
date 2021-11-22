@@ -92,7 +92,7 @@ public class DataBaseFetcher {
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                Car car = (Car) extractCarArray(rs)[1];
+                Car car = extractCarFromIdArray(extractCarArray(rs));
                 for (AddOn addOn : getAddOns(id)) {
                     car.addAddOn(addOn);
                 }
@@ -103,6 +103,10 @@ public class DataBaseFetcher {
         } catch (SQLException | Exceptions.FactoryException e) {
             throw new FetchException("could not fetch car from database: " + e.getMessage(), e);
         }
+    }
+
+    public static Car extractCarFromIdArray(Object[] idArray) {
+        return (Car) idArray[1];
     }
 
     public static List search(String searchString) throws CodedException {
