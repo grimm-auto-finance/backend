@@ -13,6 +13,7 @@ import entitypackagers.JsonPackager;
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 import fetchers.FetchCarDataUseCase;
+import logging.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,12 +60,9 @@ public class Search extends Route {
             throw err;
         }
         String searchString = sb.toString();
-
         List<Car> cars;
-//        DataBaseFetcher fetcher = new DataBaseFetcher(dataBase);
-//        cars = fetcher.search(searchString);
-        DataBaseFetcher searchFetcher = new DataBaseFetcher(dataBase);
-        FetchCarDataUseCase carDataFetcher = new FetchCarDataUseCase(searchFetcher);
+        DataBaseFetcher fetcher = new DataBaseFetcher(dataBase);
+        FetchCarDataUseCase carDataFetcher = new FetchCarDataUseCase(fetcher);
         cars = carDataFetcher.search(searchString);
         JsonPackager jp = new JsonPackager();
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
