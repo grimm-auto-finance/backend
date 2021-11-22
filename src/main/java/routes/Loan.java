@@ -15,8 +15,9 @@ import entitypackagers.PackageEntityUseCase;
 import entityparsers.JsonParser;
 import entityparsers.Parser;
 
-import fetchers.LoanDataFetcher;
-import server.Env;
+import fetchers.Fetcher;
+import fetchers.HTTPFetcher;
+import fetchers.FetchLoanDataUseCase;
 
 import java.io.*;
 import java.net.URL;
@@ -58,8 +59,10 @@ public class Loan extends Route {
     }
 
     String getResponse(entities.CarBuyer buyer, entities.Car car) throws CodedException {
-        LoanDataFetcher fetcher = new LoanDataFetcher(SENSO_RATE_URL, SENSO_SCORE_URL);
-        LoanData loanData = fetcher.fetch(buyer, car);
+        Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL, "POST");
+        Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL, "POST");
+        FetchLoanDataUseCase fetchLoanData = new FetchLoanDataUseCase(rateFetcher, scoreFetcher);
+        LoanData loanData = fetchLoanData.fetch(buyer, car);
         List<Entity> entities = new ArrayList<>();
         entities.add(car);
         entities.add(buyer);

@@ -39,7 +39,7 @@ public class PostgresDataBase extends DataBase {
                         "PRIMARY KEY (id)",
                         ");");
         try {
-            Connection connection =
+            connection =
                     DriverManager.getConnection(
                             "jdbc:postgresql://db:5432/postgres", "postgres", POSTGRES_PASSWORD);
             Statement st = connection.createStatement();
@@ -47,7 +47,6 @@ public class PostgresDataBase extends DataBase {
         } catch (SQLException e) {
             throw new Exceptions.DataBaseException("error initializing postgres database", e);
         }
-        this.connection = connection;
     }
 
     public void insertPlaceholderData() throws Exceptions.DataBaseException {
@@ -79,7 +78,6 @@ public class PostgresDataBase extends DataBase {
         }
     }
 
-    //TODO: make new exception type for database?
     public ResultSet executeQuery(String query, Object queryParam) throws Exceptions.DataBaseException {
         try {
             PreparedStatement pst = connection.prepareStatement(query);
