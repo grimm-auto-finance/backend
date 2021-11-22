@@ -10,6 +10,7 @@ import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.ParseException;
 
+import entities.Car;
 import entitypackagers.AttributizeCarIDUseCase;
 import entitypackagers.JsonPackager;
 
@@ -50,7 +51,7 @@ public class Search extends Route {
         Attribute[] carAndIdMaps = new Attribute[carsID.size()];
         int count = 0;
         for (Object[] carsAndId : carsID) {
-            AttributeMap uc = new AttributizeCarIDUseCase(carsAndId).attributizeCarAndId();
+            AttributeMap uc = new AttributizeCarIDUseCase(extractIdFromIdArray(carsAndId), extractCarFromIdArray(carsAndId)).attributizeCarAndId();
             carAndIdMaps[count] = uc;
             count += 1;
         }
@@ -58,6 +59,14 @@ public class Search extends Route {
 
         String responseString = json.toString();
         respond(t, 200, responseString.getBytes());
+    }
+
+    public static Car extractCarFromIdArray(Object[] idArray) {
+        return (Car) idArray[1];
+    }
+
+    public static int extractIdFromIdArray(Object[] idArray) {
+        return (int) idArray[0];
     }
 
     private void CreateSbfromSearchInput(BufferedReader reader, StringBuilder sb)
