@@ -6,7 +6,6 @@ import attributes.AttributeMap;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import constants.EntityStringNames;
 import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.ParseException;
@@ -22,10 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 
 /** The Route handling the `/search` route which allows users to search for a car with a string. */
 public class Search extends Route {
@@ -58,7 +54,7 @@ public class Search extends Route {
             carAndIdMaps[count] = uc;
             count += 1;
         }
-        JsonArray json = AddJsonToJsonBuilder( jp, carAndIdMaps);
+        JsonArray json = AddJsonToJsonBuilder(jp, carAndIdMaps);
 
         String responseString = json.toString();
         respond(t, 200, responseString.getBytes());
@@ -78,8 +74,7 @@ public class Search extends Route {
         }
     }
 
-    private JsonArray AddJsonToJsonBuilder(
-            JsonPackager jp, Attribute[] carAndIdMaps)
+    private JsonArray AddJsonToJsonBuilder(JsonPackager jp, Attribute[] carAndIdMaps)
             throws Exceptions.PackageException {
         ArrayAttribute carAndIdMapArray = new ArrayAttribute(carAndIdMaps);
         JsonArray json = jp.getJsonArray(carAndIdMapArray);
