@@ -9,6 +9,7 @@ import entities.Car;
 public class AttributizeCarIDUseCase {
     private final int id;
     private final Car car;
+
     public AttributizeCarIDUseCase(int id, Car car) {
         this.id = id;
         this.car = car;

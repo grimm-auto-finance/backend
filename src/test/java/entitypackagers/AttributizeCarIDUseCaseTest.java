@@ -26,7 +26,9 @@ class AttributizeCarIDUseCaseTest {
         Object[] carAndIdArray = new Object[2];
         carAndIdArray[0] = 1;
         carAndIdArray[1] = testCar;
-        AttributizeCarIDUseCase carAndId = new AttributizeCarIDUseCase(extractIdFromIdArray(carAndIdArray), extractCarFromIdArray(carAndIdArray));
+        AttributizeCarIDUseCase carAndId =
+                new AttributizeCarIDUseCase(
+                        extractIdFromIdArray(carAndIdArray), extractCarFromIdArray(carAndIdArray));
         AttributeMap carAndIdMap = carAndId.attributizeCarAndId();
         assertEquals(carAndIdMap.getItem(EntityStringNames.ID_STRING).getAttribute(), 1);
         assertEquals(

@@ -11,6 +11,7 @@ import constants.Exceptions.CodedException;
 import constants.Exceptions.ParseException;
 
 import entities.Car;
+
 import entitypackagers.AttributizeCarIDUseCase;
 import entitypackagers.JsonPackager;
 
@@ -51,7 +52,11 @@ public class Search extends Route {
         Attribute[] carAndIdMaps = new Attribute[carsID.size()];
         int count = 0;
         for (Object[] carsAndId : carsID) {
-            AttributeMap uc = new AttributizeCarIDUseCase(extractIdFromIdArray(carsAndId), extractCarFromIdArray(carsAndId)).attributizeCarAndId();
+            AttributeMap uc =
+                    new AttributizeCarIDUseCase(
+                                    extractIdFromIdArray(carsAndId),
+                                    extractCarFromIdArray(carsAndId))
+                            .attributizeCarAndId();
             carAndIdMaps[count] = uc;
             count += 1;
         }
