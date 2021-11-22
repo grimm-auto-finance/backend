@@ -17,7 +17,7 @@ public class AttributizeCarIDUseCase {
         AttributeMap carAndIdMap = new AttributeMap();
         carAndIdMap.addItem(EntityStringNames.ID_STRING, carAndId[0]);
         carAndIdMap.addItem(
-                EntityStringNames.CAR_STRING,
+                EntityStringNames.ID_CAR_STRING,
                 new AttributizeCarUseCase((Car) carAndId[1]).attributizeEntity());
 
         return carAndIdMap;

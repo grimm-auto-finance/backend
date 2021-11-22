@@ -36,7 +36,7 @@ public class EntityStringNames {
     public static final String ADD_ON_PRICE = "price";
     public static final String ADD_ON_DESCRIPTION = "description";
 
-    public static final String CAR_AND_ID_STRING = "carAndId";
+    public static final String ID_CAR_STRING = "car";
 
     public static final String ID_STRING = "id";
 }

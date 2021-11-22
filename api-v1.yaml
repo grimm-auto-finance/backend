@@ -47,7 +47,7 @@ paths:
                   minimum: 0
                 car:
                   $ref: "#/definitions/Car"
-  /addOns:
+  /addons:
     post:
       tags:
         - "addOns"

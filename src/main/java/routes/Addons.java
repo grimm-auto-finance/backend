@@ -28,7 +28,7 @@ import javax.json.JsonReader;
 public class Addons extends Route {
     @Override
     public String getContext() {
-        return null;
+        return "/addons";
     }
 
     /**

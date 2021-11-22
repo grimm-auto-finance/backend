@@ -47,7 +47,14 @@ public class JsonPackager implements Packager {
         return new JsonPackage(builder.build());
     }
 
-    private JsonArray getJsonArray(ArrayAttribute item) throws Exceptions.PackageException {
+    /**
+     * Writes ArrayAttribute to a JsonArray
+     *
+     * @param item The ArrayAttribute from which the JsonArray is created
+     * @return a JsonPackage containing the JsonObject with packageMap's data
+     * @throws Exceptions.PackageException if an item in the ArrayAttribute is of unknown type
+     */
+    public JsonArray getJsonArray(ArrayAttribute item) throws Exceptions.PackageException {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         for (Attribute a : item.getAttribute()) {
             if (a instanceof IntAttribute) {

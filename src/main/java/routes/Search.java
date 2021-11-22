@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
@@ -50,7 +51,6 @@ public class Search extends Route {
         List<Object[]> carsID;
         carsID = DataBaseFetcher.search(searchString);
         JsonPackager jp = new JsonPackager();
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         Attribute[] carAndIdMaps = new Attribute[carsID.size()];
         int count = 0;
         for (Object[] carsAndId : carsID) {
@@ -58,9 +58,9 @@ public class Search extends Route {
             carAndIdMaps[count] = uc;
             count += 1;
         }
-        AddJsonToJsonBuilder(jp, arrayBuilder, carAndIdMaps);
+        JsonArray json = AddJsonToJsonBuilder( jp, carAndIdMaps);
 
-        String responseString = arrayBuilder.build().toString();
+        String responseString = json.toString();
         respond(t, 200, responseString.getBytes());
     }
 
@@ -78,13 +78,11 @@ public class Search extends Route {
         }
     }
 
-    private void AddJsonToJsonBuilder(
-            JsonPackager jp, JsonArrayBuilder arrayBuilder, Attribute[] carAndIdMaps)
+    private JsonArray AddJsonToJsonBuilder(
+            JsonPackager jp, Attribute[] carAndIdMaps)
             throws Exceptions.PackageException {
         ArrayAttribute carAndIdMapArray = new ArrayAttribute(carAndIdMaps);
-        AttributeMap carAndIdMap = new AttributeMap();
-        carAndIdMap.addItem(EntityStringNames.CAR_AND_ID_STRING, carAndIdMapArray);
-        JsonObject json = jp.writePackage(carAndIdMap).getPackage();
-        arrayBuilder.add(json);
+        JsonArray json = jp.getJsonArray(carAndIdMapArray);
+        return json;
     }
 }
