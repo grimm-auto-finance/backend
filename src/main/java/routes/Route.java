@@ -15,6 +15,13 @@ import java.util.Arrays;
 
 /** The generic route class that all routes will inherit from */
 public abstract class Route implements HttpHandler {
+
+    private final Logger logger;
+
+    protected Route(Logger logger) {
+        this.logger = logger;
+    }
+
     /**
      * A method that must be overridden by implementers which sets the URL route that the Route
      * class will handle.

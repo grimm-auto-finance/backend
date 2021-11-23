@@ -78,7 +78,7 @@ public class PostgresDataBase extends DataBase {
                 pst.execute();
             }
         } catch (SQLException e) {
-            LoggerFactory.getLogger().info("placeholder data may already exist");
+            throw new Exceptions.DataBaseException("placeholder data may already exist", e);
         }
     }
 

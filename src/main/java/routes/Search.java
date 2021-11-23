@@ -13,7 +13,7 @@ import entitypackagers.JsonPackager;
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 import fetchers.FetchCarDataUseCase;
-import logging.LoggerFactory;
+import logging.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +29,8 @@ import javax.json.JsonObject;
 public class Search extends Route {
     private final DataBase dataBase;
 
-    public Search(DataBase dataBase) {
+    public Search(DataBase dataBase, Logger logger) {
+        super(logger);
         this.dataBase = dataBase;
     }
 

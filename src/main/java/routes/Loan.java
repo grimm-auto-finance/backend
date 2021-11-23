@@ -18,6 +18,7 @@ import entityparsers.Parser;
 import fetchers.Fetcher;
 import fetchers.HTTPFetcher;
 import fetchers.FetchLoanDataUseCase;
+import logging.Logger;
 
 import java.io.*;
 import java.net.URL;
@@ -36,7 +37,8 @@ public class Loan extends Route {
         return "/loan";
     }
 
-    public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL) {
+    public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL, Logger logger) {
+        super(logger);
         this.SENSO_RATE_URL = SENSO_RATE_URL;
         this.SENSO_SCORE_URL = SENSO_SCORE_URL;
     }

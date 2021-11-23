@@ -20,15 +20,15 @@ import java.sql.SQLException;
 class Server {
 
     public static final DataBase dataBase = new PostgresDataBase("jdbc:postgresql://db:5432/postgres", "postgres", Env.POSTGRES_PASSWORD);
+    public static final Logger logger = LoggerFactory.getLogger();
 
     public static void main(String[] args) {
-        Logger l = LoggerFactory.getLogger();
         for (int retries = 0; retries < 5; retries++) {
             try {
                 dataBase.connectAndMigrate();
                 break;
             } catch (Exceptions.DataBaseException e) {
-                l.warn("could not connect to database, retrying");
+                logger.warn("could not connect to database, retrying");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException te) {
@@ -42,14 +42,14 @@ class Server {
         try {
             dataBase.connectAndMigrate();
         } catch (Exceptions.DataBaseException e) {
-            l.error("could not connect to database: ", e);
+            logger.error("could not connect to database", e);
             System.exit(-1);
             return;
         }
         try {
             dataBase.insertPlaceholderData();
         } catch (Exceptions.DataBaseException e) {
-            l.error("placeholder data file not found", e);
+            logger.error("placeholder data file not found", e);
             System.exit(-1);
             return;
         }
@@ -57,7 +57,7 @@ class Server {
         try {
             server = HttpServer.create(new InetSocketAddress(Env.PORT), 0);
         } catch (IOException e) {
-            l.error("could not start server", e);
+            logger.error("could not start server", e);
             System.exit(-1);
             return;
         }
