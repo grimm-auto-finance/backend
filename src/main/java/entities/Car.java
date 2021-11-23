@@ -25,6 +25,7 @@ public class Car extends Entity {
     /**
      * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
      * initially set to -1 as price of the car is not know during initialization
+     *
      * @param kilometres The mileage of the car in kilometres
      * @param price The price of the car
      * @param make The make of the car
@@ -38,7 +39,8 @@ public class Car extends Entity {
 
     /**
      * Constructs a new Car with the given price, name, year and AddOns map.
-     *  @param kilometres The mileage of the car in kilometres
+     *
+     * @param kilometres The mileage of the car in kilometres
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car

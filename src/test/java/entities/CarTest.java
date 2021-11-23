@@ -50,7 +50,7 @@ public class CarTest {
     }
 
     @Test
-    public void testGetId(){
+    public void testGetId() {
         assertEquals(3, car.getId());
     }
 
