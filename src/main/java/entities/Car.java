@@ -20,30 +20,31 @@ public class Car extends Entity {
     private final String model;
     private final int year;
     private final double kilometres;
+    private final int id;
 
     /**
      * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
      * initially set to -1 as price of the car is not know during initialization
-     *
      * @param kilometres The mileage of the car in kilometres
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car
      * @param year The model year of the car
+     * @param id The id of car as its stored in the database
      */
-    protected Car(double kilometres, double price, String make, String model, int year) {
-        this(kilometres, price, make, model, year, new HashMap<>());
+    protected Car(double kilometres, double price, String make, String model, int year, int id) {
+        this(kilometres, price, make, model, year, new HashMap<>(), id);
     }
 
     /**
      * Constructs a new Car with the given price, name, year and AddOns map.
-     *
-     * @param kilometres The mileage of the car in kilometres
+     *  @param kilometres The mileage of the car in kilometres
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car
      * @param year The model year of the car
      * @param addOns A mapping of addon names to AddOn objects
+     * @param id The id of car as its stored in the database
      */
     public Car(
             double kilometres,
@@ -51,13 +52,15 @@ public class Car extends Entity {
             String make,
             String model,
             int year,
-            Map<String, AddOn> addOns) {
+            Map<String, AddOn> addOns,
+            int id) {
         this.kilometres = kilometres;
         this.price = price;
         this.make = make;
         this.model = model;
         this.year = year;
         this.addOns = addOns;
+        this.id = id;
     }
 
     /**
@@ -136,6 +139,10 @@ public class Car extends Entity {
 
     public double getKilometres() {
         return kilometres;
+    }
+
+    public int getId() {
+        return id;
     }
 
     /** @return Returns the string name of the car */

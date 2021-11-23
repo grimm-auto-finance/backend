@@ -4,6 +4,6 @@ package routes;
 public class Routes {
     /** The routes of the program. */
     public static final Route[] routes = {
-        new Loan(), new Search(),
+        new Loan(), new Search(), new Addons()
     };
 }
