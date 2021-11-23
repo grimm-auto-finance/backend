@@ -37,11 +37,8 @@ public class CarFactory {
             addOnMap = GenerateEntitiesUseCase.generateAddOnsFromMap(map);
             kilometres = (double) map.getItem(EntityStringNames.CAR_KILOMETRES).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
-            String message = "Failed to generate Car: ";
-            Exceptions.FactoryException ex =
-                    new Exceptions.FactoryException(message + '\n' + e.getMessage());
-            ex.setStackTrace(e.getStackTrace());
-            throw ex;
+            String message = "Failed to generate Car";
+            throw new Exceptions.FactoryException(message, e);
         }
         return new Car(kilometres, price, make, model, year, addOnMap);
     }

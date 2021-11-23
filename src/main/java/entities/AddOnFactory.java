@@ -31,11 +31,8 @@ public class AddOnFactory {
             price = (double) map.getItem(EntityStringNames.ADD_ON_PRICE).getAttribute();
             description = (String) map.getItem(EntityStringNames.ADD_ON_DESCRIPTION).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
-            String message = "Failed to generate AddOn: ";
-            Exceptions.FactoryException ex =
-                    new Exceptions.FactoryException(message + '\n' + e.getMessage());
-            ex.setStackTrace(e.getStackTrace());
-            throw ex;
+            String message = "Failed to generate AddOn";
+            throw new Exceptions.FactoryException(message, e);
         }
 
         return new AddOn(name, price, description);
@@ -59,10 +56,7 @@ public class AddOnFactory {
                 addOns.add(getEntity(map));
             } catch (ClassCastException | NullPointerException e) {
                 String message = "Failed to generate AddOn List: ";
-                Exceptions.FactoryException ex =
-                        new Exceptions.FactoryException(message + '\n' + e.getMessage());
-                ex.setStackTrace(e.getStackTrace());
-                throw ex;
+                throw new Exceptions.FactoryException(message, e);
             }
         }
         return addOns;
@@ -76,10 +70,7 @@ public class AddOnFactory {
                 addOns.put(name, getEntity((AttributeMap) map.getItem(name)));
             } catch (ClassCastException | NullPointerException e) {
                 String message = "Failed to generate AddOn List: ";
-                Exceptions.FactoryException ex =
-                        new Exceptions.FactoryException(message + '\n' + e.getMessage());
-                ex.setStackTrace(e.getStackTrace());
-                throw ex;
+                throw new Exceptions.FactoryException(message, e);
             }
         }
         return addOns;

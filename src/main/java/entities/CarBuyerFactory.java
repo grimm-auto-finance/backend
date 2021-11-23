@@ -30,11 +30,8 @@ public class CarBuyerFactory {
                                                     .getAttribute());
             downpayment = (double) map.getItem(EntityStringNames.BUYER_DOWNPAYMENT).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
-            String message = "Failed to generate CarBuyer: ";
-            Exceptions.FactoryException ex =
-                    new Exceptions.FactoryException(message + '\n' + e.getMessage());
-            ex.setStackTrace(e.getStackTrace());
-            throw ex;
+            String message = "Failed to generate CarBuyer";
+            throw new Exceptions.FactoryException(message, e);
         }
 
         return new CarBuyer(budget, creditScore, downpayment);

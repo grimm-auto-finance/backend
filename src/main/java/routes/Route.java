@@ -73,8 +73,7 @@ public abstract class Route implements HttpHandler {
     public final void handle(HttpExchange t) {
         String method = t.getRequestMethod();
 
-        Logger l = LoggerFactory.getLogger();
-        l.info(
+        logger.info(
                 "received "
                         + method
                         + " request on "
@@ -111,12 +110,10 @@ public abstract class Route implements HttpHandler {
                     this.patch(t);
                     break;
                 default:
-                    l.error("received request with unknown method: " + method);
+                    logger.error("received request with unknown method: " + method);
             }
         } catch (CodedException e) {
-            if (e.getCode() > 499) {
-                l.error(e.getMessage() + ": " + Arrays.toString(e.getStackTrace()));
-            }
+            logger.error(e.getMessage() + ":\n" + Arrays.toString(e.getStackTrace()));
             respond(t, e.getCode(), e.getMessage().getBytes());
         }
         t.close();
@@ -128,7 +125,7 @@ public abstract class Route implements HttpHandler {
             t.sendResponseHeaders(code, body.length);
             os.write(body);
         } catch (IOException e) {
-            LoggerFactory.getLogger().error("while responding to request, encountered: ", e);
+            logger.error("while responding to request, encountered: ", e);
         }
     }
 }

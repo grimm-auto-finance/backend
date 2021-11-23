@@ -94,7 +94,7 @@ public class PostgresDataBase extends DataBase {
             }
             return pst.executeQuery();
         } catch (SQLException e) {
-            throw new Exceptions.DataBaseException("could not execute database query: " + e.getMessage(), e);
+            throw new Exceptions.DataBaseException("could not execute database query" + e.getMessage(), e);
         }
     }
 }

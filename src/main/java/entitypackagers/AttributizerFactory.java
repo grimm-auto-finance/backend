@@ -23,7 +23,7 @@ public class AttributizerFactory {
         } else if (entity instanceof LoanData) {
             return new AttributizeLoanDataUseCase((LoanData) entity);
         } else {
-            throw new ClassCastException("No appropriate Attributizer for entity");
+            throw new ClassCastException("No appropriate Attributizer for entity " + entity.getStringName());
         }
     }
 }

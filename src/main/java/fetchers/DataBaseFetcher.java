@@ -40,7 +40,7 @@ public class DataBaseFetcher implements Fetcher {
                 resultsList.add(parseResultsRow(queryResult));
             }
         } catch (SQLException | ClassCastException e) {
-            throw new FetchException("Failed to parse database query results: " + e.getMessage(), e);
+            throw new FetchException("Failed to parse database query results" + e.getMessage(), e);
         }
         Attribute[] resultsArray = resultsList.toArray(new AttributeMap[0]);
         return (ArrayAttribute) AttributeFactory.createAttribute(resultsArray);

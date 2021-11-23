@@ -41,7 +41,7 @@ public class JsonPackager implements Packager {
                 JsonArray itemArray = getJsonArray((ArrayAttribute) item);
                 builder.add(key, itemArray);
             } else {
-                throw new Exceptions.PackageException("Unhandled Attribute type");
+                throw new Exceptions.PackageException("Unhandled Attribute type " + item.getClass());
             }
         }
         return new JsonPackage(builder.build());

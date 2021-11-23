@@ -34,7 +34,7 @@ public class FetchCarDataUseCase {
             }
             return car;
         } catch (Exceptions.FactoryException | Exceptions.FetchException e) {
-            throw new Exceptions.FetchException("could not fetch car from database: " + e.getMessage(), e);
+            throw new Exceptions.FetchException("could not fetch car from database" + e.getMessage(), e);
         }
     }
 
@@ -56,7 +56,7 @@ public class FetchCarDataUseCase {
             return cars;
         } catch (Exceptions.FactoryException | Exceptions.FetchException e) {
             throw new Exceptions.FetchException(
-                    "could not get search result from database: " + e.getMessage(), e);
+                    "could not get search result from database" + e.getMessage(), e);
         }
     }
 

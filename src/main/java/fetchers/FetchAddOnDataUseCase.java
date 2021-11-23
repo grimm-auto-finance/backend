@@ -27,7 +27,7 @@ public class FetchAddOnDataUseCase {
             entityMap.addItem(EntityStringNames.ADD_ON_STRING, resultsMapArray);
             return GenerateEntitiesUseCase.generateAddOnsFromArray(entityMap);
         } catch (Exceptions.FactoryException | Exceptions.FetchException e) {
-            throw new Exceptions.FetchException("could not get add-ons from database: " + e.getMessage(), e);
+            throw new Exceptions.FetchException("could not get add-ons from database" + e.getMessage(), e);
         }
     }
 }
