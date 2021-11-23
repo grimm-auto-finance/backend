@@ -1,5 +1,6 @@
 package fetchers;
 
+import constants.EntityStringNames;
 import constants.Exceptions;
 import logging.LoggerFactory;
 
@@ -28,25 +29,22 @@ public class PostgresDataBase extends DataBase {
                         "\n",
                         "CREATE TABLE IF NOT EXISTS cars (",
                         "id INT NOT NULL,",
-                        "price NUMERIC(9, 2) NOT NULL,",
-                        "make VARCHAR NOT NULL,",
-                        "model VARCHAR NOT NULL,",
-                        "year INT NOT NULL,",
-                        "kms INT,",
+                        EntityStringNames.CAR_PRICE + " NUMERIC(9, 2) NOT NULL,",
+                        EntityStringNames.CAR_MAKE + " VARCHAR NOT NULL,",
+                        EntityStringNames.CAR_MODEL + " VARCHAR NOT NULL,",
+                        EntityStringNames.CAR_YEAR + " INT NOT NULL,",
+                        EntityStringNames.CAR_KILOMETRES + " INT,",
                         "PRIMARY KEY (id)",
                         ");",
                         "CREATE TABLE IF NOT EXISTS addons (",
                         "id INT NOT NULL,",
-                        "name VARCHAR NOT NULL,",
-                        "price NUMERIC(9, 2) NOT NULL,",
-                        "descr VARCHAR NOT NULL,",
+                        EntityStringNames.ADD_ON_NAME + " VARCHAR NOT NULL,",
+                        EntityStringNames.ADD_ON_PRICE + " NUMERIC(9, 2) NOT NULL,",
+                        EntityStringNames.ADD_ON_DESCRIPTION + " VARCHAR NOT NULL,",
                         "vid INT NOT NULL,",
                         "PRIMARY KEY (id)",
                         ");");
         try {
-//            connection =
-//                    DriverManager.getConnection(
-//                            "jdbc:postgresql://db:5432/postgres", "postgres", POSTGRES_PASSWORD);
             connection = DriverManager.getConnection(URL, username, password);
             Statement st = connection.createStatement();
             st.execute(migrations);
