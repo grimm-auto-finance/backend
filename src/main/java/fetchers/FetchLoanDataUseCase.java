@@ -8,16 +8,19 @@ import constants.EntityStringNames;
 import constants.Exceptions;
 
 import entities.*;
+import entitypackagers.Package;
+import entitypackagers.Packager;
 
-import javax.json.*;
 
 public class FetchLoanDataUseCase {
     private final Fetcher rateFetcher;
     private final Fetcher scoreFetcher;
+    private final Packager packager;
 
-    public FetchLoanDataUseCase(Fetcher rateFetcher, Fetcher scoreFetcher) {
+    public FetchLoanDataUseCase(Fetcher rateFetcher, Fetcher scoreFetcher, Packager packager) {
         this.rateFetcher = rateFetcher;
         this.scoreFetcher = scoreFetcher;
+        this.packager = packager;
     }
 
     public LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
@@ -44,8 +47,9 @@ public class FetchLoanDataUseCase {
     }
 
     public AttributeMap makeRateRequest(CarBuyer buyer, Car car)
-            throws Exceptions.FetchException {
-        JsonObject rateBody = getRateBody(buyer, car);
+            throws Exceptions.CodedException {
+        Package rateBody;
+        rateBody = getRateBody(buyer, car);
         AttributeMap rateResponseMap;
         rateFetcher.setFetchParam("POST");
         rateResponseMap = (AttributeMap) rateFetcher.fetch(rateBody.toString());
@@ -66,42 +70,42 @@ public class FetchLoanDataUseCase {
                 Double.parseDouble((String) rateResponseMap.getItem("term").getAttribute()));
     }
 
-    private JsonObject getRateBody(CarBuyer buyer, Car car) {
-        return Json.createObjectBuilder()
-                .add("loanAmount", car.getPrice())
-                .add("creditScore", buyer.getCreditScore())
-                .add("pytBudget", buyer.getBudget())
-                .add("vehicleMake", car.getMake())
-                .add("vehicleModel", car.getModel())
-                .add("vehicleYear", car.getYear())
-                .add("vehicleKms", car.getKilometres())
-                .add("listPrice", car.getPrice())
-                // TODO: make this not hardcoded
-                .add("downpayment", buyer.getDownPayment())
-                .build();
+    private Package getRateBody(CarBuyer buyer, Car car) throws Exceptions.PackageException {
+        AttributeMap rateMap = new AttributeMap();
+        rateMap.addItem("loanAmount", car.getPrice());
+        rateMap.addItem("loanAmount", car.getPrice());
+        rateMap.addItem("creditScore", buyer.getCreditScore());
+        rateMap.addItem("pytBudget", buyer.getBudget());
+        rateMap.addItem("vehicleMake", car.getMake());
+        rateMap.addItem("vehicleModel", car.getModel());
+        rateMap.addItem("vehicleYear", car.getYear());
+        rateMap.addItem("vehicleKms", car.getKilometres());
+        rateMap.addItem("listPrice", car.getPrice());
+        rateMap.addItem("downpayment", buyer.getDownPayment());
+        return packager.writePackage(rateMap);
     }
 
     public AttributeMap makeScoreRequest(CarBuyer buyer, Car car, int termLength)
             throws Exceptions.CodedException {
-        JsonObject scoreBody = getScoreBody(buyer, car, termLength);
+        Package scoreBody = getScoreBody(buyer, car, termLength);
         scoreFetcher.setFetchParam("POST");
         return (AttributeMap) scoreFetcher.fetch(scoreBody.toString());
     }
 
-    private JsonObject getScoreBody(
-            CarBuyer buyer, Car car, int termLength) {
+    private Package getScoreBody(
+            CarBuyer buyer, Car car, int termLength) throws Exceptions.PackageException {
 
-        return Json.createObjectBuilder()
-                .add("remainingBalance", car.getPrice())
-                .add("creditScore", buyer.getCreditScore())
-                .add("loanAge", termLength)
-                .add("vehicleMake", car.getMake())
-                .add("vehicleModel", car.getModel())
-                .add("vehicleYear", car.getYear())
-                // TODO: Understand what carValue and loanStartDate are, and make them not
-                // hardcoded
-                .add("carValue", car.getPrice())
-                .add("loanStartDate", String.valueOf(java.time.LocalDate.now()))
-                .build();
+        AttributeMap scoreMap = new AttributeMap();
+        scoreMap.addItem("remainingBalance", car.getPrice());
+        scoreMap.addItem("creditScore", buyer.getCreditScore());
+        scoreMap.addItem("loanAge", termLength);
+        scoreMap.addItem("vehicleMake", car.getMake());
+        scoreMap.addItem("vehicleModel", car.getModel());
+        scoreMap.addItem("vehicleYear", car.getYear());
+        // TODO: Understand what carValue and loanStartDate are, and make them not
+        // hardcoded
+        scoreMap.addItem("carValue", car.getPrice());
+        scoreMap.addItem("loanStartDate", String.valueOf(java.time.LocalDate.now()));
+        return packager.writePackage(scoreMap);
     }
 }

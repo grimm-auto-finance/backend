@@ -61,7 +61,7 @@ public class Loan extends Route {
     String getResponse(entities.CarBuyer buyer, entities.Car car) throws CodedException {
         Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL);
         Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL);
-        FetchLoanDataUseCase fetchLoanData = new FetchLoanDataUseCase(rateFetcher, scoreFetcher);
+        FetchLoanDataUseCase fetchLoanData = new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
         LoanData loanData = fetchLoanData.fetch(buyer, car);
         List<Entity> entities = new ArrayList<>();
         entities.add(car);
