@@ -112,7 +112,7 @@ public class DataBaseFetcher {
                 String.join(
                         "\n",
                         "SELECT * FROM cars",
-                        "WHERE to_tsvector(id || ' ' || price || ' ' || make || ' ' || model || ' '"
+                        "WHERE to_tsvector(price || ' ' || make || ' ' || model || ' '"
                                 + " || year || ' ' || kms) @@ websearch_to_tsquery(?)");
         try {
             PreparedStatement pst = connection.prepareStatement(query);
