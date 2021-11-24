@@ -2,6 +2,7 @@ package routes;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.ParseException;
 
@@ -41,11 +42,39 @@ public class Search extends Route {
 
     /**
      * The post method for the `/search` route.
+     * Takes in an HttpExchange containing a search string,
+     * and returns an array of Cars matching that string.
      *
      * @param t the httpexchange that this method must handle
      */
     @Override
     protected void post(HttpExchange t) throws CodedException {
+        String searchString = getSearchString(t);
+        List<Car> cars = getCarResultList(searchString);
+        String responseString = getResponseString(cars);
+        respond(t, 200, responseString.getBytes());
+    }
+
+    private String getResponseString(List<Car> cars) throws Exceptions.PackageException {
+        JsonPackager jp = new JsonPackager();
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        for (Car car : cars) {
+            AttributizeCarUseCase uc = new AttributizeCarUseCase(car);
+            JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
+            arrayBuilder.add(json);
+        }
+        return arrayBuilder.build().toString();
+    }
+
+    private List<Car> getCarResultList(String searchString) throws CodedException {
+        List<Car> cars;
+        DataBaseFetcher fetcher = new DataBaseFetcher(dataBase);
+        FetchCarDataUseCase carDataFetcher = new FetchCarDataUseCase(fetcher);
+        cars = carDataFetcher.search(searchString);
+        return cars;
+    }
+
+    private String getSearchString(HttpExchange t) throws CodedException {
         InputStream is = t.getRequestBody();
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
@@ -60,19 +89,6 @@ public class Search extends Route {
             err.setStackTrace(e.getStackTrace());
             throw err;
         }
-        String searchString = sb.toString();
-        List<Car> cars;
-        DataBaseFetcher fetcher = new DataBaseFetcher(dataBase);
-        FetchCarDataUseCase carDataFetcher = new FetchCarDataUseCase(fetcher);
-        cars = carDataFetcher.search(searchString);
-        JsonPackager jp = new JsonPackager();
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        for (Car car : cars) {
-            AttributizeCarUseCase uc = new AttributizeCarUseCase(car);
-            JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
-            arrayBuilder.add(json);
-        }
-        String responseString = arrayBuilder.build().toString();
-        respond(t, 200, responseString.getBytes());
+        return sb.toString();
     }
 }

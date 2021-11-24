@@ -23,6 +23,17 @@ class Server {
     public static final Logger logger = LoggerFactory.getLogger();
 
     public static void main(String[] args) {
+        initializeDataBase();
+        insertPlaceholderData();
+        HttpServer server = initializeServer();
+        for (Route route : Routes.routes) {
+            server.createContext(route.getContext(), route);
+        }
+        server.setExecutor(null);
+        server.start();
+    }
+
+    private static void initializeDataBase() {
         for (int retries = 0; retries < 5; retries++) {
             try {
                 dataBase.connectAndMigrate();
@@ -44,27 +55,27 @@ class Server {
         } catch (Exceptions.DataBaseException e) {
             logger.error("could not connect to database", e);
             System.exit(-1);
-            return;
         }
+    }
+
+    private static void insertPlaceholderData() {
         try {
             dataBase.insertPlaceholderData();
         } catch (Exceptions.DataBaseException e) {
             logger.error("placeholder data file not found", e);
             System.exit(-1);
-            return;
         }
+    }
+
+    private static HttpServer initializeServer() {
         HttpServer server;
         try {
             server = HttpServer.create(new InetSocketAddress(Env.PORT), 0);
         } catch (IOException e) {
             logger.error("could not start server", e);
             System.exit(-1);
-            return;
+            return null;
         }
-        for (Route route : Routes.routes) {
-            server.createContext(route.getContext(), route);
-        }
-        server.setExecutor(null);
-        server.start();
+        return server;
     }
 }

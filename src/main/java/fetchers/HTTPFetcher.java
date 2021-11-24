@@ -29,15 +29,11 @@ public class HTTPFetcher implements Fetcher {
 
     public AttributeMap fetch(String request) throws Exceptions.FetchException {
         JsonObject httpResponse;
-        try {
-            HttpURLConnection connection = getHTTPConnection();
-            OutputStreamWriter requestWriter = new OutputStreamWriter(connection.getOutputStream());
-            requestWriter.write(request);
-            requestWriter.close();
-            httpResponse = getHTTPResponse(connection);
-        } catch (IOException e) {
-            throw new Exceptions.FetchException("Error making HTTP Request to " + connectionURL, e);
-        }
+        httpResponse = makeRequest(request);
+        return parseResponse(httpResponse);
+    }
+
+    private AttributeMap parseResponse(JsonObject httpResponse) throws Exceptions.FetchException {
         JsonParser parser = new JsonParser(httpResponse);
         AttributeMap responseMap;
         try {
@@ -46,6 +42,27 @@ public class HTTPFetcher implements Fetcher {
             throw new Exceptions.FetchException("Error parsing HTTP response from " + connectionURL, e);
         }
         return responseMap;
+    }
+
+    private JsonObject makeRequest(String request) throws Exceptions.FetchException {
+        JsonObject httpResponse;
+        try {
+            HttpURLConnection connection = getHTTPConnection();
+            OutputStreamWriter requestWriter = new OutputStreamWriter(connection.getOutputStream());
+            requestWriter.write(request);
+            requestWriter.close();
+            httpResponse = getHTTPResponse(connection);
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                String message = connection.getRequestMethod()
+                        + "request to " + connectionURL + " failed:\nMessage: "
+                        + httpResponse.getString("message")
+                        + "\nError: " + httpResponse.getString("error");
+                throw new IOException(message);
+            }
+        } catch (IOException e) {
+            throw new Exceptions.FetchException("Error making HTTP Request to " + connectionURL, e);
+        }
+        return httpResponse;
     }
 
     private HttpURLConnection getHTTPConnection()
