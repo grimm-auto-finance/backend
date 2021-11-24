@@ -87,7 +87,7 @@ public class DataBaseFetcher {
         }
     }
 
-    public static Car getCar(int id, boolean addOns) throws CodedException {
+    public static Car getCar(int id) throws CodedException {
         String query = "SELECT * FROM cars WHERE id = ?;";
         try {
             PreparedStatement pst = connection.prepareStatement(query);
@@ -95,10 +95,8 @@ public class DataBaseFetcher {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 Car car = extractCar(rs);
-                if (addOns) {
-                    for (AddOn addOn : getAddOns(id)) {
-                        car.addAddOn(addOn);
-                    }
+                for (AddOn addOn : getAddOns(id)) {
+                    car.addAddOn(addOn);
                 }
                 return car;
             } else {
@@ -114,8 +112,8 @@ public class DataBaseFetcher {
                 String.join(
                         "\n",
                         "SELECT * FROM cars",
-                        "WHERE to_tsvector(make || ' ' || model || ' ' || year) @@"
-                                + " websearch_to_tsquery(?)");
+                        "WHERE to_tsvector(price || ' ' || make || ' ' || model || ' '"
+                                + " || year || ' ' || kms) @@ websearch_to_tsquery(?)");
         try {
             PreparedStatement pst = connection.prepareStatement(query);
             pst.setString(1, searchString);
@@ -133,11 +131,12 @@ public class DataBaseFetcher {
 
     private static Car extractCar(ResultSet rs) throws SQLException, Exceptions.FactoryException {
         AttributeMap carMap = new AttributeMap();
+        carMap.addItem(EntityStringNames.CAR_ID, (int) rs.getDouble(1));
         carMap.addItem(EntityStringNames.CAR_PRICE, rs.getDouble(2));
         carMap.addItem(EntityStringNames.CAR_MAKE, rs.getString(3));
         carMap.addItem(EntityStringNames.CAR_MODEL, rs.getString(4));
         carMap.addItem(EntityStringNames.CAR_YEAR, rs.getDouble(5));
-        carMap.addItem(EntityStringNames.CAR_KILOMETRES, 0.0);
+        carMap.addItem(EntityStringNames.CAR_KILOMETRES, rs.getDouble(6));
         carMap.addItem(EntityStringNames.ADD_ON_STRING, new AttributeMap());
         // AttributeFactory.createAttribute(new Attribute[0]));
         AttributeMap entityMap = new AttributeMap();

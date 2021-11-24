@@ -26,6 +26,7 @@ public class TestEntityCreator {
         carMap.addItem(EntityStringNames.CAR_YEAR, 2020.0);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
         carMap.addItem(EntityStringNames.ADD_ON_STRING, new AttributeMap());
+        carMap.addItem(EntityStringNames.CAR_ID, 3);
         // AttributeFactory.createAttribute(new Attribute[0]));
         try {
             car = CarFactory.getEntity(carMap);

@@ -45,7 +45,7 @@ paths:
     post:
       tags:
       - "addOns"
-      summary: "Get all available add-ons for a vehicle"
+      summary: "Get the vehicle containing all available add-ons for a vehicle"
       consumes:
       - "application/json"
       produces:
@@ -62,11 +62,9 @@ paths:
               type: "number"
       responses:
         "200":
-          description: "All available add-ons for the given car"
+          description: "The vehicle containing all available add-ons for a vehicle"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/AddOn"
+            $ref: "#/definitions/Car"
   /loan:
     post:
       tags:
@@ -113,6 +111,7 @@ definitions:
     - "make"
     - "model"
     - "year"
+    - "addOns"
     properties:
       id:
         type: "number"

@@ -25,6 +25,7 @@ public class CarFactory {
         double price;
         Map<String, AddOn> addOnMap;
         double kilometres;
+        int id;
         try {
             make = (String) map.getItem(EntityStringNames.CAR_MAKE).getAttribute();
             model = (String) map.getItem(EntityStringNames.CAR_MODEL).getAttribute();
@@ -36,6 +37,7 @@ public class CarFactory {
             price = (double) map.getItem(EntityStringNames.CAR_PRICE).getAttribute();
             addOnMap = GenerateEntitiesUseCase.generateAddOnsFromMap(map);
             kilometres = (double) map.getItem(EntityStringNames.CAR_KILOMETRES).getAttribute();
+            id = (int) map.getItem(EntityStringNames.CAR_ID).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate Car: ";
             Exceptions.FactoryException ex =
@@ -43,6 +45,10 @@ public class CarFactory {
             ex.setStackTrace(e.getStackTrace());
             throw ex;
         }
-        return new Car(kilometres, price, make, model, year, addOnMap);
+        return new Car(kilometres, price, make, model, year, addOnMap, id);
+    }
+
+    private static int doubleToInt(Double doub) {
+        return (int) Math.round(doub);
     }
 }
