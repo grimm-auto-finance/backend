@@ -131,7 +131,7 @@ public class DataBaseFetcher {
 
     private static Car extractCar(ResultSet rs) throws SQLException, Exceptions.FactoryException {
         AttributeMap carMap = new AttributeMap();
-        carMap.addItem(EntityStringNames.CAR_ID, rs.getDouble(1));
+        carMap.addItem(EntityStringNames.CAR_ID, (int) rs.getDouble(1));
         carMap.addItem(EntityStringNames.CAR_PRICE, rs.getDouble(2));
         carMap.addItem(EntityStringNames.CAR_MAKE, rs.getString(3));
         carMap.addItem(EntityStringNames.CAR_MODEL, rs.getString(4));
