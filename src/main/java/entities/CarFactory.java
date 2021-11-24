@@ -47,7 +47,8 @@ public class CarFactory {
         }
         return new Car(kilometres, price, make, model, year, addOnMap, id);
     }
-    private static int doubleToInt(Double doub){
+
+    private static int doubleToInt(Double doub) {
         return (int) Math.round(doub);
     }
 }
