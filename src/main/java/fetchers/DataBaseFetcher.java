@@ -144,7 +144,7 @@ public class DataBaseFetcher {
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
         Object[] idArray = new Object[2];
-        idArray[0] = rs.getDouble(1);
+        idArray[0] = rs.getInt(1);
         idArray[1] = GenerateEntitiesUseCase.generateCar(entityMap);
         return idArray;
     }
