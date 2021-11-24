@@ -17,12 +17,26 @@ public class FetchLoanDataUseCase {
     private final Fetcher scoreFetcher;
     private final Packager packager;
 
+    /**
+     * Constructs a new FetchLoanDataUseCase to use the given Fetchers and Packager.
+     * @param rateFetcher the Fetcher to be used for making laon rate information requests
+     * @param scoreFetcher the Fetcher to be used for making loan Senso Score information requests
+     * @param packager the Packager to be used for the rate and loan request bodies
+     */
     public FetchLoanDataUseCase(Fetcher rateFetcher, Fetcher scoreFetcher, Packager packager) {
         this.rateFetcher = rateFetcher;
         this.scoreFetcher = scoreFetcher;
         this.packager = packager;
     }
 
+    /**
+     * Make a request using this FetchLoanDataUseCase's Fetchers and the given CarBuyer and Car.
+     * Return a LoanData constructed using the responses from the Fetchers
+     * @param buyer the CarBuyer who is getting the loan
+     * @param car the Car being purchased with the loan
+     * @return a LoanData constructed using the responses from the Fetchers
+     * @throws Exceptions.CodedException if any step of the fetching process fails
+     */
     public LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
 
         AttributeMap rateRequestResult = makeRateRequest(buyer, car);
@@ -46,7 +60,7 @@ public class FetchLoanDataUseCase {
         return GenerateEntitiesUseCase.generateLoanData(entityMap);
     }
 
-    public AttributeMap makeRateRequest(CarBuyer buyer, Car car)
+    private AttributeMap makeRateRequest(CarBuyer buyer, Car car)
             throws Exceptions.CodedException {
         Package rateBody;
         rateBody = getRateBody(buyer, car);
@@ -85,7 +99,7 @@ public class FetchLoanDataUseCase {
         return packager.writePackage(rateMap);
     }
 
-    public AttributeMap makeScoreRequest(CarBuyer buyer, Car car, int termLength)
+    private AttributeMap makeScoreRequest(CarBuyer buyer, Car car, int termLength)
             throws Exceptions.CodedException {
         Package scoreBody = getScoreBody(buyer, car, termLength);
         scoreFetcher.setFetchParam("POST");

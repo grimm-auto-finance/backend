@@ -16,10 +16,20 @@ public class HTTPFetcher implements Fetcher {
     private final URL connectionURL;
     private String requestMethod;
 
+    /**
+     * Constructs a new HTTPFetcher to make requests to the given connectionURL
+     * @param connectionURL the URL that requests will be sent to/received from
+     */
     public HTTPFetcher(URL connectionURL) {
         this.connectionURL = connectionURL;
     }
 
+    /**
+     * Sets the Fetch parameter of this Fetcher
+     * With HTTPFetcher, the Fetch Parameter is the request method (ex. POST)
+     * @param param an Object (String) containing the fetch request method
+     * @throws Exceptions.FetchException if param is not a String
+     */
     public void setFetchParam(Object param) throws Exceptions.FetchException {
         if (!(param instanceof String)) {
             throw new Exceptions.FetchException("Request parameter of invalid type");
@@ -27,6 +37,12 @@ public class HTTPFetcher implements Fetcher {
         this.requestMethod = (String) param;
     }
 
+    /**
+     * Make a request to connectionURL using the request method set with setFetchParam
+     * @param request the request to be sent to connectionURL
+     * @return an AttributeMap representing the response from connectionURL
+     * @throws Exceptions.FetchException if the HTTP request fails
+     */
     public AttributeMap fetch(String request) throws Exceptions.FetchException {
         JsonObject httpResponse;
         httpResponse = makeRequest(request);

@@ -15,10 +15,22 @@ public class FetchCarDataUseCase {
 
     private final Fetcher fetcher;
 
+    /**
+     * Constructs a new FetchCarDataUseCase to fetch Cars with the given Fetcher
+     * @param fetcher the Fetcher to use to retrieve Car information
+     */
     public FetchCarDataUseCase(Fetcher fetcher) {
         this.fetcher = fetcher;
     }
 
+    /**
+     * Get the Car with the given id.
+     * If addOns, include the Car's list of possible Add-ons in the result
+     * @param id the id of the Car to be fetched
+     * @param addOns whether AddOns should be included
+     * @return a Car with the given id
+     * @throws Exceptions.CodedException if the fetch fails
+     */
     public Car getCar(int id, boolean addOns) throws Exceptions.CodedException {
         String query = "SELECT * FROM cars WHERE id = ?;";
         try {
@@ -38,6 +50,12 @@ public class FetchCarDataUseCase {
         }
     }
 
+    /**
+     * Search for cars whose make, model, and/or year match the search String
+     * @param searchString the String used for the search
+     * @return a List of Cars matching the search string
+     * @throws Exceptions.CodedException if the search request fails
+     */
     public List<Car> search(String searchString) throws Exceptions.CodedException {
         String query =
                 String.join(

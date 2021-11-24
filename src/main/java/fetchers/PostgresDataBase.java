@@ -2,7 +2,6 @@ package fetchers;
 
 import constants.EntityStringNames;
 import constants.Exceptions;
-import logging.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,15 +15,27 @@ public class PostgresDataBase extends DataBase {
     private final String URL;
     private final String username;
 
+    /**
+     * Constructs a new PostgresDataBase.
+     * This will connect to the given URL using the given username and password
+     * @param URL the URL for the database connection
+     * @param username the username to access the database
+     * @param password the password to access the database
+     */
     public PostgresDataBase(String URL, String username, String password) {
         this.URL = URL;
         this.username = username;
         this.password = password;
     }
 
+    /**
+     * Initializes the connection between this PostgresDataBase and the actual database
+     * hosted at the given URL
+     * Also sets up the columns of the database and declares their values
+     * @throws Exceptions.DataBaseException if the connection fails to initialize
+     */
     public void connectAndMigrate() throws Exceptions.DataBaseException {
         String migrations =
-                //TODO: make column names use EntityStringNames values
                 String.join(
                         "\n",
                         "CREATE TABLE IF NOT EXISTS cars (",
@@ -53,6 +64,10 @@ public class PostgresDataBase extends DataBase {
         }
     }
 
+    /**
+     * Inserts placeholder data from data/cars.csv into the database.
+     * @throws Exceptions.DataBaseException if the insertion fails either due to cars.csv not existing or placeholder data already being present
+     */
     public void insertPlaceholderData() throws Exceptions.DataBaseException {
         Scanner scanner;
         try {
@@ -82,6 +97,13 @@ public class PostgresDataBase extends DataBase {
         }
     }
 
+    /**
+     * Executes a search query in the database that this PostgresDataBase is connected to
+     * @param query the search String
+     * @param queryParam an Integer or String, setting whether the ?s in query represent numbers or strings
+     * @return a ResultSet containing the results of the query
+     * @throws Exceptions.DataBaseException if the query fails
+     */
     public ResultSet executeQuery(String query, Object queryParam) throws Exceptions.DataBaseException {
         try {
             PreparedStatement pst = connection.prepareStatement(query);

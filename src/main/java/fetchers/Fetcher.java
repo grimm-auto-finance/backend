@@ -1,13 +1,16 @@
 package fetchers;
 
 import attributes.Attribute;
-import attributes.AttributeMap;
 import constants.Exceptions;
-
-import java.net.URL;
 
 public interface Fetcher {
 
+  /**
+   * Fetch information corresponding to the given request
+   * @param request
+   * @return an Attribute representing the response to the fetch request
+   * @throws Exceptions.FetchException if the fetch fails
+   */
   Attribute fetch(String request)
       throws Exceptions.FetchException;
 
