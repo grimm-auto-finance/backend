@@ -30,6 +30,7 @@ public class AttributizeCarUseCase implements Attributizer {
         carMap.addItem(EntityStringNames.CAR_MODEL, car.getModel());
         carMap.addItem(EntityStringNames.CAR_YEAR, car.getYear());
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, car.getKilometres());
+        carMap.addItem(EntityStringNames.CAR_ID, car.getId());
 
         Map<String, AddOn> addOns = car.getAddOns();
         Attribute addOnMap = getAddOnMap(addOns);

@@ -11,6 +11,7 @@ public class EntityStringNames {
     public static final String CAR_YEAR = "year";
     public static final String CAR_PRICE = "price";
     public static final String CAR_KILOMETRES = "kilometres";
+    public static final String CAR_ID = "id";
 
     /** String representation of the instance variable names in the CarBuyer entity */
     public static final String BUYER_STRING = "carBuyer";
@@ -35,4 +36,6 @@ public class EntityStringNames {
     public static final String ADD_ON_NAME = "name";
     public static final String ADD_ON_PRICE = "price";
     public static final String ADD_ON_DESCRIPTION = "description";
+
+    public static final String ID_STRING = "id";
 }

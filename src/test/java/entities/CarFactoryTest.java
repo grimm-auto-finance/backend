@@ -27,7 +27,8 @@ public class CarFactoryTest {
         AttributeMap addOnMap = new AttributeMap();
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnMap);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
-        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020);
+        carMap.addItem(EntityStringNames.CAR_ID, 3);
+        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, 3);
         try {
             assertEquals(testCar, CarFactory.getEntity(carMap));
         } catch (Exceptions.FactoryException e) {
@@ -55,7 +56,8 @@ public class CarFactoryTest {
         Map<String, AddOn> addOnHashMap = new HashMap<>();
         addOnHashMap.put("rust-proofing", addOn);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
-        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, addOnHashMap);
+        carMap.addItem(EntityStringNames.CAR_ID, 3);
+        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, addOnHashMap, 3);
 
         try {
             assertEquals(testCar, CarFactory.getEntity(carMap));
@@ -85,6 +87,7 @@ public class CarFactoryTest {
         carMap.addItem(EntityStringNames.CAR_YEAR, "uh oh");
         carMap.addItem(EntityStringNames.ADD_ON_STRING, AttributeFactory.createAttribute("yikes"));
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, "yippee");
+        carMap.addItem(EntityStringNames.CAR_ID, "hello");
         try {
             CarFactory.getEntity(carMap);
         } catch (Exceptions.FactoryException e) {
