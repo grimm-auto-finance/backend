@@ -29,15 +29,11 @@ public class CarFactory {
         try {
             make = (String) map.getItem(EntityStringNames.CAR_MAKE).getAttribute();
             model = (String) map.getItem(EntityStringNames.CAR_MODEL).getAttribute();
-            year =
-                    (int)
-                            Math.round(
-                                    (Double)
-                                            map.getItem(EntityStringNames.CAR_YEAR).getAttribute());
+            year = doubleToInt((Double) map.getItem(EntityStringNames.CAR_YEAR).getAttribute());
             price = (double) map.getItem(EntityStringNames.CAR_PRICE).getAttribute();
             addOnMap = GenerateEntitiesUseCase.generateAddOnsFromMap(map);
             kilometres = (double) map.getItem(EntityStringNames.CAR_KILOMETRES).getAttribute();
-            id = (int) map.getItem(EntityStringNames.CAR_ID).getAttribute();
+            id = doubleToInt((Double) map.getItem(EntityStringNames.CAR_ID).getAttribute());
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate Car";
             throw new Exceptions.FactoryException(message, e);

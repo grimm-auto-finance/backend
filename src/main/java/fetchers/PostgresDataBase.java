@@ -39,7 +39,7 @@ public class PostgresDataBase extends DataBase {
                 String.join(
                         "\n",
                         "CREATE TABLE IF NOT EXISTS cars (",
-                        "id INT NOT NULL,",
+                        EntityStringNames.ID_STRING + " INT NOT NULL,",
                         EntityStringNames.CAR_PRICE + " NUMERIC(9, 2) NOT NULL,",
                         EntityStringNames.CAR_MAKE + " VARCHAR NOT NULL,",
                         EntityStringNames.CAR_MODEL + " VARCHAR NOT NULL,",

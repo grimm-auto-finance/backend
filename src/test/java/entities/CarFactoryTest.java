@@ -27,7 +27,7 @@ public class CarFactoryTest {
         AttributeMap addOnMap = new AttributeMap();
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnMap);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
-        carMap.addItem(EntityStringNames.CAR_ID, 3);
+        carMap.addItem(EntityStringNames.CAR_ID, 3.0);
         Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, 3);
         try {
             assertEquals(testCar, CarFactory.getEntity(carMap));
@@ -56,7 +56,7 @@ public class CarFactoryTest {
         Map<String, AddOn> addOnHashMap = new HashMap<>();
         addOnHashMap.put("rust-proofing", addOn);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
-        carMap.addItem(EntityStringNames.CAR_ID, 3);
+        carMap.addItem(EntityStringNames.CAR_ID, 3.0);
         Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, addOnHashMap, 3);
 
         try {

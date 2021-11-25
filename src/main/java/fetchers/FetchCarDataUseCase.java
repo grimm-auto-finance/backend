@@ -27,7 +27,6 @@ public class FetchCarDataUseCase {
      * Get the Car with the given id.
      * If addOns, include the Car's list of possible Add-ons in the result
      * @param id the id of the Car to be fetched
-     * @param addOns whether AddOns should be included
      * @return a Car with the given id
      * @throws Exceptions.CodedException if the fetch fails
      */
@@ -44,7 +43,7 @@ public class FetchCarDataUseCase {
             }
             return car;
         } catch (Exceptions.FactoryException | Exceptions.FetchException e) {
-            throw new Exceptions.FetchException("could not fetch car from database" + e.getMessage(), e);
+            throw new Exceptions.FetchException("could not fetch car from database", e);
         }
     }
 
@@ -59,8 +58,8 @@ public class FetchCarDataUseCase {
                 String.join(
                         "\n",
                         "SELECT * FROM cars",
-                        "WHERE to_tsvector(price || ' ' || make || ' ' || model || ' '"
-                                + " || year || ' ' || kms) @@ websearch_to_tsquery(?)");
+                        "WHERE to_tsvector(" + EntityStringNames.CAR_PRICE + " || ' ' || " + EntityStringNames.CAR_MAKE + " || ' ' || " + EntityStringNames.CAR_MODEL +" || ' '"
+                                + " || " + EntityStringNames.CAR_YEAR + " || ' ' || " + EntityStringNames.CAR_KILOMETRES + ") @@ websearch_to_tsquery(?)");
         try {
             fetcher.setFetchParam(searchString);
             ArrayAttribute resultsMapArrayAtt = (ArrayAttribute) fetcher.fetch(query);
@@ -72,7 +71,7 @@ public class FetchCarDataUseCase {
             return cars;
         } catch (Exceptions.FactoryException | Exceptions.FetchException e) {
             throw new Exceptions.FetchException(
-                    "could not get search result from database" + e.getMessage(), e);
+                    "could not get search result from database", e);
         }
     }
 

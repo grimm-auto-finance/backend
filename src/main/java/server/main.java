@@ -62,8 +62,6 @@ class Server {
         try {
             dataBase.insertPlaceholderData();
         } catch (Exceptions.DataBaseException e) {
-            logger.error("placeholder data file not found", e);
-            System.exit(-1);
             if (e.getMessage().contains("placeholder data may already exist")) {
                 logger.warn(e.getMessage());
             } else {

@@ -46,7 +46,7 @@ public class DataBaseFetcher implements Fetcher {
         try {
             queryResult = database.executeQuery(request, queryParam);
         } catch (Exceptions.DataBaseException e) {
-            throw new FetchException("Failed to execute DataBase query with request" + request + " and parameter " + queryParam, e);
+            throw new FetchException("Failed to execute DataBase query with request\n" + request + "\nand parameter " + queryParam, e);
         }
         List<AttributeMap> resultsList = new ArrayList<>();
         try {
@@ -54,7 +54,7 @@ public class DataBaseFetcher implements Fetcher {
                 resultsList.add(parseResultsRow(queryResult));
             }
         } catch (SQLException | ClassCastException e) {
-            throw new FetchException("Failed to parse database query results" + e.getMessage(), e);
+            throw new FetchException("Failed to parse database query results", e);
         }
         Attribute[] resultsArray = resultsList.toArray(new AttributeMap[0]);
         return (ArrayAttribute) AttributeFactory.createAttribute(resultsArray);
@@ -63,7 +63,7 @@ public class DataBaseFetcher implements Fetcher {
     private AttributeMap parseResultsRow(ResultSet rs) throws SQLException, ClassCastException {
         AttributeMap resultMap = new AttributeMap();
         ResultSetMetaData metaData = rs.getMetaData();
-        for (int i = 2; i < metaData.getColumnCount(); i++) {
+        for (int i = 1; i <= metaData.getColumnCount(); i++) {
             Object resultItem = rs.getObject(i);
             if (resultItem instanceof BigDecimal) {
                 resultItem = ((BigDecimal) resultItem).doubleValue();
