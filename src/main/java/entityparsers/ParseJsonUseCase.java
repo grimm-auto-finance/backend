@@ -1,12 +1,14 @@
 package entityparsers;
 
 import attributes.AttributeMap;
+
 import constants.Exceptions;
+
+import java.io.InputStream;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import java.io.InputStream;
 
 public class ParseJsonUseCase {
 

@@ -86,7 +86,9 @@ public class JsonParser implements Parser {
                 break;
             default:
                 throw new Exceptions.ParseException(
-                        "Json item of type " + item.getValueType() + " doesn't correspond to any Attribute types");
+                        "Json item of type "
+                                + item.getValueType()
+                                + " doesn't correspond to any Attribute types");
         }
         return itemAttribute;
     }

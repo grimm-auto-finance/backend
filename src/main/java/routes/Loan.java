@@ -4,6 +4,7 @@ import attributes.AttributeMap;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import constants.EntityStringNames;
 import constants.Exceptions;
 import constants.Exceptions.CodedException;
 
@@ -13,13 +14,12 @@ import entitypackagers.JsonPackage;
 import entitypackagers.JsonPackager;
 import entitypackagers.PackageEntityUseCase;
 
-import entityparsers.JsonParser;
 import entityparsers.ParseJsonUseCase;
-import entityparsers.Parser;
 
+import fetchers.FetchLoanDataUseCase;
 import fetchers.Fetcher;
 import fetchers.HTTPFetcher;
-import fetchers.FetchLoanDataUseCase;
+
 import logging.Logger;
 
 import java.io.*;
@@ -46,10 +46,8 @@ public class Loan extends Route {
     }
 
     /**
-     * The post method for the `/loan` route.
-     * Takes in an HttpExchange containing data for a Car and CarBuyer,
-     * and sends back the Car, CarBuyer, and LoanData returned
-     * by the Senso API.
+     * The post method for the `/loan` route. Takes in an HttpExchange containing data for a Car and
+     * CarBuyer, and sends back the Car, CarBuyer, and LoanData returned by the Senso API.
      *
      * @param t the httpexchange that this method must handle
      */
@@ -58,6 +56,8 @@ public class Loan extends Route {
         InputStream is = t.getRequestBody();
         ParseJsonUseCase parseInput = new ParseJsonUseCase();
         AttributeMap entitiesMap = parseInput.parseJson(is);
+        AttributeMap carMap = (AttributeMap) entitiesMap.getItem(EntityStringNames.CAR_STRING);
+        carMap.addItem(EntityStringNames.CAR_ID, 0.0);
         Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
         CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
         respond(t, 200, getResponse(buyer, car).getBytes());
@@ -69,7 +69,8 @@ public class Loan extends Route {
         return entitiesPackage.toString();
     }
 
-    private JsonPackage getEntitiesPackage(CarBuyer buyer, Car car, LoanData loanData) throws Exceptions.PackageException {
+    private JsonPackage getEntitiesPackage(CarBuyer buyer, Car car, LoanData loanData)
+            throws Exceptions.PackageException {
         List<Entity> entities = new ArrayList<>();
         entities.add(car);
         entities.add(buyer);
@@ -82,7 +83,8 @@ public class Loan extends Route {
     private LoanData getLoanData(CarBuyer buyer, Car car) throws CodedException {
         Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL);
         Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL);
-        FetchLoanDataUseCase fetchLoanData = new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
+        FetchLoanDataUseCase fetchLoanData =
+                new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
         LoanData loanData = fetchLoanData.fetch(buyer, car);
         return loanData;
     }

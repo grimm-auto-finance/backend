@@ -1,15 +1,18 @@
 package fetchers;
 
 import attributes.AttributeMap;
+
 import constants.Exceptions;
+
 import entityparsers.JsonParser;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class HTTPFetcher implements Fetcher {
 
@@ -18,6 +21,7 @@ public class HTTPFetcher implements Fetcher {
 
     /**
      * Constructs a new HTTPFetcher to make requests to the given connectionURL
+     *
      * @param connectionURL the URL that requests will be sent to/received from
      */
     public HTTPFetcher(URL connectionURL) {
@@ -25,8 +29,9 @@ public class HTTPFetcher implements Fetcher {
     }
 
     /**
-     * Sets the Fetch parameter of this Fetcher
-     * With HTTPFetcher, the Fetch Parameter is the request method (ex. POST)
+     * Sets the Fetch parameter of this Fetcher With HTTPFetcher, the Fetch Parameter is the request
+     * method (ex. POST)
+     *
      * @param param an Object (String) containing the fetch request method
      * @throws Exceptions.FetchException if param is not a String
      */
@@ -39,6 +44,7 @@ public class HTTPFetcher implements Fetcher {
 
     /**
      * Make a request to connectionURL using the request method set with setFetchParam
+     *
      * @param request the request to be sent to connectionURL
      * @return an AttributeMap representing the response from connectionURL
      * @throws Exceptions.FetchException if the HTTP request fails
@@ -55,7 +61,8 @@ public class HTTPFetcher implements Fetcher {
         try {
             responseMap = parser.parse();
         } catch (Exceptions.ParseException e) {
-            throw new Exceptions.FetchException("Error parsing HTTP response from " + connectionURL, e);
+            throw new Exceptions.FetchException(
+                    "Error parsing HTTP response from " + connectionURL, e);
         }
         return responseMap;
     }
@@ -69,10 +76,14 @@ public class HTTPFetcher implements Fetcher {
             requestWriter.close();
             httpResponse = getHTTPResponse(connection);
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                String message = connection.getRequestMethod()
-                        + "request to " + connectionURL + " failed:\nMessage: "
-                        + httpResponse.getString("message")
-                        + "\nError: " + httpResponse.getString("error");
+                String message =
+                        connection.getRequestMethod()
+                                + "request to "
+                                + connectionURL
+                                + " failed:\nMessage: "
+                                + httpResponse.getString("message")
+                                + "\nError: "
+                                + httpResponse.getString("error");
                 throw new IOException(message);
             }
         } catch (IOException e) {
@@ -81,8 +92,7 @@ public class HTTPFetcher implements Fetcher {
         return httpResponse;
     }
 
-    private HttpURLConnection getHTTPConnection()
-            throws IOException {
+    private HttpURLConnection getHTTPConnection() throws IOException {
         HttpURLConnection conn;
         conn = (HttpURLConnection) connectionURL.openConnection();
 

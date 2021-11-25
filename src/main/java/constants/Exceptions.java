@@ -52,7 +52,9 @@ public class Exceptions {
             super(message);
         }
 
-        public int getCode() { return 502; }
+        public int getCode() {
+            return 502;
+        }
     }
 
     /** ParseException class that is thrown whenever a Json object is parsed */

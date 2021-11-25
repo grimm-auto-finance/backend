@@ -8,9 +8,9 @@ import constants.EntityStringNames;
 import constants.Exceptions;
 
 import entities.*;
+
 import entitypackagers.Package;
 import entitypackagers.Packager;
-
 
 public class FetchLoanDataUseCase {
     private final Fetcher rateFetcher;
@@ -19,6 +19,7 @@ public class FetchLoanDataUseCase {
 
     /**
      * Constructs a new FetchLoanDataUseCase to use the given Fetchers and Packager.
+     *
      * @param rateFetcher the Fetcher to be used for making laon rate information requests
      * @param scoreFetcher the Fetcher to be used for making loan Senso Score information requests
      * @param packager the Packager to be used for the rate and loan request bodies
@@ -32,6 +33,7 @@ public class FetchLoanDataUseCase {
     /**
      * Make a request using this FetchLoanDataUseCase's Fetchers and the given CarBuyer and Car.
      * Return a LoanData constructed using the responses from the Fetchers
+     *
      * @param buyer the CarBuyer who is getting the loan
      * @param car the Car being purchased with the loan
      * @return a LoanData constructed using the responses from the Fetchers
@@ -60,8 +62,7 @@ public class FetchLoanDataUseCase {
         return GenerateEntitiesUseCase.generateLoanData(entityMap);
     }
 
-    private AttributeMap makeRateRequest(CarBuyer buyer, Car car)
-            throws Exceptions.CodedException {
+    private AttributeMap makeRateRequest(CarBuyer buyer, Car car) throws Exceptions.CodedException {
         Package rateBody;
         rateBody = getRateBody(buyer, car);
         AttributeMap rateResponseMap;
@@ -106,8 +107,8 @@ public class FetchLoanDataUseCase {
         return (AttributeMap) scoreFetcher.fetch(scoreBody.toString());
     }
 
-    private Package getScoreBody(
-            CarBuyer buyer, Car car, int termLength) throws Exceptions.PackageException {
+    private Package getScoreBody(CarBuyer buyer, Car car, int termLength)
+            throws Exceptions.PackageException {
 
         AttributeMap scoreMap = new AttributeMap();
         scoreMap.addItem("remainingBalance", car.getPrice());

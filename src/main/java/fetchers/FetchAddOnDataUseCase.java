@@ -2,8 +2,10 @@ package fetchers;
 
 import attributes.ArrayAttribute;
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
+
 import entities.AddOn;
 import entities.GenerateEntitiesUseCase;
 
@@ -15,6 +17,7 @@ public class FetchAddOnDataUseCase {
 
     /**
      * Constructs a new FetchAddOnDatauseCase to fetch AddOn information with the given Fetcher
+     *
      * @param fetcher the Fetcher to use to retrieve AddOn information
      */
     public FetchAddOnDataUseCase(Fetcher fetcher) {
@@ -23,6 +26,7 @@ public class FetchAddOnDataUseCase {
 
     /**
      * Gets the list of possible add-ons for the car with the given id
+     *
      * @param carId the id of the car whose add-ons are to be returned
      * @return a List of AddOns, where each AddOn belongs to the car with the given id
      * @throws Exceptions.CodedException if the request fails

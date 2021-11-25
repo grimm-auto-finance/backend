@@ -14,6 +14,7 @@ import entitypackagers.JsonPackager;
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 import fetchers.FetchCarDataUseCase;
+
 import logging.Logger;
 
 import java.io.BufferedReader;
@@ -41,8 +42,7 @@ public class Search extends Route {
     }
 
     /**
-     * The post method for the `/search` route.
-     * Takes in an HttpExchange containing a search string,
+     * The post method for the `/search` route. Takes in an HttpExchange containing a search string,
      * and returns an array of Cars matching that string.
      *
      * @param t the httpexchange that this method must handle

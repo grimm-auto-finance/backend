@@ -16,8 +16,9 @@ public class PostgresDataBase extends DataBase {
     private final String username;
 
     /**
-     * Constructs a new PostgresDataBase.
-     * This will connect to the given URL using the given username and password
+     * Constructs a new PostgresDataBase. This will connect to the given URL using the given
+     * username and password
+     *
      * @param URL the URL for the database connection
      * @param username the username to access the database
      * @param password the password to access the database
@@ -29,9 +30,9 @@ public class PostgresDataBase extends DataBase {
     }
 
     /**
-     * Initializes the connection between this PostgresDataBase and the actual database
-     * hosted at the given URL
-     * Also sets up the columns of the database and declares their values
+     * Initializes the connection between this PostgresDataBase and the actual database hosted at
+     * the given URL Also sets up the columns of the database and declares their values
+     *
      * @throws Exceptions.DataBaseException if the connection fails to initialize
      */
     public void connectAndMigrate() throws Exceptions.DataBaseException {
@@ -66,12 +67,14 @@ public class PostgresDataBase extends DataBase {
 
     /**
      * Inserts placeholder data from data/cars.csv into the database.
-     * @throws Exceptions.DataBaseException if the insertion fails either due to cars.csv not existing or placeholder data already being present
+     *
+     * @throws Exceptions.DataBaseException if the insertion fails either due to cars.csv not
+     *     existing or placeholder data already being present
      */
     public void insertPlaceholderData() throws Exceptions.DataBaseException {
         Scanner scanner;
         try {
-        scanner = new Scanner(new File("data/cars.csv"));
+            scanner = new Scanner(new File("data/cars.csv"));
         } catch (FileNotFoundException e) {
             throw new Exceptions.DataBaseException("error reading car data file", e);
         }
@@ -99,12 +102,15 @@ public class PostgresDataBase extends DataBase {
 
     /**
      * Executes a search query in the database that this PostgresDataBase is connected to
+     *
      * @param query the search String
-     * @param queryParam an Integer or String, setting whether the ?s in query represent numbers or strings
+     * @param queryParam an Integer or String, setting whether the ?s in query represent numbers or
+     *     strings
      * @return a ResultSet containing the results of the query
      * @throws Exceptions.DataBaseException if the query fails
      */
-    public ResultSet executeQuery(String query, Object queryParam) throws Exceptions.DataBaseException {
+    public ResultSet executeQuery(String query, Object queryParam)
+            throws Exceptions.DataBaseException {
         try {
             PreparedStatement pst = connection.prepareStatement(query);
             if (queryParam instanceof Integer) {
@@ -116,7 +122,8 @@ public class PostgresDataBase extends DataBase {
             }
             return pst.executeQuery();
         } catch (SQLException e) {
-            throw new Exceptions.DataBaseException("could not execute database query" + e.getMessage(), e);
+            throw new Exceptions.DataBaseException(
+                    "could not execute database query" + e.getMessage(), e);
         }
     }
 }

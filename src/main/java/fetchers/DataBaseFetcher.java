@@ -8,7 +8,6 @@ import attributes.AttributeMap;
 import constants.Exceptions;
 import constants.Exceptions.FetchException;
 
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class DataBaseFetcher implements Fetcher {
 
     /**
      * Constructs a new DataBaseFetcher to fetch data from the given DataBase
+     *
      * @param database the DataBase to fetch from
      */
     public DataBaseFetcher(DataBase database) {
@@ -29,6 +29,7 @@ public class DataBaseFetcher implements Fetcher {
 
     /**
      * Sets the Fetch parameter for fetch requests to database
+     *
      * @param queryParam the parameter for the fetch requestsi
      */
     public void setFetchParam(Object queryParam) {
@@ -37,6 +38,7 @@ public class DataBaseFetcher implements Fetcher {
 
     /**
      * Make a request to database, and return an ArrayAttribute containing the results
+     *
      * @param request the request to be made to database
      * @return an ArrayAttribute where each entry represents a row of results from the database
      * @throws Exceptions.FetchException if the reqeust fails
@@ -46,7 +48,12 @@ public class DataBaseFetcher implements Fetcher {
         try {
             queryResult = database.executeQuery(request, queryParam);
         } catch (Exceptions.DataBaseException e) {
-            throw new FetchException("Failed to execute DataBase query with request\n" + request + "\nand parameter " + queryParam, e);
+            throw new FetchException(
+                    "Failed to execute DataBase query with request\n"
+                            + request
+                            + "\nand parameter "
+                            + queryParam,
+                    e);
         }
         List<AttributeMap> resultsList = new ArrayList<>();
         try {

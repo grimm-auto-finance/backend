@@ -18,6 +18,7 @@ import entityparsers.Parser;
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 import fetchers.FetchCarDataUseCase;
+
 import logging.Logger;
 
 import java.io.InputStream;
@@ -37,16 +38,14 @@ public class Addons extends Route {
         this.dataBase = dataBase;
     }
 
-
     @Override
     public String getContext() {
         return "/addons";
     }
 
     /**
-     * The post method for the `/addons` route.
-     * Takes in an HttpExchange containing a Car id, and responds with
-     * the Car corresponding to that id, along with all of its possible add-ons.
+     * The post method for the `/addons` route. Takes in an HttpExchange containing a Car id, and
+     * responds with the Car corresponding to that id, along with all of its possible add-ons.
      *
      * @param t the httpexchange that this method must handle
      */
