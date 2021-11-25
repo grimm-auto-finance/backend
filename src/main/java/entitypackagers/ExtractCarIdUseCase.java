@@ -5,7 +5,7 @@ import attributes.DoubleAttribute;
 
 import constants.EntityStringNames;
 
-public class GenerateIdUseCase {
+public class ExtractCarIdUseCase {
     /**
      * Extracts the AttributeMap corresponding to an id from the given AttributeMap, and returns
      * that id
@@ -13,7 +13,7 @@ public class GenerateIdUseCase {
      * @param map an AttributeMap with a submap containing key and value corresponding to an id
      * @return an id constructed using the extracted submap of map
      */
-    public static int generateId(AttributeMap map) {
+    public static int extractId(AttributeMap map) {
         DoubleAttribute idAttribute = (DoubleAttribute) map.getItem(EntityStringNames.ID_STRING);
         return idAttribute.getAttribute().intValue();
     }

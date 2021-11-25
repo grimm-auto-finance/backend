@@ -9,12 +9,12 @@ import constants.EntityStringNames;
 
 import org.junit.jupiter.api.Test;
 
-class GenerateIdUseCaseTest {
+class ExtractCarIdUseCaseTest {
 
     @Test
     public void testGenerateId() {
         AttributeMap map = new AttributeMap();
         map.addItem(EntityStringNames.ID_STRING, new DoubleAttribute(5));
-        assertEquals(5, GenerateIdUseCase.generateId(map));
+        assertEquals(5, ExtractCarIdUseCase.extractId(map));
     }
 }

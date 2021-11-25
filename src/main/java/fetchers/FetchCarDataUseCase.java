@@ -31,18 +31,16 @@ public class FetchCarDataUseCase {
      * @return a Car with the given id
      * @throws Exceptions.CodedException if the fetch fails
      */
-    public Car getCar(int id, boolean addOns) throws Exceptions.CodedException {
+    public Car getCar(int id) throws Exceptions.CodedException {
         String query = "SELECT * FROM cars WHERE id = ?;";
         try {
             fetcher.setFetchParam(id);
             ArrayAttribute resultsMapArrayAtt = (ArrayAttribute) fetcher.fetch(query);
             AttributeMap[] resultsMapArray = (AttributeMap[]) resultsMapArrayAtt.getAttribute();
             Car car = extractCar(resultsMapArray[0]);
-            if (addOns) {
-                FetchAddOnDataUseCase addOnFetcher = new FetchAddOnDataUseCase(fetcher);
-                for (AddOn addOn : addOnFetcher.getAddOns(id)) {
-                    car.addAddOn(addOn);
-                }
+            FetchAddOnDataUseCase addOnFetcher = new FetchAddOnDataUseCase(fetcher);
+            for (AddOn addOn : addOnFetcher.getAddOns(id)) {
+                car.addAddOn(addOn);
             }
             return car;
         } catch (Exceptions.FactoryException | Exceptions.FetchException e) {
@@ -61,8 +59,8 @@ public class FetchCarDataUseCase {
                 String.join(
                         "\n",
                         "SELECT * FROM cars",
-                        "WHERE to_tsvector(make || ' ' || model || ' ' || year) @@"
-                                + " websearch_to_tsquery(?)");
+                        "WHERE to_tsvector(price || ' ' || make || ' ' || model || ' '"
+                                + " || year || ' ' || kms) @@ websearch_to_tsquery(?)");
         try {
             fetcher.setFetchParam(searchString);
             ArrayAttribute resultsMapArrayAtt = (ArrayAttribute) fetcher.fetch(query);
@@ -80,7 +78,6 @@ public class FetchCarDataUseCase {
 
     private static Car extractCar(AttributeMap carMap) throws Exceptions.FactoryException {
         carMap.addItem(EntityStringNames.ADD_ON_STRING, new AttributeMap());
-        carMap.addItem(EntityStringNames.CAR_KILOMETRES, 0.0);
         AttributeMap entityMap = new AttributeMap();
         entityMap.addItem(EntityStringNames.CAR_STRING, carMap);
         return GenerateEntitiesUseCase.generateCar(entityMap);
