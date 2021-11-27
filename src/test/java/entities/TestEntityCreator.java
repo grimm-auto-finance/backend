@@ -18,10 +18,14 @@ import java.util.Map;
 public class TestEntityCreator {
 
     public static Car getTestCar() {
-        return getTestCar(50000.0, "Honda", "Civic", 2020.0, 100.0, new AttributeMap(), 3.0);
+        return getTestCar(50000.0, "Honda", "Civic", 2020, 100.0, new AttributeMap(), 3);
     }
 
-    public static Car getTestCar(double price, String make, String model, double year, double kms, AttributeMap addOns, double id) {
+    public static Car getTestCar(int id) {
+        return getTestCar(50000.0, "Honda", "Civic", 2020, 100.0, new AttributeMap(), id);
+    }
+
+    public static Car getTestCar(double price, String make, String model, int year, double kms, AttributeMap addOns, int id) {
         Car car = null;
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_PRICE, price);
@@ -43,12 +47,12 @@ public class TestEntityCreator {
         CarBuyer buyer = null;
         AttributeMap buyerMap = new AttributeMap();
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, 30000.5);
-        buyerMap.addItem(EntityStringNames.BUYER_CREDIT, 750.0);
+        buyerMap.addItem(EntityStringNames.BUYER_CREDIT, 750);
         buyerMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, 15000.0);
         try {
             buyer = CarBuyerFactory.getEntity(buyerMap);
         } catch (Exceptions.FactoryException e) {
-            fail("Factory creation of CarBuyer failed");
+            fail("Factory creation of CarBuyer failed: " + e.getMessage());
         }
         return buyer;
     }
@@ -75,7 +79,7 @@ public class TestEntityCreator {
         loanMap.addItem(EntityStringNames.LOAN_SCORE, "Medium");
         loanMap.addItem(EntityStringNames.LOAN_INTEREST_RATE, 50000.0);
         loanMap.addItem(EntityStringNames.LOAN_INTEREST_SUM, 36.0);
-        loanMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, 200.25);
+        loanMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, 200);
         List<Map<String, Double>> amortizationTable = new ArrayList<>();
         Map<String, Double> installment = new HashMap<>();
         installment.put("Test String", 5.5);
