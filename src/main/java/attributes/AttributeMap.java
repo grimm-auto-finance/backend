@@ -1,5 +1,7 @@
 package attributes;
 
+import constants.EntityStringNames;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,5 +72,20 @@ public class AttributeMap extends Attribute {
             combined.addItem(s, secondItems.get(s));
         }
         return combined;
+    }
+
+    @Override
+    public String toString() {
+        return items.toString();
+    }
+
+    // get a double value from the map that might be stored as an integer
+    public static double getDoubleMaybeInteger(String key, AttributeMap map) {
+        Object item = map.getItem(key).getAttribute();
+        if (item instanceof Integer) {
+            return ((Integer) item).doubleValue();
+        } else {
+            return (double) item;
+        }
     }
 }

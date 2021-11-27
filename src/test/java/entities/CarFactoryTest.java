@@ -23,11 +23,11 @@ public class CarFactoryTest {
         carMap.addItem(EntityStringNames.CAR_MODEL, "Civic");
         carMap.addItem(EntityStringNames.CAR_PRICE, 3000.0);
         // TODO: update this to be an int once we have parsing ints/doubles figured out
-        carMap.addItem(EntityStringNames.CAR_YEAR, 2020.0);
+        carMap.addItem(EntityStringNames.CAR_YEAR, 2020);
         AttributeMap addOnMap = new AttributeMap();
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnMap);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
-        carMap.addItem(EntityStringNames.CAR_ID, 3.0);
+        carMap.addItem(EntityStringNames.CAR_ID, 3);
         Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, 3);
         try {
             assertEquals(testCar, CarFactory.getEntity(carMap));
@@ -43,7 +43,7 @@ public class CarFactoryTest {
         carMap.addItem(EntityStringNames.CAR_MODEL, "Civic");
         carMap.addItem(EntityStringNames.CAR_PRICE, 3000.0);
         // TODO: update this to be an int once we have parsing ints/doubles figured out
-        carMap.addItem(EntityStringNames.CAR_YEAR, 2020.0);
+        carMap.addItem(EntityStringNames.CAR_YEAR, 2020);
         AttributeMap addOnMap = new AttributeMap();
         addOnMap.addItem(EntityStringNames.ADD_ON_NAME, "rust-proofing");
         addOnMap.addItem(EntityStringNames.ADD_ON_PRICE, 15.25);
@@ -56,7 +56,7 @@ public class CarFactoryTest {
         Map<String, AddOn> addOnHashMap = new HashMap<>();
         addOnHashMap.put("rust-proofing", addOn);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
-        carMap.addItem(EntityStringNames.CAR_ID, 3.0);
+        carMap.addItem(EntityStringNames.CAR_ID, 3);
         Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, addOnHashMap, 3);
 
         try {

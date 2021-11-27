@@ -74,8 +74,6 @@ public class DataBaseFetcher implements Fetcher {
             Object resultItem = rs.getObject(i);
             if (resultItem instanceof BigDecimal) {
                 resultItem = ((BigDecimal) resultItem).doubleValue();
-            } else if (resultItem instanceof Integer) {
-                resultItem = ((Integer) resultItem).doubleValue();
             }
             resultMap.addItem(metaData.getColumnName(i), resultItem);
         }

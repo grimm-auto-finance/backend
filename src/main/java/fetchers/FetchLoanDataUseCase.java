@@ -43,16 +43,7 @@ public class FetchLoanDataUseCase {
 
         AttributeMap rateRequestResult = makeRateRequest(buyer, car);
 
-        AttributeMap scoreRequestResult =
-                makeScoreRequest(
-                        buyer,
-                        car,
-                        (int)
-                                Math.round(
-                                        (double)
-                                                rateRequestResult
-                                                        .getItem(EntityStringNames.LOAN_TERM_LENGTH)
-                                                        .getAttribute()));
+        AttributeMap scoreRequestResult = makeScoreRequest(buyer, car, (int) rateRequestResult.getItem(EntityStringNames.LOAN_TERM_LENGTH).getAttribute());
 
         AttributeMap loanMap = AttributeMap.combine(rateRequestResult, scoreRequestResult);
 
@@ -82,7 +73,7 @@ public class FetchLoanDataUseCase {
         // TODO: remove this when we figure out why senso is sending term as a string
         rateResponseMap.addItem(
                 "term",
-                Double.parseDouble((String) rateResponseMap.getItem("term").getAttribute()));
+                Integer.parseInt((String) rateResponseMap.getItem("term").getAttribute()));
     }
 
     private Package getRateBody(CarBuyer buyer, Car car) throws Exceptions.PackageException {

@@ -3,6 +3,7 @@ package entitypackagers;
 import attributes.AttributeMap;
 import attributes.DoubleAttribute;
 
+import attributes.IntAttribute;
 import constants.EntityStringNames;
 
 public class ExtractCarIdUseCase {
@@ -14,7 +15,7 @@ public class ExtractCarIdUseCase {
      * @return an id constructed using the extracted submap of map
      */
     public static int extractId(AttributeMap map) {
-        DoubleAttribute idAttribute = (DoubleAttribute) map.getItem(EntityStringNames.ID_STRING);
-        return idAttribute.getAttribute().intValue();
+        IntAttribute idAttribute = (IntAttribute) map.getItem(EntityStringNames.ID_STRING);
+        return idAttribute.getAttribute();
     }
 }

@@ -57,7 +57,7 @@ public class Loan extends Route {
         ParseJsonUseCase parseInput = new ParseJsonUseCase();
         AttributeMap entitiesMap = parseInput.parseJson(is);
         AttributeMap carMap = (AttributeMap) entitiesMap.getItem(EntityStringNames.CAR_STRING);
-        carMap.addItem(EntityStringNames.CAR_ID, 0.0);
+        carMap.addItem(EntityStringNames.CAR_ID, 0);
         Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
         CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
         respond(t, 200, getResponse(buyer, car).getBytes());

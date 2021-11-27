@@ -21,14 +21,9 @@ public class CarBuyerFactory {
         int creditScore;
         double downpayment;
         try {
-            budget = (double) map.getItem(EntityStringNames.BUYER_BUDGET).getAttribute();
-            creditScore =
-                    (int)
-                            Math.round(
-                                    (Double)
-                                            map.getItem(EntityStringNames.BUYER_CREDIT)
-                                                    .getAttribute());
-            downpayment = (double) map.getItem(EntityStringNames.BUYER_DOWNPAYMENT).getAttribute();
+            budget = AttributeMap.getDoubleMaybeInteger(EntityStringNames.BUYER_BUDGET, map);
+            creditScore = (int) map.getItem(EntityStringNames.BUYER_CREDIT).getAttribute();
+            downpayment = AttributeMap.getDoubleMaybeInteger(EntityStringNames.BUYER_DOWNPAYMENT, map);
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate CarBuyer";
             throw new Exceptions.FactoryException(message, e);

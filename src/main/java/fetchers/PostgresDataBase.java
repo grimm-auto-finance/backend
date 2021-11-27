@@ -45,7 +45,7 @@ public class PostgresDataBase extends DataBase {
                         EntityStringNames.CAR_MAKE + " VARCHAR NOT NULL,",
                         EntityStringNames.CAR_MODEL + " VARCHAR NOT NULL,",
                         EntityStringNames.CAR_YEAR + " INT NOT NULL,",
-                        EntityStringNames.CAR_KILOMETRES + " INT,",
+                        EntityStringNames.CAR_KILOMETRES + " NUMERIC(9, 2) NOT NULL,",
                         "PRIMARY KEY (id)",
                         ");",
                         "CREATE TABLE IF NOT EXISTS addons (",
@@ -92,7 +92,7 @@ public class PostgresDataBase extends DataBase {
                 pst.setString(3, fields[2]);
                 pst.setString(4, fields[3]);
                 pst.setInt(5, Integer.parseInt(fields[4]));
-                pst.setInt(6, Integer.parseInt(fields[1]));
+                pst.setDouble(6, Double.parseDouble(fields[1]));
                 pst.execute();
             }
         } catch (SQLException e) {
