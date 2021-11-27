@@ -8,6 +8,7 @@ import constants.EntityStringNames;
 
 import entities.AddOn;
 
+import entities.TestEntityCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

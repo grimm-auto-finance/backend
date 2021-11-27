@@ -9,6 +9,7 @@ import constants.Exceptions;
 
 import entities.Entity;
 
+import entities.TestEntityCreator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
