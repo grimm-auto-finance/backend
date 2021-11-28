@@ -1,9 +1,8 @@
 package entitypackagers;
 
 import attributes.AttributeMap;
-import attributes.DoubleAttribute;
-
 import attributes.IntAttribute;
+
 import constants.EntityStringNames;
 
 public class ExtractCarIdUseCase {

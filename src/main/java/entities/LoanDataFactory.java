@@ -33,12 +33,15 @@ public class LoanDataFactory {
         List<Map<String, Double>> amortizationTable = new ArrayList<>();
 
         try {
-            interestRate = AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_INTEREST_RATE, map);
-            installment = AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_INSTALLMENT, map);
+            interestRate =
+                    AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_INTEREST_RATE, map);
+            installment =
+                    AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_INSTALLMENT, map);
             sensoScore = (String) map.getItem(EntityStringNames.LOAN_SCORE).getAttribute();
             loanAmount = AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_AMOUNT, map);
             termLength = (int) map.getItem(EntityStringNames.LOAN_TERM_LENGTH).getAttribute();
-            interestSum = AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_INTEREST_SUM, map);
+            interestSum =
+                    AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_INTEREST_SUM, map);
             ArrayAttribute amortizationArray =
                     (ArrayAttribute) map.getItem(EntityStringNames.LOAN_AMORTIZATION);
             Attribute[] amortization = amortizationArray.getAttribute();
@@ -47,7 +50,8 @@ public class LoanDataFactory {
                 Map<String, Attribute> installmentMap = installmentAttMap.getAttribute();
                 Map<String, Double> installmentDoubleMap = new HashMap<>();
                 for (String s : installmentMap.keySet()) {
-                    installmentDoubleMap.put(s, AttributeMap.getDoubleMaybeInteger(s, installmentAttMap));
+                    installmentDoubleMap.put(
+                            s, AttributeMap.getDoubleMaybeInteger(s, installmentAttMap));
                 }
                 amortizationTable.add(installmentDoubleMap);
             }

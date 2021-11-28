@@ -3,9 +3,8 @@ package entitypackagers;
 import static org.junit.jupiter.api.Assertions.*;
 
 import attributes.AttributeMap;
-import attributes.DoubleAttribute;
-
 import attributes.IntAttribute;
+
 import constants.EntityStringNames;
 
 import org.junit.jupiter.api.Test;

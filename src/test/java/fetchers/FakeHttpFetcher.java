@@ -1,13 +1,14 @@
 package fetchers;
 
-import attributes.ArrayAttribute;
 import attributes.Attribute;
-import attributes.AttributeFactory;
 import attributes.AttributeMap;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
+
 import entities.LoanData;
 import entities.TestEntityCreator;
+
 import entitypackagers.AttributizeLoanDataUseCase;
 
 import java.util.ArrayList;
@@ -17,14 +18,15 @@ import java.util.Map;
 
 public class FakeHttpFetcher implements Fetcher {
 
-
     @Override
     public AttributeMap fetch(String request) throws Exceptions.FetchException {
         if (request.contains("loanAmount")) {
             LoanData resultData = TestEntityCreator.getTestLoanData();
             AttributeMap rateMap = new AttributeMap();
             rateMap.addItem(EntityStringNames.LOAN_AMOUNT, resultData.getLoanAmount());
-            rateMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, ((Integer) resultData.getTermLength()).toString());
+            rateMap.addItem(
+                    EntityStringNames.LOAN_TERM_LENGTH,
+                    ((Integer) resultData.getTermLength()).toString());
             rateMap.addItem(EntityStringNames.LOAN_INTEREST_SUM, resultData.getInterestSum());
             rateMap.addItem(EntityStringNames.LOAN_INSTALLMENT, resultData.getInstallment());
             rateMap.addItem(EntityStringNames.LOAN_INTEREST_RATE, resultData.getInterestRate());
@@ -35,7 +37,8 @@ public class FakeHttpFetcher implements Fetcher {
             List<AttributeMap> amortizationAttMap =
                     AttributizeLoanDataUseCase.getAmortizationAttMap(amortizationTable);
             rateMap.addItem(
-                    EntityStringNames.LOAN_AMORTIZATION, amortizationAttMap.toArray(new Attribute[0]));
+                    EntityStringNames.LOAN_AMORTIZATION,
+                    amortizationAttMap.toArray(new Attribute[0]));
             return rateMap;
         } else if (request.contains("loanAge")) {
             LoanData resultData = TestEntityCreator.getTestLoanData();
@@ -47,7 +50,5 @@ public class FakeHttpFetcher implements Fetcher {
     }
 
     @Override
-    public void setFetchParam(Object param) throws Exceptions.FetchException {
-
-    }
+    public void setFetchParam(Object param) throws Exceptions.FetchException {}
 }

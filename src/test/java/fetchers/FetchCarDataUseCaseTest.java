@@ -1,16 +1,17 @@
 package fetchers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import constants.Exceptions;
+
 import entities.Car;
 import entities.TestEntityCreator;
-import entitypackagers.AttributizeCarUseCase;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class FetchCarDataUseCaseTest {
 
@@ -29,7 +30,6 @@ public class FetchCarDataUseCaseTest {
             fail(e.getMessage());
         }
     }
-
 
     @Test
     public void testSearch() {

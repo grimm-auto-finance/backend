@@ -25,7 +25,14 @@ public class TestEntityCreator {
         return getTestCar(50000.0, "Honda", "Civic", 2020, 100.0, new AttributeMap(), id);
     }
 
-    public static Car getTestCar(double price, String make, String model, int year, double kms, AttributeMap addOns, int id) {
+    public static Car getTestCar(
+            double price,
+            String make,
+            String model,
+            int year,
+            double kms,
+            AttributeMap addOns,
+            int id) {
         Car car = null;
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_PRICE, price);

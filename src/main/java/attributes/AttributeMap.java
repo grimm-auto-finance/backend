@@ -1,6 +1,5 @@
 package attributes;
 
-import constants.EntityStringNames;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,15 +1,17 @@
 package fetchers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import constants.Exceptions;
+
 import entities.AddOn;
 import entities.TestEntityCreator;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class FetchAddOnUseCaseTest {
 
