@@ -25,10 +25,7 @@ public class FakeDataBaseFetcher implements Fetcher {
     public ArrayAttribute fetch(String request) {
         List<AttributeMap> resultsList = new ArrayList<>();
         if (request.equals("SELECT * FROM cars WHERE id = ?;")) {
-            Car carResult = TestEntityCreator.getTestCar((int) queryParam);
-            Attributizer carAttributizer = AttributizerFactory.getAttributizer(carResult);
-            AttributeMap carMap = carAttributizer.attributizeEntity();
-            resultsList.add(carMap);
+            addCarMaptoResultList(resultsList);
         } else if (request.equals(
                 String.join(
                         "\n",
@@ -46,20 +43,7 @@ public class FakeDataBaseFetcher implements Fetcher {
                                 + EntityStringNames.CAR_KILOMETRES
                                 + ") @@ websearch_to_tsquery(?)"))) {
             List<Car> carResults = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
-                carResults.add(TestEntityCreator.getTestCar());
-            }
-            for (Car c : carResults) {
-                Attributizer carAttributizer = AttributizerFactory.getAttributizer(c);
-                AttributeMap carMap = carAttributizer.attributizeEntity();
-                carMap.addItem(
-                        EntityStringNames.CAR_ID,
-                        carMap.getItem(EntityStringNames.CAR_ID).getAttribute());
-                carMap.addItem(
-                        EntityStringNames.CAR_YEAR,
-                        carMap.getItem(EntityStringNames.CAR_YEAR).getAttribute());
-                resultsList.add(carMap);
-            }
+            addItemsAndcarResultstoLists(resultsList, carResults);
         } else if (request.equals("SELECT * FROM addons WHERE vid = ?;")) {
             for (int i = 0; i < 3; i++) {
                 AddOn addOn = TestEntityCreator.getTestAddOn();
@@ -69,6 +53,31 @@ public class FakeDataBaseFetcher implements Fetcher {
         }
         Attribute[] resultsArray = resultsList.toArray(new AttributeMap[0]);
         return (ArrayAttribute) AttributeFactory.createAttribute(resultsArray);
+    }
+
+    private void addCarMaptoResultList(List<AttributeMap> resultsList) {
+        Car carResult = TestEntityCreator.getTestCar((int) queryParam);
+        Attributizer carAttributizer = AttributizerFactory.getAttributizer(carResult);
+        AttributeMap carMap = carAttributizer.attributizeEntity();
+        resultsList.add(carMap);
+    }
+
+    private void addItemsAndcarResultstoLists(
+            List<AttributeMap> resultsList, List<Car> carResults) {
+        for (int i = 0; i < 5; i++) {
+            carResults.add(TestEntityCreator.getTestCar());
+        }
+        for (Car c : carResults) {
+            Attributizer carAttributizer = AttributizerFactory.getAttributizer(c);
+            AttributeMap carMap = carAttributizer.attributizeEntity();
+            carMap.addItem(
+                    EntityStringNames.CAR_ID,
+                    carMap.getItem(EntityStringNames.CAR_ID).getAttribute());
+            carMap.addItem(
+                    EntityStringNames.CAR_YEAR,
+                    carMap.getItem(EntityStringNames.CAR_YEAR).getAttribute());
+            resultsList.add(carMap);
+        }
     }
 
     @Override
