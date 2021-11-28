@@ -82,7 +82,7 @@ public class TestEntityCreator {
         loanMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, 200);
         List<Map<String, Double>> amortizationTable = new ArrayList<>();
         Map<String, Double> installment = new HashMap<>();
-        installment.put("Test String", 5.5);
+        installment.put("installment", 500.25);
         amortizationTable.add(installment);
         List<AttributeMap> amortizationAttMap =
                 AttributizeLoanDataUseCase.getAmortizationAttMap(amortizationTable);

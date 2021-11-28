@@ -39,7 +39,7 @@ public class FetchLoanDataUseCase {
      * @return a LoanData constructed using the responses from the Fetchers
      * @throws Exceptions.CodedException if any step of the fetching process fails
      */
-    public LoanData fetch(CarBuyer buyer, Car car) throws Exceptions.CodedException {
+    public LoanData getLoanData(CarBuyer buyer, Car car) throws Exceptions.CodedException {
 
         AttributeMap rateRequestResult = makeRateRequest(buyer, car);
 
@@ -78,7 +78,6 @@ public class FetchLoanDataUseCase {
 
     private Package getRateBody(CarBuyer buyer, Car car) throws Exceptions.PackageException {
         AttributeMap rateMap = new AttributeMap();
-        rateMap.addItem("loanAmount", car.getPrice());
         rateMap.addItem("loanAmount", car.getPrice());
         rateMap.addItem("creditScore", buyer.getCreditScore());
         rateMap.addItem("pytBudget", buyer.getBudget());

@@ -27,8 +27,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.json.*;
-
 /** The Route handling the `/loan` route which allows users to fetch information about a loan. */
 public class Loan extends Route {
 
@@ -85,7 +83,7 @@ public class Loan extends Route {
         Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL);
         FetchLoanDataUseCase fetchLoanData =
                 new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
-        LoanData loanData = fetchLoanData.fetch(buyer, car);
+        LoanData loanData = fetchLoanData.getLoanData(buyer, car);
         return loanData;
     }
 }

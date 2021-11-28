@@ -5,10 +5,9 @@ import attributes.Attribute;
 import attributes.AttributeFactory;
 import attributes.AttributeMap;
 import constants.EntityStringNames;
-import constants.Exceptions;
+import entities.AddOn;
 import entities.Car;
 import entities.TestEntityCreator;
-import entitypackagers.AttributizeCarUseCase;
 import entitypackagers.Attributizer;
 import entitypackagers.AttributizerFactory;
 
@@ -26,8 +25,6 @@ public class FakeDataBaseFetcher implements Fetcher {
             Car carResult = TestEntityCreator.getTestCar((int) queryParam);
             Attributizer carAttributizer = AttributizerFactory.getAttributizer(carResult);
             AttributeMap carMap = carAttributizer.attributizeEntity();
-            carMap.addItem(EntityStringNames.CAR_ID, queryParam);
-            carMap.addItem(EntityStringNames.CAR_YEAR, carMap.getItem(EntityStringNames.CAR_YEAR).getAttribute());
             resultsList.add(carMap);
         } else if (request.equals(String.join(
                 "\n",
@@ -45,8 +42,9 @@ public class FakeDataBaseFetcher implements Fetcher {
                         + EntityStringNames.CAR_KILOMETRES
                         + ") @@ websearch_to_tsquery(?)"))) {
             List<Car> carResults = new ArrayList<>();
-            carResults.add(TestEntityCreator.getTestCar(3));
-            carResults.add(TestEntityCreator.getTestCar(5));
+            for (int i = 0; i < 5; i++) {
+                carResults.add(TestEntityCreator.getTestCar());
+            }
             for (Car c : carResults) {
                 Attributizer carAttributizer = AttributizerFactory.getAttributizer(c);
                 AttributeMap carMap = carAttributizer.attributizeEntity();
@@ -54,6 +52,14 @@ public class FakeDataBaseFetcher implements Fetcher {
                 carMap.addItem(EntityStringNames.CAR_YEAR, carMap.getItem(EntityStringNames.CAR_YEAR).getAttribute());
                 resultsList.add(carMap);
             }
+        } else if (request.equals("SELECT * FROM addons WHERE vid = ?;")) {
+            for (int i = 0; i < 3; i++) {
+                AddOn addOn = TestEntityCreator.getTestAddOn();
+                Attributizer addOnAttributizer = AttributizerFactory.getAttributizer(addOn);
+                resultsList.add(addOnAttributizer.attributizeEntity());
+            }
+
+
         }
         Attribute[] resultsArray = resultsList.toArray(new AttributeMap[0]);
         return (ArrayAttribute) AttributeFactory.createAttribute(resultsArray);
