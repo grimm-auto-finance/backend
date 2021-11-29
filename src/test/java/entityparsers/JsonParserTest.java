@@ -67,16 +67,13 @@ public class JsonParserTest {
         testEq(parser);
     }
 
-    /*
-     Fails since JsonParser currently treats all numbers as doubles
-        @Test
-        public void testParserAllInts() {
-            addToBoth("int value", 16);
-            addToBoth("int value 2", 18);
-            JsonParser parser = new JsonParser(builder.build());
-            testEq(parser);
-        }
-    */
+    @Test
+    public void testParserAllInts() {
+        addToBoth("int value", 16);
+        addToBoth("int value 2", 18);
+        JsonParser parser = new JsonParser(builder.build());
+        testEq(parser);
+    }
 
     @Test
     public void testParserAllDoubles() {
@@ -123,7 +120,8 @@ public class JsonParserTest {
 
     @Test
     public void testJsonParserManyValues() {
-        // addToBoth("Int value", 5);
+        addToBoth("Int value", 5);
+        addToBoth("double value .0", 10.0);
         addToBoth("String value", "hello");
         addToBoth("Double value", 5.5);
         AttributeMap subMap = new AttributeMap();

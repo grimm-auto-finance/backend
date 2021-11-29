@@ -22,7 +22,7 @@ public class AttributeFactory {
             return new ArrayAttribute((Attribute[]) obj);
         } else {
             throw new ClassCastException(
-                    "Unable to find appropriate Attribute for Object " + obj.toString());
+                    "Unable to find appropriate Attribute for Object of type " + obj.getClass());
         }
     }
 }

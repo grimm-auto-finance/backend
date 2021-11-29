@@ -71,4 +71,19 @@ public class AttributeMap extends Attribute {
         }
         return combined;
     }
+
+    @Override
+    public String toString() {
+        return items.toString();
+    }
+
+    // get a double value from the map that might be stored as an integer
+    public static double getDoubleMaybeInteger(String key, AttributeMap map) {
+        Object item = map.getItem(key).getAttribute();
+        if (item instanceof Integer) {
+            return ((Integer) item).doubleValue();
+        } else {
+            return (double) item;
+        }
+    }
 }

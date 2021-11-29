@@ -14,6 +14,11 @@ public class Exceptions {
             super(message);
         }
 
+        public CodedException(String message, Exception e) {
+            super(message + ": " + e.getMessage());
+            this.setStackTrace(e.getStackTrace());
+        }
+
         public abstract int getCode();
     }
 
@@ -23,13 +28,32 @@ public class Exceptions {
 
         /** @param message The exception message */
         public FetchException(String message, Exception e) {
+            super(message, e);
+        }
+
+        public FetchException(String message) {
             super(message);
-            this.setStackTrace(e.getStackTrace());
         }
 
         /** @return Returns the specific FetchException code */
         public int getCode() {
             return 500;
+        }
+    }
+
+    public static class DataBaseException extends CodedException {
+        public DataBaseException() {}
+
+        public DataBaseException(String message, Exception e) {
+            super(message, e);
+        }
+
+        public DataBaseException(String message) {
+            super(message);
+        }
+
+        public int getCode() {
+            return 502;
         }
     }
 
@@ -45,6 +69,10 @@ public class Exceptions {
         public ParseException(String message) {
             super(message);
         }
+
+        public ParseException(String message, Exception e) {
+            super(message, e);
+        }
     }
 
     public static class FactoryException extends CodedException {
@@ -57,6 +85,10 @@ public class Exceptions {
         public FactoryException(String message) {
             super(message);
         }
+
+        public FactoryException(String message, Exception e) {
+            super(message, e);
+        }
     }
 
     /**
@@ -68,6 +100,10 @@ public class Exceptions {
         /** @param message The exception message */
         public PackageException(String message) {
             super(message);
+        }
+
+        public PackageException(String message, Exception e) {
+            super(message, e);
         }
 
         /** @return Returns the specific PackageException code */

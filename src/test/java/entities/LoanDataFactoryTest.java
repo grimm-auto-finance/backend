@@ -25,7 +25,7 @@ public class LoanDataFactoryTest {
         AttributeMap loanMap = new AttributeMap();
         loanMap.addItem(EntityStringNames.LOAN_INTEREST_RATE, 1.5);
         // TODO: update this to be an int once we have int/double parsing figured out
-        loanMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, 36.0);
+        loanMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, 36);
         loanMap.addItem(EntityStringNames.LOAN_INSTALLMENT, 300.25);
         loanMap.addItem(EntityStringNames.LOAN_AMOUNT, 10000.0);
         loanMap.addItem(EntityStringNames.LOAN_INTEREST_SUM, 200.5);

@@ -23,7 +23,7 @@ public class CarFactoryTest {
         carMap.addItem(EntityStringNames.CAR_MODEL, "Civic");
         carMap.addItem(EntityStringNames.CAR_PRICE, 3000.0);
         // TODO: update this to be an int once we have parsing ints/doubles figured out
-        carMap.addItem(EntityStringNames.CAR_YEAR, 2020.0);
+        carMap.addItem(EntityStringNames.CAR_YEAR, 2020);
         AttributeMap addOnMap = new AttributeMap();
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnMap);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
@@ -43,7 +43,7 @@ public class CarFactoryTest {
         carMap.addItem(EntityStringNames.CAR_MODEL, "Civic");
         carMap.addItem(EntityStringNames.CAR_PRICE, 3000.0);
         // TODO: update this to be an int once we have parsing ints/doubles figured out
-        carMap.addItem(EntityStringNames.CAR_YEAR, 2020.0);
+        carMap.addItem(EntityStringNames.CAR_YEAR, 2020);
         AttributeMap addOnMap = new AttributeMap();
         addOnMap.addItem(EntityStringNames.ADD_ON_NAME, "rust-proofing");
         addOnMap.addItem(EntityStringNames.ADD_ON_PRICE, 15.25);
