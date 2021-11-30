@@ -85,7 +85,8 @@ public class PostgresDataBase extends DataBase {
             while (scanner.hasNext()) {
                 line = scanner.next();
                 String[] fields = line.split(",");
-                String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
+                String statement =
+                        "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
                 PreparedStatement pst = connection.prepareStatement(statement);
                 pst.setInt(1, Integer.parseInt(fields[0]));
                 pst.setDouble(2, Double.parseDouble(fields[5]));
