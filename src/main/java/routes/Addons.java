@@ -61,9 +61,7 @@ public class Addons extends Route {
         JsonPackager packager = new JsonPackager();
         AttributizeCarUseCase carAttributizer = new AttributizeCarUseCase(car);
         JsonObject json = packager.writePackage(carAttributizer.attributizeEntity()).getPackage();
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        arrayBuilder.add(json);
-        return arrayBuilder.build().toString();
+        return json.toString();
     }
 
     private Car getCar(int id) throws Exceptions.CodedException {
