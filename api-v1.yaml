@@ -58,7 +58,7 @@ paths:
         schema:
           type: "object"
           properties:
-            vehicleId:
+            id:
               type: "number"
       responses:
         "200":
