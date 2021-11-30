@@ -85,7 +85,8 @@ public class PostgresDataBase extends DataBase {
             while (scanner.hasNext()) {
                 line = scanner.next();
                 String[] fields = line.split(",");
-                String statement = "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?)";
+                String statement =
+                        "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
                 PreparedStatement pst = connection.prepareStatement(statement);
                 pst.setInt(1, Integer.parseInt(fields[0]));
                 pst.setDouble(2, Double.parseDouble(fields[5]));
@@ -96,7 +97,32 @@ public class PostgresDataBase extends DataBase {
                 pst.execute();
             }
         } catch (SQLException e) {
-            throw new Exceptions.DataBaseException("placeholder data may already exist", e);
+            throw new Exceptions.DataBaseException("couldn't insert car placeholder data", e);
+        }
+
+        try {
+            scanner = new Scanner(new File("data/addons.csv"));
+        } catch (FileNotFoundException e) {
+            throw new Exceptions.DataBaseException("error reading addon data file", e);
+        }
+        scanner.useDelimiter("\n");
+        scanner.next();
+        try {
+            while (scanner.hasNext()) {
+                line = scanner.next();
+                String[] fields = line.split(",");
+                String statement =
+                        "INSERT INTO addons VALUES (?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
+                PreparedStatement pst = connection.prepareStatement(statement);
+                pst.setInt(1, Integer.parseInt(fields[0]));
+                pst.setString(2, fields[1]);
+                pst.setDouble(3, Double.parseDouble(fields[2]));
+                pst.setString(4, fields[3]);
+                pst.setInt(5, Integer.parseInt(fields[4]));
+                pst.execute();
+            }
+        } catch (SQLException e) {
+            throw new Exceptions.DataBaseException("couldn't insert car placeholder data", e);
         }
     }
 
