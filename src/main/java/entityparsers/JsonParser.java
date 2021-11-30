@@ -4,6 +4,7 @@ import attributes.*;
 
 import constants.Exceptions;
 
+import java.io.InputStream;
 import java.util.Set;
 
 import javax.json.*;

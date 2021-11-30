@@ -16,6 +16,7 @@ import entitypackagers.ExtractCarIdUseCase;
 import entitypackagers.JsonPackager;
 
 import entityparsers.JsonParser;
+import entityparsers.ParseJsonUseCase;
 import entityparsers.Parser;
 
 import fetchers.DataBase;
@@ -25,6 +26,7 @@ import fetchers.FetchCarDataUseCase;
 import logging.Logger;
 
 import java.io.InputStream;
+import java.util.Arrays;
 
 import javax.json.*;
 
@@ -70,12 +72,9 @@ public class Addons extends Route {
         return carDataFetcher.getCar(id);
     }
 
-    private int getId(HttpExchange t) throws Exceptions.ParseException {
-        InputStream is = t.getRequestBody();
-        JsonReader jsonReader = Json.createReader(is);
-        JsonObject inputObj = jsonReader.readObject();
-        Parser jsonParser = new JsonParser(inputObj);
-        AttributeMap entitiesMap = jsonParser.parse();
+    private int getId(HttpExchange t) throws Exceptions.CodedException {
+        ParseJsonUseCase parseJsonUseCase = new ParseJsonUseCase();
+        AttributeMap entitiesMap = parseJsonUseCase.parseJson(t.getRequestBody());
         return ExtractCarIdUseCase.extractId(entitiesMap);
     }
 

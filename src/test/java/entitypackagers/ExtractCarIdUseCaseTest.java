@@ -7,6 +7,7 @@ import attributes.IntAttribute;
 
 import constants.EntityStringNames;
 
+import constants.Exceptions;
 import org.junit.jupiter.api.Test;
 
 class ExtractCarIdUseCaseTest {
@@ -15,6 +16,10 @@ class ExtractCarIdUseCaseTest {
     public void testGenerateId() {
         AttributeMap map = new AttributeMap();
         map.addItem(EntityStringNames.ID_STRING, new IntAttribute(5));
-        assertEquals(5, ExtractCarIdUseCase.extractId(map));
+        try {
+            assertEquals(5, ExtractCarIdUseCase.extractId(map));
+        } catch (Exceptions.CodedException e) {
+            fail();
+        }
     }
 }
