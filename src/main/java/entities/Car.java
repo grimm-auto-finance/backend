@@ -72,7 +72,6 @@ public class Car extends Entity {
      */
     public void addAddOn(AddOn addOn) {
         addOns.put(addOn.getName(), addOn);
-        this.price += addOn.getPrice();
     }
 
     /**
@@ -81,7 +80,6 @@ public class Car extends Entity {
      * @param addOnName the name of the AddOn to be removed
      */
     public void removeAddOn(String addOnName) {
-        this.price = this.price - this.addOns.get(addOnName).getPrice();
         addOns.remove(addOnName);
     }
 
@@ -101,6 +99,18 @@ public class Car extends Entity {
      */
     public double getPrice() {
         return price;
+    }
+
+    /**
+     * Returns this Car's price, including any add-ons it has.
+     * @return the total price of this car with its add-ons, in dollars
+     */
+    public double getTotalPrice() {
+        double totalPrice = price;
+        for (String name : addOns.keySet()) {
+            totalPrice += addOns.get(name).getPrice();
+        }
+        return totalPrice;
     }
 
     /**
