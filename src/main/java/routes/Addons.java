@@ -15,18 +15,13 @@ import entitypackagers.AttributizeAddOnUseCase;
 import entitypackagers.ExtractCarIdUseCase;
 import entitypackagers.JsonPackager;
 
-import entityparsers.JsonParser;
 import entityparsers.ParseJsonUseCase;
-import entityparsers.Parser;
 
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 import fetchers.FetchCarDataUseCase;
 
 import logging.Logger;
-
-import java.io.InputStream;
-import java.util.Arrays;
 
 import javax.json.*;
 

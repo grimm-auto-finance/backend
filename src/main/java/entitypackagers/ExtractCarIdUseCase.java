@@ -1,7 +1,6 @@
 package entitypackagers;
 
 import attributes.AttributeMap;
-import attributes.IntAttribute;
 
 import constants.EntityStringNames;
 import constants.Exceptions;

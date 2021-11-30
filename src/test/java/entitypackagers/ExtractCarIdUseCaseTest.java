@@ -6,8 +6,8 @@ import attributes.AttributeMap;
 import attributes.IntAttribute;
 
 import constants.EntityStringNames;
-
 import constants.Exceptions;
+
 import org.junit.jupiter.api.Test;
 
 class ExtractCarIdUseCaseTest {
