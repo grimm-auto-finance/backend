@@ -24,7 +24,6 @@ import logging.Logger;
 import java.io.InputStream;
 
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
