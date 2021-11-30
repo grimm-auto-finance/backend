@@ -16,10 +16,42 @@ public class LoanData extends Entity {
     private double loanAmount;
     private int termLength;
     private double interestSum;
+    private final double addOnBudget;
     private final List<Map<String, Double>> amortizationTable;
 
     /**
      * Constructs a new LoanData object with the given values.
+     *
+     * @param interestRate the interest rate of the loan
+     * @param installment the monthly installment value of the loan
+     * @param sensoScore the senso score of the loan
+     * @param loanAmount the principal value of the loan
+     * @param termLength the length of the loan's term
+     * @param interestSum the total amount of interest paid on the loan
+     * @param addOnBudget the remaining budget for add-ons on this loan
+     * @param amortizationTable the amortization table for this loan
+     */
+    protected LoanData(
+            double interestRate,
+            double installment,
+            String sensoScore,
+            double loanAmount,
+            int termLength,
+            double interestSum, double addOnBudget,
+            List<Map<String, Double>> amortizationTable) {
+        this.interestRate = interestRate;
+        this.installment = installment;
+        this.sensoScore = sensoScore;
+        this.loanAmount = loanAmount;
+        this.termLength = termLength;
+        this.interestSum = interestSum;
+        this.addOnBudget = addOnBudget;
+        this.amortizationTable = amortizationTable;
+    }
+
+    /**
+     * Constructs a new LoanData object with the given values.
+     * addOnBudget is initialized to 0
      *
      * @param interestRate the interest rate of the loan
      * @param installment the monthly installment value of the loan
@@ -37,13 +69,7 @@ public class LoanData extends Entity {
             int termLength,
             double interestSum,
             List<Map<String, Double>> amortizationTable) {
-        this.interestRate = interestRate;
-        this.installment = installment;
-        this.sensoScore = sensoScore;
-        this.loanAmount = loanAmount;
-        this.termLength = termLength;
-        this.interestSum = interestSum;
-        this.amortizationTable = amortizationTable;
+        this(interestRate, installment, sensoScore, loanAmount, termLength, interestSum, 0.0, amortizationTable);
     }
 
     /**
@@ -163,6 +189,12 @@ public class LoanData extends Entity {
         this.interestSum = interestSum;
     }
 
+    /**
+     * Returns the budget left for add-ons on this loan.
+     * @return the budget for add-ons, in dollars
+     */
+    public double getAddOnBudget() { return addOnBudget; }
+
     @Override
     public String getStringName() {
         return EntityStringNames.LOAN_STRING;
@@ -190,6 +222,7 @@ public class LoanData extends Entity {
                 && (Math.abs(this.installment - otherLoan.installment) < .001)
                 && (Math.abs(this.loanAmount - otherLoan.loanAmount) < .001)
                 && (Math.abs(this.interestSum - otherLoan.interestSum) < .001)
+                && (Math.abs(this.addOnBudget - otherLoan.addOnBudget) < .001)
                 && (this.termLength == otherLoan.termLength)
                 && (this.sensoScore.equals(otherLoan.sensoScore));
     }
