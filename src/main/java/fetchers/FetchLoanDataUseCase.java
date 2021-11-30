@@ -84,7 +84,7 @@ public class FetchLoanDataUseCase {
 
     private Package getRateBody(CarBuyer buyer, Car car) throws Exceptions.PackageException {
         AttributeMap rateMap = new AttributeMap();
-        rateMap.addItem("loanAmount", car.getPrice());
+        rateMap.addItem("loanAmount", car.totalPrice());
         rateMap.addItem("creditScore", buyer.getCreditScore());
         rateMap.addItem("pytBudget", buyer.getBudget());
         rateMap.addItem("vehicleMake", car.getMake());
@@ -107,7 +107,7 @@ public class FetchLoanDataUseCase {
             throws Exceptions.PackageException {
 
         AttributeMap scoreMap = new AttributeMap();
-        scoreMap.addItem("remainingBalance", car.getPrice());
+        scoreMap.addItem("remainingBalance", car.totalPrice());
         scoreMap.addItem("creditScore", buyer.getCreditScore());
         scoreMap.addItem("loanAge", termLength);
         scoreMap.addItem("vehicleMake", car.getMake());
@@ -115,7 +115,7 @@ public class FetchLoanDataUseCase {
         scoreMap.addItem("vehicleYear", car.getYear());
         // TODO: Understand what carValue and loanStartDate are, and make them not
         // hardcoded
-        scoreMap.addItem("carValue", car.getPrice());
+        scoreMap.addItem("carValue", car.totalPrice());
         scoreMap.addItem("loanStartDate", String.valueOf(java.time.LocalDate.now()));
         return packager.writePackage(scoreMap);
     }
