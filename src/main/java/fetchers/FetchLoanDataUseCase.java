@@ -39,11 +39,10 @@ public class FetchLoanDataUseCase {
      * @return a LoanData constructed using the responses from the Fetchers
      * @throws Exceptions.CodedException if any step of the fetching process fails
      */
-    public LoanData getLoanData(CarBuyer buyer, Car car) throws Exceptions.CodedException {
+    public LoanData getLoanData(CarBuyer buyer, Car car, int loopMax) throws Exceptions.CodedException {
 
         AttributeMap rateRequestResult = makeRateRequest(buyer, car, 0);
-        rateRequestResult.addItem(EntityStringNames.LOAN_ADD_ON_BUDGET, getAddOnBudgetLoop(buyer, car));
-
+        rateRequestResult.addItem(EntityStringNames.LOAN_ADD_ON_BUDGET, getAddOnBudgetLoop(buyer, car, loopMax));
         AttributeMap scoreRequestResult =
                 makeScoreRequest(
                         buyer,
@@ -61,22 +60,21 @@ public class FetchLoanDataUseCase {
         return GenerateEntitiesUseCase.generateLoanData(entityMap);
     }
 
-    private double getAddOnBudgetLoop(CarBuyer buyer, Car car) throws Exceptions.CodedException {
+    private double getAddOnBudgetLoop(CarBuyer buyer, Car car, int loopMax) throws Exceptions.CodedException {
         double addOnBudget = 0;
         try {
-            while (true) {
-                double priceIncrement = addOnBudget + 100;
+            int numLoops = 0;
+            boolean inf = loopMax == -1;
+            while (inf || numLoops < loopMax) {
+                double priceIncrement = addOnBudget + (car.getTotalPrice() * .1);
                 makeRateRequest(buyer, car, priceIncrement);
                 addOnBudget = priceIncrement;
+                numLoops++;
             }
         } catch (Exceptions.FetchException e) {
             return addOnBudget;
         }
-    }
-
-    private double getAddOnBudgetDirect(CarBuyer buyer, AttributeMap rateRequestResult) {
-        double maxTotalPrice = buyer.getBudget() * ((int) rateRequestResult.getItem(EntityStringNames.LOAN_TERM_LENGTH).getAttribute());
-        return maxTotalPrice - ((int) rateRequestResult.getItem(EntityStringNames.LOAN_TOTAL_AMOUNT).getAttribute());
+        return addOnBudget;
     }
 
     private AttributeMap makeRateRequest(CarBuyer buyer, Car car, double priceModifier) throws Exceptions.CodedException {
@@ -112,9 +110,9 @@ public class FetchLoanDataUseCase {
         rateMap.addItem("vehicleKms", car.getKilometres());
         rateMap.addItem("listPrice", car.getPrice());
         rateMap.addItem("downpayment", buyer.getDownPayment());
-        if (priceModifier != 0) {
-            rateMap.addItem("looping", 1);
-        }
+//        if (priceModifier != 0) {
+//            rateMap.addItem("looping", 1);
+//        }
         return packager.writePackage(rateMap);
     }
 

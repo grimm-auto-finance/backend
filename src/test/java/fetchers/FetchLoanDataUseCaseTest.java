@@ -8,8 +8,6 @@ import constants.Exceptions;
 import entities.LoanData;
 import entities.TestEntityCreator;
 
-import entitypackagers.Attributizer;
-import entitypackagers.AttributizerFactory;
 import entitypackagers.JsonPackager;
 
 import org.junit.jupiter.api.Test;
@@ -23,11 +21,10 @@ public class FetchLoanDataUseCaseTest {
         FetchLoanDataUseCase loanFetcher =
                 new FetchLoanDataUseCase(fetcher, fetcher, new JsonPackager());
         try {
-            System.out.println("hi");
             assertEquals(
                     testLoan,
                     loanFetcher.getLoanData(
-                            TestEntityCreator.getTestBuyer(), TestEntityCreator.getTestCar()));
+                            TestEntityCreator.getTestBuyer(), TestEntityCreator.getTestCar(), 0));
         } catch (Exceptions.CodedException e) {
             fail(e.getMessage());
         }

@@ -83,7 +83,6 @@ public class Loan extends Route {
         Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL);
         FetchLoanDataUseCase fetchLoanData =
                 new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
-        LoanData loanData = fetchLoanData.getLoanData(buyer, car);
-        return loanData;
+        return fetchLoanData.getLoanData(buyer, car, -1);
     }
 }
