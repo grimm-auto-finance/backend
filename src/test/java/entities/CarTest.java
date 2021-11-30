@@ -73,15 +73,25 @@ public class CarTest {
 
     @Test
     public void testAddAddOns() {
+        double initialTotalPrice = car.totalPrice();
+        double priceOfMarshmallows = addOns.get("Marshmallows").getPrice();
+        double priceOfRustProofing = addOns.get("Rust proofing").getPrice();
         car.addAddOn(addOns.get("Marshmallows"));
         car.addAddOn(addOns.get("Rust proofing"));
+        double finalTotalPrice = car.totalPrice();
+        assertEquals(
+                initialTotalPrice + priceOfMarshmallows + priceOfRustProofing, finalTotalPrice);
         assertEquals(addOns, car.getAddOns());
     }
 
     @Test
     public void testRemoveAddOns() {
         car = new Car(10000, 30000, "Honda", "Civic", 2002, addOns, 3);
+        double initialTotalPrice = car.totalPrice();
+        double priceOfMarshmallows = car.getAddOns().get("Marshmallows").getPrice();
         car.removeAddOn("Marshmallows");
+        double finalTotalPrice = car.totalPrice();
+        assertEquals(finalTotalPrice, initialTotalPrice - priceOfMarshmallows);
         assertFalse(addOns.containsKey("Marshmallows"));
     }
 
