@@ -74,6 +74,11 @@ public class FetchLoanDataUseCase {
         }
     }
 
+    private double getAddOnBudgetDirect(CarBuyer buyer, AttributeMap rateRequestResult) {
+        double maxTotalPrice = buyer.getBudget() * ((int) rateRequestResult.getItem(EntityStringNames.LOAN_TERM_LENGTH).getAttribute());
+        return maxTotalPrice - ((int) rateRequestResult.getItem(EntityStringNames.LOAN_TOTAL_AMOUNT).getAttribute());
+    }
+
     private AttributeMap makeRateRequest(CarBuyer buyer, Car car, double priceModifier) throws Exceptions.CodedException {
         Package rateBody;
         rateBody = getRateBody(buyer, car, priceModifier);

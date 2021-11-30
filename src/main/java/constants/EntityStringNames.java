@@ -31,6 +31,7 @@ public class EntityStringNames {
     public static final String LOAN_INTEREST_SUM = "interestSum";
     public static final String LOAN_AMORTIZATION = "installments";
     public static final String LOAN_ADD_ON_BUDGET = "addOnBudget";
+    public static final String LOAN_TOTAL_AMOUNT = "sum";
 
     public static final String ADD_ON_STRING = "addOns";
 
