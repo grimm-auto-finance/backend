@@ -41,7 +41,8 @@ public class FetchLoanDataUseCase {
      */
     public LoanData getLoanData(CarBuyer buyer, Car car) throws Exceptions.CodedException {
 
-        AttributeMap rateRequestResult = makeRateRequest(buyer, car);
+        AttributeMap rateRequestResult = makeRateRequest(buyer, car, 0);
+        rateRequestResult.addItem(EntityStringNames.LOAN_ADD_ON_BUDGET, getAddOnBudgetLoop(buyer, car));
 
         AttributeMap scoreRequestResult =
                 makeScoreRequest(
@@ -60,9 +61,22 @@ public class FetchLoanDataUseCase {
         return GenerateEntitiesUseCase.generateLoanData(entityMap);
     }
 
-    private AttributeMap makeRateRequest(CarBuyer buyer, Car car) throws Exceptions.CodedException {
+    private double getAddOnBudgetLoop(CarBuyer buyer, Car car) throws Exceptions.CodedException {
+        double addOnBudget = 0;
+        try {
+            while (true) {
+                double priceIncrement = addOnBudget + 100;
+                makeRateRequest(buyer, car, priceIncrement);
+                addOnBudget = priceIncrement;
+            }
+        } catch (Exceptions.FetchException e) {
+            return addOnBudget;
+        }
+    }
+
+    private AttributeMap makeRateRequest(CarBuyer buyer, Car car, double priceModifier) throws Exceptions.CodedException {
         Package rateBody;
-        rateBody = getRateBody(buyer, car);
+        rateBody = getRateBody(buyer, car, priceModifier);
         AttributeMap rateResponseMap;
         rateFetcher.setFetchParam("POST");
         rateResponseMap = (AttributeMap) rateFetcher.fetch(rateBody.toString());
@@ -82,9 +96,9 @@ public class FetchLoanDataUseCase {
                 "term", Integer.parseInt((String) rateResponseMap.getItem("term").getAttribute()));
     }
 
-    private Package getRateBody(CarBuyer buyer, Car car) throws Exceptions.PackageException {
+    private Package getRateBody(CarBuyer buyer, Car car, double priceModifier) throws Exceptions.PackageException {
         AttributeMap rateMap = new AttributeMap();
-        rateMap.addItem("loanAmount", car.getPrice());
+        rateMap.addItem("loanAmount", car.getTotalPrice() + priceModifier);
         rateMap.addItem("creditScore", buyer.getCreditScore());
         rateMap.addItem("pytBudget", buyer.getBudget());
         rateMap.addItem("vehicleMake", car.getMake());
@@ -107,15 +121,13 @@ public class FetchLoanDataUseCase {
             throws Exceptions.PackageException {
 
         AttributeMap scoreMap = new AttributeMap();
-        scoreMap.addItem("remainingBalance", car.getPrice());
+        scoreMap.addItem("remainingBalance", car.getTotalPrice());
         scoreMap.addItem("creditScore", buyer.getCreditScore());
         scoreMap.addItem("loanAge", termLength);
         scoreMap.addItem("vehicleMake", car.getMake());
         scoreMap.addItem("vehicleModel", car.getModel());
         scoreMap.addItem("vehicleYear", car.getYear());
-        // TODO: Understand what carValue and loanStartDate are, and make them not
-        // hardcoded
-        scoreMap.addItem("carValue", car.getPrice());
+        scoreMap.addItem("carValue", car.getTotalPrice());
         scoreMap.addItem("loanStartDate", String.valueOf(java.time.LocalDate.now()));
         return packager.writePackage(scoreMap);
     }
