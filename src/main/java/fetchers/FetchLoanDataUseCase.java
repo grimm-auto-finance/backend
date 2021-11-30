@@ -112,6 +112,9 @@ public class FetchLoanDataUseCase {
         rateMap.addItem("vehicleKms", car.getKilometres());
         rateMap.addItem("listPrice", car.getPrice());
         rateMap.addItem("downpayment", buyer.getDownPayment());
+        if (priceModifier != 0) {
+            rateMap.addItem("looping", 1);
+        }
         return packager.writePackage(rateMap);
     }
 

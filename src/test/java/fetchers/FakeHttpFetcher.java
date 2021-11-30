@@ -21,6 +21,9 @@ public class FakeHttpFetcher implements Fetcher {
     @Override
     public AttributeMap fetch(String request) throws Exceptions.FetchException {
         if (request.contains("loanAmount")) {
+            if (request.contains("looping")) {
+                throw new Exceptions.FetchException("stop looping");
+            }
             LoanData resultData = TestEntityCreator.getTestLoanData();
             AttributeMap rateMap = new AttributeMap();
             rateMap.addItem(EntityStringNames.LOAN_AMOUNT, resultData.getLoanAmount());

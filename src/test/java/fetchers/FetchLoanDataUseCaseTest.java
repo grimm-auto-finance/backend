@@ -23,14 +23,7 @@ public class FetchLoanDataUseCaseTest {
         FetchLoanDataUseCase loanFetcher =
                 new FetchLoanDataUseCase(fetcher, fetcher, new JsonPackager());
         try {
-            Attributizer loanBruh = AttributizerFactory.getAttributizer(testLoan);
-            System.out.println(loanBruh.attributizeEntity());
-            Attributizer otherLoanBruh =
-                    AttributizerFactory.getAttributizer(
-                            loanFetcher.getLoanData(
-                                    TestEntityCreator.getTestBuyer(),
-                                    TestEntityCreator.getTestCar()));
-            System.out.println(otherLoanBruh.attributizeEntity());
+            System.out.println("hi");
             assertEquals(
                     testLoan,
                     loanFetcher.getLoanData(
