@@ -43,15 +43,20 @@ public class FetchLoanDataUseCase {
 
         AttributeMap rateRequestResult = makeRateRequest(buyer, car, 0);
         rateRequestResult.addItem(EntityStringNames.LOAN_ADD_ON_BUDGET, getAddOnBudgetLoop(buyer, car, loopMax));
-        AttributeMap scoreRequestResult =
-                makeScoreRequest(
-                        buyer,
-                        car,
-                        (int)
-                                rateRequestResult
-                                        .getItem(EntityStringNames.LOAN_TERM_LENGTH)
-                                        .getAttribute());
-
+        AttributeMap scoreRequestResult;
+        try {
+            scoreRequestResult =
+                    makeScoreRequest(
+                            buyer,
+                            car,
+                            (int)
+                                    rateRequestResult
+                                            .getItem(EntityStringNames.LOAN_TERM_LENGTH)
+                                            .getAttribute());
+        } catch (ClassCastException | NullPointerException e) {
+            String message = "Loan term length of wrong type";
+            throw new Exceptions.FetchException(message, e);
+        }
         AttributeMap loanMap = AttributeMap.combine(rateRequestResult, scoreRequestResult);
 
         AttributeMap entityMap = new AttributeMap();
@@ -66,7 +71,7 @@ public class FetchLoanDataUseCase {
             int numLoops = 0;
             boolean inf = loopMax == -1;
             while (inf || numLoops < loopMax) {
-                double priceIncrement = addOnBudget + (car.getTotalPrice() * .1);
+                double priceIncrement = addOnBudget + (car.getTotalPrice() * .05);
                 makeRateRequest(buyer, car, priceIncrement);
                 addOnBudget = priceIncrement;
                 numLoops++;
@@ -94,7 +99,7 @@ public class FetchLoanDataUseCase {
         rateResponseMap.addItem(
                 EntityStringNames.LOAN_INSTALLMENT,
                 ((AttributeMap) installments[0]).getItem("installment"));
-        // TODO: remove this when we figure out why senso is sending term as a string
+        // for some reason, senso sends term length back as a string instead of a number
         rateResponseMap.addItem(
                 "term", Integer.parseInt((String) rateResponseMap.getItem("term").getAttribute()));
     }
@@ -110,9 +115,6 @@ public class FetchLoanDataUseCase {
         rateMap.addItem("vehicleKms", car.getKilometres());
         rateMap.addItem("listPrice", car.getPrice());
         rateMap.addItem("downpayment", buyer.getDownPayment());
-//        if (priceModifier != 0) {
-//            rateMap.addItem("looping", 1);
-//        }
         return packager.writePackage(rateMap);
     }
 
