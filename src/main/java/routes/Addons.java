@@ -1,18 +1,13 @@
 package routes;
 
-import attributes.ArrayAttribute;
-import attributes.Attribute;
-import attributes.AttributeMap;
-
 import com.sun.net.httpserver.HttpExchange;
 
 import constants.Exceptions;
 
-import entities.AddOn;
 import entities.Car;
 
-import entitypackagers.AttributizeAddOnUseCase;
 import entitypackagers.JsonPackager;
+import entitypackagers.PackageEntityUseCase;
 
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
@@ -61,9 +56,9 @@ public class Addons extends Route {
 
     private String getResponseString(Car car) throws Exceptions.PackageException {
         JsonPackager packager = new JsonPackager();
-        ArrayAttribute addOnArrayAttribute = getArrayAttribute(car);
-        JsonArray addonJsonArray = packager.getJsonArray(addOnArrayAttribute);
-        return addonJsonArray.toString();
+        PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
+        JsonArray addOnJsonArray = packageEntity.getAddonJsonArray(car);
+        return addOnJsonArray.toString();
     }
 
     private Car getCar(int id) throws Exceptions.CodedException {
@@ -75,21 +70,6 @@ public class Addons extends Route {
     private int getId(HttpExchange t) throws IOException {
         InputStream is = t.getRequestBody();
         String result = new String(is.readAllBytes());
-        int id = Integer.parseInt(result);
-        return id;
-    }
-
-    private ArrayAttribute getArrayAttribute(Car car) {
-        int addOnArraySize = car.getAddOns().keySet().size();
-        Attribute[] addonArray = new Attribute[addOnArraySize];
-        int count = 0;
-        for (String addon : car.getAddOns().keySet()) {
-            AddOn addOn = car.getAddOns().get(addon);
-            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOn);
-            AttributeMap addOnAttribute = addOnAttributizer.attributizeEntity();
-            addonArray[count] = addOnAttribute;
-            count += 1;
-        }
-        return new ArrayAttribute(addonArray);
+        return Integer.parseInt(result);
     }
 }

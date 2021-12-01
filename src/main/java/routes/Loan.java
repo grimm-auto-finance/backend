@@ -10,9 +10,9 @@ import constants.Exceptions.CodedException;
 
 import entities.*;
 
-import entitypackagers.AttributizeLoanDataUseCase;
 import entitypackagers.JsonPackage;
 import entitypackagers.JsonPackager;
+import entitypackagers.PackageEntityUseCase;
 
 import entityparsers.ParseJsonUseCase;
 
@@ -61,14 +61,16 @@ public class Loan extends Route {
 
     private String getResponse(CarBuyer buyer, Car car) throws CodedException {
         LoanData loanData = getLoanData(buyer, car);
-        JsonPackage entitiesPackage = getLoanPackage(loanData);
+        JsonPackage entitiesPackage = getEntitiesPackage(loanData);
         return entitiesPackage.toString();
     }
 
-    private JsonPackage getLoanPackage(LoanData loanData) throws Exceptions.PackageException {
+    private JsonPackage getEntitiesPackage(LoanData loanData) throws Exceptions.PackageException {
         JsonPackager packager = new JsonPackager();
-        AttributizeLoanDataUseCase loanDataAttributizer = new AttributizeLoanDataUseCase(loanData);
-        return packager.writePackage(loanDataAttributizer.attributizeEntity());
+        PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
+        JsonPackage jsonPackage = (JsonPackage) packageEntity.writeEntity(loanData);
+        System.out.println(jsonPackage.toString());
+        return jsonPackage;
     }
 
     private LoanData getLoanData(CarBuyer buyer, Car car) throws CodedException {
