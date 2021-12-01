@@ -1,3 +1,4 @@
+// Layer: ignore
 package attributes;
 
 /** A factory that creates an Attribute given an object that is either an int, Double or String */

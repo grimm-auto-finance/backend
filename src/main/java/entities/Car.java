@@ -1,3 +1,4 @@
+// Layer: entities
 package entities;
 
 import constants.EntityStringNames;

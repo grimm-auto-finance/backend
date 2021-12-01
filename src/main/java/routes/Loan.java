@@ -1,3 +1,4 @@
+// Layer: controllers
 package routes;
 
 import attributes.AttributeMap;
@@ -14,7 +15,7 @@ import entitypackagers.JsonPackage;
 import entitypackagers.JsonPackager;
 import entitypackagers.PackageEntityUseCase;
 
-import entityparsers.ParseJsonUseCase;
+import entityparsers.JsonParser;
 
 import fetchers.FetchLoanDataUseCase;
 import fetchers.Fetcher;
@@ -52,8 +53,8 @@ public class Loan extends Route {
     @Override
     protected void post(HttpExchange t) throws CodedException {
         InputStream is = t.getRequestBody();
-        ParseJsonUseCase parseInput = new ParseJsonUseCase();
-        AttributeMap entitiesMap = parseInput.parseJson(is);
+        JsonParser parser = new JsonParser(is);
+        AttributeMap entitiesMap = parser.parse();
         AttributeMap carMap = (AttributeMap) entitiesMap.getItem(EntityStringNames.CAR_STRING);
         carMap.addItem(EntityStringNames.CAR_ID, 0);
         Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);

@@ -1,3 +1,4 @@
+// Layer: ignore
 package attributes;
 
 public class StringAttribute extends Attribute {
