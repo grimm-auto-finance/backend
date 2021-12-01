@@ -1,3 +1,4 @@
+// layer: frameworksanddrivers
 package entityparsers;
 
 import attributes.*;
@@ -23,10 +24,10 @@ public class JsonParser implements Parser {
     }
 
     /**
-     * Constructs a new JsonParser by retrieving a JsonObject from the given InputStream
+     * Constructs a new JsonParser using the JsonObject contained in the given InputStream
      *
      * @param is an InputStream containing a JsonObject
-     * @throws Exceptions.ParseException if the retrieval fails
+     * @throws Exceptions.ParseException if the InputStream cannot be parsed into a JsonObject
      */
     public JsonParser(InputStream is) throws Exceptions.ParseException {
         try {

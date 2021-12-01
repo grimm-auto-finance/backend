@@ -1,3 +1,4 @@
+// layer: usecases
 package entities;
 
 import attributes.ArrayAttribute;
