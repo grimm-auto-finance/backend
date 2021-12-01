@@ -72,13 +72,10 @@ public class Addons extends Route {
         return carDataFetcher.getCar(id);
     }
 
-    private int getId(HttpExchange t) throws Exceptions.ParseException, IOException {
-        System.out.println("Addons 1 reached");
+    private int getId(HttpExchange t) throws IOException {
         InputStream is = t.getRequestBody();
         String result = new String(is.readAllBytes());
-        System.out.println(Integer.parseInt(result));
         int id = Integer.parseInt(result);
-        ;
         return id;
     }
 
