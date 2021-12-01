@@ -1,4 +1,4 @@
-// Layer: interfaceadapters
+// layer: interfaceadapters
 package entitypackagers;
 
 import attributes.AttributeMap;

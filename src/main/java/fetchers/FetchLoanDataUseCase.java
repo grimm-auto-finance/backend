@@ -1,4 +1,4 @@
-// Layer: usecases
+// layer: usecases
 package fetchers;
 
 import attributes.ArrayAttribute;

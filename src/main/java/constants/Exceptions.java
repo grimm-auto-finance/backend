@@ -1,4 +1,4 @@
-// Layer: ignore
+// layer: ignore
 package constants;
 
 /**
