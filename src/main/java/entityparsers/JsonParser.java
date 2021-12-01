@@ -4,6 +4,7 @@ import attributes.*;
 
 import constants.Exceptions;
 
+import java.io.InputStream;
 import java.util.Set;
 
 import javax.json.*;
@@ -19,6 +20,21 @@ public class JsonParser implements Parser {
      */
     public JsonParser(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
+    }
+
+
+    /**
+     * Constructs a new JsonParser by retrieving a JsonObject from the given InputStream
+     * @param is an InputStream containing a JsonObject
+     * @throws Exceptions.ParseException if the retrieval fails
+     */
+    public JsonParser(InputStream is) throws Exceptions.ParseException {
+        try {
+            JsonReader jsonReader = Json.createReader(is);
+            this.jsonObject = jsonReader.readObject();
+        } catch (JsonException e) {
+            throw new Exceptions.ParseException("Failed to parse JsonObject from InputStream", e);
+        }
     }
 
     /**
