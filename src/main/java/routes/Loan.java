@@ -24,8 +24,6 @@ import logging.Logger;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /** The Route handling the `/loan` route which allows users to fetch information about a loan. */
 public class Loan extends Route {
@@ -67,8 +65,7 @@ public class Loan extends Route {
         return entitiesPackage.toString();
     }
 
-    private JsonPackage getLoanPackage(LoanData loanData)
-            throws Exceptions.PackageException {
+    private JsonPackage getLoanPackage(LoanData loanData) throws Exceptions.PackageException {
         JsonPackager packager = new JsonPackager();
         AttributizeLoanDataUseCase loanDataAttributizer = new AttributizeLoanDataUseCase(loanData);
         return packager.writePackage(loanDataAttributizer.attributizeEntity());

@@ -12,11 +12,7 @@ import entities.AddOn;
 import entities.Car;
 
 import entitypackagers.AttributizeAddOnUseCase;
-import entitypackagers.ExtractCarIdUseCase;
 import entitypackagers.JsonPackager;
-
-import entityparsers.JsonParser;
-import entityparsers.Parser;
 
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
@@ -81,7 +77,8 @@ public class Addons extends Route {
         InputStream is = t.getRequestBody();
         String result = new String(is.readAllBytes());
         System.out.println(Integer.parseInt(result));
-        int id = Integer.parseInt(result);;
+        int id = Integer.parseInt(result);
+        ;
         return id;
     }
 
