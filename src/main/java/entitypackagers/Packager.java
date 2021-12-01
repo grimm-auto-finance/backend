@@ -1,10 +1,11 @@
 package entitypackagers;
 
+import attributes.Attribute;
 import attributes.AttributeMap;
 
 import constants.Exceptions;
 
 public interface Packager {
 
-    Package writePackage(AttributeMap map) throws Exceptions.PackageException;
+    Package writePackage(Attribute item) throws Exceptions.PackageException;
 }

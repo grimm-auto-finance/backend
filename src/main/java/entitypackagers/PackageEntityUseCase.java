@@ -2,6 +2,7 @@ package entitypackagers;
 
 import attributes.ArrayAttribute;
 import attributes.Attribute;
+import attributes.AttributeFactory;
 import attributes.AttributeMap;
 
 import constants.Exceptions;
@@ -11,6 +12,8 @@ import entities.Car;
 import entities.Entity;
 
 import javax.json.JsonArray;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PackageEntityUseCase {
 
@@ -65,25 +68,29 @@ public class PackageEntityUseCase {
     }
 
     /**
-     * @param car The car which addons we want to package
-     * @return A JsonArray of all the cars addons
-     * @throws Exceptions.PackageException Exception raised when the addons cannot be packaged
-     *     correctly
+     * Writes the given List of Entities to a Package using packager
+     * The Entities are packaged as an Array.
+     *
+     * @param entities the List of Entities to be packaged
+     * @return a Package containing an array representation of entities
+     * @throws Exceptions.PackageException if the Attributization of the entities fails
      */
-    public JsonArray getAddonJsonArray(Car car) throws Exceptions.PackageException {
-        int addOnArraySize = car.getAddOns().keySet().size();
-        Attribute[] addonArray = new Attribute[addOnArraySize];
-        int count = 0;
-        for (String addon : car.getAddOns().keySet()) {
-            AddOn addOn = car.getAddOns().get(addon);
-            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOn);
-            AttributeMap addOnAttribute = addOnAttributizer.attributizeEntity();
-            addonArray[count] = addOnAttribute;
-            count += 1;
+    public Package writeEntitiesToArray(List<Entity> entities) throws Exceptions.PackageException {
+        if (packager == null) {
+            throw new NullPointerException("Can't use null Packager to package Entity");
         }
-        ArrayAttribute addonArrayAttribute = new ArrayAttribute(addonArray);
-        JsonPackager packager = new JsonPackager();
-
-        return packager.getJsonArray(addonArrayAttribute);
+        List<AttributeMap> entitiesMapList = new ArrayList<>();
+        for (Entity e : entities) {
+            if (e == null) {
+                throw new NullPointerException("Can't extract Attributes from null Entity");
+            }
+            Attributizer entityAttributizer = AttributizerFactory.getAttributizer(e);
+            AttributeMap entityMap = entityAttributizer.attributizeEntity();
+            entitiesMapList.add(entityMap);
+        }
+        ArrayAttribute entitiesMapArray = (ArrayAttribute) AttributeFactory.createAttribute(entitiesMapList.toArray(new Attribute[0]));
+        return packager.writePackage(entitiesMapArray);
     }
+
+
 }

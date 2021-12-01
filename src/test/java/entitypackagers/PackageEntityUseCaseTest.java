@@ -3,6 +3,9 @@ package entitypackagers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import attributes.ArrayAttribute;
+import attributes.Attribute;
+import attributes.AttributeFactory;
 import attributes.AttributeMap;
 
 import constants.Exceptions;
@@ -12,6 +15,9 @@ import entities.TestEntityCreator;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PackageEntityUseCaseTest {
 
@@ -40,7 +46,7 @@ public class PackageEntityUseCaseTest {
     }
 
     @Test
-    public void testPackageEntityWorking() {
+    public void testWriteEntityWorking() {
         entityPackager.setPackager(jsonPackager);
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(car);
         AttributeMap entityMap = new AttributeMap();
@@ -50,9 +56,35 @@ public class PackageEntityUseCaseTest {
                     jsonPackager
                             .writePackage(entityMap)
                             .getPackage()
+                            .asJsonObject()
                             .getJsonObject("car")
                             .toString(),
                     entityPackager.writeEntity(car).getPackage().toString());
+        } catch (Exceptions.PackageException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testWriteEntitiesToArrayWorking() {
+        entityPackager.setPackager(jsonPackager);
+        List<Entity> entityList = new ArrayList<>();
+        entityList.add(car);
+        entityList.add(car);
+        entityList.add(car);
+        List<AttributeMap> entityMapList = new ArrayList<>();
+        for (Entity e : entityList) {
+            Attributizer entityAttributizer = AttributizerFactory.getAttributizer(car);
+            entityMapList.add(entityAttributizer.attributizeEntity());
+        }
+        ArrayAttribute entityArray = (ArrayAttribute) AttributeFactory.createAttribute(entityMapList.toArray(new Attribute[0]));
+        try {
+            assertEquals(
+                    jsonPackager
+                            .writePackage(entityArray)
+                            .getPackage()
+                            .toString(),
+                    entityPackager.writeEntitiesToArray(entityList).getPackage().toString());
         } catch (Exceptions.PackageException e) {
             fail();
         }

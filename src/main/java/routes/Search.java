@@ -60,7 +60,7 @@ public class Search extends Route {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         for (Car car : cars) {
             AttributizeCarUseCase uc = new AttributizeCarUseCase(car);
-            JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
+            JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage().asJsonObject();
             arrayBuilder.add(json);
         }
         return arrayBuilder.build().toString();

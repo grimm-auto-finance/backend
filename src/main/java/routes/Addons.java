@@ -4,9 +4,13 @@ import com.sun.net.httpserver.HttpExchange;
 
 import constants.Exceptions;
 
+import entities.AddOn;
 import entities.Car;
 
+import entities.Entity;
+import entitypackagers.JsonPackage;
 import entitypackagers.JsonPackager;
+import entitypackagers.Package;
 import entitypackagers.PackageEntityUseCase;
 
 import fetchers.DataBase;
@@ -17,8 +21,9 @@ import logging.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.json.*;
 
 /** The Route handling the `/addons` route which returns a car with its addons given the id */
 public class Addons extends Route {
@@ -57,8 +62,9 @@ public class Addons extends Route {
     private String getResponseString(Car car) throws Exceptions.PackageException {
         JsonPackager packager = new JsonPackager();
         PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
-        JsonArray addOnJsonArray = packageEntity.getAddonJsonArray(car);
-        return addOnJsonArray.toString();
+        List<Entity> addOnsList = new ArrayList<>(car.getAddOnsList());
+        Package addOnArrayPackage = packageEntity.writeEntitiesToArray(addOnsList);
+        return addOnArrayPackage.toString();
     }
 
     private Car getCar(int id) throws Exceptions.CodedException {
