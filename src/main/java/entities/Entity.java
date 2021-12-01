@@ -1,4 +1,4 @@
-// Layer: entities
+// layer: entities
 package entities;
 
 public abstract class Entity {

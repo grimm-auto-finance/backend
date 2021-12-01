@@ -1,4 +1,4 @@
-// Layer: gateways
+// layer: gateways
 package fetchers;
 
 import attributes.ArrayAttribute;

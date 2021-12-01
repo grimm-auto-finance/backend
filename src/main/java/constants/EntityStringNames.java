@@ -1,4 +1,4 @@
-// Layer: ignore
+// layer: ignore
 package constants;
 
 /** String representations of entity instance variable names */
