@@ -34,7 +34,7 @@ public class JsonParser implements Parser {
             JsonReader jsonReader = Json.createReader(is);
             this.jsonObject = jsonReader.readObject();
         } catch (JsonException e) {
-            throw new Exceptions.ParseException("Failed to convert InputStream to JsonObject", e);
+            throw new Exceptions.ParseException("Failed to parse JsonObject from InputStream", e);
         }
     }
 

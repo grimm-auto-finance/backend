@@ -8,9 +8,11 @@ import constants.Exceptions.CodedException;
 import constants.Exceptions.ParseException;
 
 import entities.Car;
+import entities.Entity;
 
-import entitypackagers.AttributizeCarUseCase;
 import entitypackagers.JsonPackager;
+import entitypackagers.Package;
+import entitypackagers.PackageEntityUseCase;
 
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
@@ -22,11 +24,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 
 /** The Route handling the `/search` route which allows users to search for a car with a string. */
 public class Search extends Route {
@@ -58,13 +57,10 @@ public class Search extends Route {
 
     private String getResponseString(List<Car> cars) throws Exceptions.PackageException {
         JsonPackager jp = new JsonPackager();
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        for (Car car : cars) {
-            AttributizeCarUseCase uc = new AttributizeCarUseCase(car);
-            JsonObject json = jp.writePackage(uc.attributizeEntity()).getPackage();
-            arrayBuilder.add(json);
-        }
-        return arrayBuilder.build().toString();
+        PackageEntityUseCase carPackager = new PackageEntityUseCase(jp);
+        List<Entity> entities = new ArrayList<>(cars);
+        Package carsPackage = carPackager.writeEntitiesToArray(entities);
+        return carsPackage.toString();
     }
 
     private List<Car> getCarResultList(String searchString) throws CodedException {
