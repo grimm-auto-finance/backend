@@ -47,24 +47,23 @@ paths:
       - "addOns"
       summary: "Get the vehicle containing all available add-ons for a vehicle"
       consumes:
-      - "application/json"
+      - "text/plain"
       produces:
       - "application/json"
       parameters:
       - in: "body"
         name: "body"
-        description: "Vehicle to get add-ons for"
+        description: "The vehicle id to fetch addons for"
         required: true
         schema:
-          type: "object"
-          properties:
-            id:
-              type: "number"
+          type: "number"
       responses:
         "200":
-          description: "The vehicle containing all available add-ons for a vehicle"
+          description: "The all available add-ons for a vehicle"
           schema:
-            $ref: "#/definitions/Car"
+            type: "array"
+            items:
+              $ref: "#/definitions/AddOn"
   /loan:
     post:
       tags:
