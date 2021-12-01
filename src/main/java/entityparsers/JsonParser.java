@@ -1,9 +1,11 @@
+// layer: frameworksanddrivers
 package entityparsers;
 
 import attributes.*;
 
 import constants.Exceptions;
 
+import java.io.InputStream;
 import java.util.Set;
 
 import javax.json.*;
@@ -19,6 +21,21 @@ public class JsonParser implements Parser {
      */
     public JsonParser(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
+    }
+
+    /**
+     * Constructs a new JsonParser using the JsonObject contained in the given InputStream
+     *
+     * @param is an InputStream containing a JsonObject
+     * @throws Exceptions.ParseException if the InputStream cannot be parsed into a JsonObject
+     */
+    public JsonParser(InputStream is) throws Exceptions.ParseException {
+        try {
+            JsonReader jsonReader = Json.createReader(is);
+            this.jsonObject = jsonReader.readObject();
+        } catch (JsonException e) {
+            throw new Exceptions.ParseException("Failed to convert InputStream to JsonObject", e);
+        }
     }
 
     /**
