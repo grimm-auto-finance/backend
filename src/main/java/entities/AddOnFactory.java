@@ -29,7 +29,7 @@ public class AddOnFactory {
         String description;
         try {
             name = (String) map.getItem(EntityStringNames.ADD_ON_NAME).getAttribute();
-            price = (double) map.getItem(EntityStringNames.ADD_ON_PRICE).getAttribute();
+            price = AttributeMap.getDoubleMaybeInteger(EntityStringNames.ADD_ON_PRICE, map);
             description = (String) map.getItem(EntityStringNames.ADD_ON_DESCRIPTION).getAttribute();
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate AddOn";
