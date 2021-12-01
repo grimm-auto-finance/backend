@@ -4,11 +4,9 @@ import com.sun.net.httpserver.HttpExchange;
 
 import constants.Exceptions;
 
-import entities.AddOn;
 import entities.Car;
-
 import entities.Entity;
-import entitypackagers.JsonPackage;
+
 import entitypackagers.JsonPackager;
 import entitypackagers.Package;
 import entitypackagers.PackageEntityUseCase;
@@ -23,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /** The Route handling the `/addons` route which returns a car with its addons given the id */
 public class Addons extends Route {

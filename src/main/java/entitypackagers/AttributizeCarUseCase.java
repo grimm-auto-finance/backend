@@ -1,19 +1,13 @@
 package entitypackagers;
 
-import attributes.ArrayAttribute;
 import attributes.Attribute;
-import attributes.AttributeFactory;
 import attributes.AttributeMap;
 
 import constants.EntityStringNames;
 
-import constants.Exceptions;
 import entities.AddOn;
 import entities.Car;
 
-import javax.json.JsonArray;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class AttributizeCarUseCase implements Attributizer {
@@ -53,5 +47,4 @@ public class AttributizeCarUseCase implements Attributizer {
         }
         return map;
     }
-
 }

@@ -7,11 +7,8 @@ import attributes.AttributeMap;
 
 import constants.Exceptions;
 
-import entities.AddOn;
-import entities.Car;
 import entities.Entity;
 
-import javax.json.JsonArray;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +65,8 @@ public class PackageEntityUseCase {
     }
 
     /**
-     * Writes the given List of Entities to a Package using packager
-     * The Entities are packaged as an Array.
+     * Writes the given List of Entities to a Package using packager The Entities are packaged as an
+     * Array.
      *
      * @param entities the List of Entities to be packaged
      * @return a Package containing an array representation of entities
@@ -88,9 +85,9 @@ public class PackageEntityUseCase {
             AttributeMap entityMap = entityAttributizer.attributizeEntity();
             entitiesMapList.add(entityMap);
         }
-        ArrayAttribute entitiesMapArray = (ArrayAttribute) AttributeFactory.createAttribute(entitiesMapList.toArray(new Attribute[0]));
+        ArrayAttribute entitiesMapArray =
+                (ArrayAttribute)
+                        AttributeFactory.createAttribute(entitiesMapList.toArray(new Attribute[0]));
         return packager.writePackage(entitiesMapArray);
     }
-
-
 }

@@ -33,8 +33,8 @@ public class JsonPackager implements Packager {
         }
     }
 
-
-    private JsonPackage writePackageFromMap(AttributeMap packageMap) throws Exceptions.PackageException {
+    private JsonPackage writePackageFromMap(AttributeMap packageMap)
+            throws Exceptions.PackageException {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         Map<String, Attribute> map = packageMap.getAttribute();
         for (String key : map.keySet()) {
@@ -62,7 +62,8 @@ public class JsonPackager implements Packager {
         return new JsonPackage(builder.build());
     }
 
-    private JsonPackage writePackageFromArray(ArrayAttribute packageArray) throws Exceptions.PackageException {
+    private JsonPackage writePackageFromArray(ArrayAttribute packageArray)
+            throws Exceptions.PackageException {
         JsonArray array = getJsonArray(packageArray);
         return new JsonPackage(array);
     }

@@ -77,13 +77,12 @@ public class PackageEntityUseCaseTest {
             Attributizer entityAttributizer = AttributizerFactory.getAttributizer(car);
             entityMapList.add(entityAttributizer.attributizeEntity());
         }
-        ArrayAttribute entityArray = (ArrayAttribute) AttributeFactory.createAttribute(entityMapList.toArray(new Attribute[0]));
+        ArrayAttribute entityArray =
+                (ArrayAttribute)
+                        AttributeFactory.createAttribute(entityMapList.toArray(new Attribute[0]));
         try {
             assertEquals(
-                    jsonPackager
-                            .writePackage(entityArray)
-                            .getPackage()
-                            .toString(),
+                    jsonPackager.writePackage(entityArray).getPackage().toString(),
                     entityPackager.writeEntitiesToArray(entityList).getPackage().toString());
         } catch (Exceptions.PackageException e) {
             fail();

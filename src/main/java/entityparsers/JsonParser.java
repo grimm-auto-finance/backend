@@ -22,9 +22,9 @@ public class JsonParser implements Parser {
         this.jsonObject = jsonObject;
     }
 
-
     /**
      * Constructs a new JsonParser by retrieving a JsonObject from the given InputStream
+     *
      * @param is an InputStream containing a JsonObject
      * @throws Exceptions.ParseException if the retrieval fails
      */
