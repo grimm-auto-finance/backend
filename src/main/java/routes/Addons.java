@@ -24,6 +24,7 @@ import fetchers.FetchCarDataUseCase;
 
 import logging.Logger;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.json.*;
@@ -51,7 +52,12 @@ public class Addons extends Route {
      */
     @Override
     protected void post(HttpExchange t) throws Exceptions.CodedException {
-        int id = getId(t);
+        int id = 0;
+        try {
+            id = getId(t);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Car car = getCar(id);
         String responseString = getResponseString(car);
         respond(t, 200, responseString.getBytes());
@@ -70,13 +76,13 @@ public class Addons extends Route {
         return carDataFetcher.getCar(id);
     }
 
-    private int getId(HttpExchange t) throws Exceptions.ParseException {
+    private int getId(HttpExchange t) throws Exceptions.ParseException, IOException {
+        System.out.println("Addons 1 reached");
         InputStream is = t.getRequestBody();
-        JsonReader jsonReader = Json.createReader(is);
-        JsonObject inputObj = jsonReader.readObject();
-        Parser jsonParser = new JsonParser(inputObj);
-        AttributeMap entitiesMap = jsonParser.parse();
-        return ExtractCarIdUseCase.extractId(entitiesMap);
+        String result = new String(is.readAllBytes());
+        System.out.println(Integer.parseInt(result));
+        int id = Integer.parseInt(result);;
+        return id;
     }
 
     private ArrayAttribute getArrayAttribute(Car car) {

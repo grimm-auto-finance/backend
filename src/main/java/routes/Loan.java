@@ -10,9 +10,9 @@ import constants.Exceptions.CodedException;
 
 import entities.*;
 
+import entitypackagers.AttributizeLoanDataUseCase;
 import entitypackagers.JsonPackage;
 import entitypackagers.JsonPackager;
-import entitypackagers.PackageEntityUseCase;
 
 import entityparsers.ParseJsonUseCase;
 
@@ -63,19 +63,15 @@ public class Loan extends Route {
 
     private String getResponse(CarBuyer buyer, Car car) throws CodedException {
         LoanData loanData = getLoanData(buyer, car);
-        JsonPackage entitiesPackage = getEntitiesPackage(buyer, car, loanData);
+        JsonPackage entitiesPackage = getLoanPackage(loanData);
         return entitiesPackage.toString();
     }
 
-    private JsonPackage getEntitiesPackage(CarBuyer buyer, Car car, LoanData loanData)
+    private JsonPackage getLoanPackage(LoanData loanData)
             throws Exceptions.PackageException {
-        List<Entity> entities = new ArrayList<>();
-        entities.add(car);
-        entities.add(buyer);
-        entities.add(loanData);
         JsonPackager packager = new JsonPackager();
-        PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
-        return (JsonPackage) packageEntity.writeEntities(entities);
+        AttributizeLoanDataUseCase loanDataAttributizer = new AttributizeLoanDataUseCase(loanData);
+        return packager.writePackage(loanDataAttributizer.attributizeEntity());
     }
 
     private LoanData getLoanData(CarBuyer buyer, Car car) throws CodedException {
@@ -83,7 +79,6 @@ public class Loan extends Route {
         Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL);
         FetchLoanDataUseCase fetchLoanData =
                 new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
-        LoanData loanData = fetchLoanData.getLoanData(buyer, car);
-        return loanData;
+        return fetchLoanData.getLoanData(buyer, car);
     }
 }
