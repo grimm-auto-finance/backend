@@ -1,3 +1,4 @@
+// layer: frameworksanddrivers
 package server;
 
 import com.sun.net.httpserver.HttpServer;
@@ -62,12 +63,9 @@ class Server {
         try {
             dataBase.insertPlaceholderData();
         } catch (Exceptions.DataBaseException e) {
-            if (e.getMessage().contains("placeholder data may already exist")) {
-                logger.warn(e.getMessage());
-            } else {
-                logger.error("failed to insert placeholder data", e);
-                System.exit(-1);
-            }
+            logger.error(e.getMessage());
+            logger.error("failed to insert placeholder data", e);
+            System.exit(-1);
         }
     }
 

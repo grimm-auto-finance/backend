@@ -1,3 +1,4 @@
+// frameworksanddrivers
 package entitypackagers;
 
 import attributes.*;
@@ -48,7 +49,15 @@ public class JsonPackager implements Packager {
         return new JsonPackage(builder.build());
     }
 
-    private JsonArray getJsonArray(ArrayAttribute item) throws Exceptions.PackageException {
+    /**
+     * Takes in an ArrayAttribute and coverts it into a JsonArray
+     *
+     * @param item The ArrayAttribute to be used to create a JsonArray
+     * @return The JsonArray
+     * @throws Exceptions.PackageException Returns an exception if an item cannot be converted to a
+     *     Json
+     */
+    public JsonArray getJsonArray(ArrayAttribute item) throws Exceptions.PackageException {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         for (Attribute a : item.getAttribute()) {
             if (a instanceof IntAttribute) {

@@ -1,19 +1,19 @@
+// layer: controllers
 package routes;
 
+import attributes.ArrayAttribute;
+import attributes.Attribute;
 import attributes.AttributeMap;
 
 import com.sun.net.httpserver.HttpExchange;
 
 import constants.Exceptions;
 
+import entities.AddOn;
 import entities.Car;
 
-import entitypackagers.AttributizeCarUseCase;
-import entitypackagers.ExtractCarIdUseCase;
+import entitypackagers.AttributizeAddOnUseCase;
 import entitypackagers.JsonPackager;
-
-import entityparsers.JsonParser;
-import entityparsers.Parser;
 
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
@@ -21,12 +21,10 @@ import fetchers.FetchCarDataUseCase;
 
 import logging.Logger;
 
+import java.io.IOException;
 import java.io.InputStream;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import javax.json.*;
 
 /** The Route handling the `/addons` route which returns a car with its addons given the id */
 public class Addons extends Route {
@@ -45,13 +43,18 @@ public class Addons extends Route {
 
     /**
      * The post method for the `/addons` route. Takes in an HttpExchange containing a Car id, and
-     * responds with the Car corresponding to that id, along with all of its possible add-ons.
+     * responds with the list of Addons contained in the Car corresponding to that id.
      *
      * @param t the httpexchange that this method must handle
      */
     @Override
     protected void post(HttpExchange t) throws Exceptions.CodedException {
-        int id = getId(t);
+        int id = 0;
+        try {
+            id = getId(t);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Car car = getCar(id);
         String responseString = getResponseString(car);
         respond(t, 200, responseString.getBytes());
@@ -59,11 +62,9 @@ public class Addons extends Route {
 
     private String getResponseString(Car car) throws Exceptions.PackageException {
         JsonPackager packager = new JsonPackager();
-        AttributizeCarUseCase carAttributizer = new AttributizeCarUseCase(car);
-        JsonObject json = packager.writePackage(carAttributizer.attributizeEntity()).getPackage();
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        arrayBuilder.add(json);
-        return arrayBuilder.build().toString();
+        ArrayAttribute addOnArrayAttribute = getArrayAttribute(car);
+        JsonArray addonJsonArray = packager.getJsonArray(addOnArrayAttribute);
+        return addonJsonArray.toString();
     }
 
     private Car getCar(int id) throws Exceptions.CodedException {
@@ -72,12 +73,24 @@ public class Addons extends Route {
         return carDataFetcher.getCar(id);
     }
 
-    private int getId(HttpExchange t) throws Exceptions.ParseException {
+    private int getId(HttpExchange t) throws IOException {
         InputStream is = t.getRequestBody();
-        JsonReader jsonReader = Json.createReader(is);
-        JsonObject inputObj = jsonReader.readObject();
-        Parser jsonParser = new JsonParser(inputObj);
-        AttributeMap entitiesMap = jsonParser.parse();
-        return ExtractCarIdUseCase.extractId(entitiesMap);
+        String result = new String(is.readAllBytes());
+        int id = Integer.parseInt(result);
+        return id;
+    }
+
+    private ArrayAttribute getArrayAttribute(Car car) {
+        int addOnArraySize = car.getAddOns().keySet().size();
+        Attribute[] addonArray = new Attribute[addOnArraySize];
+        int count = 0;
+        for (String addon : car.getAddOns().keySet()) {
+            AddOn addOn = car.getAddOns().get(addon);
+            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOn);
+            AttributeMap addOnAttribute = addOnAttributizer.attributizeEntity();
+            addonArray[count] = addOnAttribute;
+            count += 1;
+        }
+        return new ArrayAttribute(addonArray);
     }
 }

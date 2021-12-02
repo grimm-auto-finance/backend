@@ -1,3 +1,4 @@
+// layer: entities
 package entities;
 
 import constants.EntityStringNames;
@@ -63,6 +64,19 @@ public class Car extends Entity {
         this.year = year;
         this.addOns = addOns;
         this.id = id;
+    }
+
+    /**
+     * Calculates the total price of the car by adding the price of the addons
+     *
+     * @return The total price of the car including addons
+     */
+    public double totalPrice() {
+        double totalPrice = this.price;
+        for (String key : this.addOns.keySet()) {
+            totalPrice += this.addOns.get(key).getPrice();
+        }
+        return totalPrice;
     }
 
     /**

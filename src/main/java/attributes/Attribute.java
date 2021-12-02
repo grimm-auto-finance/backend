@@ -1,3 +1,4 @@
+// layer: ignore
 package attributes;
 
 public abstract class Attribute {
