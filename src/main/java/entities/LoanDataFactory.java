@@ -43,7 +43,8 @@ public class LoanDataFactory {
             loanAmount = AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_AMOUNT, map);
             termLength = (int) map.getItem(EntityStringNames.LOAN_TERM_LENGTH).getAttribute();
             try {
-                addOnBudget = (double) map.getItem(EntityStringNames.LOAN_ADD_ON_BUDGET).getAttribute();
+                addOnBudget =
+                        (double) map.getItem(EntityStringNames.LOAN_ADD_ON_BUDGET).getAttribute();
             } catch (NullPointerException ignored) {
                 // if add-on budget isn't in the map we just default its value to 0
             }
@@ -73,7 +74,8 @@ public class LoanDataFactory {
                 sensoScore,
                 loanAmount,
                 termLength,
-                interestSum, addOnBudget,
+                interestSum,
+                addOnBudget,
                 amortizationTable);
     }
 }

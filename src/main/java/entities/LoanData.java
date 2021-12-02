@@ -38,7 +38,8 @@ public class LoanData extends Entity {
             String sensoScore,
             double loanAmount,
             int termLength,
-            double interestSum, double addOnBudget,
+            double interestSum,
+            double addOnBudget,
             List<Map<String, Double>> amortizationTable) {
         this.interestRate = interestRate;
         this.installment = installment;
@@ -51,8 +52,7 @@ public class LoanData extends Entity {
     }
 
     /**
-     * Constructs a new LoanData object with the given values.
-     * addOnBudget is initialized to 0
+     * Constructs a new LoanData object with the given values. addOnBudget is initialized to 0
      *
      * @param interestRate the interest rate of the loan
      * @param installment the monthly installment value of the loan
@@ -70,7 +70,15 @@ public class LoanData extends Entity {
             int termLength,
             double interestSum,
             List<Map<String, Double>> amortizationTable) {
-        this(interestRate, installment, sensoScore, loanAmount, termLength, interestSum, 0.0, amortizationTable);
+        this(
+                interestRate,
+                installment,
+                sensoScore,
+                loanAmount,
+                termLength,
+                interestSum,
+                0.0,
+                amortizationTable);
     }
 
     /**
@@ -192,9 +200,12 @@ public class LoanData extends Entity {
 
     /**
      * Returns the budget left for add-ons on this loan.
+     *
      * @return the budget for add-ons, in dollars
      */
-    public double getAddOnBudget() { return addOnBudget; }
+    public double getAddOnBudget() {
+        return addOnBudget;
+    }
 
     @Override
     public String getStringName() {

@@ -38,13 +38,10 @@ public class JsonParserTest {
         testMap.addItem(name, value);
     }
 
-    /*
-    Not used as test can't be initialized at the moment
-     static void addToBoth(String name, int value) {
-         builder.add(name, value);
-         testMap.addItem(name, value);
-     }
-    */
+    static void addToBoth(String name, int value) {
+        builder.add(name, value);
+        testMap.addItem(name, value);
+    }
 
     static void addToBoth(String name, double value) {
         builder.add(name, value);

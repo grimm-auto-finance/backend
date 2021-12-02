@@ -40,10 +40,12 @@ public class FetchLoanDataUseCase {
      * @return a LoanData constructed using the responses from the Fetchers
      * @throws Exceptions.CodedException if any step of the fetching process fails
      */
-    public LoanData getLoanData(CarBuyer buyer, Car car, int loopMax) throws Exceptions.CodedException {
+    public LoanData getLoanData(CarBuyer buyer, Car car, int loopMax)
+            throws Exceptions.CodedException {
 
         AttributeMap rateRequestResult = makeRateRequest(buyer, car, 0);
-        rateRequestResult.addItem(EntityStringNames.LOAN_ADD_ON_BUDGET, getAddOnBudgetLoop(buyer, car, loopMax));
+        rateRequestResult.addItem(
+                EntityStringNames.LOAN_ADD_ON_BUDGET, getAddOnBudgetLoop(buyer, car, loopMax));
         AttributeMap scoreRequestResult;
         try {
             scoreRequestResult =
@@ -66,7 +68,8 @@ public class FetchLoanDataUseCase {
         return GenerateEntitiesUseCase.generateLoanData(entityMap);
     }
 
-    private double getAddOnBudgetLoop(CarBuyer buyer, Car car, int loopMax) throws Exceptions.CodedException {
+    private double getAddOnBudgetLoop(CarBuyer buyer, Car car, int loopMax)
+            throws Exceptions.CodedException {
         double addOnBudget = 0;
         try {
             int numLoops = 0;
@@ -83,7 +86,8 @@ public class FetchLoanDataUseCase {
         return addOnBudget;
     }
 
-    private AttributeMap makeRateRequest(CarBuyer buyer, Car car, double priceModifier) throws Exceptions.CodedException {
+    private AttributeMap makeRateRequest(CarBuyer buyer, Car car, double priceModifier)
+            throws Exceptions.CodedException {
         Package rateBody;
         rateBody = getRateBody(buyer, car, priceModifier);
         AttributeMap rateResponseMap;
@@ -105,7 +109,8 @@ public class FetchLoanDataUseCase {
                 "term", Integer.parseInt((String) rateResponseMap.getItem("term").getAttribute()));
     }
 
-    private Package getRateBody(CarBuyer buyer, Car car, double priceModifier) throws Exceptions.PackageException {
+    private Package getRateBody(CarBuyer buyer, Car car, double priceModifier)
+            throws Exceptions.PackageException {
         AttributeMap rateMap = new AttributeMap();
         rateMap.addItem("loanAmount", car.getTotalPrice() + priceModifier);
         rateMap.addItem("creditScore", buyer.getCreditScore());
