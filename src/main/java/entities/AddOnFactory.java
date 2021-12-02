@@ -56,13 +56,21 @@ public class AddOnFactory {
                 AttributeMap map = (AttributeMap) a;
                 addOns.add(getEntity(map));
             } catch (ClassCastException | NullPointerException e) {
-                String message = "Failed to generate AddOn List: ";
+                String message = "Failed to generate AddOn List";
                 throw new Exceptions.FactoryException(message, e);
             }
         }
         return addOns;
     }
 
+    /**
+     * Construct a map between add-on names and AddOn objects using
+     * the values in the given AttributeMap.
+     * @param map an AttributeMap where each index string maps to an AttributeMap representing an AddOn
+     * @return a Map between Strings and AddOns constructed from the AttributeMap
+     * @throws Exceptions.FactoryException if the required AttributeMaps aren't present in the given map,
+     *      or if those maps do not contain the correct keys and values for AddOn construction
+     */
     public static Map<String, AddOn> getEntities(AttributeMap map)
             throws Exceptions.FactoryException {
         Map<String, AddOn> addOns = new HashMap<>();
@@ -70,7 +78,7 @@ public class AddOnFactory {
             try {
                 addOns.put(name, getEntity((AttributeMap) map.getItem(name)));
             } catch (ClassCastException | NullPointerException e) {
-                String message = "Failed to generate AddOn List: ";
+                String message = "Failed to generate AddOn Map";
                 throw new Exceptions.FactoryException(message, e);
             }
         }

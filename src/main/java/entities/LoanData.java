@@ -17,7 +17,7 @@ public class LoanData extends Entity {
     private double loanAmount;
     private int termLength;
     private double interestSum;
-    private final double addOnBudget;
+    private double addOnBudget;
     private final List<Map<String, Double>> amortizationTable;
 
     /**
@@ -206,6 +206,12 @@ public class LoanData extends Entity {
     public double getAddOnBudget() {
         return addOnBudget;
     }
+
+    /**
+     * Updates this loan's budget for addons
+     * @param budget the new budget
+     */
+    public void setAddOnBudget(double budget) { this.addOnBudget = budget; }
 
     @Override
     public String getStringName() {

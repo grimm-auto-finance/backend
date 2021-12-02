@@ -14,7 +14,12 @@ import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 
 public class JsonParserTest {
 
@@ -25,6 +30,21 @@ public class JsonParserTest {
     public void setup() {
         builder = Json.createObjectBuilder();
         testMap = new AttributeMap();
+    }
+
+    @Test
+    public void testInputStreamConstructor() {
+        builder.add("test string", "test");
+        JsonObject testObj = builder.build();
+        InputStream testIS = new ByteArrayInputStream(testObj.toString().getBytes());
+        JsonParser testParser = new JsonParser(testObj);
+        try {
+            AttributeMap testResult = testParser.parse();
+            JsonParser parser = new JsonParser(testIS);
+            assertEquals(testResult.toString(), parser.parse().toString());
+        } catch (Exceptions.ParseException e) {
+            fail();
+        }
     }
 
     /**
