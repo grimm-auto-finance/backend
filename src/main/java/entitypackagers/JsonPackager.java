@@ -7,21 +7,35 @@ import constants.Exceptions;
 
 import java.util.Map;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 
 public class JsonPackager implements Packager {
 
     /**
      * Writes packageMap to a JsonObject
      *
-     * @param packageMap The AttributeMap from which the JsonObject is created
-     * @return a JsonPackage containing the JsonObject with packageMap's data
-     * @throws Exceptions.PackageException if an item in the AttributeMap is of unknown type
+     * @param item The Attribute from which the JsonObject is created
+     * @return a JsonPackage containing the JsonObject with item's data
+     * @throws Exceptions.PackageException if item of unknown type
      */
-    public JsonPackage writePackage(AttributeMap packageMap) throws Exceptions.PackageException {
+    public JsonPackage writePackage(Attribute item) throws Exceptions.PackageException {
+        if (item instanceof AttributeMap) {
+            return writePackageFromMap((AttributeMap) item);
+        } else if (item instanceof ArrayAttribute) {
+            return writePackageFromArray((ArrayAttribute) item);
+        } else if (item instanceof StringAttribute) {
+            return new JsonPackage(Json.createValue((String) item.getAttribute()));
+        } else if (item instanceof DoubleAttribute) {
+            return new JsonPackage(Json.createValue((double) item.getAttribute()));
+        } else if (item instanceof IntAttribute) {
+            return new JsonPackage(Json.createValue((int) item.getAttribute()));
+        } else {
+            throw new Exceptions.PackageException("cannot package unhandled attribute type");
+        }
+    }
+
+    private JsonPackage writePackageFromMap(AttributeMap packageMap)
+            throws Exceptions.PackageException {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         Map<String, Attribute> map = packageMap.getAttribute();
         for (String key : map.keySet()) {
@@ -49,6 +63,12 @@ public class JsonPackager implements Packager {
         return new JsonPackage(builder.build());
     }
 
+    private JsonPackage writePackageFromArray(ArrayAttribute packageArray)
+            throws Exceptions.PackageException {
+        JsonArray array = getJsonArray(packageArray);
+        return new JsonPackage(array);
+    }
+
     /**
      * Takes in an ArrayAttribute and coverts it into a JsonArray
      *
@@ -57,7 +77,7 @@ public class JsonPackager implements Packager {
      * @throws Exceptions.PackageException Returns an exception if an item cannot be converted to a
      *     Json
      */
-    public JsonArray getJsonArray(ArrayAttribute item) throws Exceptions.PackageException {
+    private JsonArray getJsonArray(ArrayAttribute item) throws Exceptions.PackageException {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         for (Attribute a : item.getAttribute()) {
             if (a instanceof IntAttribute) {

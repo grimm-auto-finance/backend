@@ -3,7 +3,9 @@ package entities;
 
 import constants.EntityStringNames;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -104,6 +106,14 @@ public class Car extends Entity {
      */
     public Map<String, AddOn> getAddOns() {
         return new HashMap<>(this.addOns);
+    }
+
+    public List<AddOn> getAddOnsList() {
+        List<AddOn> addOnsList = new ArrayList<>();
+        for (String s : this.addOns.keySet()) {
+            addOnsList.add(addOns.get(s));
+        }
+        return addOnsList;
     }
 
     /**

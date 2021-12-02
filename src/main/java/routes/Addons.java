@@ -1,19 +1,16 @@
 // layer: controllers
 package routes;
 
-import attributes.ArrayAttribute;
-import attributes.Attribute;
-import attributes.AttributeMap;
-
 import com.sun.net.httpserver.HttpExchange;
 
 import constants.Exceptions;
 
-import entities.AddOn;
 import entities.Car;
+import entities.Entity;
 
-import entitypackagers.AttributizeAddOnUseCase;
 import entitypackagers.JsonPackager;
+import entitypackagers.Package;
+import entitypackagers.PackageEntityUseCase;
 
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
@@ -23,8 +20,8 @@ import logging.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.json.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /** The Route handling the `/addons` route which returns a car with its addons given the id */
 public class Addons extends Route {
@@ -62,9 +59,10 @@ public class Addons extends Route {
 
     private String getResponseString(Car car) throws Exceptions.PackageException {
         JsonPackager packager = new JsonPackager();
-        ArrayAttribute addOnArrayAttribute = getArrayAttribute(car);
-        JsonArray addonJsonArray = packager.getJsonArray(addOnArrayAttribute);
-        return addonJsonArray.toString();
+        PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
+        List<Entity> addOnsList = new ArrayList<>(car.getAddOnsList());
+        Package addOnArrayPackage = packageEntity.writeEntitiesToArray(addOnsList);
+        return addOnArrayPackage.toString();
     }
 
     private Car getCar(int id) throws Exceptions.CodedException {
@@ -76,21 +74,6 @@ public class Addons extends Route {
     private int getId(HttpExchange t) throws IOException {
         InputStream is = t.getRequestBody();
         String result = new String(is.readAllBytes());
-        int id = Integer.parseInt(result);
-        return id;
-    }
-
-    private ArrayAttribute getArrayAttribute(Car car) {
-        int addOnArraySize = car.getAddOns().keySet().size();
-        Attribute[] addonArray = new Attribute[addOnArraySize];
-        int count = 0;
-        for (String addon : car.getAddOns().keySet()) {
-            AddOn addOn = car.getAddOns().get(addon);
-            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOn);
-            AttributeMap addOnAttribute = addOnAttributizer.attributizeEntity();
-            addonArray[count] = addOnAttribute;
-            count += 1;
-        }
-        return new ArrayAttribute(addonArray);
+        return Integer.parseInt(result);
     }
 }
