@@ -64,12 +64,14 @@ public class AddOnFactory {
     }
 
     /**
-     * Construct a map between add-on names and AddOn objects using
-     * the values in the given AttributeMap.
-     * @param map an AttributeMap where each index string maps to an AttributeMap representing an AddOn
+     * Construct a map between add-on names and AddOn objects using the values in the given
+     * AttributeMap.
+     *
+     * @param map an AttributeMap where each index string maps to an AttributeMap representing an
+     *     AddOn
      * @return a Map between Strings and AddOns constructed from the AttributeMap
-     * @throws Exceptions.FactoryException if the required AttributeMaps aren't present in the given map,
-     *      or if those maps do not contain the correct keys and values for AddOn construction
+     * @throws Exceptions.FactoryException if the required AttributeMaps aren't present in the given
+     *     map, or if those maps do not contain the correct keys and values for AddOn construction
      */
     public static Map<String, AddOn> getEntities(AttributeMap map)
             throws Exceptions.FactoryException {

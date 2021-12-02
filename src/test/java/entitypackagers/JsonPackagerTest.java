@@ -153,7 +153,7 @@ public class JsonPackagerTest {
     public void testJsonpackagerUnhandledAttribute() {
         JsonPackager jsonPackager = new JsonPackager();
         try {
-             jsonPackager.writePackage(new FakeAttribute(5));
+            jsonPackager.writePackage(new FakeAttribute(5));
         } catch (Exceptions.PackageException e) {
             return;
         }
@@ -176,7 +176,8 @@ public class JsonPackagerTest {
         JsonPackager jsonPackager = new JsonPackager();
         JsonValue stringVal = Json.createValue("test");
         try {
-            assertEquals(stringVal, jsonPackager.writePackage(new StringAttribute("test")).getPackage());
+            assertEquals(
+                    stringVal, jsonPackager.writePackage(new StringAttribute("test")).getPackage());
         } catch (Exceptions.PackageException e) {
             fail();
         }

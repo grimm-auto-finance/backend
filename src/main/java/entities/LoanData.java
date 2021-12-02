@@ -209,9 +209,12 @@ public class LoanData extends Entity {
 
     /**
      * Updates this loan's budget for addons
+     *
      * @param budget the new budget
      */
-    public void setAddOnBudget(double budget) { this.addOnBudget = budget; }
+    public void setAddOnBudget(double budget) {
+        this.addOnBudget = budget;
+    }
 
     @Override
     public String getStringName() {
