@@ -82,8 +82,8 @@ public class Loan extends Route {
     }
 
     private LoanData getLoanData(CarBuyer buyer, Car car, int loopMax) throws CodedException {
-        Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL);
-        Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL);
+        Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL, logger);
+        Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL, logger);
         FetchLoanDataUseCase fetchLoanData =
                 new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
         return fetchLoanData.getLoanData(buyer, car, loopMax);
