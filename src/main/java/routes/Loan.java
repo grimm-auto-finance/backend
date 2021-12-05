@@ -2,8 +2,8 @@
 package routes;
 
 import attributes.AttributeMap;
-
 import attributes.IntAttribute;
+
 import com.sun.net.httpserver.HttpExchange;
 
 import constants.EntityStringNames;
@@ -57,7 +57,8 @@ public class Loan extends Route {
         int maxLoopRetries;
         // default to looping until senso returns an error if no parameter is given
         try {
-            IntAttribute maxLoopAttribute = (IntAttribute) entitiesMap.getItem(EntityStringNames.LOAN_LOOP_MAX);
+            IntAttribute maxLoopAttribute =
+                    (IntAttribute) entitiesMap.getItem(EntityStringNames.LOAN_LOOP_MAX);
             maxLoopRetries = maxLoopAttribute.getAttribute();
         } catch (NullPointerException e) {
             maxLoopRetries = -1;
@@ -66,7 +67,7 @@ public class Loan extends Route {
         carMap.addItem(EntityStringNames.CAR_ID, 0);
         Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
         CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
-        respond(t, 200, getResponse(buyer, car, maxLoopRetries);
+        respond(t, 200, getResponse(buyer, car, maxLoopRetries).getBytes());
     }
 
     private String getResponse(CarBuyer buyer, Car car, int loopMax) throws CodedException {
