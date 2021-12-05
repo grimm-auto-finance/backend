@@ -3,6 +3,7 @@ package routes;
 
 import attributes.AttributeMap;
 
+import attributes.IntAttribute;
 import com.sun.net.httpserver.HttpExchange;
 
 import constants.EntityStringNames;
@@ -53,15 +54,16 @@ public class Loan extends Route {
         InputStream is = t.getRequestBody();
         JsonParser parser = new JsonParser(is);
         AttributeMap entitiesMap = parser.parse();
+        IntAttribute maxLoopRetries = (IntAttribute) entitiesMap.getItem(EntityStringNames.LOAN_LOOP_MAX);
         AttributeMap carMap = (AttributeMap) entitiesMap.getItem(EntityStringNames.CAR_STRING);
         carMap.addItem(EntityStringNames.CAR_ID, 0);
         Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
         CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
-        respond(t, 200, getResponse(buyer, car).getBytes());
+        respond(t, 200, getResponse(buyer, car, maxLoopRetries.getAttribute()).getBytes());
     }
 
-    private String getResponse(CarBuyer buyer, Car car) throws CodedException {
-        LoanData loanData = getLoanData(buyer, car);
+    private String getResponse(CarBuyer buyer, Car car, int loopMax) throws CodedException {
+        LoanData loanData = getLoanData(buyer, car, loopMax);
         return getEntitiesPackage(loanData).toString();
     }
 
@@ -71,11 +73,11 @@ public class Loan extends Route {
         return packageEntity.writeEntity(loanData);
     }
 
-    private LoanData getLoanData(CarBuyer buyer, Car car) throws CodedException {
+    private LoanData getLoanData(CarBuyer buyer, Car car, int loopMax) throws CodedException {
         Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL);
         Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL);
         FetchLoanDataUseCase fetchLoanData =
                 new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
-        return fetchLoanData.getLoanData(buyer, car, -1);
+        return fetchLoanData.getLoanData(buyer, car, loopMax);
     }
 }
