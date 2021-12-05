@@ -54,12 +54,19 @@ public class Loan extends Route {
         InputStream is = t.getRequestBody();
         JsonParser parser = new JsonParser(is);
         AttributeMap entitiesMap = parser.parse();
-        IntAttribute maxLoopRetries = (IntAttribute) entitiesMap.getItem(EntityStringNames.LOAN_LOOP_MAX);
+        int maxLoopRetries;
+        // default to looping until senso returns an error if no parameter is given
+        try {
+            IntAttribute maxLoopAttribute = (IntAttribute) entitiesMap.getItem(EntityStringNames.LOAN_LOOP_MAX);
+            maxLoopRetries = maxLoopAttribute.getAttribute();
+        } catch (NullPointerException e) {
+            maxLoopRetries = -1;
+        }
         AttributeMap carMap = (AttributeMap) entitiesMap.getItem(EntityStringNames.CAR_STRING);
         carMap.addItem(EntityStringNames.CAR_ID, 0);
         Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
         CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
-        respond(t, 200, getResponse(buyer, car, maxLoopRetries.getAttribute()).getBytes());
+        respond(t, 200, getResponse(buyer, car, maxLoopRetries);
     }
 
     private String getResponse(CarBuyer buyer, Car car, int loopMax) throws CodedException {
