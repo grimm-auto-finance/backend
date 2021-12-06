@@ -33,6 +33,7 @@ public class AttributizeLoanDataUseCaseTest {
         testMap.addItem(EntityStringNames.LOAN_INTEREST_RATE, loanData.getInterestRate());
         testMap.addItem(EntityStringNames.LOAN_INTEREST_SUM, loanData.getInterestSum());
         testMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, loanData.getTermLength());
+        testMap.addItem(EntityStringNames.LOAN_ADD_ON_BUDGET, 0.0);
         List<AttributeMap> amortizationAttMap =
                 AttributizeLoanDataUseCase.getAmortizationAttMap(loanData.getAmortizationTable());
         testMap.addItem(

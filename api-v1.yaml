@@ -142,9 +142,11 @@ definitions:
     - 'interestRate'
     - "installment"
     - "sensoScore"
-    - "loanAmount"
-    - "termLength"
+    - "amount"
+    - "term"
     - "interestSum"
+    - "installments"
+    - "addOnBudget"
     properties:
       interestRate:
         type: "number"
@@ -152,9 +154,26 @@ definitions:
         type: "number"
       sensoScore:
         type: "string"
-      loanAmount:
+      amount:
         type: "number"
-      termLength:
+      term:
         type: "number"
       interestSum:
+        type: "number"
+      installments:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            capital:
+              type: "number"
+            interest:
+              type: "number"
+            remain:
+              type: "number"
+            installment:
+              type: "number"
+            interestSum:
+              type: "number"
+      addOnBudget:
         type: "number"

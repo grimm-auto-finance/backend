@@ -2,6 +2,7 @@
 package routes;
 
 import attributes.AttributeMap;
+import attributes.IntAttribute;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -53,15 +54,24 @@ public class Loan extends Route {
         InputStream is = t.getRequestBody();
         JsonParser parser = new JsonParser(is);
         AttributeMap entitiesMap = parser.parse();
+        int maxLoopRetries;
+        // default to no looping for add-on budget if no parameter is given
+        try {
+            IntAttribute maxLoopAttribute =
+                    (IntAttribute) entitiesMap.getItem(EntityStringNames.LOAN_LOOP_MAX);
+            maxLoopRetries = maxLoopAttribute.getAttribute();
+        } catch (NullPointerException e) {
+            maxLoopRetries = 0;
+        }
         AttributeMap carMap = (AttributeMap) entitiesMap.getItem(EntityStringNames.CAR_STRING);
         carMap.addItem(EntityStringNames.CAR_ID, 0);
         Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
         CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
-        respond(t, 200, getResponse(buyer, car).getBytes());
+        respond(t, 200, getResponse(buyer, car, maxLoopRetries).getBytes());
     }
 
-    private String getResponse(CarBuyer buyer, Car car) throws CodedException {
-        LoanData loanData = getLoanData(buyer, car);
+    private String getResponse(CarBuyer buyer, Car car, int loopMax) throws CodedException {
+        LoanData loanData = getLoanData(buyer, car, loopMax);
         return getEntitiesPackage(loanData).toString();
     }
 
@@ -71,11 +81,11 @@ public class Loan extends Route {
         return packageEntity.writeEntity(loanData);
     }
 
-    private LoanData getLoanData(CarBuyer buyer, Car car) throws CodedException {
-        Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL);
-        Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL);
+    private LoanData getLoanData(CarBuyer buyer, Car car, int loopMax) throws CodedException {
+        Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL, logger);
+        Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL, logger);
         FetchLoanDataUseCase fetchLoanData =
                 new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
-        return fetchLoanData.getLoanData(buyer, car);
+        return fetchLoanData.getLoanData(buyer, car, loopMax);
     }
 }

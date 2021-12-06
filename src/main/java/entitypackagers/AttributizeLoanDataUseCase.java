@@ -38,6 +38,7 @@ public class AttributizeLoanDataUseCase implements Attributizer {
         loanMap.addItem(EntityStringNames.LOAN_INTEREST_RATE, loan.getInterestRate());
         loanMap.addItem(EntityStringNames.LOAN_INTEREST_SUM, loan.getInterestSum());
         loanMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, loan.getTermLength());
+        loanMap.addItem(EntityStringNames.LOAN_ADD_ON_BUDGET, loan.getAddOnBudget());
         List<Map<String, Double>> amortizationTable = loan.getAmortizationTable();
         List<AttributeMap> amortizationAttMap = getAmortizationAttMap(amortizationTable);
         loanMap.addItem(

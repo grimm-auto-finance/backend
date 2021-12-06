@@ -31,6 +31,7 @@ public class LoanDataFactory {
         double loanAmount;
         int termLength;
         double interestSum;
+        double addOnBudget = 0;
         List<Map<String, Double>> amortizationTable = new ArrayList<>();
 
         try {
@@ -41,6 +42,12 @@ public class LoanDataFactory {
             sensoScore = (String) map.getItem(EntityStringNames.LOAN_SCORE).getAttribute();
             loanAmount = AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_AMOUNT, map);
             termLength = (int) map.getItem(EntityStringNames.LOAN_TERM_LENGTH).getAttribute();
+            try {
+                addOnBudget =
+                        (double) map.getItem(EntityStringNames.LOAN_ADD_ON_BUDGET).getAttribute();
+            } catch (NullPointerException ignored) {
+                // if add-on budget isn't in the map we just default its value to 0
+            }
             interestSum =
                     AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_INTEREST_SUM, map);
             ArrayAttribute amortizationArray =
@@ -68,6 +75,7 @@ public class LoanDataFactory {
                 loanAmount,
                 termLength,
                 interestSum,
+                addOnBudget,
                 amortizationTable);
     }
 }

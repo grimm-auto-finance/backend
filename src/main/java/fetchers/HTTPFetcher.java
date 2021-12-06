@@ -7,6 +7,8 @@ import constants.Exceptions;
 
 import entityparsers.JsonParser;
 
+import logging.Logger;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,14 +21,16 @@ public class HTTPFetcher implements Fetcher {
 
     private final URL connectionURL;
     private String requestMethod;
+    private Logger logger;
 
     /**
      * Constructs a new HTTPFetcher to make requests to the given connectionURL
      *
      * @param connectionURL the URL that requests will be sent to/received from
      */
-    public HTTPFetcher(URL connectionURL) {
+    public HTTPFetcher(URL connectionURL, Logger logger) {
         this.connectionURL = connectionURL;
+        this.logger = logger;
     }
 
     /**
@@ -52,7 +56,9 @@ public class HTTPFetcher implements Fetcher {
      */
     public AttributeMap fetch(String request) throws Exceptions.FetchException {
         JsonObject httpResponse;
+        logger.info("Making request to " + this.connectionURL + "\n" + request);
         httpResponse = makeRequest(request);
+        logger.info("Received response: " + "\n" + httpResponse);
         return parseResponse(httpResponse);
     }
 
