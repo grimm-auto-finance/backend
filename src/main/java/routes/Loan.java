@@ -55,13 +55,13 @@ public class Loan extends Route {
         JsonParser parser = new JsonParser(is);
         AttributeMap entitiesMap = parser.parse();
         int maxLoopRetries;
-        // default to looping until senso returns an error if no parameter is given
+        // default to no looping for add-on budget if no parameter is given
         try {
             IntAttribute maxLoopAttribute =
                     (IntAttribute) entitiesMap.getItem(EntityStringNames.LOAN_LOOP_MAX);
             maxLoopRetries = maxLoopAttribute.getAttribute();
         } catch (NullPointerException e) {
-            maxLoopRetries = -1;
+            maxLoopRetries = 0;
         }
         AttributeMap carMap = (AttributeMap) entitiesMap.getItem(EntityStringNames.CAR_STRING);
         carMap.addItem(EntityStringNames.CAR_ID, 0);
