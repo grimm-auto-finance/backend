@@ -3,10 +3,7 @@ package entitypackagers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import attributes.Attribute;
-import attributes.AttributeFactory;
-import attributes.AttributeMap;
-import attributes.FakeAttribute;
+import attributes.*;
 
 import constants.Exceptions;
 
@@ -16,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 
 public class JsonPackagerTest {
 
@@ -138,7 +136,7 @@ public class JsonPackagerTest {
     }
 
     @Test
-    public void testJsonPackagerUnhandledAttribute() {
+    public void testJsonPackagerUnhandledAttributeInMap() {
         map.addItem("fake attribute item", new FakeAttribute(5));
         JsonPackager jsonPackager = new JsonPackager();
         try {
@@ -149,5 +147,50 @@ public class JsonPackagerTest {
             return;
         }
         fail();
+    }
+
+    @Test
+    public void testJsonpackagerUnhandledAttribute() {
+        JsonPackager jsonPackager = new JsonPackager();
+        try {
+            jsonPackager.writePackage(new FakeAttribute(5));
+        } catch (Exceptions.PackageException e) {
+            return;
+        }
+        fail();
+    }
+
+    @Test
+    public void testJsonPackagerSingleInt() {
+        JsonPackager jsonPackager = new JsonPackager();
+        JsonValue intVal = Json.createValue(5);
+        try {
+            assertEquals(intVal, jsonPackager.writePackage(new IntAttribute(5)).getPackage());
+        } catch (Exceptions.PackageException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testJsonPackagerSingleString() {
+        JsonPackager jsonPackager = new JsonPackager();
+        JsonValue stringVal = Json.createValue("test");
+        try {
+            assertEquals(
+                    stringVal, jsonPackager.writePackage(new StringAttribute("test")).getPackage());
+        } catch (Exceptions.PackageException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testJsonPackagerSingleDouble() {
+        JsonPackager jsonPackager = new JsonPackager();
+        JsonValue doubVal = Json.createValue(5.5);
+        try {
+            assertEquals(doubVal, jsonPackager.writePackage(new DoubleAttribute(5.5)).getPackage());
+        } catch (Exceptions.PackageException e) {
+            fail();
+        }
     }
 }

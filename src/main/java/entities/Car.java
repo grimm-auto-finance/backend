@@ -1,8 +1,11 @@
+// layer: entities
 package entities;
 
 import constants.EntityStringNames;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,13 +22,8 @@ public class Car extends Entity {
     private final String make;
     private final String model;
     private final int year;
-    private final Double kilometres;
-
-    // TODO: decide if we want to use Factory method instead
-
-    public Double getKilometres() {
-        return kilometres;
-    }
+    private final double kilometres;
+    private final int id;
 
     /**
      * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
@@ -36,9 +34,10 @@ public class Car extends Entity {
      * @param make The make of the car
      * @param model The model of the car
      * @param year The model year of the car
+     * @param id The id of car as its stored in the database
      */
-    public Car(double kilometres, double price, String make, String model, int year) {
-        this(kilometres, price, make, model, year, new HashMap<>());
+    protected Car(double kilometres, double price, String make, String model, int year, int id) {
+        this(kilometres, price, make, model, year, new HashMap<>(), id);
     }
 
     /**
@@ -50,6 +49,7 @@ public class Car extends Entity {
      * @param model The model of the car
      * @param year The model year of the car
      * @param addOns A mapping of addon names to AddOn objects
+     * @param id The id of car as its stored in the database
      */
     public Car(
             double kilometres,
@@ -57,13 +57,15 @@ public class Car extends Entity {
             String make,
             String model,
             int year,
-            Map<String, AddOn> addOns) {
+            Map<String, AddOn> addOns,
+            int id) {
         this.kilometres = kilometres;
         this.price = price;
         this.make = make;
         this.model = model;
         this.year = year;
         this.addOns = addOns;
+        this.id = id;
     }
 
     /**
@@ -93,6 +95,14 @@ public class Car extends Entity {
         return new HashMap<>(this.addOns);
     }
 
+    public List<AddOn> getAddOnsList() {
+        List<AddOn> addOnsList = new ArrayList<>();
+        for (String s : this.addOns.keySet()) {
+            addOnsList.add(addOns.get(s));
+        }
+        return addOnsList;
+    }
+
     /**
      * Returns this Car's price, in dollars.
      *
@@ -100,6 +110,19 @@ public class Car extends Entity {
      */
     public double getPrice() {
         return price;
+    }
+
+    /**
+     * Returns this Car's price, including any add-ons it has.
+     *
+     * @return the total price of this car with its add-ons, in dollars
+     */
+    public double getTotalPrice() {
+        double totalPrice = price;
+        for (String name : addOns.keySet()) {
+            totalPrice += addOns.get(name).getPrice();
+        }
+        return totalPrice;
     }
 
     /**
@@ -138,9 +161,37 @@ public class Car extends Entity {
         return year;
     }
 
+    public double getKilometres() {
+        return kilometres;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     /** @return Returns the string name of the car */
     @Override
     public String getStringName() {
         return EntityStringNames.CAR_STRING;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Car)) {
+            return false;
+        }
+        Car otherCar = (Car) other;
+        for (String s : addOns.keySet()) {
+            if (!otherCar.addOns.containsKey(s)) {
+                return false;
+            }
+            if (!addOns.get(s).equals(otherCar.addOns.get(s))) {
+                return false;
+            }
+        }
+        return (this.make.equals(otherCar.make))
+                && (this.model.equals(otherCar.model))
+                && (this.year == otherCar.year)
+                && (this.price == otherCar.price);
     }
 }

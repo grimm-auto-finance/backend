@@ -13,7 +13,7 @@ public class CarBuyerTest {
 
     @BeforeAll
     static void setup() {
-        buyer = new CarBuyer(50000, 750);
+        buyer = new CarBuyer(50000, 750, 15000.0);
     }
 
     @Test
@@ -24,6 +24,11 @@ public class CarBuyerTest {
     @Test
     public void testGetCreditScore() {
         assertEquals(750, buyer.getCreditScore());
+    }
+
+    @Test
+    public void testGetDownPayment() {
+        assertEquals(15000.0, buyer.getDownPayment());
     }
 
     @Test

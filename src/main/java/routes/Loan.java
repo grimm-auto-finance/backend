@@ -1,77 +1,91 @@
+// layer: controllers
 package routes;
+
+import attributes.AttributeMap;
+import attributes.IntAttribute;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import constants.EntityStringNames;
+import constants.Exceptions;
 import constants.Exceptions.CodedException;
 
-import entities.Car;
-import entities.CarBuyer;
-import entities.Entity;
-import entities.LoanData;
+import entities.*;
 
-import entitypackagers.JsonPackage;
 import entitypackagers.JsonPackager;
+import entitypackagers.Package;
 import entitypackagers.PackageEntityUseCase;
 
 import entityparsers.JsonParser;
-import entityparsers.ParseCarBuyerUseCase;
-import entityparsers.ParseCarUseCase;
-import entityparsers.Parser;
 
-import fetchers.LoanDataFetcher;
+import fetchers.FetchLoanDataUseCase;
+import fetchers.Fetcher;
+import fetchers.HTTPFetcher;
+
+import logging.Logger;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.json.*;
+import java.net.URL;
 
 /** The Route handling the `/loan` route which allows users to fetch information about a loan. */
 public class Loan extends Route {
+
+    private final URL SENSO_RATE_URL, SENSO_SCORE_URL;
+
     @Override
     public String getContext() {
         return "/loan";
     }
 
+    public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL, Logger logger) {
+        super(logger);
+        this.SENSO_RATE_URL = SENSO_RATE_URL;
+        this.SENSO_SCORE_URL = SENSO_SCORE_URL;
+    }
+
     /**
-     * The post method for the `/loan` route.
+     * The post method for the `/loan` route. Takes in an HttpExchange containing data for a Car and
+     * CarBuyer, and sends back the Car, CarBuyer, and LoanData returned by the Senso API.
      *
      * @param t the httpexchange that this method must handle
      */
     @Override
     protected void post(HttpExchange t) throws CodedException {
         InputStream is = t.getRequestBody();
-        JsonReader jsonReader = Json.createReader(is);
-        JsonObject inputObj = jsonReader.readObject();
-        Parser jsonParser = new JsonParser(inputObj);
-        ParseCarUseCase carParser = new ParseCarUseCase(jsonParser);
-        ParseCarBuyerUseCase buyerParser = new ParseCarBuyerUseCase(jsonParser);
-        Car car = carParser.parse();
-        CarBuyer buyer = buyerParser.parse();
-        // TODO: this check should be happening with ParseCarUseCase and ParseCarBuyerUseCase
-        if (car.getMake() == null || car.getModel() == null) {
-            String message = "Error in Payload JSON parsing";
-            respond(t, 400, message.getBytes());
-            return;
+        JsonParser parser = new JsonParser(is);
+        AttributeMap entitiesMap = parser.parse();
+        int maxLoopRetries;
+        // default to no looping for add-on budget if no parameter is given
+        try {
+            IntAttribute maxLoopAttribute =
+                    (IntAttribute) entitiesMap.getItem(EntityStringNames.LOAN_LOOP_MAX);
+            maxLoopRetries = maxLoopAttribute.getAttribute();
+        } catch (NullPointerException e) {
+            maxLoopRetries = 0;
         }
-        respond(t, 200, getResponse(buyer, car).getBytes());
+        AttributeMap carMap = (AttributeMap) entitiesMap.getItem(EntityStringNames.CAR_STRING);
+        carMap.addItem(EntityStringNames.CAR_ID, 0);
+        Car car = GenerateEntitiesUseCase.generateCar(entitiesMap);
+        CarBuyer buyer = GenerateEntitiesUseCase.generateCarBuyer(entitiesMap);
+        respond(t, 200, getResponse(buyer, car, maxLoopRetries).getBytes());
     }
 
-    String getResponse(entities.CarBuyer buyer, entities.Car car) throws CodedException {
-        LoanData loanData = LoanDataFetcher.fetch(buyer, car);
-        // TODO: Abstract this more?
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        List<Entity> entities = new ArrayList<>();
-        entities.add(car);
-        entities.add(buyer);
-        entities.add(loanData);
-        PackageEntityUseCase packageEntity = new PackageEntityUseCase();
-        for (Entity e : entities) {
-            packageEntity.setEntity(e);
-            JsonPackager jsonPackager = new JsonPackager();
-            JsonPackage entityPackage = (JsonPackage) packageEntity.writeEntity(jsonPackager);
-            jsonBuilder.add(e.getStringName(), entityPackage.getPackage());
-        }
-        return jsonBuilder.build().toString();
+    private String getResponse(CarBuyer buyer, Car car, int loopMax) throws CodedException {
+        LoanData loanData = getLoanData(buyer, car, loopMax);
+        return getEntitiesPackage(loanData).toString();
+    }
+
+    private Package getEntitiesPackage(LoanData loanData) throws Exceptions.PackageException {
+        JsonPackager packager = new JsonPackager();
+        PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
+        return packageEntity.writeEntity(loanData);
+    }
+
+    private LoanData getLoanData(CarBuyer buyer, Car car, int loopMax) throws CodedException {
+        Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL, logger);
+        Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL, logger);
+        FetchLoanDataUseCase fetchLoanData =
+                new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
+        return fetchLoanData.getLoanData(buyer, car, loopMax);
     }
 }

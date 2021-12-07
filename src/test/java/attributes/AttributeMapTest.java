@@ -12,8 +12,8 @@ import java.util.Map;
 public class AttributeMapTest {
 
     static AttributeMap attMap;
-    static IntAttribute intAtt = new IntAttribute(1);
-    static DoubleAttribute doubleAtt = new DoubleAttribute(1.1);
+    static final IntAttribute intAtt = new IntAttribute(1);
+    static final DoubleAttribute doubleAtt = new DoubleAttribute(1.1);
 
     @BeforeEach
     public void setup() {
@@ -74,5 +74,19 @@ public class AttributeMapTest {
             return;
         }
         fail();
+    }
+
+    @Test
+    public void testCombine() {
+        AttributeMap first = new AttributeMap();
+        first.addItem("test string", "test value");
+        AttributeMap second = new AttributeMap();
+        second.addItem("second test string", "second test value");
+        AttributeMap testCombined = new AttributeMap();
+        testCombined.addItem("test string", "test value");
+        testCombined.addItem("second test string", "second test value");
+        assertEquals(
+                testCombined.getAttribute().toString(),
+                AttributeMap.combine(first, second).getAttribute().toString());
     }
 }

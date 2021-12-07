@@ -1,26 +1,27 @@
+// layer: frameworksanddrivers
 package entitypackagers;
 
-import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 public class JsonPackage extends Package {
 
-    private final JsonObject obj;
+    private final JsonValue val;
 
     /**
-     * Constructs a new JsonPackage to contain the given JsonObject
+     * Constructs a new JsonPackage to contain the given JsonValue
      *
-     * @param obj The jsonObject
+     * @param val The jsonValue to be stored
      */
-    public JsonPackage(JsonObject obj) {
-        this.obj = obj;
+    public JsonPackage(JsonValue val) {
+        this.val = val;
     }
 
     /**
      * Get this package's contents
      *
-     * @return the JsonObject stored in this JsonPackage
+     * @return the JsonValue stored in this JsonPackage
      */
-    public JsonObject getPackage() {
-        return obj;
+    public JsonValue getPackage() {
+        return val;
     }
 }
