@@ -14,6 +14,8 @@ import entitypackagers.JsonPackager;
 import entitypackagers.Package;
 import entitypackagers.PackageEntityUseCase;
 
+import entitypackagers.Packager;
+import entityparsers.Parser;
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 import fetchers.FetchCarDataUseCase;
@@ -31,8 +33,8 @@ import java.util.List;
 public class Search extends Route {
     private final DataBase dataBase;
 
-    public Search(DataBase dataBase, Logger logger) {
-        super(logger);
+    public Search(DataBase dataBase, Logger logger, Parser parser, Packager packager) {
+        super(logger, parser, packager);
         this.dataBase = dataBase;
     }
 
@@ -56,8 +58,7 @@ public class Search extends Route {
     }
 
     private String getResponseString(List<Car> cars) throws Exceptions.PackageException {
-        JsonPackager jp = new JsonPackager();
-        PackageEntityUseCase carPackager = new PackageEntityUseCase(jp);
+        PackageEntityUseCase carPackager = new PackageEntityUseCase(packager);
         List<Entity> entities = new ArrayList<>(cars);
         Package carsPackage = carPackager.writeEntitiesToArray(entities);
         return carsPackage.toString();

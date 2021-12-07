@@ -12,24 +12,39 @@ import javax.json.*;
 
 public class JsonParser implements Parser {
 
-    private final JsonObject jsonObject;
+    private JsonObject jsonObject;
 
     /**
-     * Construct a new JsonParser
-     *
+     * Set the object that this JsonParser will be parsing.
+     * This object should be either a JsonObject or InputStream
+     * @param obj the object to parse data from
+     * @throws Exceptions.ParseException if obj is of invalid type
+     */
+    public void setParseObject(Object obj) throws Exceptions.ParseException {
+        if (obj instanceof JsonObject) {
+            setParseObject((JsonObject) obj);
+        } else if (obj instanceof InputStream) {
+            setParseObject((InputStream) obj);
+        } else {
+            throw new Exceptions.ParseException("Parse object of invalid type " + obj.getClass());
+        }
+    }
+
+    /**
+     * Sets the object that this JsonParser will be parsing to jsonObject
      * @param jsonObject the given JsonObject parsed to construct JsonParser
      */
-    public JsonParser(JsonObject jsonObject) {
+    private void setParseObject(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
     }
 
     /**
-     * Constructs a new JsonParser using the JsonObject contained in the given InputStream
-     *
+     * Sets the object that this JsonParser will be parsing to a JsonObject
+     * stored within the given InputStream
      * @param is an InputStream containing a JsonObject
      * @throws Exceptions.ParseException if the InputStream cannot be parsed into a JsonObject
      */
-    public JsonParser(InputStream is) throws Exceptions.ParseException {
+    private void setParseObject(InputStream is) throws Exceptions.ParseException {
         try {
             JsonReader jsonReader = Json.createReader(is);
             this.jsonObject = jsonReader.readObject();
@@ -44,6 +59,9 @@ public class JsonParser implements Parser {
      * @return The parsed AttributeMap
      */
     public AttributeMap parse() throws Exceptions.ParseException {
+        if (this.jsonObject == null) {
+            throw new Exceptions.ParseException("can't parse from null jsonobject");
+        }
         return parseJsonObject(this.jsonObject);
     }
 

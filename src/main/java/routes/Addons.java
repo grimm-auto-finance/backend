@@ -12,6 +12,8 @@ import entitypackagers.JsonPackager;
 import entitypackagers.Package;
 import entitypackagers.PackageEntityUseCase;
 
+import entitypackagers.Packager;
+import entityparsers.Parser;
 import fetchers.DataBase;
 import fetchers.DataBaseFetcher;
 import fetchers.FetchCarDataUseCase;
@@ -28,8 +30,8 @@ public class Addons extends Route {
 
     private final DataBase dataBase;
 
-    public Addons(DataBase dataBase, Logger logger) {
-        super(logger);
+    public Addons(DataBase dataBase, Logger logger, Parser parser, Packager packager) {
+        super(logger, parser, packager);
         this.dataBase = dataBase;
     }
 
@@ -58,7 +60,6 @@ public class Addons extends Route {
     }
 
     private String getResponseString(Car car) throws Exceptions.PackageException {
-        JsonPackager packager = new JsonPackager();
         PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
         List<Entity> addOnsList = new ArrayList<>(car.getAddOnsList());
         Package addOnArrayPackage = packageEntity.writeEntitiesToArray(addOnsList);

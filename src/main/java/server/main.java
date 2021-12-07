@@ -5,6 +5,10 @@ import com.sun.net.httpserver.HttpServer;
 
 import constants.Exceptions;
 
+import entitypackagers.JsonPackager;
+import entitypackagers.Packager;
+import entityparsers.JsonParser;
+import entityparsers.Parser;
 import fetchers.DataBase;
 import fetchers.PostgresDataBase;
 
@@ -22,6 +26,8 @@ class Server {
             new PostgresDataBase(
                     "jdbc:postgresql://db:5432/postgres", "postgres", Env.POSTGRES_PASSWORD);
     public static final Logger logger = LoggerFactory.getLogger();
+    public static final Packager packager = new JsonPackager();
+    public static final Parser parser = new JsonParser();
 
     public static void main(String[] args) {
         initializeDataBase();

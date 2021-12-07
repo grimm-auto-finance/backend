@@ -8,6 +8,8 @@ import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.MissingMethodException;
 
+import entitypackagers.Packager;
+import entityparsers.Parser;
 import logging.Logger;
 
 import java.io.IOException;
@@ -18,9 +20,13 @@ import java.util.Arrays;
 public abstract class Route implements HttpHandler {
 
     protected final Logger logger;
+    protected final Parser parser;
+    protected final Packager packager;
 
-    protected Route(Logger logger) {
+    protected Route(Logger logger, Parser parser, Packager packager) {
         this.logger = logger;
+        this.parser = parser;
+        this.packager = packager;
     }
 
     /**

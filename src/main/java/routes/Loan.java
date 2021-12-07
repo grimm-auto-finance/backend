@@ -16,8 +16,9 @@ import entitypackagers.JsonPackager;
 import entitypackagers.Package;
 import entitypackagers.PackageEntityUseCase;
 
-import entityparsers.JsonParser;
+import entitypackagers.Packager;
 
+import entityparsers.Parser;
 import fetchers.FetchLoanDataUseCase;
 import fetchers.Fetcher;
 import fetchers.HTTPFetcher;
@@ -37,8 +38,8 @@ public class Loan extends Route {
         return "/loan";
     }
 
-    public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL, Logger logger) {
-        super(logger);
+    public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL, Logger logger, Parser parser, Packager packager) {
+        super(logger, parser, packager);
         this.SENSO_RATE_URL = SENSO_RATE_URL;
         this.SENSO_SCORE_URL = SENSO_SCORE_URL;
     }
@@ -52,7 +53,7 @@ public class Loan extends Route {
     @Override
     protected void post(HttpExchange t) throws CodedException {
         InputStream is = t.getRequestBody();
-        JsonParser parser = new JsonParser(is);
+        parser.setParseObject(is);
         AttributeMap entitiesMap = parser.parse();
         int maxLoopRetries;
         // default to no looping for add-on budget if no parameter is given
@@ -76,7 +77,6 @@ public class Loan extends Route {
     }
 
     private Package getEntitiesPackage(LoanData loanData) throws Exceptions.PackageException {
-        JsonPackager packager = new JsonPackager();
         PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
         return packageEntity.writeEntity(loanData);
     }

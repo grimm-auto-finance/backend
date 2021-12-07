@@ -10,8 +10,8 @@ import routes.Search;
 public class Routes {
     /** The routes of the program. */
     public static final Route[] routes = {
-        new Loan(Env.SENSO_RATE_URL, Env.SENSO_SCORE_URL, Server.logger),
-        new Search(Server.dataBase, Server.logger),
-        new Addons(Server.dataBase, Server.logger),
+        new Loan(Env.SENSO_RATE_URL, Env.SENSO_SCORE_URL, Server.logger, Server.parser, Server.packager),
+        new Search(Server.dataBase, Server.logger, Server.parser, Server.packager),
+        new Addons(Server.dataBase, Server.logger, Server.parser, Server.packager),
     };
 }
