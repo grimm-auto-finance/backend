@@ -4,6 +4,7 @@ package routes;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.MissingMethodException;
 
@@ -114,7 +115,21 @@ public abstract class Route implements HttpHandler {
             }
         } catch (CodedException e) {
             logger.error(e.getMessage() + ":\n" + Arrays.toString(e.getStackTrace()));
-            respond(t, e.getCode(), e.getMessage().getBytes());
+            String message;
+            if (e instanceof Exceptions.FetchException) {
+                message = "Fetch error during request execution";
+            } else if (e instanceof Exceptions.ParseException) {
+                message = "Parse error during request execution";
+            } else if (e instanceof Exceptions.PackageException) {
+                message = "Package error during request execution";
+            } else if (e instanceof Exceptions.FactoryException) {
+                message = "Factory error during request execution";
+            } else if (e instanceof Exceptions.DataBaseException) {
+                message = "DataBase error during request execution";
+            } else {
+                message = "Error during request execution";
+            }
+            respond(t, e.getCode(), message.getBytes());
         }
         t.close();
     }
