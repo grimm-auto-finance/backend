@@ -1,4 +1,3 @@
-// layer: usecases
 package entitypackagers;
 
 import entities.*;
@@ -24,8 +23,7 @@ public class AttributizerFactory {
         } else if (entity instanceof LoanData) {
             return new AttributizeLoanDataUseCase((LoanData) entity);
         } else {
-            throw new ClassCastException(
-                    "No appropriate Attributizer for entity " + entity.getStringName());
+            throw new ClassCastException("No appropriate Attributizer for entity");
         }
     }
 }

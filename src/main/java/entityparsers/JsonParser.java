@@ -1,11 +1,9 @@
-// layer: frameworksanddrivers
 package entityparsers;
 
 import attributes.*;
 
 import constants.Exceptions;
 
-import java.io.InputStream;
 import java.util.Set;
 
 import javax.json.*;
@@ -21,21 +19,6 @@ public class JsonParser implements Parser {
      */
     public JsonParser(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
-    }
-
-    /**
-     * Constructs a new JsonParser using the JsonObject contained in the given InputStream
-     *
-     * @param is an InputStream containing a JsonObject
-     * @throws Exceptions.ParseException if the InputStream cannot be parsed into a JsonObject
-     */
-    public JsonParser(InputStream is) throws Exceptions.ParseException {
-        try {
-            JsonReader jsonReader = Json.createReader(is);
-            this.jsonObject = jsonReader.readObject();
-        } catch (JsonException e) {
-            throw new Exceptions.ParseException("Failed to parse JsonObject from InputStream", e);
-        }
     }
 
     /**
@@ -72,12 +55,18 @@ public class JsonParser implements Parser {
         switch (item.getValueType()) {
             case NUMBER:
                 JsonNumber itemNum = (JsonNumber) item;
-                String numAsString = item.toString();
-                if (!numAsString.contains(".")) {
-                    itemAttribute = new IntAttribute(itemNum.intValue());
-                } else {
-                    itemAttribute = new DoubleAttribute(itemNum.doubleValue());
-                }
+                /*
+                 TODO: figure out how to differentiate ints and doubles better?
+                 isIntegral returns true if the value has .0 at the end even though
+                 it should be a double
+                                    if (itemNum.isIntegral()) {
+                                        itemAttribute = new IntAttribute(itemNum.intValue());
+                                    } else {
+                                        itemAttribute = new
+                 DoubleAttribute(itemNum.doubleValue());
+                                    }
+                */
+                itemAttribute = new DoubleAttribute(itemNum.doubleValue());
                 break;
             case STRING:
                 JsonString itemString = (JsonString) item;
@@ -97,9 +86,7 @@ public class JsonParser implements Parser {
                 break;
             default:
                 throw new Exceptions.ParseException(
-                        "Json item of type "
-                                + item.getValueType()
-                                + " doesn't correspond to any Attribute types");
+                        "Json item doesn't correspond to any Attribute types");
         }
         return itemAttribute;
     }

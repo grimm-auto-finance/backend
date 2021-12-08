@@ -7,7 +7,6 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 
 import entities.AddOn;
-import entities.TestEntityCreator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ public class AttributizeAddOnUseCaseTest {
 
     @Test
     public void testAttributizeAddOnCompleteAddOn() {
-        addOn = TestEntityCreator.getTestAddOn();
+        addOn = new AddOn("Rust proofing", 1000, "no rust allowed!");
         addAddOnToTestMap();
         addOnAttributizer = new AttributizeAddOnUseCase(addOn);
         assertEquals(

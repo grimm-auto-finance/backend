@@ -1,4 +1,3 @@
-// layer: interfaceadapters
 package entitypackagers;
 
 public abstract class Package {

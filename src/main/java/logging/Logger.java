@@ -1,4 +1,3 @@
-// layer: ignore
 package logging;
 
 /** An interface that accepts and communicates messages various levels. */

@@ -1,4 +1,3 @@
-// layer: ignore
 package attributes;
 
 public class IntAttribute extends Attribute {

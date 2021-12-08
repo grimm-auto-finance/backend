@@ -45,21 +45,24 @@ paths:
     post:
       tags:
       - "addOns"
-      summary: "Get the vehicle containing all available add-ons for a vehicle"
+      summary: "Get all available add-ons for a vehicle"
       consumes:
-      - "text/plain"
+      - "application/json"
       produces:
       - "application/json"
       parameters:
       - in: "body"
         name: "body"
-        description: "The vehicle id to fetch addons for"
+        description: "Vehicle to get add-ons for"
         required: true
         schema:
-          type: "number"
+          type: "object"
+          properties:
+            vehicleId:
+              type: "number"
       responses:
         "200":
-          description: "The all available add-ons for a vehicle"
+          description: "All available add-ons for the given car"
           schema:
             type: "array"
             items:
@@ -110,7 +113,6 @@ definitions:
     - "make"
     - "model"
     - "year"
-    - "addOns"
     properties:
       id:
         type: "number"
@@ -142,11 +144,9 @@ definitions:
     - 'interestRate'
     - "installment"
     - "sensoScore"
-    - "amount"
-    - "term"
+    - "loanAmount"
+    - "termLength"
     - "interestSum"
-    - "installments"
-    - "addOnBudget"
     properties:
       interestRate:
         type: "number"
@@ -154,26 +154,9 @@ definitions:
         type: "number"
       sensoScore:
         type: "string"
-      amount:
+      loanAmount:
         type: "number"
-      term:
+      termLength:
         type: "number"
       interestSum:
-        type: "number"
-      installments:
-        type: "array"
-        items:
-          type: "object"
-          properties:
-            capital:
-              type: "number"
-            interest:
-              type: "number"
-            remain:
-              type: "number"
-            installment:
-              type: "number"
-            interestSum:
-              type: "number"
-      addOnBudget:
         type: "number"

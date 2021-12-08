@@ -1,93 +1,58 @@
 package entitypackagers;
 
-import attributes.ArrayAttribute;
-import attributes.Attribute;
-import attributes.AttributeFactory;
 import attributes.AttributeMap;
 
 import constants.Exceptions;
 
 import entities.Entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PackageEntityUseCase {
 
-    private Packager packager;
+    private Entity entity;
 
     public PackageEntityUseCase() {}
 
     /**
      * Constructs a new PackageEntityUseCase to write the given Entity to a Package
      *
-     * @param packager the Packager to use to turn Entities into Packages
+     * @param entity the Entity to be serialized
      */
-    public PackageEntityUseCase(Packager packager) {
-        this.packager = packager;
+    public PackageEntityUseCase(Entity entity) {
+        this.entity = entity;
     }
 
     /**
-     * Sets the Packager that this PackageEntityUseCase uses to turn Entities into Packages
+     * Sets the Entity that this PackageEntityUseCase packages to newEntity
      *
-     * @param packager the new Packager to be used
+     * @param newEntity the new Entity to be packaged
      */
-    public void setPackager(Packager packager) {
-        this.packager = packager;
+    public void setEntity(Entity newEntity) {
+        this.entity = newEntity;
     }
 
     /**
-     * Returns the Packager that this PackageEntityUseCase has been set to use to package Should
-     * only be used for testing
+     * Returns the Entity that this PackageEntityUseCase has been set to package Should only be used
+     * for testing
      *
      * @return The entity to be packaged
      */
-    public Packager getPackager() {
-        return this.packager;
+    public Entity getEntity() {
+        return this.entity;
     }
 
     /**
-     * Writes the given Entity to a Package using packager
+     * Writes entity to a Package using the given Packager
      *
-     * @param entity the Entity to be packaged using Packager
-     * @return a Package storing a representation of entity, made using Packager
-     * @throws Exceptions.PackageException if the Attributization of entity fails
+     * @param packager The type of package to be used
+     * @return the package
+     * @throws Exceptions.PackageException A PackageException
      */
-    public Package writeEntity(Entity entity) throws Exceptions.PackageException {
+    public Package writeEntity(Packager packager) throws Exceptions.PackageException {
         if (entity == null) {
             throw new NullPointerException("Can't extract Attributes from null Entity");
-        } else if (packager == null) {
-            throw new NullPointerException("Can't use null Packager to package Entity");
         }
         Attributizer entityAttributizer = AttributizerFactory.getAttributizer(entity);
         AttributeMap entityMap = entityAttributizer.attributizeEntity();
         return packager.writePackage(entityMap);
-    }
-
-    /**
-     * Writes the given List of Entities to a Package using packager The Entities are packaged as an
-     * Array.
-     *
-     * @param entities the List of Entities to be packaged
-     * @return a Package containing an array representation of entities
-     * @throws Exceptions.PackageException if the Attributization of the entities fails
-     */
-    public Package writeEntitiesToArray(List<Entity> entities) throws Exceptions.PackageException {
-        if (packager == null) {
-            throw new NullPointerException("Can't use null Packager to package Entity");
-        }
-        List<AttributeMap> entitiesMapList = new ArrayList<>();
-        for (Entity e : entities) {
-            if (e == null) {
-                throw new NullPointerException("Can't extract Attributes from null Entity");
-            }
-            Attributizer entityAttributizer = AttributizerFactory.getAttributizer(e);
-            AttributeMap entityMap = entityAttributizer.attributizeEntity();
-            entitiesMapList.add(entityMap);
-        }
-        ArrayAttribute entitiesMapArray =
-                (ArrayAttribute)
-                        AttributeFactory.createAttribute(entitiesMapList.toArray(new Attribute[0]));
-        return packager.writePackage(entitiesMapArray);
     }
 }

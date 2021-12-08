@@ -1,4 +1,3 @@
-// layer: ignore
 package logging;
 
 /**
@@ -22,7 +21,7 @@ class SystemLogger implements Logger {
 
     @Override
     public void error(String string, Exception e) {
-        error(string + ": " + e.getMessage());
+        error(string);
         e.printStackTrace();
     }
 }

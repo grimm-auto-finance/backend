@@ -1,4 +1,3 @@
-// layer: interfaceadapters
 package entityparsers;
 
 import attributes.AttributeMap;

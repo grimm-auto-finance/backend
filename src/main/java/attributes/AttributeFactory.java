@@ -1,4 +1,3 @@
-// layer: ignore
 package attributes;
 
 /** A factory that creates an Attribute given an object that is either an int, Double or String */
@@ -23,7 +22,7 @@ public class AttributeFactory {
             return new ArrayAttribute((Attribute[]) obj);
         } else {
             throw new ClassCastException(
-                    "Unable to find appropriate Attribute for Object of type " + obj.getClass());
+                    "Unable to find appropriate Attribute for Object " + obj.toString());
         }
     }
 }

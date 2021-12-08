@@ -1,4 +1,3 @@
-// layer: entities
 package entities;
 
 import constants.EntityStringNames;
@@ -16,7 +15,7 @@ public class AddOn extends Entity {
      * @param price The price of the addon
      * @param description A string describing the addon and its use
      */
-    protected AddOn(String name, double price, String description) {
+    public AddOn(String name, double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -70,16 +69,5 @@ public class AddOn extends Entity {
     @Override
     public String getStringName() {
         return EntityStringNames.ADD_ON_STRING;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof AddOn)) {
-            return false;
-        }
-        AddOn otherAddOn = (AddOn) other;
-        return (this.name.equals(otherAddOn.name))
-                && (this.price == otherAddOn.price)
-                && (this.description.equals(otherAddOn.description));
     }
 }

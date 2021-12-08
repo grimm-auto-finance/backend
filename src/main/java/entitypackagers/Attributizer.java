@@ -1,4 +1,3 @@
-// layer: usecases
 package entitypackagers;
 
 import attributes.AttributeMap;

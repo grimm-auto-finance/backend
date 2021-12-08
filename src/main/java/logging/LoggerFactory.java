@@ -1,4 +1,3 @@
-// layer: ignore
 package logging;
 
 /** A class that allows you to create loggers */
