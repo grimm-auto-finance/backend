@@ -8,14 +8,12 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 
 import entities.LoanData;
+import entities.TestEntityCreator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AttributizeLoanDataUseCaseTest {
 
@@ -35,6 +33,7 @@ public class AttributizeLoanDataUseCaseTest {
         testMap.addItem(EntityStringNames.LOAN_INTEREST_RATE, loanData.getInterestRate());
         testMap.addItem(EntityStringNames.LOAN_INTEREST_SUM, loanData.getInterestSum());
         testMap.addItem(EntityStringNames.LOAN_TERM_LENGTH, loanData.getTermLength());
+        testMap.addItem(EntityStringNames.LOAN_ADD_ON_BUDGET, 0.0);
         List<AttributeMap> amortizationAttMap =
                 AttributizeLoanDataUseCase.getAmortizationAttMap(loanData.getAmortizationTable());
         testMap.addItem(
@@ -43,11 +42,7 @@ public class AttributizeLoanDataUseCaseTest {
 
     @Test
     public void testAttributizeLoanData() {
-        List<Map<String, Double>> amortizationTable = new ArrayList<>();
-        Map<String, Double> installment = new HashMap<>();
-        installment.put("Test String", 5.5);
-        amortizationTable.add(installment);
-        loanData = new LoanData(1.25, 500.25, "Medium", 50000, 36, 200.25, amortizationTable);
+        loanData = TestEntityCreator.getTestLoanData();
         addLoanDataToTestMap();
         loanDataAttributizer = new AttributizeLoanDataUseCase(loanData);
         assertEquals(

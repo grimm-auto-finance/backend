@@ -8,6 +8,7 @@ import constants.EntityStringNames;
 
 import entities.AddOn;
 import entities.Car;
+import entities.TestEntityCreator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ public class AttributizeCarUseCaseTest {
 
     @BeforeEach
     public void setup() {
-        testCar = new Car(0, 50000, "Honda", "Civic", 2020);
+        testCar = TestEntityCreator.getTestCar();
         carAttributizer = new AttributizeCarUseCase(testCar);
         testMap = new AttributeMap();
     }
@@ -30,10 +31,11 @@ public class AttributizeCarUseCaseTest {
         testMap.addItem(EntityStringNames.CAR_MAKE, testCar.getMake());
         testMap.addItem(EntityStringNames.CAR_MODEL, testCar.getModel());
         testMap.addItem(EntityStringNames.CAR_YEAR, testCar.getYear());
-        testMap.addItem(
-                EntityStringNames.CAR_ADD_ONS,
-                AttributizeCarUseCase.getAddOnAttArray(testCar.getAddOns()));
         testMap.addItem(EntityStringNames.CAR_KILOMETRES, testCar.getKilometres());
+        testMap.addItem(EntityStringNames.CAR_ID, testCar.getId());
+        testMap.addItem(
+                EntityStringNames.ADD_ON_STRING,
+                AttributizeCarUseCase.getAddOnMap(testCar.getAddOns()));
     }
 
     @Test
@@ -46,10 +48,8 @@ public class AttributizeCarUseCaseTest {
 
     @Test
     public void testAttributizeCarWithAddOns() {
-        AddOn rustProofing = new AddOn("Rust proofing", 1000, "no rust allowed");
-        AddOn marshmallows = new AddOn("Marshmallows", 100, "fluffy goodness");
+        AddOn rustProofing = TestEntityCreator.getTestAddOn();
         testCar.addAddOn(rustProofing);
-        testCar.addAddOn(marshmallows);
         addCarToTestMap();
         assertEquals(
                 testMap.getAttribute().toString(),

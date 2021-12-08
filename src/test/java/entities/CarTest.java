@@ -18,7 +18,7 @@ public class CarTest {
 
     @BeforeEach
     public void setup() {
-        car = new Car(10000, 30000, "Honda", "Civic", 2002);
+        car = new Car(10000, 30000, "Honda", "Civic", 2002, 3);
         addOns = new HashMap<>();
         addOns.put("Marshmallows", new AddOn("Marshmallows", 100, "fluffy goodness"));
         addOns.put("Rust proofing", new AddOn("Rust proofing", 1000, "no rust allowed!"));
@@ -50,13 +50,18 @@ public class CarTest {
     }
 
     @Test
+    public void testGetId() {
+        assertEquals(3, car.getId());
+    }
+
+    @Test
     public void testEmptyAddOnConstructor() {
         assertEquals(new HashMap<>(), car.getAddOns());
     }
 
     @Test
     public void testAddOnConstructor() {
-        car = new Car(10000, 30000, "Honda", "Civic", 2002, addOns);
+        car = new Car(10000, 30000, "Honda", "Civic", 2002, addOns, 3);
         assertEquals(addOns, car.getAddOns());
     }
 
@@ -68,15 +73,25 @@ public class CarTest {
 
     @Test
     public void testAddAddOns() {
+        double initialTotalPrice = car.getTotalPrice();
+        double priceOfMarshmallows = addOns.get("Marshmallows").getPrice();
+        double priceOfRustProofing = addOns.get("Rust proofing").getPrice();
         car.addAddOn(addOns.get("Marshmallows"));
         car.addAddOn(addOns.get("Rust proofing"));
+        double finalTotalPrice = car.getTotalPrice();
+        assertEquals(
+                initialTotalPrice + priceOfMarshmallows + priceOfRustProofing, finalTotalPrice);
         assertEquals(addOns, car.getAddOns());
     }
 
     @Test
     public void testRemoveAddOns() {
-        car = new Car(10000, 30000, "Honda", "Civic", 2002, addOns);
+        car = new Car(10000, 30000, "Honda", "Civic", 2002, addOns, 3);
+        double initialTotalPrice = car.getTotalPrice();
+        double priceOfMarshmallows = car.getAddOns().get("Marshmallows").getPrice();
         car.removeAddOn("Marshmallows");
+        double finalTotalPrice = car.getTotalPrice();
+        assertEquals(finalTotalPrice, initialTotalPrice - priceOfMarshmallows);
         assertFalse(addOns.containsKey("Marshmallows"));
     }
 

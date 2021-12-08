@@ -7,6 +7,7 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 
 import entities.CarBuyer;
+import entities.TestEntityCreator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ public class AttributizeCarBuyerUseCaseTest {
 
     @BeforeEach
     public void setup() {
-        buyer = new CarBuyer(30000.5, 750);
+        buyer = TestEntityCreator.getTestBuyer();
         testMap = new AttributeMap();
         buyerAttributizer = new AttributizeCarBuyerUseCase(buyer);
         addBuyerToTestMap();
@@ -28,6 +29,7 @@ public class AttributizeCarBuyerUseCaseTest {
     static void addBuyerToTestMap() {
         testMap.addItem(EntityStringNames.BUYER_BUDGET, buyer.getBudget());
         testMap.addItem(EntityStringNames.BUYER_CREDIT, buyer.getCreditScore());
+        testMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, buyer.getDownPayment());
     }
 
     @Test

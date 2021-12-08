@@ -1,3 +1,4 @@
+// layer: ignore
 package constants;
 
 /**
@@ -14,6 +15,11 @@ public class Exceptions {
             super(message);
         }
 
+        public CodedException(String message, Exception e) {
+            super(message + ": " + e.getMessage());
+            this.setStackTrace(e.getStackTrace());
+        }
+
         public abstract int getCode();
     }
 
@@ -23,8 +29,11 @@ public class Exceptions {
 
         /** @param message The exception message */
         public FetchException(String message, Exception e) {
+            super(message, e);
+        }
+
+        public FetchException(String message) {
             super(message);
-            this.setStackTrace(e.getStackTrace());
         }
 
         /** @return Returns the specific FetchException code */
@@ -33,8 +42,28 @@ public class Exceptions {
         }
     }
 
+    public static class DataBaseException extends CodedException {
+        public DataBaseException() {}
+
+        public DataBaseException(String message, Exception e) {
+            super(message, e);
+        }
+
+        public DataBaseException(String message) {
+            super(message);
+        }
+
+        public int getCode() {
+            return 502;
+        }
+    }
+
     /** ParseException class that is thrown whenever a Json object is parsed */
     public static class ParseException extends CodedException {
+        public int getCode() {
+            return 400;
+        }
+
         public ParseException() {}
 
         /** @param message The exception message */
@@ -42,9 +71,24 @@ public class Exceptions {
             super(message);
         }
 
-        /** @return Returns the specific ParseException code */
+        public ParseException(String message, Exception e) {
+            super(message, e);
+        }
+    }
+
+    public static class FactoryException extends CodedException {
         public int getCode() {
             return 400;
+        }
+
+        public FactoryException() {}
+
+        public FactoryException(String message) {
+            super(message);
+        }
+
+        public FactoryException(String message, Exception e) {
+            super(message, e);
         }
     }
 
@@ -57,6 +101,10 @@ public class Exceptions {
         /** @param message The exception message */
         public PackageException(String message) {
             super(message);
+        }
+
+        public PackageException(String message, Exception e) {
+            super(message, e);
         }
 
         /** @return Returns the specific PackageException code */
