@@ -8,8 +8,8 @@ import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.MissingMethodException;
 
-import entitypackagers.Packager;
-import entityparsers.Parser;
+import packaging.Packager;
+import parsing.Parser;
 import logging.Logger;
 
 import java.io.IOException;

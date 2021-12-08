@@ -8,7 +8,7 @@ import attributes.AttributeMap;
 import constants.EntityStringNames;
 import constants.Exceptions;
 
-import entitypackagers.AttributizeLoanDataUseCase;
+import attributizing.AttributizeLoanDataUseCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;

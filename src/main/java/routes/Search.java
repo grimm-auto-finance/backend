@@ -10,15 +10,14 @@ import constants.Exceptions.ParseException;
 import entities.Car;
 import entities.Entity;
 
-import entitypackagers.JsonPackager;
-import entitypackagers.Package;
-import entitypackagers.PackageEntityUseCase;
+import packaging.Package;
+import packaging.PackageEntityUseCase;
 
-import entitypackagers.Packager;
-import entityparsers.Parser;
-import fetchers.DataBase;
-import fetchers.DataBaseFetcher;
-import fetchers.FetchCarDataUseCase;
+import packaging.Packager;
+import parsing.Parser;
+import database.DataBase;
+import fetching.DataBaseFetcher;
+import fetching.FetchCarDataUseCase;
 
 import logging.Logger;
 

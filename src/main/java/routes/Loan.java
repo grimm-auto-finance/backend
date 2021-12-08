@@ -12,16 +12,16 @@ import constants.Exceptions.CodedException;
 
 import entities.*;
 
-import entitypackagers.JsonPackager;
-import entitypackagers.Package;
-import entitypackagers.PackageEntityUseCase;
+import packaging.JsonPackager;
+import packaging.Package;
+import packaging.PackageEntityUseCase;
 
-import entitypackagers.Packager;
+import packaging.Packager;
 
-import entityparsers.Parser;
-import fetchers.FetchLoanDataUseCase;
-import fetchers.Fetcher;
-import fetchers.HTTPFetcher;
+import parsing.Parser;
+import fetching.FetchLoanDataUseCase;
+import fetching.Fetcher;
+import fetching.HTTPFetcher;
 
 import logging.Logger;
 

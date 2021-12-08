@@ -5,12 +5,12 @@ import com.sun.net.httpserver.HttpServer;
 
 import constants.Exceptions;
 
-import entitypackagers.JsonPackager;
-import entitypackagers.Packager;
-import entityparsers.JsonParser;
-import entityparsers.Parser;
-import fetchers.DataBase;
-import fetchers.PostgresDataBase;
+import packaging.JsonPackager;
+import packaging.Packager;
+import parsing.JsonParser;
+import parsing.Parser;
+import database.DataBase;
+import database.PostgresDataBase;
 
 import logging.Logger;
 import logging.LoggerFactory;
