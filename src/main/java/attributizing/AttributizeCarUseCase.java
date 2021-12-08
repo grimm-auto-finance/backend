@@ -43,7 +43,7 @@ public class AttributizeCarUseCase implements Attributizer {
     public static AttributeMap getAddOnMap(Map<String, AddOn> addOns) {
         AttributeMap map = new AttributeMap();
         for (String s : addOns.keySet()) {
-            AttributizeAddOnUseCase addOnAttributizer = new AttributizeAddOnUseCase(addOns.get(s));
+            AttributizeAddOnUseCase addOnAttributizer = (AttributizeAddOnUseCase) AttributizerFactory.getAttributizer(addOns.get(s));
             map.addItem(addOns.get(s).getName(), addOnAttributizer.attributizeEntity());
         }
         return map;

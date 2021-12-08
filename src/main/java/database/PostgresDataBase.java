@@ -81,22 +81,8 @@ public class PostgresDataBase extends DataBase {
         }
         scanner.useDelimiter("\n");
         scanner.next();
-        String line;
         try {
-            while (scanner.hasNext()) {
-                line = scanner.next();
-                String[] fields = line.split(",");
-                String statement =
-                        "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
-                PreparedStatement pst = connection.prepareStatement(statement);
-                pst.setInt(1, Integer.parseInt(fields[0]));
-                pst.setDouble(2, Double.parseDouble(fields[5]));
-                pst.setString(3, fields[2]);
-                pst.setString(4, fields[3]);
-                pst.setInt(5, Integer.parseInt(fields[4]));
-                pst.setDouble(6, Double.parseDouble(fields[1]));
-                pst.execute();
-            }
+            insertCarPlaceHolderData(scanner);
         } catch (SQLException e) {
             throw new Exceptions.DataBaseException("couldn't insert car placeholder data", e);
         }
@@ -109,21 +95,44 @@ public class PostgresDataBase extends DataBase {
         scanner.useDelimiter("\n");
         scanner.next();
         try {
-            while (scanner.hasNext()) {
-                line = scanner.next();
-                String[] fields = line.split(",");
-                String statement =
-                        "INSERT INTO addons VALUES (?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
-                PreparedStatement pst = connection.prepareStatement(statement);
-                pst.setInt(1, Integer.parseInt(fields[0]));
-                pst.setString(2, fields[1]);
-                pst.setDouble(3, Double.parseDouble(fields[2]));
-                pst.setString(4, fields[3]);
-                pst.setInt(5, Integer.parseInt(fields[4]));
-                pst.execute();
-            }
+            insertAddOnPlaceholderData(scanner);
         } catch (SQLException e) {
             throw new Exceptions.DataBaseException("couldn't insert car placeholder data", e);
+        }
+    }
+
+    private void insertAddOnPlaceholderData(Scanner scanner) throws SQLException {
+        String line;
+        while (scanner.hasNext()) {
+            line = scanner.next();
+            String[] fields = line.split(",");
+            String statement =
+                    "INSERT INTO addons VALUES (?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
+            PreparedStatement pst = connection.prepareStatement(statement);
+            pst.setInt(1, Integer.parseInt(fields[0]));
+            pst.setString(2, fields[1]);
+            pst.setDouble(3, Double.parseDouble(fields[2]));
+            pst.setString(4, fields[3]);
+            pst.setInt(5, Integer.parseInt(fields[4]));
+            pst.execute();
+        }
+    }
+
+    private void insertCarPlaceHolderData(Scanner scanner) throws SQLException {
+        String line;
+        while (scanner.hasNext()) {
+            line = scanner.next();
+            String[] fields = line.split(",");
+            String statement =
+                    "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
+            PreparedStatement pst = connection.prepareStatement(statement);
+            pst.setInt(1, Integer.parseInt(fields[0]));
+            pst.setDouble(2, Double.parseDouble(fields[5]));
+            pst.setString(3, fields[2]);
+            pst.setString(4, fields[3]);
+            pst.setInt(5, Integer.parseInt(fields[4]));
+            pst.setDouble(6, Double.parseDouble(fields[1]));
+            pst.execute();
         }
     }
 

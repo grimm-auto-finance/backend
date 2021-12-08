@@ -92,14 +92,14 @@ public class JsonParser implements Parser {
                 JsonNumber itemNum = (JsonNumber) item;
                 String numAsString = item.toString();
                 if (!numAsString.contains(".")) {
-                    itemAttribute = new IntAttribute(itemNum.intValue());
+                    itemAttribute = AttributeFactory.createAttribute(itemNum.intValue());
                 } else {
-                    itemAttribute = new DoubleAttribute(itemNum.doubleValue());
+                    itemAttribute = AttributeFactory.createAttribute(itemNum.doubleValue());
                 }
                 break;
             case STRING:
                 JsonString itemString = (JsonString) item;
-                itemAttribute = new StringAttribute(itemString.getString());
+                itemAttribute = AttributeFactory.createAttribute(itemString.getString());
                 break;
             case OBJECT:
                 JsonObject itemObject = item.asJsonObject();
@@ -111,7 +111,7 @@ public class JsonParser implements Parser {
                 for (int i = 0; i < itemArray.size(); i++) {
                     attributeArray[i] = parseJsonValue(itemArray.get(i));
                 }
-                itemAttribute = new ArrayAttribute(attributeArray);
+                itemAttribute = AttributeFactory.createAttribute(attributeArray);
                 break;
             default:
                 throw new Exceptions.ParseException(

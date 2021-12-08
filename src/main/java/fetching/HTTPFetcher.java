@@ -21,7 +21,7 @@ public class HTTPFetcher implements Fetcher {
 
     private final URL connectionURL;
     private String requestMethod;
-    private Logger logger;
+    private final Logger logger;
 
     /**
      * Constructs a new HTTPFetcher to make requests to the given connectionURL
@@ -34,7 +34,7 @@ public class HTTPFetcher implements Fetcher {
     }
 
     /**
-     * Sets the Fetch parameter of this Fetcher With HTTPFetcher, the Fetch Parameter is the request
+     * Sets the Fetch parameter of this Fetcher. With HTTPFetcher, the Fetch Parameter is the request
      * method (ex. POST)
      *
      * @param param an Object (String) containing the fetch request method
