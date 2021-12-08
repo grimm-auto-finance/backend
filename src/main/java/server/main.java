@@ -31,7 +31,6 @@ class Server {
 
     public static void main(String[] args) {
         initializeDataBase();
-        insertPlaceholderData();
         HttpServer server = initializeServer();
         for (Route route : Routes.routes) {
             server.createContext(route.getContext(), route);
@@ -59,18 +58,9 @@ class Server {
         }
         try {
             dataBase.connectAndMigrate();
-        } catch (Exceptions.DataBaseException e) {
-            logger.error("could not connect to database", e);
-            System.exit(-1);
-        }
-    }
-
-    private static void insertPlaceholderData() {
-        try {
             dataBase.insertPlaceholderData();
         } catch (Exceptions.DataBaseException e) {
-            logger.error(e.getMessage());
-            logger.error("failed to insert placeholder data", e);
+            logger.error("could not connect to database", e);
             System.exit(-1);
         }
     }
