@@ -63,9 +63,10 @@ public class HTTPFetcher implements Fetcher {
     }
 
     private AttributeMap parseResponse(JsonObject httpResponse) throws Exceptions.FetchException {
-        JsonParser parser = new JsonParser(httpResponse);
         AttributeMap responseMap;
         try {
+            JsonParser parser = new JsonParser();
+            parser.setParseObject(httpResponse);
             responseMap = parser.parse();
         } catch (Exceptions.ParseException e) {
             throw new Exceptions.FetchException(

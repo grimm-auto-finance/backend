@@ -23,23 +23,27 @@ import javax.json.JsonObjectBuilder;
 public class JsonParserTest {
 
     static JsonObjectBuilder builder;
+    static JsonParser parser;
     static AttributeMap testMap;
 
     @BeforeEach
     public void setup() {
         builder = Json.createObjectBuilder();
         testMap = new AttributeMap();
+        parser = new JsonParser();
     }
 
     @Test
-    public void testInputStreamConstructor() {
+    public void testSetParseObjectInputStream() {
         builder.add("test string", "test");
         JsonObject testObj = builder.build();
         InputStream testIS = new ByteArrayInputStream(testObj.toString().getBytes());
-        JsonParser testParser = new JsonParser(testObj);
+        JsonParser testParser = new JsonParser();
         try {
+            testParser.setParseObject(testObj);
             AttributeMap testResult = testParser.parse();
-            JsonParser parser = new JsonParser(testIS);
+            parser = new JsonParser();
+            parser.setParseObject(testIS);
             assertEquals(testResult.toString(), parser.parse().toString());
         } catch (Exceptions.ParseException e) {
             fail();
@@ -75,11 +79,19 @@ public class JsonParserTest {
         }
     }
 
+    static void setParseObj() {
+        try {
+            parser.setParseObject(builder.build());
+        } catch (Exceptions.ParseException e) {
+            fail();
+        }
+    }
+
     @Test
     public void testParserAllStrings() {
         addToBoth("String value", "test value");
         addToBoth("String 2", "string 2 value");
-        JsonParser parser = new JsonParser(builder.build());
+        setParseObj();
         testEq(parser);
     }
 
@@ -87,7 +99,7 @@ public class JsonParserTest {
     public void testParserAllInts() {
         addToBoth("int value", 16);
         addToBoth("int value 2", 18);
-        JsonParser parser = new JsonParser(builder.build());
+        setParseObj();
         testEq(parser);
     }
 
@@ -95,7 +107,7 @@ public class JsonParserTest {
     public void testParserAllDoubles() {
         addToBoth("double value", 18.0);
         addToBoth("double value 2", 20.56);
-        JsonParser parser = new JsonParser(builder.build());
+        setParseObj();
         testEq(parser);
     }
 
@@ -118,14 +130,14 @@ public class JsonParserTest {
         arrayBuilder.add(subBuilder.build());
         builder.add("Array value", arrayBuilder.build());
         testMap.addItem("Array value", attArray);
-        JsonParser parser = new JsonParser(builder.build());
+        setParseObj();
         testEq(parser);
     }
 
     @Test
     public void testJsonParserNullValues() {
         builder.addNull("NULL VALUE!");
-        JsonParser parser = new JsonParser(builder.build());
+        setParseObj();
         try {
             parser.parse();
         } catch (Exceptions.ParseException e) {
@@ -146,7 +158,7 @@ public class JsonParserTest {
         JsonObjectBuilder subBuilder = Json.createObjectBuilder();
         subBuilder.add("Sub-String value", "sub-string");
         builder.add("Sub-object", subBuilder);
-        JsonParser parser = new JsonParser(builder.build());
+        setParseObj();
         testEq(parser);
     }
 }
