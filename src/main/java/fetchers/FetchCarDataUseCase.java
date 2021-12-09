@@ -73,8 +73,6 @@ public class FetchCarDataUseCase {
                                 + " || ' '"
                                 + " || "
                                 + EntityStringNames.CAR_YEAR
-                                + " || ' ' || "
-                                + EntityStringNames.CAR_KILOMETRES
                                 + ") @@ websearch_to_tsquery(?)");
         try {
             fetcher.setFetchParam(searchString);

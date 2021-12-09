@@ -9,6 +9,7 @@ public class EntityStringNames {
 
     public static final String CAR_MAKE = "make";
     public static final String CAR_MODEL = "model";
+    public static final String CAR_IMAGE = "image";
     public static final String CAR_YEAR = "year";
     public static final String CAR_PRICE = "price";
     public static final String CAR_KILOMETRES = "kilometres";

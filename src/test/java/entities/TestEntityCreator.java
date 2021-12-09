@@ -18,17 +18,18 @@ import java.util.Map;
 public class TestEntityCreator {
 
     public static Car getTestCar() {
-        return getTestCar(50000.0, "Honda", "Civic", 2020, 100.0, new AttributeMap(), 3);
+        return getTestCar(50000.0, "Honda", "Civic", "image", 2020, 100.0, new AttributeMap(), 3);
     }
 
     public static Car getTestCar(int id) {
-        return getTestCar(50000.0, "Honda", "Civic", 2020, 100.0, new AttributeMap(), id);
+        return getTestCar(50000.0, "Honda", "Civic", "image", 2020, 100.0, new AttributeMap(), id);
     }
 
     public static Car getTestCar(
             double price,
             String make,
             String model,
+            String image,
             int year,
             double kms,
             AttributeMap addOns,
@@ -38,6 +39,7 @@ public class TestEntityCreator {
         carMap.addItem(EntityStringNames.CAR_PRICE, price);
         carMap.addItem(EntityStringNames.CAR_MAKE, make);
         carMap.addItem(EntityStringNames.CAR_MODEL, model);
+        carMap.addItem(EntityStringNames.CAR_IMAGE, image);
         carMap.addItem(EntityStringNames.CAR_YEAR, year);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, kms);
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOns);
