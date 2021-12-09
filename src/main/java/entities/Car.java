@@ -38,7 +38,14 @@ public class Car extends Entity {
      * @param year The model year of the car
      * @param id The id of car as its stored in the database
      */
-    protected Car(double kilometres, double price, String make, String model, String image, int year, int id) {
+    protected Car(
+            double kilometres,
+            double price,
+            String make,
+            String model,
+            String image,
+            int year,
+            int id) {
         this(kilometres, price, make, model, image, year, new HashMap<>(), id);
     }
 
@@ -156,7 +163,6 @@ public class Car extends Entity {
     public String getModel() {
         return model;
     }
-
 
     /**
      * returns the image of this car
