@@ -47,6 +47,7 @@ public class PostgresDataBase extends DataBase {
                         EntityStringNames.CAR_MODEL + " VARCHAR NOT NULL,",
                         EntityStringNames.CAR_YEAR + " INT NOT NULL,",
                         EntityStringNames.CAR_KILOMETRES + " NUMERIC(9, 2) NOT NULL,",
+                        EntityStringNames.CAR_IMAGE + " VARCHAR NOT NULL,",
                         "PRIMARY KEY (id)",
                         ");",
                         "CREATE TABLE IF NOT EXISTS addons (",
@@ -87,7 +88,7 @@ public class PostgresDataBase extends DataBase {
                 line = scanner.next();
                 String[] fields = line.split(",");
                 String statement =
-                        "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
+                        "INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
                 PreparedStatement pst = connection.prepareStatement(statement);
                 pst.setInt(1, Integer.parseInt(fields[0]));
                 pst.setDouble(2, Double.parseDouble(fields[5]));
@@ -95,6 +96,7 @@ public class PostgresDataBase extends DataBase {
                 pst.setString(4, fields[3]);
                 pst.setInt(5, Integer.parseInt(fields[4]));
                 pst.setDouble(6, Double.parseDouble(fields[1]));
+                pst.setString(7, fields[6]);
                 pst.execute();
             }
         } catch (SQLException e) {

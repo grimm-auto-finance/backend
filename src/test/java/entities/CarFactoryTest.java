@@ -21,13 +21,14 @@ public class CarFactoryTest {
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_MAKE, "Honda");
         carMap.addItem(EntityStringNames.CAR_MODEL, "Civic");
+        carMap.addItem(EntityStringNames.CAR_IMAGE, "image");
         carMap.addItem(EntityStringNames.CAR_PRICE, 3000.0);
         carMap.addItem(EntityStringNames.CAR_YEAR, 2020);
         AttributeMap addOnMap = new AttributeMap();
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnMap);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
         carMap.addItem(EntityStringNames.CAR_ID, 3);
-        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, 3);
+        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", "image", 2020, 3);
         try {
             assertEquals(testCar, CarFactory.getEntity(carMap));
         } catch (Exceptions.FactoryException e) {
@@ -40,6 +41,7 @@ public class CarFactoryTest {
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_MAKE, "Honda");
         carMap.addItem(EntityStringNames.CAR_MODEL, "Civic");
+        carMap.addItem(EntityStringNames.CAR_IMAGE, "image");
         carMap.addItem(EntityStringNames.CAR_PRICE, 3000);
         carMap.addItem(EntityStringNames.CAR_YEAR, 2020);
         AttributeMap addOnMap = new AttributeMap();
@@ -55,7 +57,7 @@ public class CarFactoryTest {
         addOnHashMap.put("rust-proofing", addOn);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
         carMap.addItem(EntityStringNames.CAR_ID, 3);
-        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", 2020, addOnHashMap, 3);
+        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", "image", 2020, addOnHashMap, 3);
 
         try {
             assertEquals(testCar, CarFactory.getEntity(carMap));
@@ -81,6 +83,7 @@ public class CarFactoryTest {
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_MAKE, 15);
         carMap.addItem(EntityStringNames.CAR_MODEL, 36.5);
+        carMap.addItem(EntityStringNames.CAR_IMAGE, 36.5);
         carMap.addItem(EntityStringNames.CAR_PRICE, "whoops");
         carMap.addItem(EntityStringNames.CAR_YEAR, "uh oh");
         carMap.addItem(EntityStringNames.ADD_ON_STRING, AttributeFactory.createAttribute("yikes"));
