@@ -107,8 +107,7 @@ public class PostgresDataBase extends DataBase {
         while (scanner.hasNext()) {
             line = scanner.next();
             String[] fields = line.split(",");
-            String statement =
-                    "INSERT INTO addons VALUES (?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
+            String statement = "INSERT INTO addons VALUES (?, ?, ?, ?, ?) ON CONFLICT DO NOTHING";
             PreparedStatement pst = connection.prepareStatement(statement);
             pst.setInt(1, Integer.parseInt(fields[0]));
             pst.setString(2, fields[1]);

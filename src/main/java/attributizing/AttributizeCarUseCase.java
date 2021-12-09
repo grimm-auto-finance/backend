@@ -24,10 +24,12 @@ public class AttributizeCarUseCase implements Attributizer {
         this.car = car;
     }
 
-    /** Write the given Car's data to an AttributeMap
-     * The Car's add-ons are stored as a submap of the Car's map
+    /**
+     * Write the given Car's data to an AttributeMap The Car's add-ons are stored as a submap of the
+     * Car's map
+     *
      * @return an AttributeMap containing the Car's information
-     * */
+     */
     public AttributeMap attributizeEntity() {
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_PRICE, car.getPrice());
@@ -46,16 +48,17 @@ public class AttributizeCarUseCase implements Attributizer {
     }
 
     /**
-     * Converts a Map betweeen AddOn names and AddOn objects into an AttributeMap
-     * The keys in this AttributeMap are AddOn names, and the values are AttributeMaps
-     * representing AddOns
+     * Converts a Map betweeen AddOn names and AddOn objects into an AttributeMap The keys in this
+     * AttributeMap are AddOn names, and the values are AttributeMaps representing AddOns
+     *
      * @param addOns the Map between Strings and AddOns to attributize
      * @return an AttributeMap representation of addOns
      */
     public static AttributeMap getAddOnMap(Map<String, AddOn> addOns) {
         AttributeMap map = new AttributeMap();
         for (String s : addOns.keySet()) {
-            AttributizeAddOnUseCase addOnAttributizer = (AttributizeAddOnUseCase) AttributizerFactory.getAttributizer(addOns.get(s));
+            AttributizeAddOnUseCase addOnAttributizer =
+                    (AttributizeAddOnUseCase) AttributizerFactory.getAttributizer(addOns.get(s));
             map.addItem(addOns.get(s).getName(), addOnAttributizer.attributizeEntity());
         }
         return map;

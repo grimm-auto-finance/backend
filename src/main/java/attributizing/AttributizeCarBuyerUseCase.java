@@ -22,9 +22,11 @@ public class AttributizeCarBuyerUseCase implements Attributizer {
         this.buyer = buyer;
     }
 
-    /** Write the given CarBuyer's data to an AttributeMap
+    /**
+     * Write the given CarBuyer's data to an AttributeMap
+     *
      * @return an AttributeMap containing the CarBuyer's information
-     * */
+     */
     public AttributeMap attributizeEntity() {
         AttributeMap buyerMap = new AttributeMap();
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, buyer.getBudget());

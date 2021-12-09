@@ -3,9 +3,7 @@ package entities;
 
 import constants.EntityStringNames;
 
-/**
- * A class to represent an individual person buying a car
- */
+/** A class to represent an individual person buying a car */
 public class CarBuyer extends Entity {
 
     private final double budget;

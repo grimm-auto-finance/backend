@@ -5,9 +5,9 @@ import attributes.AttributeMap;
 
 import constants.Exceptions;
 
-import parsing.JsonParser;
-
 import logging.Logger;
+
+import parsing.JsonParser;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -35,8 +35,8 @@ public class HTTPFetcher implements Fetcher {
     }
 
     /**
-     * Sets the Fetch parameter of this Fetcher. With HTTPFetcher, the Fetch Parameter is the request
-     * method (ex. POST)
+     * Sets the Fetch parameter of this Fetcher. With HTTPFetcher, the Fetch Parameter is the
+     * request method (ex. POST)
      *
      * @param param an Object (String) containing the fetch request method
      * @throws Exceptions.FetchException if param is not a String

@@ -20,6 +20,7 @@ public class Car extends Entity {
 
     /** The make, model and year of the Car */
     private final String make;
+
     private final String model;
     private final String image;
     private final int year;
@@ -186,6 +187,7 @@ public class Car extends Entity {
 
     /**
      * Return the number of kilometers that this car has
+     *
      * @return This Car's number of kilometers
      */
     public double getKilometres() {

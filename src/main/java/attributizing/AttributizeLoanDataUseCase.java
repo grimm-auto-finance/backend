@@ -48,10 +48,12 @@ public class AttributizeLoanDataUseCase implements Attributizer {
     }
 
     /**
-     * Converts an amortization table, in the form of a List of Maps between Strings and Doubles,
-     * to a List of AttributeMaps.
+     * Converts an amortization table, in the form of a List of Maps between Strings and Doubles, to
+     * a List of AttributeMaps.
+     *
      * @param amortizationTable the List of Maps between strings and Doubles to be attributized
-     * @return a List of AttributeMaps, where each AttributeMap represents one of the Maps in amortizationTable
+     * @return a List of AttributeMaps, where each AttributeMap represents one of the Maps in
+     *     amortizationTable
      */
     public static List<AttributeMap> getAmortizationAttMap(
             List<Map<String, Double>> amortizationTable) {

@@ -12,18 +12,17 @@ import constants.Exceptions.CodedException;
 
 import entities.*;
 
-import packaging.JsonPackager;
-import packaging.Package;
-import packaging.PackageEntityUseCase;
-
-import packaging.Packager;
-
-import parsing.Parser;
 import fetching.FetchLoanDataUseCase;
 import fetching.Fetcher;
 import fetching.HTTPFetcher;
 
 import logging.Logger;
+
+import packaging.Package;
+import packaging.PackageEntityUseCase;
+import packaging.Packager;
+
+import parsing.Parser;
 
 import java.io.*;
 import java.net.URL;
@@ -41,13 +40,19 @@ public class Loan extends Route {
 
     /**
      * Constructs the AddOns route with the given instance attributes
+     *
      * @param SENSO_RATE_URL the URL to make Senso Rate requests to
      * @param SENSO_SCORE_URL the URL to make Senso score requests to
      * @param logger the logger to log results/errors to
      * @param parser the parser to use for input data
      * @param packager the packager to use for output data
      */
-    public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL, Logger logger, Parser parser, Packager packager) {
+    public Loan(
+            URL SENSO_RATE_URL,
+            URL SENSO_SCORE_URL,
+            Logger logger,
+            Parser parser,
+            Packager packager) {
         super(logger, parser, packager);
         this.SENSO_RATE_URL = SENSO_RATE_URL;
         this.SENSO_SCORE_URL = SENSO_SCORE_URL;

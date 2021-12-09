@@ -8,9 +8,11 @@ import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.MissingMethodException;
 
-import packaging.Packager;
-import parsing.Parser;
 import logging.Logger;
+
+import packaging.Packager;
+
+import parsing.Parser;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,6 +27,7 @@ public abstract class Route implements HttpHandler {
 
     /**
      * Constructs a new Route with the given instance attributes
+     *
      * @param logger the logger to use to log results/errors
      * @param parser the parser to use for input data
      * @param packager the packager to use for output data
@@ -51,6 +54,7 @@ public abstract class Route implements HttpHandler {
 
     /**
      * The method for handling POST requests to this route
+     *
      * @param t an HttpExchange to be handled
      * @throws CodedException if an error occurs while handling this request
      */

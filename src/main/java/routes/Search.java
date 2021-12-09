@@ -7,19 +7,21 @@ import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.ParseException;
 
+import database.DataBase;
+
 import entities.Car;
 import entities.Entity;
 
-import packaging.Package;
-import packaging.PackageEntityUseCase;
-
-import packaging.Packager;
-import parsing.Parser;
-import database.DataBase;
 import fetching.DataBaseFetcher;
 import fetching.FetchCarDataUseCase;
 
 import logging.Logger;
+
+import packaging.Package;
+import packaging.PackageEntityUseCase;
+import packaging.Packager;
+
+import parsing.Parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,6 +36,7 @@ public class Search extends Route {
 
     /**
      * Constructs a new Search route with the given instance attributes
+     *
      * @param dataBase the database to search in
      * @param logger the logger to use for logging results/errors
      * @param parser the parser to use for input data

@@ -79,10 +79,11 @@ public class AttributeMap extends Attribute {
         return items.toString();
     }
 
-    /** Get a double value from the map that might be stored as an integer
-     * Basically, sometimes values get parsed into AttributeMaps as an Integer even though
-     * we need them to be Doubles. So this lets us retrieve them as Doubles regardless.
-     * */
+    /**
+     * Get a double value from the map that might be stored as an integer Basically, sometimes
+     * values get parsed into AttributeMaps as an Integer even though we need them to be Doubles. So
+     * this lets us retrieve them as Doubles regardless.
+     */
     public static double getDoubleMaybeInteger(String key, AttributeMap map) {
         Object item = map.getItem(key).getAttribute();
         if (item instanceof Integer) {

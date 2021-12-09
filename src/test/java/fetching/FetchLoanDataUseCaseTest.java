@@ -8,9 +8,9 @@ import constants.Exceptions;
 import entities.LoanData;
 import entities.TestEntityCreator;
 
-import packaging.JsonPackager;
-
 import org.junit.jupiter.api.Test;
+
+import packaging.JsonPackager;
 
 public class FetchLoanDataUseCaseTest {
 

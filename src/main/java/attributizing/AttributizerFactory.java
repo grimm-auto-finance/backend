@@ -3,13 +3,12 @@ package attributizing;
 
 import entities.*;
 
-/**
- * A factory that returns the appropriate Attributizer for a given Entity
- */
+/** A factory that returns the appropriate Attributizer for a given Entity */
 public class AttributizerFactory {
 
     /**
      * Returns the appropraite Attributizer for entity
+     *
      * @param entity The Entity from which the Attributizers is created
      * @return an Attributizer capable of Attributizing entity
      * @throws ClassCastException if the type of Entity does not have a defined Attributizer

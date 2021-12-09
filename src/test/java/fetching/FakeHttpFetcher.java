@@ -3,13 +3,13 @@ package fetching;
 import attributes.Attribute;
 import attributes.AttributeMap;
 
+import attributizing.AttributizeLoanDataUseCase;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
 
 import entities.LoanData;
 import entities.TestEntityCreator;
-
-import attributizing.AttributizeLoanDataUseCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;

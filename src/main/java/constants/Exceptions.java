@@ -6,8 +6,7 @@ package constants;
  */
 public class Exceptions {
 
-    /** An Exception associated with a specific Code
-     * These codes are based on HTTP Error Codes. */
+    /** An Exception associated with a specific Code These codes are based on HTTP Error Codes. */
     public abstract static class CodedException extends Exception {
         /** Construct a new CodedException */
         public CodedException() {
@@ -19,10 +18,13 @@ public class Exceptions {
             super(message);
         }
 
-        /** Construct a new CodedException with a specific message as well as
-         * incorporating the information of another Exception
+        /**
+         * Construct a new CodedException with a specific message as well as incorporating the
+         * information of another Exception
+         *
          * @param message the message for this CodedException
-         * @param e an Exception whose information should be incorporated into this CodedException, such as message and stack trace
+         * @param e an Exception whose information should be incorporated into this CodedException,
+         *     such as message and stack trace
          */
         public CodedException(String message, Exception e) {
             super(message + ": " + e.getMessage());
@@ -36,10 +38,12 @@ public class Exceptions {
     /** A CodedException that might be thrown during Fetching */
     public static class FetchException extends CodedException {
 
-        /** Constructs a new FetchException with the given message and Exception
+        /**
+         * Constructs a new FetchException with the given message and Exception
+         *
          * @param message The exception message
          * @param e an Exception whose information should be incorporated into this FetchException
-         * */
+         */
         public FetchException(String message, Exception e) {
             super(message, e);
         }
@@ -58,10 +62,12 @@ public class Exceptions {
     /** A CodedException that might be thrown during database access */
     public static class DataBaseException extends CodedException {
 
-        /** Constructs a new DataBaseException with the given message and Exception
+        /**
+         * Constructs a new DataBaseException with the given message and Exception
          *
          * @param message the exception message
-         * @param e an Exception whose information should be incorporated into this DataBaseException
+         * @param e an Exception whose information should be incorporated into this
+         *     DataBaseException
          */
         public DataBaseException(String message, Exception e) {
             super(message, e);
@@ -91,7 +97,8 @@ public class Exceptions {
             super(message);
         }
 
-        /** Constructs a new ParseException with the given message and Exception
+        /**
+         * Constructs a new ParseException with the given message and Exception
          *
          * @param message the exception message
          * @param e an Exception whose information should be incorporated into this ParseException
@@ -116,7 +123,8 @@ public class Exceptions {
             super(message);
         }
 
-        /** Constructs a new FactoryException with the given message and Exception
+        /**
+         * Constructs a new FactoryException with the given message and Exception
          *
          * @param message the exception message
          * @param e an Exception whose information should be incorporated into this FactoryException
@@ -126,9 +134,7 @@ public class Exceptions {
         }
     }
 
-    /**
-     * A CodedException that might be thrown during Packaging of an Entity
-     */
+    /** A CodedException that might be thrown during Packaging of an Entity */
     public static class PackageException extends CodedException {
         public PackageException() {}
 
@@ -137,7 +143,8 @@ public class Exceptions {
             super(message);
         }
 
-        /** Constructs a new PackageException with the given message and Exception
+        /**
+         * Constructs a new PackageException with the given message and Exception
          *
          * @param message the exception message
          * @param e an Exception whose information should be incorporated into this PackageException
@@ -152,8 +159,9 @@ public class Exceptions {
         }
     }
     /**
-     * A CodedException that will be thrown when attempting to call an unimplemented method.
-     * This Exception is only ever thrown when we receive an improper HTTP request type (anything besides POST).
+     * A CodedException that will be thrown when attempting to call an unimplemented method. This
+     * Exception is only ever thrown when we receive an improper HTTP request type (anything besides
+     * POST).
      */
     public static class MissingMethodException extends CodedException {
         public MissingMethodException() {}

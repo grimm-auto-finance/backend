@@ -28,8 +28,8 @@ public class ArrayAttribute extends Attribute {
     }
 
     /**
-     * Returns a String representation of this ArrayAttribute
-     * Uses Arrays.toString() to generate the String representation of items
+     * Returns a String representation of this ArrayAttribute Uses Arrays.toString() to generate the
+     * String representation of items
      *
      * @return a string representation of this ArrayAttribute
      */

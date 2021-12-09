@@ -17,8 +17,9 @@ public interface Fetcher {
     Attribute fetch(String request) throws Exceptions.FetchException;
 
     /**
-     * Sets the value of a parameter associated with fetch requests
-     * The meaning of this parameter varies by the type of fetcher
+     * Sets the value of a parameter associated with fetch requests The meaning of this parameter
+     * varies by the type of fetcher
+     *
      * @param param the parameter to be set
      * @throws Exceptions.FetchException if setting the parameter fails
      */

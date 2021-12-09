@@ -69,7 +69,8 @@ public class LoanDataFactory {
                 amortizationTable);
     }
 
-    private static void addAmortizationEntries(List<Map<String, Double>> amortizationTable, ArrayAttribute amortizationArray) {
+    private static void addAmortizationEntries(
+            List<Map<String, Double>> amortizationTable, ArrayAttribute amortizationArray) {
         Attribute[] amortization = amortizationArray.getAttribute();
         for (Attribute a : amortization) {
             AttributeMap installmentAttMap = (AttributeMap) a;

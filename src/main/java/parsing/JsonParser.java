@@ -16,8 +16,9 @@ public class JsonParser implements Parser {
     private JsonObject jsonObject;
 
     /**
-     * Set the object that this JsonParser will be parsing.
-     * This object should be either a JsonObject or InputStream
+     * Set the object that this JsonParser will be parsing. This object should be either a
+     * JsonObject or InputStream
+     *
      * @param obj the object to parse data from
      * @throws Exceptions.ParseException if obj is of invalid type
      */
@@ -33,6 +34,7 @@ public class JsonParser implements Parser {
 
     /**
      * Sets the object that this JsonParser will be parsing to jsonObject
+     *
      * @param jsonObject the given JsonObject parsed to construct JsonParser
      */
     private void setParseObject(JsonObject jsonObject) {
@@ -40,8 +42,9 @@ public class JsonParser implements Parser {
     }
 
     /**
-     * Sets the object that this JsonParser will be parsing to a JsonObject
-     * stored within the given InputStream
+     * Sets the object that this JsonParser will be parsing to a JsonObject stored within the given
+     * InputStream
+     *
      * @param is an InputStream containing a JsonObject
      * @throws Exceptions.ParseException if the InputStream cannot be parsed into a JsonObject
      */

@@ -8,6 +8,7 @@ import attributes.AttributeMap;
 
 import constants.Exceptions;
 import constants.Exceptions.FetchException;
+
 import database.DataBase;
 
 import java.math.BigDecimal;

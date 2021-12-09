@@ -7,8 +7,7 @@ import constants.EntityStringNames;
 
 import entities.AddOn;
 
-/** A Use Case to convert an AddOn into an AttributeMap.
- */
+/** A Use Case to convert an AddOn into an AttributeMap. */
 public class AttributizeAddOnUseCase implements Attributizer {
 
     private final AddOn addOn;
@@ -22,9 +21,11 @@ public class AttributizeAddOnUseCase implements Attributizer {
         this.addOn = addOn;
     }
 
-    /** Write the given AddOns's data to an AttributeMap
+    /**
+     * Write the given AddOns's data to an AttributeMap
+     *
      * @return an AttributeMap containing the AddOn's information
-     * */
+     */
     public AttributeMap attributizeEntity() {
         AttributeMap addOnMap = new AttributeMap();
         addOnMap.addItem(EntityStringNames.ADD_ON_NAME, addOn.getName());

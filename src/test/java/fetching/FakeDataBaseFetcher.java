@@ -5,14 +5,14 @@ import attributes.Attribute;
 import attributes.AttributeFactory;
 import attributes.AttributeMap;
 
+import attributizing.Attributizer;
+import attributizing.AttributizerFactory;
+
 import constants.EntityStringNames;
 
 import entities.AddOn;
 import entities.Car;
 import entities.TestEntityCreator;
-
-import attributizing.Attributizer;
-import attributizing.AttributizerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
