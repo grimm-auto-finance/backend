@@ -52,17 +52,7 @@ public class LoanDataFactory {
                     AttributeMap.getDoubleMaybeInteger(EntityStringNames.LOAN_INTEREST_SUM, map);
             ArrayAttribute amortizationArray =
                     (ArrayAttribute) map.getItem(EntityStringNames.LOAN_AMORTIZATION);
-            Attribute[] amortization = amortizationArray.getAttribute();
-            for (Attribute a : amortization) {
-                AttributeMap installmentAttMap = (AttributeMap) a;
-                Map<String, Attribute> installmentMap = installmentAttMap.getAttribute();
-                Map<String, Double> installmentDoubleMap = new HashMap<>();
-                for (String s : installmentMap.keySet()) {
-                    installmentDoubleMap.put(
-                            s, AttributeMap.getDoubleMaybeInteger(s, installmentAttMap));
-                }
-                amortizationTable.add(installmentDoubleMap);
-            }
+            addAmortizationEntries(amortizationTable, amortizationArray);
         } catch (ClassCastException | NullPointerException e) {
             String message = "Failed to generate LoanData";
             throw new Exceptions.FactoryException(message, e);
@@ -77,5 +67,20 @@ public class LoanDataFactory {
                 interestSum,
                 addOnBudget,
                 amortizationTable);
+    }
+
+    private static void addAmortizationEntries(
+            List<Map<String, Double>> amortizationTable, ArrayAttribute amortizationArray) {
+        Attribute[] amortization = amortizationArray.getAttribute();
+        for (Attribute a : amortization) {
+            AttributeMap installmentAttMap = (AttributeMap) a;
+            Map<String, Attribute> installmentMap = installmentAttMap.getAttribute();
+            Map<String, Double> installmentDoubleMap = new HashMap<>();
+            for (String s : installmentMap.keySet()) {
+                installmentDoubleMap.put(
+                        s, AttributeMap.getDoubleMaybeInteger(s, installmentAttMap));
+            }
+            amortizationTable.add(installmentDoubleMap);
+        }
     }
 }

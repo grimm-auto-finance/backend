@@ -16,7 +16,6 @@ public class CarBuyerFactoryTest {
     public void testGetEntityWorking() {
         AttributeMap buyerMap = new AttributeMap();
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, 10000.0);
-        // TODO: update this to be an int once we have parsing ints/doubles figured out
         buyerMap.addItem(EntityStringNames.BUYER_CREDIT, 750);
         buyerMap.addItem(EntityStringNames.BUYER_DOWNPAYMENT, 3000.0);
         CarBuyer testBuyer = new CarBuyer(10000.0, 750, 3000.0);

@@ -3,6 +3,7 @@ package attributes;
 
 import java.util.Arrays;
 
+/** An Attribute representing an Array of Attributes */
 public class ArrayAttribute extends Attribute {
 
     /** The array of Attributes stored in this ArrayAttribute */

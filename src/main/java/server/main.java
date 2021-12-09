@@ -5,11 +5,17 @@ import com.sun.net.httpserver.HttpServer;
 
 import constants.Exceptions;
 
-import fetchers.DataBase;
-import fetchers.PostgresDataBase;
+import database.DataBase;
+import database.PostgresDataBase;
 
 import logging.Logger;
 import logging.LoggerFactory;
+
+import packaging.JsonPackager;
+import packaging.Packager;
+
+import parsing.JsonParser;
+import parsing.Parser;
 
 import routes.Route;
 
@@ -22,10 +28,11 @@ class Server {
             new PostgresDataBase(
                     "jdbc:postgresql://db:5432/postgres", "postgres", Env.POSTGRES_PASSWORD);
     public static final Logger logger = LoggerFactory.getLogger();
+    public static final Packager packager = new JsonPackager();
+    public static final Parser parser = new JsonParser();
 
     public static void main(String[] args) {
         initializeDataBase();
-        insertPlaceholderData();
         HttpServer server = initializeServer();
         for (Route route : Routes.routes) {
             server.createContext(route.getContext(), route);
@@ -53,18 +60,9 @@ class Server {
         }
         try {
             dataBase.connectAndMigrate();
-        } catch (Exceptions.DataBaseException e) {
-            logger.error("could not connect to database", e);
-            System.exit(-1);
-        }
-    }
-
-    private static void insertPlaceholderData() {
-        try {
             dataBase.insertPlaceholderData();
         } catch (Exceptions.DataBaseException e) {
-            logger.error(e.getMessage());
-            logger.error("failed to insert placeholder data", e);
+            logger.error("could not connect to database", e);
             System.exit(-1);
         }
     }

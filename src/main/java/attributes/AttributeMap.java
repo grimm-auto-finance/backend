@@ -4,6 +4,7 @@ package attributes;
 import java.util.HashMap;
 import java.util.Map;
 
+/** An Attribute representing a Map between String names and Attributes */
 public class AttributeMap extends Attribute {
 
     // A map between attribute names and attributes
@@ -78,7 +79,11 @@ public class AttributeMap extends Attribute {
         return items.toString();
     }
 
-    // get a double value from the map that might be stored as an integer
+    /**
+     * Get a double value from the map that might be stored as an integer Basically, sometimes
+     * values get parsed into AttributeMaps as an Integer even though we need them to be Doubles. So
+     * this lets us retrieve them as Doubles regardless.
+     */
     public static double getDoubleMaybeInteger(String key, AttributeMap map) {
         Object item = map.getItem(key).getAttribute();
         if (item instanceof Integer) {

@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import attributes.Attribute;
 import attributes.AttributeMap;
 
+import attributizing.AttributizeLoanDataUseCase;
+
 import constants.EntityStringNames;
 import constants.Exceptions;
-
-import entitypackagers.AttributizeLoanDataUseCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,9 +1,10 @@
 // layer: ignore
 package attributes;
 
+/** An Attribute representing an Integer */
 public class IntAttribute extends Attribute {
 
-    // the int item stored in this attribute
+    /** the int item stored in this attribute */
     private final int item;
 
     /**

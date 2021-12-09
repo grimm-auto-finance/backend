@@ -12,17 +12,17 @@ import constants.Exceptions.CodedException;
 
 import entities.*;
 
-import entitypackagers.JsonPackager;
-import entitypackagers.Package;
-import entitypackagers.PackageEntityUseCase;
-
-import entityparsers.JsonParser;
-
-import fetchers.FetchLoanDataUseCase;
-import fetchers.Fetcher;
-import fetchers.HTTPFetcher;
+import fetching.FetchLoanDataUseCase;
+import fetching.Fetcher;
+import fetching.HTTPFetcher;
 
 import logging.Logger;
+
+import packaging.Package;
+import packaging.PackageEntityUseCase;
+import packaging.Packager;
+
+import parsing.Parser;
 
 import java.io.*;
 import java.net.URL;
@@ -32,13 +32,28 @@ public class Loan extends Route {
 
     private final URL SENSO_RATE_URL, SENSO_SCORE_URL;
 
+    /** Returns the URL context for this Route: /loan */
     @Override
     public String getContext() {
         return "/loan";
     }
 
-    public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL, Logger logger) {
-        super(logger);
+    /**
+     * Constructs the AddOns route with the given instance attributes
+     *
+     * @param SENSO_RATE_URL the URL to make Senso Rate requests to
+     * @param SENSO_SCORE_URL the URL to make Senso score requests to
+     * @param logger the logger to log results/errors to
+     * @param parser the parser to use for input data
+     * @param packager the packager to use for output data
+     */
+    public Loan(
+            URL SENSO_RATE_URL,
+            URL SENSO_SCORE_URL,
+            Logger logger,
+            Parser parser,
+            Packager packager) {
+        super(logger, parser, packager);
         this.SENSO_RATE_URL = SENSO_RATE_URL;
         this.SENSO_SCORE_URL = SENSO_SCORE_URL;
     }
@@ -52,7 +67,7 @@ public class Loan extends Route {
     @Override
     protected void post(HttpExchange t) throws CodedException {
         InputStream is = t.getRequestBody();
-        JsonParser parser = new JsonParser(is);
+        parser.setParseObject(is);
         AttributeMap entitiesMap = parser.parse();
         int maxLoopRetries;
         // default to no looping for add-on budget if no parameter is given
@@ -76,7 +91,6 @@ public class Loan extends Route {
     }
 
     private Package getEntitiesPackage(LoanData loanData) throws Exceptions.PackageException {
-        JsonPackager packager = new JsonPackager();
         PackageEntityUseCase packageEntity = new PackageEntityUseCase(packager);
         return packageEntity.writeEntity(loanData);
     }
@@ -85,7 +99,7 @@ public class Loan extends Route {
         Fetcher rateFetcher = new HTTPFetcher(SENSO_RATE_URL, logger);
         Fetcher scoreFetcher = new HTTPFetcher(SENSO_SCORE_URL, logger);
         FetchLoanDataUseCase fetchLoanData =
-                new FetchLoanDataUseCase(rateFetcher, scoreFetcher, new JsonPackager());
+                new FetchLoanDataUseCase(rateFetcher, scoreFetcher, packager);
         return fetchLoanData.getLoanData(buyer, car, loopMax);
     }
 }

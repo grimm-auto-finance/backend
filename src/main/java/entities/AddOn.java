@@ -72,6 +72,7 @@ public class AddOn extends Entity {
         return EntityStringNames.ADD_ON_STRING;
     }
 
+    /** Returns whether this Car is equal to other */
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof AddOn)) {

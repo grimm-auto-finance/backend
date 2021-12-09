@@ -1,9 +1,10 @@
 // layer: ignore
 package attributes;
 
+/** An Attribute representing a Double */
 public class DoubleAttribute extends Attribute {
 
-    // the double item stored in this Attribute
+    /** the double item stored in this Attribute */
     private final double item;
 
     /**

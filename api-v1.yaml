@@ -76,18 +76,21 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "The car (containing add-ons) and car buyer to fetch data for"
+        description: "The car (containing add-ons) and car buyer to fetch data for. loopMax is the maximum number of times to loop calls to Senso /rate to calculate add-on budget (-1 means loop until error)"
         required: true
         schema:
           type: "object"
           required:
           - "car"
           - "carBuyer"
+          - "loopMax"
           properties:
             car:
               $ref: "#/definitions/Car"
             carBuyer:
               $ref: "#/definitions/CarBuyer"
+            loopMax:
+              type: "number"
       responses:
         "200":
           description: "The data on the loan"

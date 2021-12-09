@@ -7,18 +7,21 @@ import constants.Exceptions;
 import constants.Exceptions.CodedException;
 import constants.Exceptions.ParseException;
 
+import database.DataBase;
+
 import entities.Car;
 import entities.Entity;
 
-import entitypackagers.JsonPackager;
-import entitypackagers.Package;
-import entitypackagers.PackageEntityUseCase;
-
-import fetchers.DataBase;
-import fetchers.DataBaseFetcher;
-import fetchers.FetchCarDataUseCase;
+import fetching.DataBaseFetcher;
+import fetching.FetchCarDataUseCase;
 
 import logging.Logger;
+
+import packaging.Package;
+import packaging.PackageEntityUseCase;
+import packaging.Packager;
+
+import parsing.Parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,11 +34,20 @@ import java.util.List;
 public class Search extends Route {
     private final DataBase dataBase;
 
-    public Search(DataBase dataBase, Logger logger) {
-        super(logger);
+    /**
+     * Constructs a new Search route with the given instance attributes
+     *
+     * @param dataBase the database to search in
+     * @param logger the logger to use for logging results/errors
+     * @param parser the parser to use for input data
+     * @param packager the packager to use for output data
+     */
+    public Search(DataBase dataBase, Logger logger, Parser parser, Packager packager) {
+        super(logger, parser, packager);
         this.dataBase = dataBase;
     }
 
+    /** Returns the HTTP URL context for this route: /search */
     @Override
     public String getContext() {
         return "/search";
@@ -56,8 +68,7 @@ public class Search extends Route {
     }
 
     private String getResponseString(List<Car> cars) throws Exceptions.PackageException {
-        JsonPackager jp = new JsonPackager();
-        PackageEntityUseCase carPackager = new PackageEntityUseCase(jp);
+        PackageEntityUseCase carPackager = new PackageEntityUseCase(packager);
         List<Entity> entities = new ArrayList<>(cars);
         Package carsPackage = carPackager.writeEntitiesToArray(entities);
         return carsPackage.toString();
