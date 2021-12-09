@@ -3,6 +3,7 @@ package packaging;
 
 import javax.json.JsonValue;
 
+/** A package that stores JsonValues */
 public class JsonPackage extends Package {
 
     private final JsonValue val;

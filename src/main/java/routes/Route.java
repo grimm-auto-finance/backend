@@ -23,6 +23,12 @@ public abstract class Route implements HttpHandler {
     protected final Parser parser;
     protected final Packager packager;
 
+    /**
+     * Constructs a new Route with the given instance attributes
+     * @param logger the logger to use to log results/errors
+     * @param parser the parser to use for input data
+     * @param packager the packager to use for output data
+     */
     protected Route(Logger logger, Parser parser, Packager packager) {
         this.logger = logger;
         this.parser = parser;
@@ -43,6 +49,11 @@ public abstract class Route implements HttpHandler {
         throw new MissingMethodException();
     }
 
+    /**
+     * The method for handling POST requests to this route
+     * @param t an HttpExchange to be handled
+     * @throws CodedException if an error occurs while handling this request
+     */
     protected void post(HttpExchange t) throws CodedException {
         throw new MissingMethodException();
     }
@@ -140,7 +151,7 @@ public abstract class Route implements HttpHandler {
         t.close();
     }
 
-    public final void respond(HttpExchange t, int code, byte[] body) {
+    protected final void respond(HttpExchange t, int code, byte[] body) {
         OutputStream os = t.getResponseBody();
         try {
             t.sendResponseHeaders(code, body.length);

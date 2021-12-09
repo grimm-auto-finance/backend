@@ -4,6 +4,7 @@ package server;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/** A set of environment variables related to the functioning of this program */
 public class Env {
     private static final String SENSO_API_BASE_URL = System.getenv("SENSO_API_BASE_URL");
     private static final String SENSO_API_KEY = System.getenv("SENSO_API_KEY");

@@ -32,11 +32,19 @@ import java.util.List;
 public class Search extends Route {
     private final DataBase dataBase;
 
+    /**
+     * Constructs a new Search route with the given instance attributes
+     * @param dataBase the database to search in
+     * @param logger the logger to use for logging results/errors
+     * @param parser the parser to use for input data
+     * @param packager the packager to use for output data
+     */
     public Search(DataBase dataBase, Logger logger, Parser parser, Packager packager) {
         super(logger, parser, packager);
         this.dataBase = dataBase;
     }
 
+    /** Returns the HTTP URL context for this route: /search */
     @Override
     public String getContext() {
         return "/search";

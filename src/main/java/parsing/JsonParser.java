@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.json.*;
 
+/** A parser capable of parsing Attributes from JsonObjects */
 public class JsonParser implements Parser {
 
     private JsonObject jsonObject;

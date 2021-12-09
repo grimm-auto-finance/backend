@@ -1,7 +1,7 @@
 // layer: ignore
 package attributes;
 
-/** A factory that creates an Attribute given an object that is either an int, Double or String */
+/** A factory that creates an Attribute given an Object */
 public class AttributeFactory {
 
     /**
@@ -9,7 +9,7 @@ public class AttributeFactory {
      *
      * @param obj the object to be stored in the newly created Attribute
      * @return an Attribute that stores obj
-     * @throws ClassCastException if the type of obj does not correspond to any known Attribute
+     * @throws ClassCastException if the type of obj does not correspond to any defined Attribute
      *     types
      */
     public static Attribute createAttribute(Object obj) throws ClassCastException {

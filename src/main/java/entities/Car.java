@@ -12,36 +12,38 @@ import java.util.Map;
  * A class to represent an individual car that is being viewed and configured in the user interface.
  */
 public class Car extends Entity {
-    // A Map between add-on names and AddOn objects representing those addons
+    /** A Map between add-on names and AddOn objects representing those addons */
     private final Map<String, AddOn> addOns;
 
-    // The Car's price, in dollars.
+    /** The Car's price, in dollars. */
     private double price;
 
-    // The make, model and year of the Car
+    /** The make, model and year of the Car */
     private final String make;
     private final String model;
     private final int year;
+
     private final double kilometres;
+
+    /** The car's ID as is used in the database */
     private final int id;
 
     /**
-     * Constructs a new Car with the given price, name, year and empty AddOns map. Price of the car
-     * initially set to -1 as price of the car is not know during initialization
+     * Constructs a new Car with the given information and an empty AddOns map.
      *
      * @param kilometres The mileage of the car in kilometres
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car
-     * @param year The model year of the car
-     * @param id The id of car as its stored in the database
+     * @param year The year of the car
+     * @param id The id of car
      */
     protected Car(double kilometres, double price, String make, String model, int year, int id) {
         this(kilometres, price, make, model, year, new HashMap<>(), id);
     }
 
     /**
-     * Constructs a new Car with the given price, name, year and AddOns map.
+     * Constructs a new Car with the given information and AddOns map.
      *
      * @param kilometres The mileage of the car in kilometres
      * @param price The price of the car
@@ -49,7 +51,7 @@ public class Car extends Entity {
      * @param model The model of the car
      * @param year The model year of the car
      * @param addOns A mapping of addon names to AddOn objects
-     * @param id The id of car as its stored in the database
+     * @param id The id of car
      */
     public Car(
             double kilometres,
@@ -161,20 +163,26 @@ public class Car extends Entity {
         return year;
     }
 
+    /**
+     * Return the number of kilometers that this car has
+     * @return This Car's number of kilometers
+     */
     public double getKilometres() {
         return kilometres;
     }
 
+    /** Return this Car's ID */
     public int getId() {
         return id;
     }
 
-    /** @return Returns the string name of the car */
+    /** Returns the string name of the car as defined in constants.EntityStringNames */
     @Override
     public String getStringName() {
         return EntityStringNames.CAR_STRING;
     }
 
+    /** Returns whether this Car is equal to other */
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Car)) {

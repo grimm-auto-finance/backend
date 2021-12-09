@@ -12,6 +12,7 @@ import entities.GenerateEntitiesUseCase;
 
 import java.util.List;
 
+/** A use case for fetching AddOns from a database */
 public class FetchAddOnDataUseCase {
 
     private final Fetcher fetcher;

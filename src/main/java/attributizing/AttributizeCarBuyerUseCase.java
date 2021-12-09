@@ -7,6 +7,7 @@ import constants.EntityStringNames;
 
 import entities.CarBuyer;
 
+/** A Use Case to convert a CarBuyer into an AttributeMap */
 public class AttributizeCarBuyerUseCase implements Attributizer {
 
     private final CarBuyer buyer;
@@ -21,7 +22,9 @@ public class AttributizeCarBuyerUseCase implements Attributizer {
         this.buyer = buyer;
     }
 
-    /** Write the given CarBuyer's data to an AttributeMap */
+    /** Write the given CarBuyer's data to an AttributeMap
+     * @return an AttributeMap containing the CarBuyer's information
+     * */
     public AttributeMap attributizeEntity() {
         AttributeMap buyerMap = new AttributeMap();
         buyerMap.addItem(EntityStringNames.BUYER_BUDGET, buyer.getBudget());

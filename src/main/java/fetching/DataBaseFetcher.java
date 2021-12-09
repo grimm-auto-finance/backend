@@ -15,6 +15,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/** A Fetcher gateway for retrieving information from a DataBase */
 public class DataBaseFetcher implements Fetcher {
 
     private final DataBase database;

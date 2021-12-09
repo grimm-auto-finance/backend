@@ -4,15 +4,15 @@ package attributizing;
 import entities.*;
 
 /**
- * A factory that creates an AttributizerUseCase given an Entity that is either a Car, CarBuyer or
- * AddOn
+ * A factory that returns the appropriate Attributizer for a given Entity
  */
 public class AttributizerFactory {
 
     /**
-     * @param entity The Entity from which the attributizerUseCase object is created
-     * @return a Car, CarBuyer or AddOn Attributizer, depending on the entity in the parameter
-     * @throws ClassCastException This is because an incorrect class is used for the parameter
+     * Returns the appropraite Attributizer for entity
+     * @param entity The Entity from which the Attributizers is created
+     * @return an Attributizer capable of Attributizing entity
+     * @throws ClassCastException if the type of Entity does not have a defined Attributizer
      */
     public static Attributizer getAttributizer(Entity entity) {
         if (entity instanceof Car) {

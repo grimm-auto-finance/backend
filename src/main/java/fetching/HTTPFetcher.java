@@ -1,4 +1,4 @@
-// layer: frameworksanddrivers
+// layer: gateways
 package fetching;
 
 import attributes.AttributeMap;
@@ -17,6 +17,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+/** A Fetcher for making HTTP requests to outside web servers */
 public class HTTPFetcher implements Fetcher {
 
     private final URL connectionURL;

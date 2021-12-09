@@ -11,6 +11,7 @@ import entities.Car;
 
 import java.util.Map;
 
+/** A Use Case to convert a Car into an AttributeMap */
 public class AttributizeCarUseCase implements Attributizer {
     private final Car car;
 
@@ -23,7 +24,10 @@ public class AttributizeCarUseCase implements Attributizer {
         this.car = car;
     }
 
-    /** Write the given Car's data to an AttributeMap */
+    /** Write the given Car's data to an AttributeMap
+     * The Car's add-ons are stored as a submap of the Car's map
+     * @return an AttributeMap containing the Car's information
+     * */
     public AttributeMap attributizeEntity() {
         AttributeMap carMap = new AttributeMap();
         carMap.addItem(EntityStringNames.CAR_PRICE, car.getPrice());
@@ -40,6 +44,13 @@ public class AttributizeCarUseCase implements Attributizer {
         return carMap;
     }
 
+    /**
+     * Converts a Map betweeen AddOn names and AddOn objects into an AttributeMap
+     * The keys in this AttributeMap are AddOn names, and the values are AttributeMaps
+     * representing AddOns
+     * @param addOns the Map between Strings and AddOns to attributize
+     * @return an AttributeMap representation of addOns
+     */
     public static AttributeMap getAddOnMap(Map<String, AddOn> addOns) {
         AttributeMap map = new AttributeMap();
         for (String s : addOns.keySet()) {

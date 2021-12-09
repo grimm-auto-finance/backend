@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/** A use case to convert a LoanData into an AttributeMap */
 public class AttributizeLoanDataUseCase implements Attributizer {
 
     private final LoanData loan;
@@ -28,7 +29,7 @@ public class AttributizeLoanDataUseCase implements Attributizer {
     /**
      * Writes the stored LoanData to an AttributeMap
      *
-     * @return an AttributeMap representing loan
+     * @return an AttributeMap representing the LoanData
      */
     public AttributeMap attributizeEntity() {
         AttributeMap loanMap = new AttributeMap();
@@ -46,6 +47,12 @@ public class AttributizeLoanDataUseCase implements Attributizer {
         return loanMap;
     }
 
+    /**
+     * Converts an amortization table, in the form of a List of Maps between Strings and Doubles,
+     * to a List of AttributeMaps.
+     * @param amortizationTable the List of Maps between strings and Doubles to be attributized
+     * @return a List of AttributeMaps, where each AttributeMap represents one of the Maps in amortizationTable
+     */
     public static List<AttributeMap> getAmortizationAttMap(
             List<Map<String, Double>> amortizationTable) {
         List<AttributeMap> amortizationAttMap = new ArrayList<>();

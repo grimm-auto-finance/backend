@@ -221,6 +221,7 @@ public class LoanData extends Entity {
         return EntityStringNames.LOAN_STRING;
     }
 
+    /** Returns whether this LoanData is equal to other */
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof LoanData)) {
@@ -250,16 +251,11 @@ public class LoanData extends Entity {
 
     private boolean compareAmortizationEntries(
             Map<String, Double> first, Map<String, Double> second) {
-        return compareAmortizationEntries(first, second, .001);
-    }
-
-    private boolean compareAmortizationEntries(
-            Map<String, Double> first, Map<String, Double> second, double epsilon) {
         for (String s : first.keySet()) {
             if (!second.containsKey(s)) {
                 return false;
             }
-            if (Math.abs(first.get(s) - second.get(s)) >= epsilon) {
+            if (Math.abs(first.get(s) - second.get(s)) >= .001) {
                 return false;
             }
         }

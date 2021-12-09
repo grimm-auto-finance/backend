@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.json.*;
 
+/** A packager for converting Attributes to JsonPackages */
 public class JsonPackager implements Packager {
 
     /**

@@ -32,7 +32,7 @@ public class PostgresDataBase extends DataBase {
 
     /**
      * Initializes the connection between this PostgresDataBase and the actual database hosted at
-     * the given URL Also sets up the columns of the database and declares their values
+     * the given URL and sets up the columns of the database and declares their values
      *
      * @throws Exceptions.DataBaseException if the connection fails to initialize
      */
@@ -90,14 +90,14 @@ public class PostgresDataBase extends DataBase {
         try {
             scanner = new Scanner(new File("data/addons.csv"));
         } catch (FileNotFoundException e) {
-            throw new Exceptions.DataBaseException("error reading addon data file", e);
+            throw new Exceptions.DataBaseException("error reading add-on data file", e);
         }
         scanner.useDelimiter("\n");
         scanner.next();
         try {
             insertAddOnPlaceholderData(scanner);
         } catch (SQLException e) {
-            throw new Exceptions.DataBaseException("couldn't insert car placeholder data", e);
+            throw new Exceptions.DataBaseException("couldn't insert add-on placeholder data", e);
         }
     }
 

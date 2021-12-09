@@ -1,9 +1,10 @@
 // layer: ignore
 package attributes;
 
+/** An Attribute representing a String */
 public class StringAttribute extends Attribute {
 
-    // the String item stored in this StringAttribute
+    /** the String item stored in this StringAttribute */
     private final String item;
 
     /**

@@ -14,6 +14,7 @@ import entities.GenerateEntitiesUseCase;
 import java.util.ArrayList;
 import java.util.List;
 
+/** A use case for fetching Cars from a database */
 public class FetchCarDataUseCase {
 
     private final Fetcher fetcher;

@@ -29,11 +29,19 @@ public class Addons extends Route {
 
     private final DataBase dataBase;
 
+    /**
+     * Constructs the AddOns route with the given instance attributes
+     * @param dataBase the database to search addons in
+     * @param logger the logger to log results/errors with
+     * @param parser the parser to use on input data
+     * @param packager the packager to use for creating output data
+     */
     public Addons(DataBase dataBase, Logger logger, Parser parser, Packager packager) {
         super(logger, parser, packager);
         this.dataBase = dataBase;
     }
 
+    /** Returns the URL context for this Route: /addons */
     @Override
     public String getContext() {
         return "/addons";

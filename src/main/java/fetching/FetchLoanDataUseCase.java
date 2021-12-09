@@ -13,6 +13,7 @@ import entities.*;
 import packaging.Package;
 import packaging.Packager;
 
+/** A use case for fetching Loan information from the senso API */
 public class FetchLoanDataUseCase {
     private final Fetcher rateFetcher;
     private final Fetcher scoreFetcher;

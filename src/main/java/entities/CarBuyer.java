@@ -4,8 +4,7 @@ package entities;
 import constants.EntityStringNames;
 
 /**
- * A class to represent an individual person buying a car Stores all necessary information about the
- * person that is used by the Senso API and our functions to determine the returned loan.
+ * A class to represent an individual person buying a car
  */
 public class CarBuyer extends Entity {
 
@@ -58,6 +57,7 @@ public class CarBuyer extends Entity {
         return EntityStringNames.BUYER_STRING;
     }
 
+    /** Returns whether this CarBuyer is equal to other */
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof CarBuyer)) {

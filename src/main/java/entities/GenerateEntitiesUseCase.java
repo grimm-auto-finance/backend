@@ -57,6 +57,16 @@ public class GenerateEntitiesUseCase {
         return AddOnFactory.getEntities(addOnArray);
     }
 
+    /**
+     * Extracts the AttributeMap corresponding to a Map between add-on names and AddOns from the given AttributeMap,
+     * and constructs that Map
+     *
+     * @param map an AttributeMap containing an AttributeMap, where each key in the map is an Add-on name and each
+     *            value in the map is a sub-AttributeMap corresponding to an AddOn
+     * @return a Map between add-on names and AddOns constructed using the extracted AttributeMap from map
+     * @throws Exceptions.FactoryException if the needed AttributeMap is not present in map or
+     *     does not contain the correct key/value pairs
+     */
     public static Map<String, AddOn> generateAddOnsFromMap(AttributeMap map)
             throws Exceptions.FactoryException {
         AttributeMap addOnMap = (AttributeMap) map.getItem(EntityStringNames.ADD_ON_STRING);

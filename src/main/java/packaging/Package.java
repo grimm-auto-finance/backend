@@ -1,6 +1,7 @@
 // layer: interfaceadapters
 package packaging;
 
+/** A wrapper class for certain types of Objects that can be made from AttributeMaps */
 public abstract class Package {
 
     /**

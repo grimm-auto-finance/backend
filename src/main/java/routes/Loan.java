@@ -33,11 +33,20 @@ public class Loan extends Route {
 
     private final URL SENSO_RATE_URL, SENSO_SCORE_URL;
 
+    /** Returns the URL context for this Route: /loan */
     @Override
     public String getContext() {
         return "/loan";
     }
 
+    /**
+     * Constructs the AddOns route with the given instance attributes
+     * @param SENSO_RATE_URL the URL to make Senso Rate requests to
+     * @param SENSO_SCORE_URL the URL to make Senso score requests to
+     * @param logger the logger to log results/errors to
+     * @param parser the parser to use for input data
+     * @param packager the packager to use for output data
+     */
     public Loan(URL SENSO_RATE_URL, URL SENSO_SCORE_URL, Logger logger, Parser parser, Packager packager) {
         super(logger, parser, packager);
         this.SENSO_RATE_URL = SENSO_RATE_URL;

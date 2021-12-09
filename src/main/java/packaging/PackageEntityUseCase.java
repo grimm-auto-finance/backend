@@ -14,6 +14,7 @@ import entities.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/** A use case for converting Entities into Packages */
 public class PackageEntityUseCase {
 
     private Packager packager;
