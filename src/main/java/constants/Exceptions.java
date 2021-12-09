@@ -116,12 +116,7 @@ public class Exceptions {
             return 400;
         }
 
-        public FactoryException() {}
-
-        /** Constructs a new FactoryException with the given message */
-        public FactoryException(String message) {
-            super(message);
-        }
+        // --Commented out by Inspection (12/8/21, 11:46 PM):public FactoryException() {}
 
         /**
          * Constructs a new FactoryException with the given message and Exception
@@ -136,21 +131,10 @@ public class Exceptions {
 
     /** A CodedException that might be thrown during Packaging of an Entity */
     public static class PackageException extends CodedException {
-        public PackageException() {}
 
         /** Constructs a new PackageException with the given message */
         public PackageException(String message) {
             super(message);
-        }
-
-        /**
-         * Constructs a new PackageException with the given message and Exception
-         *
-         * @param message the exception message
-         * @param e an Exception whose information should be incorporated into this PackageException
-         */
-        public PackageException(String message, Exception e) {
-            super(message, e);
         }
 
         /** Return the error code for this PackageException: 500 */

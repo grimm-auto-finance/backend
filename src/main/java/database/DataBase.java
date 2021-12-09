@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 
 public abstract class DataBase {
 
-    /** Connect to the database and run migration operations (establish column names, types, etc) */
+    /**
+     * Connect to the database and run migration operations (establish column names, types, etc.)
+     */
     public abstract void connectAndMigrate() throws Exceptions.DataBaseException;
 
     /** Insert placeholder data into the database */

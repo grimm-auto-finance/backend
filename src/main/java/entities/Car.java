@@ -39,7 +39,7 @@ public class Car extends Entity {
      * @param model The model of the car
      * @param image The image of the car
      * @param year The model year of the car
-     * @param id The id of car as its stored in the database
+     * @param id The id of car as it's stored in the database
      */
     protected Car(
             double kilometres,

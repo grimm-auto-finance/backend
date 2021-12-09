@@ -52,7 +52,7 @@ public class JsonPackager implements Packager {
                 builder.add(key, itemString);
             } else if (item instanceof AttributeMap) {
                 JsonPackager subPackager = new JsonPackager();
-                builder.add(key, subPackager.writePackage((AttributeMap) item).getPackage());
+                builder.add(key, subPackager.writePackage(item).getPackage());
             } else if (item instanceof ArrayAttribute) {
                 JsonArray itemArray = getJsonArray((ArrayAttribute) item);
                 builder.add(key, itemArray);
@@ -89,7 +89,7 @@ public class JsonPackager implements Packager {
                 arrayBuilder.add((String) a.getAttribute());
             } else if (a instanceof AttributeMap) {
                 JsonPackager subPackager = new JsonPackager();
-                arrayBuilder.add(subPackager.writePackage((AttributeMap) a).getPackage());
+                arrayBuilder.add(subPackager.writePackage(a).getPackage());
             } else if (a instanceof ArrayAttribute) {
                 JsonArray subArray = getJsonArray((ArrayAttribute) a);
                 arrayBuilder.add(subArray);
