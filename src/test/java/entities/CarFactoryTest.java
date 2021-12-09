@@ -28,7 +28,7 @@ public class CarFactoryTest {
         carMap.addItem(EntityStringNames.ADD_ON_STRING, addOnMap);
         carMap.addItem(EntityStringNames.CAR_KILOMETRES, 100.0);
         carMap.addItem(EntityStringNames.CAR_ID, 3);
-        Car testCar = new Car(100.0, 3000.0, "Honda", "image", "Civic", 2020, 3);
+        Car testCar = new Car(100.0, 3000.0, "Honda", "Civic", "image", 2020, 3);
         try {
             assertEquals(testCar, CarFactory.getEntity(carMap));
         } catch (Exceptions.FactoryException e) {
