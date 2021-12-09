@@ -21,7 +21,7 @@ public class CarFactory {
      *     not present in map
      */
     public static Car getEntity(AttributeMap map) throws Exceptions.FactoryException {
-        String make, model;
+        String make, model, image;
         int year;
         double price;
         Map<String, AddOn> addOnMap;
@@ -30,6 +30,7 @@ public class CarFactory {
         try {
             make = (String) map.getItem(EntityStringNames.CAR_MAKE).getAttribute();
             model = (String) map.getItem(EntityStringNames.CAR_MODEL).getAttribute();
+            image = (String) map.getItem(EntityStringNames.CAR_IMAGE).getAttribute();
             year = (int) map.getItem(EntityStringNames.CAR_YEAR).getAttribute();
             price = AttributeMap.getDoubleMaybeInteger(EntityStringNames.CAR_PRICE, map);
             addOnMap = GenerateEntitiesUseCase.generateAddOnsFromMap(map);
@@ -39,6 +40,6 @@ public class CarFactory {
             String message = "Failed to generate Car from map: " + map.toString();
             throw new Exceptions.FactoryException(message, e);
         }
-        return new Car(kilometres, price, make, model, year, addOnMap, id);
+        return new Car(kilometres, price, make, model, image, year, addOnMap, id);
     }
 }

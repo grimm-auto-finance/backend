@@ -21,6 +21,7 @@ public class Car extends Entity {
     /** The make, model and year of the Car */
     private final String make;
     private final String model;
+    private final String image;
     private final int year;
 
     private final double kilometres;
@@ -35,11 +36,19 @@ public class Car extends Entity {
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car
-     * @param year The year of the car
-     * @param id The id of car
+     * @param image The image of the car
+     * @param year The model year of the car
+     * @param id The id of car as its stored in the database
      */
-    protected Car(double kilometres, double price, String make, String model, int year, int id) {
-        this(kilometres, price, make, model, year, new HashMap<>(), id);
+    protected Car(
+            double kilometres,
+            double price,
+            String make,
+            String model,
+            String image,
+            int year,
+            int id) {
+        this(kilometres, price, make, model, image, year, new HashMap<>(), id);
     }
 
     /**
@@ -49,6 +58,7 @@ public class Car extends Entity {
      * @param price The price of the car
      * @param make The make of the car
      * @param model The model of the car
+     * @param image The image of the car
      * @param year The model year of the car
      * @param addOns A mapping of addon names to AddOn objects
      * @param id The id of car
@@ -58,6 +68,7 @@ public class Car extends Entity {
             double price,
             String make,
             String model,
+            String image,
             int year,
             Map<String, AddOn> addOns,
             int id) {
@@ -65,6 +76,7 @@ public class Car extends Entity {
         this.price = price;
         this.make = make;
         this.model = model;
+        this.image = image;
         this.year = year;
         this.addOns = addOns;
         this.id = id;
@@ -155,6 +167,15 @@ public class Car extends Entity {
     }
 
     /**
+     * returns the image of this car
+     *
+     * @return The image of the car
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
      * Returns this Car's model year
      *
      * @return The car's model year
@@ -199,6 +220,7 @@ public class Car extends Entity {
         }
         return (this.make.equals(otherCar.make))
                 && (this.model.equals(otherCar.model))
+                && (this.image.equals(otherCar.image))
                 && (this.year == otherCar.year)
                 && (this.price == otherCar.price);
     }

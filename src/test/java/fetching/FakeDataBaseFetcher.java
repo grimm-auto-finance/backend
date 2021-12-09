@@ -39,8 +39,6 @@ public class FakeDataBaseFetcher implements Fetcher {
                                 + " || ' '"
                                 + " || "
                                 + EntityStringNames.CAR_YEAR
-                                + " || ' ' || "
-                                + EntityStringNames.CAR_KILOMETRES
                                 + ") @@ websearch_to_tsquery(?)"))) {
             List<Car> carResults = new ArrayList<>();
             addItemsAndcarResultstoLists(resultsList, carResults);
