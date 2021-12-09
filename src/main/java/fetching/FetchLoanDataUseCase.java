@@ -76,7 +76,7 @@ public class FetchLoanDataUseCase {
             int numLoops = 0;
             boolean inf = loopMax == -1;
             while (inf || numLoops < loopMax) {
-                double priceIncrement = addOnBudget + (car.getTotalPrice() * .05);
+                double priceIncrement = addOnBudget + (car.getTotalPrice() * .4);
                 makeRateRequest(buyer, car, priceIncrement);
                 addOnBudget = priceIncrement;
                 numLoops++;

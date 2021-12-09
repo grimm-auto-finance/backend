@@ -33,7 +33,7 @@ public class FetchLoanDataUseCaseTest {
     @Test
     public void testFetchWithBudget() {
         LoanData testLoan = TestEntityCreator.getTestLoanData();
-        testLoan.setAddOnBudget(5000);
+        testLoan.setAddOnBudget(40000);
         FakeHttpFetcher fetcher = new FakeHttpFetcher();
         FetchLoanDataUseCase loanFetcher =
                 new FetchLoanDataUseCase(fetcher, fetcher, new JsonPackager());
