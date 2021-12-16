@@ -25,7 +25,6 @@ public class Exceptions {
 
     /** FetchException class that is thrown when a fetch request is made */
     public static class FetchException extends CodedException {
-        public FetchException() {}
 
         /** @param message The exception message */
         public FetchException(String message, Exception e) {
@@ -43,7 +42,6 @@ public class Exceptions {
     }
 
     public static class DataBaseException extends CodedException {
-        public DataBaseException() {}
 
         public DataBaseException(String message, Exception e) {
             super(message, e);
@@ -63,8 +61,6 @@ public class Exceptions {
         public int getCode() {
             return 400;
         }
-
-        public ParseException() {}
 
         /** @param message The exception message */
         public ParseException(String message) {
@@ -96,15 +92,10 @@ public class Exceptions {
      * PackageException class that is thrown whenever a java object is packaged into a Json object
      */
     public static class PackageException extends CodedException {
-        public PackageException() {}
 
         /** @param message The exception message */
         public PackageException(String message) {
             super(message);
-        }
-
-        public PackageException(String message, Exception e) {
-            super(message, e);
         }
 
         /** @return Returns the specific PackageException code */
@@ -118,11 +109,6 @@ public class Exceptions {
      */
     public static class MissingMethodException extends CodedException {
         public MissingMethodException() {}
-
-        /** @param message The exception message */
-        public MissingMethodException(String message) {
-            super(message);
-        }
 
         /** @return Returns the specific MissingMethodException code */
         public int getCode() {
